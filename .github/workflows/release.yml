@@ -82,7 +82,7 @@ jobs:
       # Push to main: Changesets opens or merges the release pull request and publishes under `latest`.
       - name: Changesets (push to main)
         if: github.event_name == 'push'
-        uses: changesets/action@v1
+        uses: changesets/action@v2
         with:
           version: pnpm changeset version
           publish: pnpm changeset publish
