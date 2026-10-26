@@ -60,6 +60,8 @@ export function parseRef(expr: string): Ref {
   const e = expr.trim();
   const a = e.match(/^alpha\((.+),\s*([0-9.]+)\)$/);
   if (a) return { kind: "alpha", inner: parseRef(a[1]!), alpha: Number(a[2]) };
+  const hex = e.match(/^\{(#[0-9a-fA-F]{6})\}$/);
+  if (hex) return { kind: "const", value: hex[1]!.toLowerCase() };
   if (e === "{white}") return { kind: "const", value: "#ffffff" };
   if (e === "{black}") return { kind: "const", value: "#000000" };
   const m = e.match(/^\{(?:(light|dark|light-hc|dark-hc):)?([a-z]+)\.([a-z0-9-]+)\}$/);

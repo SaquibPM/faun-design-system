@@ -263,10 +263,10 @@ function checkNode() {
 }
 
 function checkPlaceholders() {
-  const missing = ["README.md", "SECURITY.md", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "docs/STATUS.md"].filter((f) => !existsSync(join(root, f)));
+  const missing = ["README.md", ".github/SECURITY.md", ".github/CONTRIBUTING.md", ".github/CODE_OF_CONDUCT.md", "docs/STATUS.md"].filter((f) => !existsSync(join(root, f)));
   if (missing.length) fail("required documents exist", missing.join(", "));
   else pass("required documents exist");
-  const sec = existsSync(join(root, "SECURITY.md")) ? readFileSync(join(root, "SECURITY.md"), "utf8") : "";
+  const sec = existsSync(join(root, ".github/SECURITY.md")) ? readFileSync(join(root, ".github/SECURITY.md"), "utf8") : "";
   if (/OWNER_PLACEHOLDER|example\.com|TODO|TBD/i.test(sec)) fail("SECURITY.md has no placeholder", "contains a placeholder or TODO");
 }
 
