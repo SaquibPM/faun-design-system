@@ -16,6 +16,7 @@ permissions:
 jobs:
   registry-smoke:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -24,5 +25,6 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm exec playwright install --with-deps chromium
+      # apt on hosted runners occasionally stalls; bound each attempt and retry once
+      - run: timeout 300 pnpm exec playwright install --with-deps chromium || timeout 300 pnpm exec playwright install --with-deps chromium
       - run: node scripts/consumer-smoke.mjs --registry --tag "${{ inputs.tag }}"

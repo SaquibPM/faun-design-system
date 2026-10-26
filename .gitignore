@@ -36,3 +36,6 @@ PROGRESS.md
 .preflight-forbidden
 .preflight-ack
 scripts/snapshot.sh
+
+# local agent worktrees
+.claude/worktrees/
