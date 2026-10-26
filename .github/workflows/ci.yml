@@ -115,7 +115,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       # apt on hosted runners occasionally stalls; bound each attempt and retry once
-      - run: timeout 300 pnpm exec playwright install --with-deps chromium || timeout 300 pnpm exec playwright install --with-deps chromium
+      - run: timeout 300 pnpm exec playwright install chromium || timeout 300 pnpm exec playwright install chromium
       - run: node scripts/consumer-smoke.mjs
 
   e2e:
@@ -132,5 +132,5 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm build && pnpm --filter @faun-ds/docs build
       # apt on hosted runners occasionally stalls; bound each attempt and retry once
-      - run: timeout 300 pnpm exec playwright install --with-deps chromium || timeout 300 pnpm exec playwright install --with-deps chromium
+      - run: timeout 300 pnpm exec playwright install chromium || timeout 300 pnpm exec playwright install chromium
       - run: pnpm e2e

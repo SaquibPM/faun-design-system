@@ -26,5 +26,5 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       # apt on hosted runners occasionally stalls; bound each attempt and retry once
-      - run: timeout 300 pnpm exec playwright install --with-deps chromium || timeout 300 pnpm exec playwright install --with-deps chromium
+      - run: timeout 300 pnpm exec playwright install chromium || timeout 300 pnpm exec playwright install chromium
       - run: node scripts/consumer-smoke.mjs --registry --tag "${{ inputs.tag }}"

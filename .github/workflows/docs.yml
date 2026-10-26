@@ -55,7 +55,7 @@ jobs:
         run: node scripts/prepare-pages.mjs --dist apps/docs/dist --base "${{ steps.base.outputs.base }}"
 
       # apt on hosted runners occasionally stalls; bound each attempt and retry once
-      - run: timeout 300 pnpm exec playwright install --with-deps chromium || timeout 300 pnpm exec playwright install --with-deps chromium
+      - run: timeout 300 pnpm exec playwright install chromium || timeout 300 pnpm exec playwright install chromium
       - name: Smoke test under the subpath (assets, hash routes, console errors, 404 fallback)
         run: node scripts/pages-smoke.mjs --dist apps/docs/dist --base "${{ steps.base.outputs.base }}"
 
@@ -96,6 +96,6 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       # apt on hosted runners occasionally stalls; bound each attempt and retry once
-      - run: timeout 300 pnpm exec playwright install --with-deps chromium || timeout 300 pnpm exec playwright install --with-deps chromium
+      - run: timeout 300 pnpm exec playwright install chromium || timeout 300 pnpm exec playwright install chromium
       - name: Live site smoke test
         run: node scripts/pages-smoke.mjs --url "${{ needs.deploy.outputs.page_url }}" --wait 300
