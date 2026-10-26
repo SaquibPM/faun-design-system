@@ -8,9 +8,9 @@
 
 ## Context
 
-Feedback on ADR 0006 and 0007: "The button doesn't need to have the 3D. The texture is very dark (bar faces with dark, high-contrast wavy lines): it needs to be very subtle across all components, almost visible. Also use different colours for different components."
+Review findings on ADR 0006 and 0007: buttons should not have the 3D treatment; the texture (dark, high-contrast wavy lines on bar faces) was too strong and should be very subtle across all components, almost visible; and different components should use different hues.
 
-ADR 0007 answered "I don't see the texture" by drawing the wave in the full series colour at alpha 0.85. On a 24% tint face that is a dark line on a pale ground: measured luminance spread inside a bar face was 34 to 47 (0 to 255) against 0 when flat. That swung too far.
+ADR 0007 answered the finding that the texture was not visible by drawing the wave in the full series colour at alpha 0.85. On a 24% tint face that is a dark line on a pale ground: measured luminance spread inside a bar face was 34 to 47 (0 to 255) against 0 when flat. That swung too far.
 
 ## Decision
 

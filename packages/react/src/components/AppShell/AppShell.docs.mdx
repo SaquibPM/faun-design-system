@@ -1,9 +1,9 @@
 export const meta = {
   title: "App shell",
-  description: "The frame every screen sits in: a deep moss green side navigation, a top bar for location and search, and a page header with title, status and actions.",
+  description: "The frame every screen sits in: a light side panel that collapses to a near-black icon rail, a top bar for location and search, and a page header with title, status and actions.",
   category: "Navigation",
   status: "new",
-  components: ["AppShell", "SideNav", "SideNavWorkspace", "SideNavSection", "SideNavGroup", "SideNavItem", "SideNavUser", "TopBar", "PageHeader"],
+  components: ["AppShell", "SideNav", "SideNavWorkspace", "SideNavAction", "SideNavSection", "SideNavGroup", "SideNavItem", "SideNavUser", "TopBar", "PageHeader"],
   related: ["stat", "card", "banner"],
   order: 1,
 };
@@ -25,7 +25,7 @@ export const meta = {
 
 ## Side navigation
 
-Destinations are grouped into a few short sections (Reporting, Agents, Data) under an ungrouped top block for the places people go every day. Each item has an icon so the collapsed rail stays usable, a neutral count when the number helps people choose, and an attention badge only when something is waiting on the person signed in.
+The open panel has one primary action ("New conversation") under the workspace, then a few short sections (Projects, Reports, Pinned, Recent). Rows are plain text; a section gives the collapsed rail its icon. Reports rows show progress as a percentage with a thin bar, pinned rows carry a small dot, and any row can have a kebab menu. A neutral count helps people choose; an attention badge appears only when something is waiting on the person signed in.
 
 <DoDont>
   <Do of="AppShell/DoOneAttention" caption="Reserve the attention badge for work waiting on this person. Show plain counts for everything else." />
@@ -45,7 +45,7 @@ Use one tier of groups at most. If a group needs groups of its own, the informat
 
 ## Collapsed rail
 
-People can collapse the navigation to a 60px rail to give tables and graphs more room. Labels move into tooltips, counts hide, and attention badges become a dot on the icon. The choice is the person's; persist it per user with `navCollapsed` and `onNavCollapsedChange`.
+People can collapse the navigation to a 64px near-black rail to give tables and graphs more room. It is the same design with fewer parts: the mark tile, a square moss "+" for the primary action, one icon per section (Projects, Reports, Pinned) that opens its rows in a panel beside the rail, and the round avatar at the bottom. Labels move into tooltips, counts and progress hide, and attention badges become a dot on the icon. The choice is the person's; persist it per user with `navCollapsed` and `onNavCollapsedChange`.
 
 See the open and collapsed states side by side, with a working toggle, a keyboard shortcut and remembered state, in the [Assistant home](/patterns/assistant-home) pattern. [Chat with panels](/patterns/chat-with-panels) puts a conversation, a progress panel and an artifact panel beside the same navigation.
 
@@ -79,7 +79,7 @@ Write titles as the name of the thing on the page ("CSRD sustainability statemen
 
 ## Anatomy
 
-1. **SideNav**: workspace block (mark, name, tenant and period), sections of items, and the signed-in user pinned to the bottom. It sits on `sidebar.bg`, a deep moss green in every theme (moss.10 in light, a slightly deeper moss in dark so it reads as green against the near-black canvas). The open panel and the collapsed icon rail share the same surface, so collapsing never turns the navigation black. Page content stays neutral. See ADR 0009.
+1. **SideNav**: workspace block (mark tile and wordmark), the primary action, sections of rows and the signed-in user pinned to the bottom with a chevron. Open, it is a 280px light paper panel on `sidebar.bg` with a hairline border; in dark themes it takes a theme-appropriate dark surface. Collapsed, it is a 64px near-black rail on `rail.bg` in every theme. One component draws both, from the same mark, action, avatar and corner language. See ADR 0011.
 2. **TopBar**: a 56px sticky bar on the surface colour with a hairline bottom border.
 3. **Page area**: the sage canvas, padded by the page padding tokens (24/32/40px by breakpoint). Cards and KPI rows sit on it as white surfaces with a soft shadow.
 4. **PageHeader**: `heading-xl` title, muted meta line with 14px icons, and actions aligned to the title.
@@ -88,11 +88,11 @@ Write titles as the name of the thing on the page ("CSRD sustainability statemen
 
 ## States
 
-Items have rest, hover (`sidebar.bg-hover`, label to `sidebar.fg-active`), current (`sidebar.bg-active`, semibold label and a 3px `sidebar.accent` bar) and keyboard focus (a 2px ring in `sidebar.accent`, 3:1 on the surface and on both fills). Section labels, counts and context use `sidebar.fg-muted`; attention badges use `sidebar.badge-bg` and `sidebar.badge-fg`.
+Items have rest, hover (`sidebar.bg-hover`, label to `sidebar.fg-active`), current (`sidebar.bg-active`, semibold label and a 3px `sidebar.accent` bar) and keyboard focus (a 2px ring in `sidebar.accent`, 3:1 on the surface and on both fills). Section labels, counts and context use `sidebar.fg-muted`; attention badges use `sidebar.badge-bg` and `sidebar.badge-fg`. The collapsed rail reads the matching `rail.*` tokens.
 
 ## Tokens
 
-<UsesTokens names={["sidebar.bg", "sidebar.bg-hover", "sidebar.bg-active", "sidebar.fg", "sidebar.fg-muted", "sidebar.fg-active", "sidebar.accent", "sidebar.border", "sidebar.badge-bg", "sidebar.badge-fg", "bg.canvas", "bg.surface", "border.subtle", "layout.nav-width", "layout.nav-collapsed-width", "layout.topbar-height"]} />
+<UsesTokens names={["sidebar.bg", "sidebar.bg-hover", "sidebar.bg-active", "sidebar.fg", "sidebar.fg-muted", "sidebar.fg-active", "sidebar.accent", "sidebar.border", "sidebar.badge-bg", "sidebar.badge-fg", "sidebar.mark-bg", "sidebar.mark-fg", "rail.bg", "rail.bg-hover", "rail.bg-active", "rail.fg", "rail.fg-muted", "rail.fg-active", "rail.accent", "rail.action-bg", "rail.mark-bg", "bg.canvas", "bg.surface", "border.subtle", "layout.nav-width", "layout.nav-collapsed-width", "layout.topbar-height"]} />
 
 <ComponentTokens name="nav" />
 
@@ -113,6 +113,28 @@ Pass your router's link through `asChild`; the item keeps its icon, label, count
   <Link to="/filings" />
 </SideNavItem>
 ```
+
+## Panel parts
+
+```tsx
+<SideNav
+  workspace={<SideNavWorkspace mark={<IconOrchestrator />} name="Faun" />}
+  action={<SideNavAction>New conversation</SideNavAction>}
+  footer={<SideNavUser name="Saquib Jawed" meta="Sustainability lead" onOpenMenu={openMenu} />}
+>
+  <SideNavSection title="Projects" icon={<IconFolder />} action={<IconButton icon={<IconAdd />} label="New project" size="sm" />}>
+    <SideNavItem href="/acme" actions={<IconButton icon={<IconMoreVertical />} label="Actions for Acme" size="sm" />}>Acme</SideNavItem>
+  </SideNavSection>
+  <SideNavSection title="Reports" icon={<IconList />}>
+    <SideNavItem href="/csrd" progress={72}>CSRD statement</SideNavItem>
+  </SideNavSection>
+  <SideNavSection title="Pinned" icon={<IconStar />}>
+    <SideNavItem href="/ledger" dot>Emissions ledger</SideNavItem>
+  </SideNavSection>
+</SideNav>
+```
+
+A section with a `title` and an `icon` becomes one icon on the collapsed rail that opens its rows in a panel; sections without an icon (Recent) are left out of the rail. `progress` is 0 to 100 or `"done"`. `actions` renders beside the link, so the menu button is its own tab stop and never nests inside the link.
 
 ## Notes
 
@@ -141,6 +163,6 @@ Pass your router's link through `asChild`; the item keeps its icon, label, count
 ## Visual
 
 - Item labels, section titles, counts and badge numbers meet 4.5:1 on `sidebar.bg` and on the hover and current fills in every theme (7:1 in the high-contrast themes). Icons, the current-item bar, the focus ring and the attention dot meet 3:1. These pairs are in the contrast contract.
-- Items are 34px tall with full-width hit areas. The attention badge never relies on colour alone: it carries a number.
+- Items are 32px tall with full-width hit areas. The attention badge never relies on colour alone: it carries a number.
 
 </Section>
