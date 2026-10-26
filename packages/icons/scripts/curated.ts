@@ -24,6 +24,8 @@ export const CURATED: Record<string, Record<string, string>> = {
     "more-vertical": "ellipsis-vertical",
     search: "search",
     bookmark: "bookmark",
+    star: "star",
+    list: "list",
     bell: "bell",
     settings: "settings",
     "layout-grid": "layout-grid",
