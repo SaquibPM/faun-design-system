@@ -32,7 +32,7 @@
     "remark-gfm": "4.0.1",
     "shiki": "1.29.2",
     "tsx": "^4.19.2",
-    "typescript": "5.9.3",
+    "typescript": "7.0.2",
     "vite": "6.4.4"
   }
 }
