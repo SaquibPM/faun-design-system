@@ -1,4 +1,5 @@
 import {
+  IconAdd,
   IconBell,
   IconBook,
   IconCalendar,
@@ -7,15 +8,19 @@ import {
   IconEmissionFactor,
   IconFileCheck,
   IconFileText,
+  IconFolder,
   IconHelp,
   IconHistory,
   IconHome,
   IconLayoutGrid,
   IconLedger,
+  IconList,
   IconMateriality,
+  IconMoreVertical,
   IconOrchestrator,
   IconPause,
   IconProvenance,
+  IconStar,
   IconStatusAttention,
   IconSubAgent,
   IconTarget,
@@ -36,7 +41,7 @@ import { Timeline } from "../Timeline/Timeline";
 import { HeaderNav } from "../HeaderNav/HeaderNav";
 import { HeaderAction, HeaderActions, HeaderPanel, SwitcherPanel } from "../HeaderPanel/HeaderPanel";
 import { NotificationList } from "../NotificationPanel/NotificationPanel";
-import { AppShell, PageHeader, SideNav, SideNavGroup, SideNavItem, SideNavSection, SideNavUser, SideNavWorkspace, TopBar } from "./AppShell";
+import { AppShell, PageHeader, SideNav, SideNavAction, SideNavGroup, SideNavItem, SideNavSection, SideNavUser, SideNavWorkspace, TopBar } from "./AppShell";
 
 /* Shared pieces for the examples below (not exported, so they stay out of the code panels). */
 
@@ -57,32 +62,36 @@ function Trail({ items }: { items: string[] }) {
   );
 }
 
+function RowMenu({ name }: { name: string }) {
+  return <IconButton icon={<IconMoreVertical />} label={`Actions for ${name}`} size="sm" tooltip={false} onClick={() => {}} />;
+}
+
+/* The product navigation: the same design as the collapsed rail, opened (ADR 0011). */
 function ProductNav() {
   return (
     <SideNav
-      workspace={<SideNavWorkspace mark={<IconOrchestrator />} name="Faun" context="Acme Industrial · FY2026" onSwitch={() => {}} />}
-      footer={<SideNavUser name="Alex Morgan" meta="Sustainability lead" onOpenMenu={() => {}} />}
+      workspace={<SideNavWorkspace mark={<IconOrchestrator />} name="Faun" />}
+      action={<SideNavAction>New conversation</SideNavAction>}
+      footer={<SideNavUser name="Saquib Jawed" meta="Sustainability lead" onOpenMenu={() => {}} />}
     >
-      <SideNavSection>
-        <SideNavItem href="#home" icon={<IconHome />}>Home</SideNavItem>
-        <SideNavItem href="#ask" icon={<IconChat />}>Ask the assistant</SideNavItem>
-        <SideNavItem href="#approvals" icon={<IconStatusAttention />} attention={2}>Approvals</SideNavItem>
+      <SideNavSection title="Projects" icon={<IconFolder />} action={<IconButton icon={<IconAdd />} label="New project" size="sm" tooltip={false} onClick={() => {}} />}>
+        <SideNavItem href="#acme-csrd" actions={<RowMenu name="Acme CSRD FY2026" />} current>Acme CSRD FY2026</SideNavItem>
+        <SideNavItem href="#cdp" actions={<RowMenu name="CDP climate 2026" />}>CDP climate 2026</SideNavItem>
+        <SideNavItem href="#scope3" actions={<RowMenu name="Scope 3 screening" />}>Scope 3 screening</SideNavItem>
       </SideNavSection>
-      <SideNavSection title="Reporting">
-        <SideNavItem href="#filings" icon={<IconFileText />} count={5} current>Filings</SideNavItem>
-        <SideNavItem href="#ledger" icon={<IconLedger />}>Emissions ledger</SideNavItem>
-        <SideNavItem href="#materiality" icon={<IconMateriality />}>Materiality</SideNavItem>
-        <SideNavItem href="#targets" icon={<IconTarget />}>Targets</SideNavItem>
+      <SideNavSection title="Reports" icon={<IconList />}>
+        <SideNavItem href="#csrd-report" progress={72} actions={<RowMenu name="CSRD statement" />}>CSRD statement</SideNavItem>
+        <SideNavItem href="#gri-305" progress={100} actions={<RowMenu name="GRI 305 filing" />}>GRI 305 filing</SideNavItem>
+        <SideNavItem href="#tcfd" progress={0} actions={<RowMenu name="TCFD disclosure" />}>TCFD disclosure</SideNavItem>
       </SideNavSection>
-      <SideNavSection title="Agents">
-        <SideNavItem href="#agents" icon={<IconOrchestrator />} count={5}>Agents</SideNavItem>
-        <SideNavItem href="#sub-agents" icon={<IconSubAgent />} count={30}>Sub-agents</SideNavItem>
-        <SideNavItem href="#tools" icon={<IconTool />} count={64}>Tools</SideNavItem>
+      <SideNavSection title="Pinned" icon={<IconStar />}>
+        <SideNavItem href="#ledger" dot>Emissions ledger</SideNavItem>
+        <SideNavItem href="#materiality" dot>Materiality matrix</SideNavItem>
       </SideNavSection>
-      <SideNavSection title="Data">
-        <SideNavItem href="#sources" icon={<IconDatabase />}>Sources</SideNavItem>
-        <SideNavItem href="#factors" icon={<IconEmissionFactor />}>Factor library</SideNavItem>
-        <SideNavItem href="#evidence" icon={<IconProvenance />}>Evidence</SideNavItem>
+      <SideNavSection title="Recent">
+        <SideNavItem href="#r1">Chennai utility bills</SideNavItem>
+        <SideNavItem href="#r2">Factor library update</SideNavItem>
+        <SideNavItem href="#r3">Base year restatement</SideNavItem>
       </SideNavSection>
     </SideNav>
   );
@@ -199,7 +208,7 @@ export function CollapsedRail() {
 
 export function NavigationOnly() {
   return (
-    <div style={{ blockSize: 640, inlineSize: 248 }}>
+    <div style={{ blockSize: 720, inlineSize: 280 }}>
       <ProductNav />
     </div>
   );
@@ -328,7 +337,7 @@ function TieredNav() {
 }
 
 export function SecondTier() {
-  return <div style={{ blockSize: 560, inlineSize: 248 }}><TieredNav /></div>;
+  return <div style={{ blockSize: 560, inlineSize: 280 }}><TieredNav /></div>;
 }
 
 export function SecondTierRail() {
