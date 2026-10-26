@@ -18,7 +18,7 @@
 .faun-artifact-version { inline-size: 9rem; }
 
 .faun-artifact-tabs { display: flex; flex-direction: column; flex: 1 1 auto; min-block-size: 0; padding-block-start: var(--faun-space-1); }
-.faun-artifact-tabs > [role="tablist"], .faun-artifact-tabs > .faun-tabs-list-wrap { flex: none; padding-inline: var(--faun-space-2); }
+.faun-artifact-tabs .faun-tabs-list { box-sizing: border-box; padding-inline: var(--faun-space-4); }
 .faun-artifact-pane { flex: 1 1 auto; min-block-size: 0; display: flex; flex-direction: column; }
 .faun-artifact-pane[hidden] { display: none; }
 .faun-artifact-preview { flex: 1 1 auto; min-block-size: 0; overflow: auto; padding: var(--faun-space-4); border-radius: var(--faun-radius-sm); }
