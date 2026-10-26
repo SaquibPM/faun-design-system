@@ -37,7 +37,7 @@ Commit messages follow [Conventional Commits](https://www.conventionalcommits.or
 
 ## The bar for a component
 
-Each component lives in its own folder with six files: implementation, CSS, tests, examples, docs and an index. See [BUILDERS.md](BUILDERS.md) for the full spec. Before a component is marked stable it must:
+Each component lives in its own folder with six files: implementation, CSS, tests, examples, docs and an index. See [BUILDERS.md](../BUILDERS.md) for the full spec. Before a component is marked stable it must:
 
 1. Use tokens only. A test fails the build on raw colours or sizes.
 2. Pass axe in every documented state and have keyboard tests for every interaction.
@@ -73,7 +73,7 @@ Accessibility is a release criterion. Changes that lower a contrast ratio below 
 
 ## Decisions
 
-Significant decisions are recorded as ADRs in [`docs/adr`](docs/adr). Propose one with your pull request when you change structure, naming or a documented principle.
+Significant decisions are recorded as ADRs in [`docs/adr`](../docs/adr). Propose one with your pull request when you change structure, naming or a documented principle.
 
 ## Code of conduct
 

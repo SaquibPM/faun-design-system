@@ -140,7 +140,7 @@ async function check(name, url) {
 }
 
 async function serve(cmd, a, cwd, port) {
-  const child = spawn(cmd, a, { cwd, stdio: "ignore", env: { ...process.env, PORT: String(port) } });
+  const child = spawn(cmd, a, { cwd, stdio: process.env.CI ? "inherit" : "ignore", env: { ...process.env, PORT: String(port) } });
   for (let i = 0; i < 60; i++) {
     try { if ((await fetch(`http://127.0.0.1:${port}/`)).ok) return child; } catch { /* not up yet */ }
     await new Promise((r) => setTimeout(r, 500));
@@ -175,7 +175,7 @@ async function vite() {
   run("npx", ["tsc", "--noEmit"], dir);
   run("npx", ["vite", "build"], dir);
   const port = await freePort();
-  const server = await serve("npx", ["vite", "preview", "--port", String(port), "--strictPort"], dir, port);
+  const server = await serve("npx", ["vite", "preview", "--host", "127.0.0.1", "--port", String(port), "--strictPort"], dir, port);
   try { await check(`vite-r${reactMajor}`, `http://127.0.0.1:${port}/`); } finally { server.kill(); }
 }
 
@@ -201,7 +201,7 @@ async function next() {
   run("npm", ["install", "--no-audit", "--no-fund"], dir);
   run("npx", ["next", "build"], dir, { NEXT_TELEMETRY_DISABLED: "1" });
   const port = await freePort();
-  const server = await serve("npx", ["next", "start", "-p", String(port)], dir, port);
+  const server = await serve("npx", ["next", "start", "-H", "127.0.0.1", "-p", String(port)], dir, port);
   try { await check(`next-r${reactMajor}`, `http://127.0.0.1:${port}/`); } finally { server.kill(); }
 }
 
