@@ -1,12 +1,21 @@
 import { useState } from "react";
-import { IconAttach } from "@faun-ds/icons";
-import { IconButton, Tag } from "@faun-ds/react";
+import { IconAttach, IconMoreHorizontal, IconUpload, IconZap } from "@faun-ds/icons";
+import { Button, IconButton, Tag } from "@faun-ds/react";
 import { PromptComposer } from "./PromptComposer";
+
+/** The toolbar from the design: a labelled pill, then round icon buttons. The composer rounds them; you only pick the variants. */
+const toolbar = (
+  <>
+    <Button variant="outline" leadingIcon={<IconUpload />}>Attach evidence</Button>
+    <IconButton variant="outline" className="faun-composer-glyph" icon={<IconZap />} label="Quick actions" />
+    <IconButton variant="outline" icon={<IconMoreHorizontal />} label="More" />
+  </>
+);
 
 export function Thumbnail() {
   return (
     <div style={{ inlineSize: "min(100%, 320px)" }}>
-      <PromptComposer placeholder="Ask the CSRD Filing Orchestrator" defaultValue="Why is Scope 3 category 1 up 8%?" />
+      <PromptComposer placeholder="Ask the CSRD Filing Orchestrator" defaultValue="Why is Scope 3 category 1 up 8%?" actions={<IconButton variant="outline" icon={<IconAttach />} label="Attach a file" />} />
     </div>
   );
 }
@@ -18,7 +27,8 @@ export function Overview() {
       {sent.length ? <p style={{ margin: 0 }}>Sent: “{sent[sent.length - 1]}”</p> : null}
       <PromptComposer
         label="Message to the CSRD Filing Orchestrator"
-        placeholder="Ask about a disclosure, a factor or a run"
+        placeholder="Ask anything about your ESG data"
+        actions={toolbar}
         hint="The agent can see this filing and its evidence. Shift+Enter adds a line."
         onSend={(text) => setSent([...sent, text])}
       />
@@ -33,7 +43,7 @@ export function WithAttachments() {
         label="Message"
         defaultValue="Check these invoices against the March electricity total."
         attachments={<><Tag onRemove={() => {}} removeLabel="Remove INV-20931.pdf">INV-20931.pdf</Tag><Tag onRemove={() => {}} removeLabel="Remove utility-export.xlsx">utility-export.xlsx</Tag></>}
-        actions={<IconButton icon={<IconAttach />} label="Attach a file" />}
+        actions={<Button variant="outline" leadingIcon={<IconUpload />}>Attach evidence</Button>}
         allowEmpty
       />
     </div>

@@ -25,7 +25,7 @@ export function Chat({ progress: p0 = false, artifact: a0 = false }: { progress?
     <ChatLayout
       label="Chat with the CSRD Filing Orchestrator"
       header={<><h2 style={{ margin: 0, fontSize: "var(--faun-type-heading-sm-font-size)", fontFamily: "var(--faun-type-heading-sm-font-family)" }}>ESRS E1 disclosure</h2><ChatLayoutControls progressOpen={progress} onProgressOpenChange={setProgress} artifactOpen={artifact} onArtifactOpenChange={setArtifact} /></>}
-      composer={<PromptComposer label="Message to the CSRD Filing Orchestrator" placeholder="Ask a follow-up or ask for a change" actions={<IconButton icon={<IconAttach />} label="Attach a file" />} />}
+      composer={<PromptComposer label="Message to the CSRD Filing Orchestrator" placeholder="Ask a follow-up or ask for a change" actions={<IconButton variant="outline" icon={<IconAttach />} label="Attach a file" />} />}
       progress={progress ? <ProgressPanel variant="docked" autoFocus={touched} title="Drafting the ESRS E1 disclosure" steps={run.steps} elapsedMs={run.elapsedMs} onClose={() => setProgress(false)} /> : undefined}
       artifact={artifact ? <ArtifactPanel autoFocus={touched} title="ESRS E1-6 draft" kind="Document" versions={versions} preview={<DraftPreview />} code={draftCode} filename="esrs-e1-6-draft.md" onClose={() => setArtifact(false)} /> : undefined}
     >

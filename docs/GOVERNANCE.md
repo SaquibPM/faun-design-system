@@ -4,7 +4,7 @@
 
 - **Users** use Faun in products and file issues.
 - **Contributors** send pull requests, docs, issues and reviews.
-- **Maintainers** review and merge, triage issues, and cut releases. They are listed in [CODEOWNERS](.github/CODEOWNERS).
+- **Maintainers** review and merge, triage issues, and cut releases. They are listed in [CODEOWNERS](../.github/CODEOWNERS).
 - **Design leads** own the visual language, the tokens and the accessibility bar. They have the final say on changes to either.
 
 ## Decisions
