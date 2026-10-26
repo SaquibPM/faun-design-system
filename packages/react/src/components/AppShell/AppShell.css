@@ -6,7 +6,7 @@
   grid-template-columns: var(--_nav-w) minmax(0, 1fr);
   block-size: 100dvh;
   overflow: hidden;
-  background: var(--faun-bg-canvas);
+  background: var(--faun-bg-surface);
   color: var(--faun-fg-default);
   transition: grid-template-columns var(--faun-motion-duration-moderate) var(--faun-motion-easing-standard);
 }
