@@ -616,12 +616,14 @@
     },
     "bg-hover": {
       "$description": "Hovered item fill.",
-      "value": "{gray.a3}",
+      "value": "{gray.2}",
+      "dark": "{gray.a3}",
       "print": "{gray.a3}"
     },
     "bg-active": {
       "$description": "Current and pressed item fill.",
-      "value": "{gray.a4}",
+      "value": "{gray.3}",
+      "dark": "{gray.a4}",
       "print": "{gray.a4}"
     },
     "fg": {
