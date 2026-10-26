@@ -395,7 +395,7 @@
     ]
   },
   "SideNavSection": {
-    "description": "A labelled group of SideNav items.",
+    "description": "A labelled group of SideNav items. With a title the heading is a button that folds the list away (an accordion).",
     "file": "packages/react/src/components/AppShell/AppShell.tsx",
     "props": [
       {
@@ -404,6 +404,20 @@
         "required": false,
         "default": null,
         "description": "A control at the end of the heading, e.g. an `IconButton` with a \"+\" to add a project. Hidden on the rail."
+      },
+      {
+        "name": "collapsible",
+        "type": "boolean",
+        "required": false,
+        "default": "true",
+        "description": "Let the person fold the section away with its heading. Default true when there is a `title`."
+      },
+      {
+        "name": "defaultFolded",
+        "type": "boolean",
+        "required": false,
+        "default": "false",
+        "description": "Initial folded state when collapsible. Default open."
       },
       {
         "name": "icon",

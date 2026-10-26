@@ -264,3 +264,17 @@ describe("SideNav panel design (ADR 0011)", () => {
     expect(await axeViolations(container)).toEqual([]);
   });
 });
+
+describe("SideNavSection accordion", () => {
+  it("folds its list from the heading", async () => {
+    const { SideNav, SideNavSection, SideNavItem } = await import("./AppShell");
+    const { render, screen } = await import("@testing-library/react");
+    const userEvent = (await import("@testing-library/user-event")).default;
+    render(<SideNav><SideNavSection title="Reports"><SideNavItem href="#a">Scope 1</SideNavItem></SideNavSection></SideNav>);
+    const toggle = screen.getByRole("button", { name: "Reports" });
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await userEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByText("Scope 1")).not.toBeVisible();
+  });
+});

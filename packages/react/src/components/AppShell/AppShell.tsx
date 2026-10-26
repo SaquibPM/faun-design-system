@@ -371,11 +371,18 @@ export interface SideNavSectionProps extends HTMLAttributes<HTMLDivElement> {
   action?: ReactNode;
   /** The section's glyph on the rail. With an `icon` and a `title`, the collapsed rail shows one icon that opens the section's links in a panel beside the rail. */
   icon?: ReactNode;
+  /** Let the person fold the section away with its heading. Default true when there is a `title`. */
+  collapsible?: boolean;
+  /** Initial folded state when collapsible. Default open. */
+  defaultFolded?: boolean;
 }
 
-/** A labelled group of SideNav items. */
-export const SideNavSection = forwardRef<HTMLDivElement, SideNavSectionProps>(function SideNavSection({ title, action, icon, className, children, ...props }, ref) {
+/** A labelled group of SideNav items. With a title the heading is a button that folds the list away (an accordion). */
+export const SideNavSection = forwardRef<HTMLDivElement, SideNavSectionProps>(function SideNavSection({ title, action, icon, collapsible = true, defaultFolded = false, className, children, ...props }, ref) {
   const id = useId();
+  const listId = useId();
+  const [folded, setFolded] = useState(defaultFolded);
+  const foldable = collapsible && !!title;
   const { collapsed } = useContext(NavContext);
   if (collapsed && icon && title) {
     return (
@@ -390,11 +397,18 @@ export const SideNavSection = forwardRef<HTMLDivElement, SideNavSectionProps>(fu
     <div ref={ref} className={cx("faun-side-nav-section", className)} {...props}>
       {title ? (
         <div className="faun-side-nav-section-head">
-          <p id={id} className="faun-side-nav-section-title">{title}</p>
+          {foldable ? (
+            <button type="button" id={id} className="faun-side-nav-section-toggle" aria-expanded={!folded} aria-controls={listId} onClick={() => setFolded((f) => !f)}>
+              <span className="faun-side-nav-section-title">{title}</span>
+              <span className="faun-side-nav-section-chevron" aria-hidden="true"><IconChevronDown size="sm" /></span>
+            </button>
+          ) : (
+            <p id={id} className="faun-side-nav-section-title">{title}</p>
+          )}
           {action ? <span className="faun-side-nav-section-action">{action}</span> : null}
         </div>
       ) : null}
-      <ul className="faun-side-nav-list" aria-labelledby={title ? id : undefined}>{children}</ul>
+      <ul id={listId} className="faun-side-nav-list" aria-labelledby={title ? id : undefined} hidden={foldable && folded}>{children}</ul>
     </div>
   );
 });
