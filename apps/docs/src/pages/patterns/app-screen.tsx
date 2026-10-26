@@ -1,5 +1,5 @@
-import { IconBell, IconChat, IconDatabase, IconEmissionFactor, IconFileText, IconHome, IconLedger, IconMateriality, IconOrchestrator, IconProvenance, IconStatusAttention, IconSubAgent, IconTarget, IconTool } from "@faun-ds/icons";
-import { AppShell, Breadcrumbs, IconButton, SearchField, SideNav, SideNavItem, SideNavSection, SideNavUser, SideNavWorkspace, TopBar } from "@faun-ds/react";
+import { IconBell, IconFolder, IconList, IconOrchestrator, IconStar } from "@faun-ds/icons";
+import { AppShell, Breadcrumbs, IconButton, SearchField, SideNav, SideNavAction, SideNavItem, SideNavSection, SideNavUser, SideNavWorkspace, TopBar } from "@faun-ds/react";
 import type { ReactNode } from "react";
 
 type Current = "home" | "filings" | "ledger" | "datapoints";
@@ -7,29 +7,27 @@ type Current = "home" | "filings" | "ledger" | "datapoints";
 function Nav({ current }: { current: Current }) {
   return (
     <SideNav
-      workspace={<SideNavWorkspace mark={<IconOrchestrator />} name="Faun" context="Acme Industrial · FY2026" onSwitch={() => {}} />}
+      workspace={<SideNavWorkspace mark={<IconOrchestrator />} name="Faun" />}
+      action={<SideNavAction>New conversation</SideNavAction>}
       footer={<SideNavUser name="Priya Raman" meta="Sustainability lead" onOpenMenu={() => {}} />}
     >
-      <SideNavSection>
-        <SideNavItem href="#home" icon={<IconHome />} current={current === "home"}>Home</SideNavItem>
-        <SideNavItem href="#ask" icon={<IconChat />}>Ask the assistant</SideNavItem>
-        <SideNavItem href="#approvals" icon={<IconStatusAttention />} attention={2}>Approvals</SideNavItem>
+      <SideNavSection title="Projects" icon={<IconFolder />}>
+        <SideNavItem href="#home" current={current === "home"}>Acme CSRD FY2026</SideNavItem>
+        <SideNavItem href="#cdp">CDP climate 2026</SideNavItem>
+        <SideNavItem href="#scope3">Scope 3 screening</SideNavItem>
       </SideNavSection>
-      <SideNavSection title="Reporting">
-        <SideNavItem href="#filings" icon={<IconFileText />} count={5} current={current === "filings"}>Filings</SideNavItem>
-        <SideNavItem href="#datapoints" icon={<IconDatabase />} current={current === "datapoints"}>Datapoints</SideNavItem>
-        <SideNavItem href="#ledger" icon={<IconLedger />} current={current === "ledger"}>Emissions ledger</SideNavItem>
-        <SideNavItem href="#materiality" icon={<IconMateriality />}>Materiality</SideNavItem>
-        <SideNavItem href="#targets" icon={<IconTarget />}>Targets</SideNavItem>
+      <SideNavSection title="Reports" icon={<IconList />}>
+        <SideNavItem href="#filings" current={current === "filings"} progress={72}>CSRD statement</SideNavItem>
+        <SideNavItem href="#datapoints" current={current === "datapoints"} progress="done">GRI 305 filing</SideNavItem>
+        <SideNavItem href="#tcfd" progress={0}>TCFD disclosure</SideNavItem>
       </SideNavSection>
-      <SideNavSection title="Agents">
-        <SideNavItem href="#agents" icon={<IconOrchestrator />} count={5}>Agents</SideNavItem>
-        <SideNavItem href="#sub-agents" icon={<IconSubAgent />} count={30}>Sub-agents</SideNavItem>
-        <SideNavItem href="#tools" icon={<IconTool />} count={64}>Tools</SideNavItem>
+      <SideNavSection title="Pinned" icon={<IconStar />}>
+        <SideNavItem href="#ledger" current={current === "ledger"} dot>Emissions ledger</SideNavItem>
+        <SideNavItem href="#materiality" dot>Materiality matrix</SideNavItem>
       </SideNavSection>
-      <SideNavSection title="Data">
-        <SideNavItem href="#factors" icon={<IconEmissionFactor />}>Factor library</SideNavItem>
-        <SideNavItem href="#evidence" icon={<IconProvenance />}>Evidence</SideNavItem>
+      <SideNavSection title="Recent">
+        <SideNavItem href="#r1">Chennai utility bills</SideNavItem>
+        <SideNavItem href="#r2">Factor library update</SideNavItem>
       </SideNavSection>
     </SideNav>
   );

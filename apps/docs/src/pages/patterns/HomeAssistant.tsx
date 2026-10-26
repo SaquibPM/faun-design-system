@@ -1,8 +1,8 @@
-import { IconAttach, IconBell, IconChat, IconClose, IconDatabase, IconDisclosure, IconEmissionFactor, IconFileText, IconHome, IconLeaf, IconLedger, IconLogout, IconMateriality, IconMenu, IconSettings, IconStatusAttention, IconTarget, IconUsers, IconWorkflow } from "@faun-ds/icons";
+import { IconAttach, IconBell, IconChat, IconClose, IconDatabase, IconDisclosure, IconEmissionFactor, IconFileText, IconFolder, IconHome, IconLeaf, IconLedger, IconList, IconLogout, IconMateriality, IconMenu, IconSettings, IconStar, IconStatusAttention, IconTarget, IconUsers, IconWorkflow } from "@faun-ds/icons";
 import { AIPromptSuggestions, PromptComposer } from "@faun-ds/ai";
 import {
   AppShell, Avatar, Button, Card, CardBody, CardHeader, DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
-  EmptyState, IconButton, Tag, Kbd, SearchField, SideNav, SideNavItem, SideNavSection, SideNavUser, SideNavWorkspace, Skeleton, StatusBadge, Tabs, TabsContent, TabsList, TabsTrigger, TopBar, useAppShell,
+  EmptyState, IconButton, Tag, Kbd, SearchField, SideNav, SideNavAction, SideNavItem, SideNavSection, SideNavUser, SideNavWorkspace, Skeleton, StatusBadge, Tabs, TabsContent, TabsList, TabsTrigger, TopBar, useAppShell,
 } from "@faun-ds/react";
 import { useEffect, useId, useRef, useState, type MouseEvent, type ReactNode } from "react";
 import { Link } from "react-router";
@@ -48,9 +48,9 @@ export function greetingFor(date: Date) {
 
 type Dest = "home" | "ask" | "approvals" | "filings" | "datapoints" | "ledger" | "materiality" | "targets" | "agents" | "factors" | `recent-${string}`;
 
-function NavItem({ id, icon, current, onGo, ...rest }: { id: Dest; icon: ReactNode; current: Dest; onGo?: (d: Dest) => void; count?: number; attention?: number | boolean; children: string }) {
+function NavItem({ id, current, onGo, ...rest }: { id: Dest; current: Dest; onGo?: (d: Dest) => void; count?: number; attention?: number | boolean; progress?: number | "done"; dot?: boolean; children: string }) {
   return (
-    <SideNavItem href="#" icon={icon} current={current === id} onClick={(e) => { e.preventDefault(); onGo?.(id); }} {...rest} />
+    <SideNavItem href="#" current={current === id} onClick={(e) => { e.preventDefault(); onGo?.(id); }} {...rest} />
   );
 }
 
@@ -59,11 +59,12 @@ export function HomeNav({ current = "home", collapsed, fresh, onGo, interactive 
   const shell = useAppShell();
   const isRail = collapsed ?? shell?.collapsed ?? false;
   const counts = !fresh;
-  const workspace = <SideNavWorkspace mark={<IconLeaf />} name="Acme ESG" context="Acme Industrial · FY2026" onSwitch={() => {}} />;
+  const workspace = <SideNavWorkspace mark={<IconLeaf />} name="Acme ESG" onSwitch={() => {}} />;
   const user = <SideNavUser name={USER} meta="Sustainability lead" onOpenMenu={() => {}} />;
   return (
     <SideNav
       collapsed={collapsed}
+      action={<SideNavAction onClick={() => onGo?.("ask")}>New conversation</SideNavAction>}
       workspace={interactive ? (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>{workspace}</DropdownMenuTrigger>
@@ -88,25 +89,25 @@ export function HomeNav({ current = "home", collapsed, fresh, onGo, interactive 
         </DropdownMenu>
       ) : user}
     >
-      <SideNavSection>
-        <NavItem id="home" icon={<IconHome />} current={current} onGo={onGo}>Home</NavItem>
-        <NavItem id="ask" icon={<IconChat />} current={current} onGo={onGo}>Assistant</NavItem>
-        <NavItem id="approvals" icon={<IconStatusAttention />} current={current} onGo={onGo} attention={counts ? 2 : undefined}>Approvals</NavItem>
+      <SideNavSection title="Workspace" icon={<IconFolder />}>
+        <NavItem id="home" current={current} onGo={onGo}>Home</NavItem>
+        <NavItem id="ask" current={current} onGo={onGo}>Assistant</NavItem>
+        <NavItem id="approvals" current={current} onGo={onGo} attention={counts ? 2 : undefined}>Approvals</NavItem>
       </SideNavSection>
-      <SideNavSection title="Reporting">
-        <NavItem id="filings" icon={<IconFileText />} current={current} onGo={onGo} count={counts ? 5 : undefined}>Filings</NavItem>
-        <NavItem id="datapoints" icon={<IconDatabase />} current={current} onGo={onGo}>Datapoints</NavItem>
-        <NavItem id="ledger" icon={<IconLedger />} current={current} onGo={onGo}>Emissions ledger</NavItem>
-        <NavItem id="materiality" icon={<IconMateriality />} current={current} onGo={onGo}>Materiality</NavItem>
-        <NavItem id="targets" icon={<IconTarget />} current={current} onGo={onGo}>Targets</NavItem>
+      <SideNavSection title="Reports" icon={<IconList />}>
+        <NavItem id="filings" current={current} onGo={onGo} progress={counts ? 72 : undefined}>Filings</NavItem>
+        <NavItem id="datapoints" current={current} onGo={onGo}>Datapoints</NavItem>
+        <NavItem id="ledger" current={current} onGo={onGo}>Emissions ledger</NavItem>
+        <NavItem id="materiality" current={current} onGo={onGo}>Materiality</NavItem>
+        <NavItem id="targets" current={current} onGo={onGo}>Targets</NavItem>
       </SideNavSection>
-      <SideNavSection title="Automation">
-        <NavItem id="agents" icon={<IconWorkflow />} current={current} onGo={onGo} count={counts ? 5 : undefined}>Agents</NavItem>
-        <NavItem id="factors" icon={<IconEmissionFactor />} current={current} onGo={onGo}>Factor library</NavItem>
+      <SideNavSection title="Pinned" icon={<IconStar />}>
+        <NavItem id="agents" current={current} onGo={onGo} dot>Agents</NavItem>
+        <NavItem id="factors" current={current} onGo={onGo} dot>Factor library</NavItem>
       </SideNavSection>
       {recents && !fresh && !isRail ? (
         <SideNavSection title="Recent">
-          {RECENT.slice(0, 4).map((r) => <NavItem key={r.id} id={`recent-${r.id}`} icon={r.kind === "run" ? <IconWorkflow /> : <IconChat />} current={current} onGo={onGo}>{r.title}</NavItem>)}
+          {RECENT.slice(0, 4).map((r) => <NavItem key={r.id} id={`recent-${r.id}`} current={current} onGo={onGo}>{r.title}</NavItem>)}
         </SideNavSection>
       ) : null}
     </SideNav>

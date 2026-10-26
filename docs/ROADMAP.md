@@ -26,4 +26,4 @@ Ordered by the priorities in the parity audit (P0 is needed by any product):
 
 ## How decisions are made
 
-See [GOVERNANCE.md](../GOVERNANCE.md) and the architecture decision records in [adr/](adr/).
+See [GOVERNANCE.md](GOVERNANCE.md) and the architecture decision records in [adr/](adr/).
