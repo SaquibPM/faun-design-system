@@ -8,10 +8,10 @@
 
 ## Context
 
-Two pieces of feedback on the docs and patterns.
+Two review findings on the docs and patterns.
 
-1. "We need to use IBM Plex as fonts."
-2. "The left panel when open doesn't have any dark green colour, and when closed it is black."
+1. The fonts should be IBM Plex.
+2. The left panel had no dark green when open and was black when closed.
 
 For the second: the navigation tokens used `moss.12` in light themes, which is `#20271a`, close to black and not readably green, and `gray.1` in dark themes, the same near-black as the canvas. The open panel therefore looked black, and so did the collapsed rail, which is the same element.
 

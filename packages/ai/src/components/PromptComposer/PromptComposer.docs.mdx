@@ -24,7 +24,7 @@ export const meta = {
 
 ## Variants
 
-<Example of="PromptComposer/WithAttachments" title="Attachments and tools" description="Put files and context above the text with the attachments slot, and controls such as an attach button in actions." layout="start" />
+<Example of="PromptComposer/WithAttachments" title="Attachments and tools" description="Put files and context above the text with the attachments slot, and controls such as an attach button in actions. Pass outline Buttons and IconButtons: the composer makes labelled buttons pills and icon buttons circles." layout="start" />
 
 <Example of="PromptComposer/Running" title="Running" description="While the agent answers, Send becomes Stop. The person can keep typing the next message." layout="start" />
 
@@ -48,11 +48,11 @@ export const meta = {
 
 ## Anatomy
 
-One rounded surface that holds an attachments row, an auto-growing text box (one to eight lines), a toolbar with your actions on the start side, and Send or Stop on the end side. A hint sits below.
+One large rounded card with a soft rose and lavender glow behind it. It holds an attachments row, an auto-growing text box (one to eight lines), a toolbar with your actions on the start side (labelled buttons as pills, icon buttons as circles), and a round Send or Stop on the end side. A hint sits below. The glow is decoration and is removed in the high-contrast themes, forced colors and print.
 
 ## States
 
-Empty (Send off), ready, running (Stop), disabled. The whole surface shows the focus ring when the text box has focus.
+Empty (Send off), ready, running (Stop), disabled. The whole card shows the focus ring when the text box has focus. A disabled card drops the glow.
 
 ## Tokens
 
@@ -70,6 +70,7 @@ Empty (Send off), ready, running (Stop), disabled. The whole surface shows the f
 
 ## Notes
 
+- Toolbar recipe: `actions={<><Button variant="outline" leadingIcon={<IconUpload />}>Attach evidence</Button><IconButton variant="outline" icon={<IconZap />} label="Quick actions" /></>}`. Add `className="faun-composer-glyph"` to an icon button to tint its glyph amber.
 - Works controlled (`value` and `onValueChange`) or uncontrolled (`defaultValue`). An uncontrolled composer clears itself after `onSend`. A controlled one leaves clearing to you.
 - `onSend` receives trimmed text. Send is off for empty text unless `allowEmpty` is set.
 - Enter is ignored while an input method is composing, so people typing in Japanese or Hindi are never cut off.
