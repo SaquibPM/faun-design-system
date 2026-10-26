@@ -607,63 +607,155 @@
     }
   },
   "sidebar": {
-    "$description": "Application navigation panel (open sidebar and collapsed icon rail share one surface). A deep moss green in every colour theme: moss.10 in light themes, a slightly deeper moss pinned from the light scale in dark themes so it reads as green against the near-black canvas. Text is white at set opacities, composited and contrast-tested on the surface and on the hover and active fills.",
+    "$description": "Open application navigation panel (ADR 0011). A light paper surface in light themes and a theme-appropriate dark surface in dark themes, so it sits on the page the way the main column does. The collapsed icon rail is a separate near-black surface, see `rail`. Primary actions inside the panel use the ordinary accent solid button.",
     "bg": {
-      "$description": "Panel surface, open and collapsed.",
-      "value": "{moss.10}",
-      "dark": "{light:moss.12}",
+      "$description": "Open panel surface.",
+      "value": "{gray.1}",
+      "dark": "{gray.2}",
       "print": "{white}"
     },
     "bg-hover": {
       "$description": "Hovered item fill.",
-      "value": "alpha({white}, 0.09)",
+      "value": "{gray.2}",
+      "dark": "{gray.a3}",
       "print": "{gray.a3}"
     },
     "bg-active": {
       "$description": "Current and pressed item fill.",
-      "value": "alpha({white}, 0.15)",
+      "value": "{gray.3}",
+      "dark": "{gray.a4}",
       "print": "{gray.a4}"
     },
     "fg": {
       "$description": "Item label and icon.",
-      "value": "alpha({white}, 0.8)",
-      "light-hc": "alpha({white}, 0.97)",
-      "dark-hc": "alpha({white}, 0.97)",
-      "print": "{gray.11}"
+      "value": "{gray.12}",
+      "print": "{gray.12}"
     },
     "fg-muted": {
       "$description": "Section labels, counts, workspace context, chevrons.",
-      "value": "alpha({white}, 0.72)",
-      "light-hc": "alpha({white}, 0.97)",
-      "dark-hc": "alpha({white}, 0.97)",
+      "value": "{gray.11}",
       "print": "{gray.11}"
     },
     "fg-active": {
       "$description": "Current and hovered item label, workspace and user names.",
-      "value": "{white}",
-      "print": "{gray.12}"
+      "value": "{gray.12}",
+      "print": "{black}"
     },
     "border": {
       "$description": "Panel divider and section rules.",
-      "value": "alpha({white}, 0.12)",
-      "light-hc": "alpha({white}, 0.3)",
-      "dark-hc": "alpha({white}, 0.3)",
+      "value": "{gray.a5}",
+      "light-hc": "{gray.a8}",
+      "dark-hc": "{gray.a8}",
       "print": "{gray.a6}"
     },
     "accent": {
-      "$description": "Current-item indicator bar and focus ring on the panel.",
-      "value": "{dark:moss.9}",
+      "$description": "Current-item indicator bar, pinned dot, progress bar and focus ring on the panel.",
+      "value": "{accent.9}",
       "print": "{accent.9}"
     },
     "badge-bg": {
-      "$description": "Attention badge and dot on the panel: the plum from the dark scale, light enough to separate from deep moss.",
-      "value": "{dark:plum.9}",
+      "$description": "Attention badge and dot on the panel.",
+      "value": "{plum.9}",
       "print": "{plum.9}"
     },
     "badge-fg": {
       "$description": "Count inside the attention badge.",
-      "value": "{dark:plum.1}",
+      "value": "{white}",
+      "dark": "{dark:plum.1}",
       "print": "{white}"
+    },
+    "mark-bg": {
+      "$description": "Workspace mark tile.",
+      "value": "{accent.3}",
+      "print": "{gray.a3}"
+    },
+    "mark-fg": {
+      "$description": "Logo on the workspace mark tile.",
+      "value": "{accent.11}",
+      "print": "{gray.12}"
+    }
+  },
+  "rail": {
+    "$description": "Collapsed icon rail (ADR 0011): near-black in every theme, so the rail reads as a fixed spine whether the panel beside it is light or dark. Text is white at set opacities, composited and contrast-tested on the surface and on the hover and active fills. Printed output keeps the rail as is.",
+    "bg": {
+      "$description": "Rail surface. A literal ink, #17171a, because no gray-scale step is this dark and cool-neutral.",
+      "value": "{#17171a}"
+    },
+    "bg-hover": {
+      "$description": "Hovered item fill.",
+      "value": "alpha({white}, 0.1)"
+    },
+    "bg-active": {
+      "$description": "Current and pressed item fill.",
+      "value": "alpha({white}, 0.16)"
+    },
+    "fg": {
+      "$description": "Item icon.",
+      "value": "alpha({white}, 0.78)",
+      "light-hc": "alpha({white}, 0.97)",
+      "dark-hc": "alpha({white}, 0.97)"
+    },
+    "fg-muted": {
+      "$description": "Chevrons and secondary glyphs.",
+      "value": "alpha({white}, 0.7)",
+      "light-hc": "alpha({white}, 0.97)",
+      "dark-hc": "alpha({white}, 0.97)"
+    },
+    "fg-active": {
+      "$description": "Current and hovered item icon.",
+      "value": "{white}"
+    },
+    "border": {
+      "$description": "Section rules on the rail.",
+      "value": "alpha({white}, 0.14)",
+      "light-hc": "alpha({white}, 0.4)",
+      "dark-hc": "alpha({white}, 0.4)"
+    },
+    "accent": {
+      "$description": "Current-item indicator and focus ring on the rail.",
+      "value": "{dark:moss.9}"
+    },
+    "badge-bg": {
+      "$description": "Attention dot on the rail.",
+      "value": "{dark:plum.9}"
+    },
+    "badge-fg": {
+      "$description": "Count inside the attention badge.",
+      "value": "{dark:plum.1}"
+    },
+    "mark-bg": {
+      "$description": "Workspace mark tile on the rail.",
+      "value": "{light:moss.3}"
+    },
+    "mark-fg": {
+      "$description": "Logo on the workspace mark tile on the rail.",
+      "value": "{light:moss.11}"
+    },
+    "action-bg": {
+      "$description": "The '+' primary action square on the rail: the brand moss.",
+      "value": "{light:moss.9}"
+    },
+    "action-bg-hover": {
+      "$description": "Hovered '+' action.",
+      "value": "{light:moss.10}"
+    },
+    "action-fg": {
+      "$description": "Icon on the '+' action.",
+      "value": "{white}"
+    },
+    "action-border": {
+      "$description": "Hairline around the '+' action so it separates from the ink.",
+      "value": "alpha({white}, 0.22)",
+      "light-hc": "alpha({white}, 0.6)",
+      "dark-hc": "alpha({white}, 0.6)"
+    },
+    "avatar-bg": {
+      "$description": "Initials avatar on the rail.",
+      "value": "{light:moss.3}"
+    },
+    "avatar-fg": {
+      "$description": "Initials on the rail avatar.",
+      "value": "{light:moss.11}"
     }
   },
   "nav": {

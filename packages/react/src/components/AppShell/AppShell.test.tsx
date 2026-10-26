@@ -1,9 +1,9 @@
 import { act, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { IconFileText, IconHome, IconOrchestrator, IconStatusAttention } from "@faun-ds/icons";
+import { IconFileText, IconFolder, IconHome, IconList, IconOrchestrator, IconStar, IconStatusAttention } from "@faun-ds/icons";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { axeViolations } from "../../../test/a11y.js";
-import { AppShell, PageHeader, SideNav, SideNavGroup, SideNavItem, SideNavSection, SideNavUser, SideNavWorkspace, TopBar } from "./AppShell.js";
+import { AppShell, PageHeader, SideNav, SideNavAction, SideNavGroup, SideNavItem, SideNavSection, SideNavUser, SideNavWorkspace, TopBar } from "./AppShell.js";
 
 function mockViewport(mobile: boolean) {
   const listeners = new Set<() => void>();
@@ -199,5 +199,82 @@ describe("TopBar nav slot", () => {
   it("renders header navigation before the location", () => {
     render(<AppShell nav={<Nav />} topBar={<TopBar nav={<nav aria-label="Primary"><a href="#a">Overview</a></nav>} start={<span>Filings</span>} />}><p>x</p></AppShell>);
     expect(screen.getByRole("navigation", { name: "Primary" })).toBeInTheDocument();
+  });
+});
+
+describe("SideNav panel design (ADR 0011)", () => {
+  function PanelNav({ collapsed }: { collapsed?: boolean }) {
+    return (
+      <SideNav
+        collapsed={collapsed}
+        workspace={<SideNavWorkspace mark={<IconOrchestrator />} name="Faun" />}
+        action={<SideNavAction>New conversation</SideNavAction>}
+        footer={<SideNavUser name="Saquib Jawed" meta="Lead" onOpenMenu={() => {}} />}
+      >
+        <SideNavSection title="Projects" icon={<IconFolder />} action={<button type="button" aria-label="New project">+</button>}>
+          <SideNavItem href="#a" current actions={<button type="button" aria-label="Actions for Alpha">⋮</button>}>Alpha</SideNavItem>
+        </SideNavSection>
+        <SideNavSection title="Reports" icon={<IconList />}>
+          <SideNavItem href="#r1" progress={40}>Draft</SideNavItem>
+          <SideNavItem href="#r2" progress="done">Filed</SideNavItem>
+        </SideNavSection>
+        <SideNavSection title="Pinned" icon={<IconStar />}>
+          <SideNavItem href="#p" dot>Ledger</SideNavItem>
+        </SideNavSection>
+      </SideNav>
+    );
+  }
+
+  it("shows the primary action, section action and row action when open", () => {
+    render(<PanelNav />);
+    expect(screen.getByRole("button", { name: "New conversation" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "New project" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Actions for Alpha" })).toBeInTheDocument();
+    expect(screen.getByText("Projects")).toBeInTheDocument();
+  });
+
+  it("reports progress to assistive technology and draws the percentage", () => {
+    render(<PanelNav />);
+    expect(screen.getByRole("link", { name: /Draft.*40% complete/ })).toBeInTheDocument();
+    expect(screen.getByText("40%")).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /Filed.*complete/ })).toBeInTheDocument();
+  });
+
+  it("keeps the user's menu", () => {
+    render(<PanelNav />);
+    expect(screen.getByRole("button", { name: /Saquib Jawed/ })).toBeInTheDocument();
+  });
+
+  it("collapses to one icon per section, with the primary action kept as a button", async () => {
+    render(<PanelNav collapsed />);
+    expect(screen.getByRole("button", { name: "New conversation" })).toBeInTheDocument();
+    expect(screen.queryByRole("button", { name: "New project" })).toBeNull();
+    const reports = screen.getByRole("button", { name: /Reports, 2 pages/ });
+    await userEvent.click(reports);
+    const flyout = await screen.findByRole("dialog", { name: "Reports" });
+    expect(within(flyout).getByRole("link", { name: "Draft" })).toHaveAttribute("href", "#r1");
+    await userEvent.keyboard("{Escape}");
+    expect(reports).toHaveFocus();
+  });
+
+  it("has no axe violations open or collapsed", async () => {
+    const { container, rerender } = render(<PanelNav />);
+    expect(await axeViolations(container)).toEqual([]);
+    rerender(<PanelNav collapsed />);
+    expect(await axeViolations(container)).toEqual([]);
+  });
+});
+
+describe("SideNavSection accordion", () => {
+  it("folds its list from the heading", async () => {
+    const { SideNav, SideNavSection, SideNavItem } = await import("./AppShell");
+    const { render, screen } = await import("@testing-library/react");
+    const userEvent = (await import("@testing-library/user-event")).default;
+    render(<SideNav><SideNavSection title="Reports"><SideNavItem href="#a">Scope 1</SideNavItem></SideNavSection></SideNav>);
+    const toggle = screen.getByRole("button", { name: "Reports" });
+    expect(toggle).toHaveAttribute("aria-expanded", "true");
+    await userEvent.click(toggle);
+    expect(toggle).toHaveAttribute("aria-expanded", "false");
+    expect(screen.queryByText("Scope 1")).not.toBeVisible();
   });
 });

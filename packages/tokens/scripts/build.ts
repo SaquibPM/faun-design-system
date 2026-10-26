@@ -137,6 +137,7 @@ function twName(s: Semantic): string | null {
     case "ai": return a === "fg" ? "ai" : a === "bg" ? "ai-soft" : a === "border" ? "ai-line" : `ai-${a}`;
     case "nav": return a === "bg" ? "nav" : `nav-${a}`;
     case "sidebar": return a === "bg" ? "sidebar" : `sidebar-${a}`;
+    case "rail": return a === "bg" ? "rail" : `rail-${a}`;
     case "layer": return `layer-${a}`;
     case "dataviz": return `viz-${a}`;
     default: return null;

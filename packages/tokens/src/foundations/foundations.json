@@ -729,10 +729,10 @@
   "layout": {
     "$type": "dimension",
     "nav-width": {
-      "$value": "248px"
+      "$value": "280px"
     },
     "nav-collapsed-width": {
-      "$value": "60px"
+      "$value": "64px"
     },
     "topbar-height": {
       "$value": "52px"
