@@ -1,6 +1,6 @@
 # @faun-ds/mcp
 
-> **Status: pre-1.0 (0.1.0).** Interfaces can change in minor releases. Covered by unit tests on Node 20, 22 and 24 in CI; not tested with every editor, agent client or package manager. [What is tested and what is not](https://github.com/SaquibPM/faun-design-system/blob/main/docs/STATUS.md)
+> **Status: pre-1.0 (0.1.0).** Interfaces can change in minor releases. Covered by unit tests on Node 22 and 24 in CI; not tested with every editor, agent client or package manager. [What is tested and what is not](https://github.com/SaquibPM/faun-design-system/blob/main/docs/STATUS.md)
 
 A stdio [Model Context Protocol](https://modelcontextprotocol.io) server that gives coding agents Faun's components, props, tokens, status map and icons.
 

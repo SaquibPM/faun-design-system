@@ -65,8 +65,8 @@ Full explanation: [PUBLISH-FROM-CLEAN-HISTORY.md](PUBLISH-FROM-CLEAN-HISTORY.md)
 - [ ] `git remote add origin https://github.com/<owner>/faun.git && git push -u origin main`.
 - [ ] Settings, Actions, General: **Workflow permissions: Read and write**, and tick "Allow GitHub Actions to create and approve pull requests" (the release pull request needs it).
 - [ ] Settings, Security: enable private vulnerability reporting (`SECURITY.md` points to it), Dependabot alerts and secret scanning. Enable Discussions (`SUPPORT.md` links to it). Create the labels the templates use (`good first issue`, `component proposal`, ...).
-- [ ] Wait for **CI** on `main` to be green on Node 20, 22 and 24, plus `generated-drift`, `consumer` and `e2e`.
-- [ ] Branch protection on `main`: require pull requests; require the checks `verify (node 20)`, `verify (node 22)`, `verify (node 24)`, `generated-drift`, `consumer` and `e2e`; require up-to-date branches; block force pushes. **Leave "Require review from Code Owners" off** unless step 2 is done properly.
+- [ ] Wait for **CI** on `main` to be green on Node 22 and 24, plus `generated-drift`, `consumer` and `e2e`.
+- [ ] Branch protection on `main`: require pull requests; require the checks `verify (node 22)`, `verify (node 24)`, `generated-drift`, `consumer` and `e2e`; require up-to-date branches; block force pushes. **Leave "Require review from Code Owners" off** unless step 2 is done properly.
 - [ ] Pushing to `main` does **not** publish anything: the Release workflow refuses the first publish and says so in its run summary.
 
 ## 6. Run the Pages workflow

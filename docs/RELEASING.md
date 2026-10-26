@@ -10,7 +10,7 @@ Faun publishes eight packages to npm under the `@faun-ds` scope, from GitHub Act
 
 `apps/docs` is private and is deployed to GitHub Pages, not npm.
 
-Every published package declares `engines.node >=20`; CI builds and tests on Node 20, 22 and 24, and `.nvmrc` pins 22 for development.
+Every published package declares `engines.node >=22`; CI builds and tests on Node 22 and 24, and `.nvmrc` pins 22 for development.
 
 ## One-time setup
 
@@ -28,7 +28,7 @@ Every package is already at `0.1.0` and there are no pending changesets, so the 
 
 A push to `main` never performs the first publish: `scripts/release-guard.mjs` refuses while `@faun-ds/ai` (the first package) is not on npm, and says so in the run summary.
 
-1. **Local checks** (also run by CI on Node 20, 22 and 24):
+1. **Local checks** (also run by CI on Node 22 and 24):
    ```bash
    pnpm install --frozen-lockfile && pnpm build && pnpm test && pnpm lint && pnpm typecheck
    node scripts/check-icons.mjs

@@ -102,7 +102,7 @@
     "provenance": true
   },
   "engines": {
-    "node": ">=20"
+    "node": ">=22"
   },
   "peerDependencies": {
     "@fontsource/ibm-plex-sans": "^5.0.0",

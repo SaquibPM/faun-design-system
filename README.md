@@ -42,7 +42,7 @@ Everything below is a real component or pattern from the [documentation site](ht
 
 ## Install in three steps
 
-Works with React 18.2+ and 19, in Vite, Next.js (App Router and Pages) and anything that bundles CSS. Node 20 or newer.
+Works with React 18.2+ and 19, in Vite, Next.js (App Router and Pages) and anything that bundles CSS. Node 22 or newer.
 
 **1. Install**
 

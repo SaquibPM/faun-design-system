@@ -1,6 +1,6 @@
 # @faun-ds/eslint-plugin
 
-> **Status: pre-1.0 (0.1.0).** Rules and options can change in minor releases. Covered by unit tests on Node 20, 22 and 24 in CI; not tested with every editor, agent client or package manager. [What is tested and what is not](https://github.com/SaquibPM/faun-design-system/blob/main/docs/STATUS.md)
+> **Status: pre-1.0 (0.1.0).** Rules and options can change in minor releases. Covered by unit tests on Node 22 and 24 in CI; not tested with every editor, agent client or package manager. [What is tested and what is not](https://github.com/SaquibPM/faun-design-system/blob/main/docs/STATUS.md)
 
 ESLint rules that keep product code on [Faun](https://github.com/SaquibPM/faun-design-system). They enforce the rules in `AGENTS.md` that a linter can check.
 

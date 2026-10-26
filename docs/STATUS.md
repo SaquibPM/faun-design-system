@@ -15,7 +15,7 @@ Faun is **pre-1.0 (0.1.0)**. APIs can change in minor releases. This page says p
 | Registry install | The same smoke test against the published packages | `node scripts/consumer-smoke.mjs --registry`, run by hand after publishing |
 | Generated files | Every generator is re-run and must reproduce its output | `pnpm check:generated`, CI |
 | Documentation hosting | The built site is served under the GitHub Pages subpath and loaded in Chromium; the live site is checked after deploy | `node scripts/pages-smoke.mjs`, CI |
-| Node versions | Build, lint, typecheck and tests on Node 20, 22 and 24 | CI matrix |
+| Node versions | Build, lint, typecheck and tests on Node 22 and 24 | CI matrix |
 
 ## Not tested, or only partly
 

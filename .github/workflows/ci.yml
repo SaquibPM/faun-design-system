@@ -14,7 +14,7 @@ concurrency:
 
 jobs:
   verify:
-    # Build, lint, typecheck and test on every supported Node line (package.json `engines`: >=20; .nvmrc is the
+    # Build, lint, typecheck and test on every supported Node line (package.json `engines`: >=22; .nvmrc is the
     # development default). The documentation, MCP and artifact steps run once, on Node 22.
     name: verify (node ${{ matrix.node }})
     runs-on: ubuntu-latest
@@ -22,7 +22,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        node: [20, 22, 24]
+        node: [22, 24]
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v6
