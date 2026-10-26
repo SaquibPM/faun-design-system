@@ -24,7 +24,7 @@
   "dialog": { "radius": "{radius.xl}", "padding": "{space.6}", "gap": "{space.4}" },
   "sheet": { "padding": "{space.6}" },
   "tabs": { "height": "40px", "px": "{space.3}", "indicator": "2px" },
-  "nav": { "item-height": "34px", "item-px": "{space.2-5}", "item-radius": "{radius.md}", "width": "{layout.nav-width}", "collapsed-width": "{layout.nav-collapsed-width}" },
+  "nav": { "item-height": "32px", "item-px": "{space.2-5}", "item-radius": "{radius.md}", "width": "{layout.nav-width}", "collapsed-width": "{layout.nav-collapsed-width}" },
   "toast": { "width": "380px", "radius": "{radius.lg}", "padding": "{space.4}" },
   "avatar": { "radius": "{radius.full}" },
   "kpi": { "padding": "{space.5}" }

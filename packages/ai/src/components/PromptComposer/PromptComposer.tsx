@@ -1,4 +1,4 @@
-import { IconSend, IconStop } from "@faun-ds/icons";
+import { IconArrowRight, IconStop } from "@faun-ds/icons";
 import { IconButton, Textarea, cx, useControllableState } from "@faun-ds/react";
 import { forwardRef, useId, type FormHTMLAttributes, type KeyboardEvent, type ReactNode } from "react";
 
@@ -79,7 +79,7 @@ export const PromptComposer = forwardRef<HTMLFormElement, PromptComposerProps>(f
         {running ? (
           <IconButton variant="solid" intent="neutral" icon={<IconStop />} label="Stop" onClick={onStop} />
         ) : (
-          <IconButton type="submit" variant="solid" intent="accent" icon={<IconSend />} label="Send" shortcut={shortcut} disabled={!canSend} />
+          <IconButton type="submit" variant="solid" intent="accent" icon={<IconArrowRight />} label="Send" shortcut={shortcut} disabled={!canSend} />
         )}
       </div>
       {hint ? <p id={hintId} className="faun-composer-hint">{hint}</p> : null}

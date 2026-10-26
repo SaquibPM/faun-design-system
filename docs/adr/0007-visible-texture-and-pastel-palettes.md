@@ -9,13 +9,13 @@
 
 ## Context
 
-Two pieces of feedback on relief (ADR 0006).
+Two review findings on relief (ADR 0006).
 
-1. **"I don't see the texture."** The wave texture was present but did not read. We checked the build rather than assume. In Chromium the `mask-image` data URI renders, on the docs build and on the Artifact build (`vite build --base ./`), and the computed `mask-image`, `mask-size` and `opacity` of a bar face and a button face are all set. At 200% device scale the wave resolved. At 100% it did not, for three reasons that stack:
+1. **The texture was not visible.** The wave texture was present but did not read. We checked the build rather than assume. In Chromium the `mask-image` data URI renders, on the docs build and on the Artifact build (`vite build --base ./`), and the computed `mask-image`, `mask-size` and `opacity` of a bar face and a button face are all set. At 200% device scale the wave resolved. At 100% it did not, for three reasons that stack:
    - the tile was 4 by 12 px with a 0.9 px stroke, so adjacent waves overlap after anti-aliasing and read as a flat grey-green hatch;
    - the wave colour was the series colour mixed 78% towards paper, pale lines on a pale tint;
    - on buttons the wave was a near-black at alpha 0.12 on a dark face, and 3 px high rows, invisible at any scale.
-2. **"I want pastel colours, with moss staying the main colour."** The categorical palette is saturated by design, because every series colour must hold 3:1 against the chart surface (WCAG 1.4.11). Pastel fills cannot: a pastel at lightness 0.85 on white is about 1.3:1.
+2. **Pastel palette options were requested, with moss staying the main colour.** The categorical palette is saturated by design, because every series colour must hold 3:1 against the chart surface (WCAG 1.4.11). Pastel fills cannot: a pastel at lightness 0.85 on white is about 1.3:1.
 
 ## Decision
 

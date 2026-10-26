@@ -49,6 +49,9 @@ export function Shell() {
       </header>
       <div className="docs-body">
         <aside className="docs-side" data-open={navOpen || undefined} aria-label="Documentation">
+          <div className="docs-side-find">
+            <button type="button" onClick={() => setSearchOpen(true)} aria-label="Find in documentation, press Control K or Command K"><IconSearch size="sm" /><span>Find</span></button>
+          </div>
           <nav>
             {sections.map((s) => (
               <div className="docs-side-section" key={s.title}>
