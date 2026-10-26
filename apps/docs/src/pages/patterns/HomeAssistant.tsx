@@ -13,8 +13,8 @@ import "./patterns-chat.css";
 
 /* ------------------------------------------------------------------ data */
 
-const USER = "Priya Raman";
-const FIRST_NAME = "Priya";
+const USER = "Saquib Jawed";
+const FIRST_NAME = "Saquib";
 const PLACEHOLDER = "Ask about your emissions, a filing or a supplier";
 const SUGGESTIONS = [
   "Summarise Scope 2 emissions by site for FY2026",
@@ -447,7 +447,7 @@ const [collapsed, setCollapsed] = useState(() => localStorage.getItem("nav") ===
   nav={<SideNav workspace={<SideNavWorkspace … />} footer={<SideNavUser … />}>…</SideNav>}
   topBar={<TopBar start="Home" />}          // renders the collapse button and the narrow-screen menu button
 >
-  <h1>Good morning, Priya</h1>
+  <h1>Good morning, Saquib</h1>
   <PromptComposer label="Ask the assistant" placeholder="Ask about your emissions, a filing or a supplier" />
   <AIPromptSuggestions suggestions={suggestions} onSelect={setText} />
 </AppShell>`;
