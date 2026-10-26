@@ -1,11 +1,57 @@
-.faun-composer { display: grid; gap: var(--faun-space-2); padding: var(--faun-space-2-5) var(--faun-space-3); border: var(--faun-border-width-hairline) solid var(--faun-border-control); border-radius: var(--faun-radius-lg); background: var(--faun-bg-surface); box-shadow: var(--faun-elevation-2); min-inline-size: 0; transition: border-color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard), box-shadow var(--faun-motion-duration-fast) var(--faun-motion-easing-standard); }
+/* Prompt composer: one large rounded card with a soft pastel glow behind it, the text on top and a toolbar under it.
+   Tokens only. The glow is decoration: it is removed in forced colors, the high-contrast themes and print, and never carries meaning. */
+.faun-composer {
+  --_radius: calc(var(--faun-radius-xl) + var(--faun-space-1));
+  --_ctl: calc(var(--faun-size-control-md) + var(--faun-space-1));
+  position: relative; isolation: isolate;
+  display: grid; gap: var(--faun-space-4);
+  padding: var(--faun-space-5) var(--faun-space-6);
+  border: var(--faun-border-width-hairline) solid var(--faun-border-default);
+  border-radius: var(--_radius);
+  background: var(--faun-bg-surface);
+  box-shadow: none;
+  min-inline-size: 0;
+  transition: border-color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard), box-shadow var(--faun-motion-duration-fast) var(--faun-motion-easing-standard);
+}
+/* Glow: rose on the start side, lavender above and below, blurred past the card edge. */
+.faun-composer::before {
+  content: ""; position: absolute; z-index: -1; pointer-events: none;
+  inset: calc(var(--faun-space-4) * -1); border-radius: calc(var(--_radius) + var(--faun-space-4));
+  background:
+    radial-gradient(60% 90% at 0% 50%, color-mix(in srgb, var(--faun-ember-5) 85%, transparent), transparent 70%),
+    radial-gradient(70% 70% at 50% 0%, color-mix(in srgb, var(--faun-plum-6) 95%, transparent), transparent 72%),
+    radial-gradient(70% 70% at 50% 100%, color-mix(in srgb, var(--faun-plum-6) 95%, transparent), transparent 72%),
+    radial-gradient(50% 80% at 100% 50%, color-mix(in srgb, var(--faun-plum-4) 90%, transparent), transparent 70%);
+  filter: blur(var(--faun-space-4));
+  opacity: 0.9;
+}
+[data-faun-theme="dark"] .faun-composer::before { opacity: 0.32; }
+[data-faun-theme="light-hc"] .faun-composer::before, [data-faun-theme="dark-hc"] .faun-composer::before, [data-faun-theme="print"] .faun-composer::before { display: none; }
 .faun-composer:hover { border-color: var(--faun-border-control-hover); }
-.faun-composer:focus-within { border-color: var(--faun-focus-ring); box-shadow: var(--faun-elevation-2), 0 0 0 3px var(--faun-focus-halo); }
+.faun-composer:focus-within { border-color: var(--faun-focus-ring); box-shadow: 0 0 0 3px var(--faun-focus-halo); }
 .faun-composer[data-disabled] { background: var(--faun-bg-disabled); border-color: var(--faun-border-disabled); box-shadow: none; }
+.faun-composer[data-disabled]::before { display: none; }
+
 .faun-composer-attachments { display: flex; flex-wrap: wrap; gap: var(--faun-space-1-5); min-inline-size: 0; }
 .faun-composer .faun-composer-field, .faun-composer .faun-composer-field:hover, .faun-composer .faun-composer-field:focus-within { border: 0; border-radius: 0; background: transparent; box-shadow: none; }
-.faun-composer .faun-textarea-control { padding-inline: 0; }
-.faun-composer-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--faun-space-2); }
-.faun-composer-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--faun-space-1); min-inline-size: 0; }
+.faun-composer .faun-textarea-control { padding-inline: 0; font-size: var(--faun-type-body-lg-font-size); line-height: var(--faun-type-body-lg-line-height); min-block-size: calc(var(--faun-type-body-lg-line-height) * 2); }
+.faun-composer-bar { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--faun-space-2); }
+.faun-composer-actions { display: flex; flex-wrap: wrap; align-items: center; align-self: stretch; gap: var(--faun-space-2); min-inline-size: 0; }
+
+/* Toolbar controls: labelled buttons are pills, icon buttons and Send/Stop are circles. */
+.faun-composer-bar .faun-button { block-size: var(--_ctl); min-inline-size: var(--_ctl); border-radius: var(--faun-radius-full); }
+.faun-composer-actions .faun-button:not(.faun-icon-button) { padding-inline: var(--faun-space-4); }
+.faun-composer-actions .faun-button[data-variant="outline"], .faun-composer-actions .faun-button[data-variant="ghost"] { background: var(--faun-bg-surface); border-color: var(--faun-border-default); }
+.faun-composer-actions .faun-button[data-variant="outline"]:hover, .faun-composer-actions .faun-button[data-variant="ghost"]:hover { background: var(--faun-bg-hover); border-color: var(--faun-border-strong); }
+/* An empty composer keeps the solid shape of Send and only dims it, so the card reads the same before and after typing. */
+.faun-composer-bar > .faun-button[data-variant="solid"][data-intent="accent"]:disabled { background: color-mix(in srgb, var(--faun-accent-solid-bg) 62%, var(--faun-bg-surface)); border-color: transparent; color: var(--faun-accent-solid-fg); opacity: 1; }
+/* A tool glyph in colour, e.g. the lightning bolt for quick actions: add className="faun-composer-glyph". */
+.faun-composer-actions .faun-composer-glyph { color: var(--faun-amber-11); }
 .faun-composer-hint { margin: 0; color: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size); line-height: var(--faun-type-caption-line-height); }
-@media (forced-colors: active) { .faun-composer { border-color: CanvasText; } }
+
+@media (max-width: 520px) {
+  .faun-composer { padding: var(--faun-space-4); gap: var(--faun-space-3); }
+  .faun-composer .faun-textarea-control { font-size: var(--faun-type-body-md-font-size); line-height: var(--faun-type-body-md-line-height); min-block-size: calc(var(--faun-type-body-md-line-height) * 2); }
+}
+@media (forced-colors: active) { .faun-composer { border-color: CanvasText; } .faun-composer::before { display: none; } }
+@media print { .faun-composer::before { display: none; } }
