@@ -368,8 +368,6 @@
 .pt-home-sub { margin: 0; color: var(--faun-fg-muted); font-size: var(--faun-type-body-md-font-size); line-height: var(--faun-type-body-md-line-height); }
 .pt-home-compose { display: flex; flex-direction: column; gap: var(--faun-space-3); }
 .pt-home-label { margin: 0; color: var(--faun-fg-muted); font-size: var(--faun-type-label-md-font-size); line-height: var(--faun-type-label-md-line-height); font-weight: var(--faun-font-weight-medium); }
-.pt-home-compose .faun-composer { box-shadow: var(--faun-elevation-2); }
-.pt-home-compose .faun-composer-field textarea { min-block-size: var(--faun-space-16); font-size: var(--faun-type-body-lg-font-size); }
 .pt-home-chips { display: flex; flex-wrap: wrap; gap: var(--faun-space-2); margin: 0; padding: 0; list-style: none; }
 .pt-home-chips li { min-inline-size: 0; max-inline-size: 100%; }
 .pt-home-chips .faun-button { max-inline-size: 100%; white-space: normal; text-align: start; block-size: auto; min-block-size: var(--faun-size-control-sm); }

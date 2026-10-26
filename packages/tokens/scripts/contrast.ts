@@ -46,21 +46,35 @@ export const PAIRS: Pair[] = [
   ]),
   ...["info", "success", "danger", "running", "attention", "neutral"].map((t): Pair => ({ fg: `status.${t}.solid`, bg: ["bg.surface", "bg.canvas"], min: 3, note: `${t} dot / solid fill` })),
   { fg: "ai.fg", bg: ["bg.surface", "bg.canvas", "ai.bg"], min: 4.5, hc: 7, note: "AI label" },
-  // Sidebar (ADR 0009): one deep moss surface for the open panel and the collapsed rail.
-  { fg: "sidebar.fg", bg: ["sidebar.bg", "sidebar.bg-hover", "sidebar.bg-active"], min: 4.5, hc: 7, note: "Sidebar item label and icon (text)" },
-  { fg: "sidebar.fg-muted", bg: ["sidebar.bg", "sidebar.bg-hover", "sidebar.bg-active"], min: 4.5, hc: 7, note: "Sidebar section label, count and workspace context (text)" },
+  // Sidebar (ADR 0011): the open panel is a paper surface in light themes and a dark surface in dark ones; the collapsed rail is near-black in all themes.
+  { fg: "sidebar.fg", bg: ["sidebar.bg", "sidebar.bg-hover", "sidebar.bg-active"], min: 7, hc: 12, note: "Sidebar item label and icon (text)" },
+  { fg: "sidebar.fg-muted", bg: ["sidebar.bg", "sidebar.bg-hover", "sidebar.bg-active"], min: 4.5, hc: 7, note: "Sidebar section label, count, progress and workspace context (text)" },
   { fg: "sidebar.fg-active", bg: ["sidebar.bg", "sidebar.bg-hover", "sidebar.bg-active"], min: 7, note: "Sidebar current and hovered item (text)" },
-  { fg: "sidebar.accent", bg: ["sidebar.bg", "sidebar.bg-hover", "sidebar.bg-active"], min: 3, note: "Sidebar current-item indicator and focus ring (1.4.11, 2.4.13)" },
-  { fg: "sidebar.fg", bg: ["sidebar.bg"], min: 3, note: "Collapsed rail icons (1.4.11)" },
+  { fg: "sidebar.accent", bg: ["sidebar.bg", "sidebar.bg-hover", "sidebar.bg-active"], min: 3, note: "Sidebar current-item indicator, pinned dot, progress bar and focus ring (1.4.11, 2.4.13)" },
+  { fg: "sidebar.fg-muted", bg: ["sidebar.bg"], min: 3, note: "Sidebar chevrons and kebab icons (1.4.11)" },
   { fg: "sidebar.badge-bg", bg: ["sidebar.bg", "sidebar.bg-hover", "sidebar.bg-active"], min: 3, note: "Attention badge and dot on the sidebar (1.4.11)" },
   { fg: "sidebar.badge-fg", bg: ["sidebar.badge-bg"], min: 4.5, note: "Attention badge count on the sidebar (text)" },
+  { fg: "sidebar.mark-fg", bg: ["sidebar.mark-bg"], min: 4.5, note: "Logo on the workspace mark tile (non-text, held to text contrast)" },
+  { fg: "sidebar.mark-bg", bg: ["sidebar.bg"], min: 1.05, note: "Workspace mark tile is distinguishable from the panel (decorative, the name carries identity)" },
+  { fg: "rail.fg", bg: ["rail.bg", "rail.bg-hover", "rail.bg-active"], min: 4.5, hc: 7, note: "Rail item icon (text-grade)" },
+  { fg: "rail.fg-muted", bg: ["rail.bg", "rail.bg-hover", "rail.bg-active"], min: 4.5, hc: 7, note: "Rail secondary glyphs" },
+  { fg: "rail.fg-active", bg: ["rail.bg", "rail.bg-hover", "rail.bg-active"], min: 7, note: "Rail current and hovered item icon" },
+  { fg: "rail.accent", bg: ["rail.bg", "rail.bg-hover", "rail.bg-active"], min: 3, note: "Rail current-item indicator and focus ring (1.4.11, 2.4.13)" },
+  { fg: "rail.badge-bg", bg: ["rail.bg", "rail.bg-hover", "rail.bg-active"], min: 3, note: "Attention dot on the rail (1.4.11)" },
+  { fg: "rail.badge-fg", bg: ["rail.badge-bg"], min: 4.5, note: "Attention badge count on the rail (text)" },
+  { fg: "rail.mark-fg", bg: ["rail.mark-bg"], min: 4.5, note: "Logo on the mark tile on the rail" },
+  { fg: "rail.mark-bg", bg: ["rail.bg"], min: 3, note: "Mark tile boundary on the rail (1.4.11)" },
+  { fg: "rail.action-fg", bg: ["rail.action-bg", "rail.action-bg-hover"], min: 4.5, hc: 7, note: "Plus icon on the rail primary action" },
+  { fg: "rail.action-border", bg: ["rail.bg"], min: 1.5, hc: 3, note: "Rail primary action hairline (the icon and the fill carry the meaning)" },
+  { fg: "rail.avatar-fg", bg: ["rail.avatar-bg"], min: 4.5, note: "Initials on the rail avatar" },
+  { fg: "rail.avatar-bg", bg: ["rail.bg"], min: 3, note: "Avatar boundary on the rail (1.4.11)" },
   ...[1, 2, 3, 4, 5, 6, 7, 8].map((i): Pair => ({ fg: `dataviz.cat-${i}`, bg: ["dataviz.surface", "bg.canvas"], min: 3, note: `Categorical slot ${i}` })),
   ...["1", "2", "3", "outside"].map((i): Pair => ({ fg: `dataviz.scope-${i}`, bg: ["dataviz.surface", "bg.canvas"], min: 3, note: `Scope ${i}` })),
   { fg: "dataviz.axis", bg: ["dataviz.surface"], min: 4.5, note: "Axis labels" },
 ];
 
 /** Base surface for compositing translucent backgrounds. */
-const BASE: Record<string, string> = { "sidebar.bg-active": "sidebar.bg", "sidebar.bg-hover": "sidebar.bg" };
+const BASE: Record<string, string> = { "sidebar.bg-active": "sidebar.bg", "sidebar.bg-hover": "sidebar.bg", "rail.bg-active": "rail.bg", "rail.bg-hover": "rail.bg", "rail.action-border": "rail.bg" };
 
 export type Row = { theme: ThemeName; fg: string; bg: string; ratio: number; min: number; pass: boolean; note: string };
 

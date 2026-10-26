@@ -22,7 +22,7 @@ Read this before writing UI that uses Faun or changing Faun itself. Tests and pr
 ## Changing Faun
 
 - Sources live in `packages/*/src` and `packages/tokens/scripts`. `dist` is generated; never edit it.
-- Follow [BUILDERS.md](BUILDERS.md) for components and [CONTRIBUTING.md](CONTRIBUTING.md) for process.
+- Follow [BUILDERS.md](BUILDERS.md) for components and [CONTRIBUTING.md](.github/CONTRIBUTING.md) for process.
 - Run `pnpm build && pnpm test && pnpm typecheck` and `node scripts/check-icons.mjs` before proposing a change. The build fails if any contrast pair fails.
 - Add every new foreground and background pairing to `packages/tokens/scripts/contrast.ts`.
 - Colour scales are generated (`pnpm --filter @faun-ds/tokens scales`) and committed. Do not hand-edit `src/scales/scales.json`.
