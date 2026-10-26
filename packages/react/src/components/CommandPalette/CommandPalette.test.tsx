@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { useState } from "react";
-import { describe, expect, it, vi } from "vitest";
+import { describe, expect, it, vi, type Mock } from "vitest";
 import { axeViolations } from "../../../test/a11y.js";
 import { CommandPalette, type CommandPaletteItem } from "./CommandPalette.js";
 
@@ -14,7 +14,7 @@ function makeItems(onSelect = vi.fn()): CommandPaletteItem[] {
   ];
 }
 
-function Harness({ onSelect, defaultOpen = true }: { onSelect?: ReturnType<typeof vi.fn>; defaultOpen?: boolean }) {
+function Harness({ onSelect, defaultOpen = true }: { onSelect?: Mock; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen);
   return <CommandPalette open={open} onOpenChange={setOpen} items={makeItems(onSelect)} />;
 }

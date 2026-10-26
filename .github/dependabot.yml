@@ -4,6 +4,10 @@ updates:
     directory: /
     schedule: { interval: weekly }
     open-pull-requests-limit: 10
+    ignore:
+      # typescript-eslint, tsup's declaration build and react-docgen-typescript need the JavaScript compiler API, which TypeScript 7 does not ship. Revisit when they support it.
+      - dependency-name: typescript
+        update-types: ["version-update:semver-major"]
     groups:
       radix: { patterns: ["@radix-ui/*"] }
       tooling: { patterns: ["typescript", "vitest", "tsup", "turbo", "tsx"] }

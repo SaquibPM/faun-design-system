@@ -25,6 +25,14 @@ export default defineConfig({
   build: {
     outDir: "dist",
     chunkSizeWarningLimit: 4000,
-    rollupOptions: { output: { manualChunks: { react: ["react", "react-dom", "react-router"], shiki: ["shiki/core", "shiki/engine/javascript"] } } },
+    rollupOptions: {
+      output: {
+        manualChunks(id: string) {
+          if (/node_modules\/(react|react-dom|react-router|scheduler)\//.test(id)) return "react";
+          if (/node_modules\/(@?shiki|@shikijs)\//.test(id)) return "shiki";
+          return undefined;
+        },
+      },
+    },
   },
 });
