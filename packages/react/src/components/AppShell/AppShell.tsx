@@ -1,5 +1,5 @@
 import { Slot } from "@radix-ui/react-slot";
-import { IconChevronDown, IconChevronsUpDown, IconMenu, IconPanelLeft } from "@faun-ds/icons";
+import { IconAdd, IconCheck, IconChevronDown, IconChevronsUpDown, IconMenu, IconPanelLeft } from "@faun-ds/icons";
 import {
   Children,
   cloneElement,
@@ -14,6 +14,8 @@ import {
   useRef,
   useState,
   type AnchorHTMLAttributes,
+  type ButtonHTMLAttributes,
+  type CSSProperties,
   type HTMLAttributes,
   type ReactElement,
   type ReactNode,
@@ -224,20 +226,25 @@ export interface SideNavProps extends HTMLAttributes<HTMLElement> {
   label?: string;
   /** Workspace or product identity at the top, usually `<SideNavWorkspace>`. */
   workspace?: ReactNode;
+  /** The one primary action, usually `<SideNavAction>`: "New conversation". Sits under the workspace; a square "+" on the rail. */
+  action?: ReactNode;
   /** Pinned to the bottom, usually `<SideNavUser>`. */
   footer?: ReactNode;
   /** Force the icon rail when used outside an AppShell. */
   collapsed?: boolean;
 }
 
-/** The primary navigation rail: workspace, sections of destinations, and the signed-in user. */
-export const SideNav = forwardRef<HTMLElement, SideNavProps>(function SideNav({ label = "Main", workspace, footer, collapsed: collapsedProp, className, children, ...props }, ref) {
+/**
+ * The primary navigation: workspace, one primary action, sections of destinations, and the signed-in user. One component draws both
+ * states: a light panel when open and a near-black icon rail when collapsed (ADR 0011).
+ */
+export const SideNav = forwardRef<HTMLElement, SideNavProps>(function SideNav({ label = "Main", workspace, action, footer, collapsed: collapsedProp, className, children, ...props }, ref) {
   const shell = useAppShell();
   const collapsed = collapsedProp ?? shell?.collapsed ?? false;
   return (
     <NavContext.Provider value={{ collapsed }}>
       <nav ref={ref} aria-label={label} className={cx("faun-side-nav", className)} data-collapsed={collapsed ? "" : undefined} {...props}>
-        {workspace ? <div className="faun-side-nav-head">{workspace}</div> : null}
+        {workspace || action ? <div className="faun-side-nav-head">{workspace}{action}</div> : null}
         <div className="faun-side-nav-body">{children}</div>
         {footer ? <div className="faun-side-nav-foot">{footer}</div> : null}
       </nav>
@@ -282,17 +289,111 @@ export const SideNavWorkspace = forwardRef<HTMLElement, SideNavWorkspaceProps>(f
   return <div ref={ref as React.Ref<HTMLDivElement>} className={cx("faun-side-nav-ws", className)} {...(props as HTMLAttributes<HTMLDivElement>)}>{inner}</div>;
 });
 
+type ItemElement = ReactElement<SideNavItemProps>;
+const itemElements = (children: ReactNode) => Children.toArray(children).filter((c): c is ItemElement => isValidElement(c));
+
+interface RailFlyoutProps extends Omit<HTMLAttributes<HTMLLIElement>, "children"> {
+  label: string;
+  icon: ReactNode;
+  items: ItemElement[];
+  holdsCurrent?: boolean;
+  needsAttention?: boolean;
+}
+
+/** On the collapsed rail: one icon that opens the links of a group or section in a panel beside the rail. */
+const RailFlyout = forwardRef<HTMLLIElement, RailFlyoutProps>(function RailFlyout({ label, icon, items, holdsCurrent, needsAttention, className, ...props }, ref) {
+  const hasCurrent = holdsCurrent ?? items.some((i) => i.props.current);
+  const attention = needsAttention ?? items.some((i) => i.props.attention === true || (typeof i.props.attention === "number" && i.props.attention > 0));
+  return (
+    <li ref={ref} className={cx("faun-side-nav-li", className)} data-has-current={hasCurrent ? "" : undefined} {...props}>
+      <Popover>
+        <Tooltip content={label} side="right">
+          <PopoverTrigger asChild>
+            <button type="button" className="faun-side-nav-item faun-side-nav-group-trigger" data-has-current={hasCurrent ? "" : undefined} aria-label={`${label}, ${items.length} pages`}>
+              <span className="faun-side-nav-icon" aria-hidden="true">{icon}</span>
+              {attention ? <span className="faun-side-nav-attention" data-dot="" aria-hidden="true" /> : null}
+            </button>
+          </PopoverTrigger>
+        </Tooltip>
+        <PopoverContent className="faun-side-nav-flyout" side="right" align="start" size="auto" flush sideOffset={8} aria-label={label}>
+          <p className="faun-side-nav-flyout-title">{label}</p>
+          <ul className="faun-side-nav-flyout-list">
+            {items.map((i, idx) => {
+              const { children: kids, current: cur, count, attention: att, asChild, label: lbl, icon: _icon, progress: _p, dot: _d, actions: _a, className: _cn, ...rest } = i.props;
+              const text = lbl ?? (typeof kids === "string" ? kids : "");
+              const badge = typeof att === "number" && att > 0 ? att : count;
+              const inner = (
+                <>
+                  <span className="faun-side-nav-flyout-label">{text}</span>
+                  {att === true ? <span className="faun-side-nav-attention" data-dot="" /> : badge !== undefined ? <span className="faun-side-nav-flyout-count">{badge}</span> : null}
+                </>
+              );
+              const common = { className: "faun-side-nav-flyout-link", "aria-current": cur ? ("page" as const) : undefined, "data-current": cur ? "" : undefined };
+              return (
+                <li key={idx}>
+                  {asChild && isValidElement(kids)
+                    ? cloneElement(kids as ReactElement<Record<string, unknown>>, common, inner)
+                    : <a {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)} {...common}>{inner}</a>}
+                </li>
+              );
+            })}
+          </ul>
+        </PopoverContent>
+      </Popover>
+    </li>
+  );
+});
+
+export interface SideNavActionProps extends Omit<ButtonHTMLAttributes<HTMLButtonElement>, "children"> {
+  /** The action's name, e.g. "New conversation". Shown beside the icon when open; the tooltip and accessible name on the rail. */
+  children: string;
+  /** Icon before the label. Default "+". */
+  icon?: ReactNode;
+}
+
+/** The primary action of the SideNav: a full-width moss button when open and a square "+" when collapsed. */
+export const SideNavAction = forwardRef<HTMLButtonElement, SideNavActionProps>(function SideNavAction({ children, icon, className, type = "button", ...props }, ref) {
+  const { collapsed } = useContext(NavContext);
+  return (
+    <Tooltip content={children} side="right" disabled={!collapsed}>
+      <button ref={ref} type={type} className={cx("faun-side-nav-action", className)} {...props}>
+        <span className="faun-side-nav-action-icon" aria-hidden="true">{icon ?? <IconAdd size="sm" />}</span>
+        <span className="faun-side-nav-action-label">{children}</span>
+      </button>
+    </Tooltip>
+  );
+});
+
 export interface SideNavSectionProps extends HTMLAttributes<HTMLDivElement> {
-  /** Section heading, e.g. "Reporting". Omit for the top group. */
+  /** Section heading, e.g. "Reports". Omit for the top group. */
   title?: string;
+  /** A control at the end of the heading, e.g. an `IconButton` with a "+" to add a project. Hidden on the rail. */
+  action?: ReactNode;
+  /** The section's glyph on the rail. With an `icon` and a `title`, the collapsed rail shows one icon that opens the section's links in a panel beside the rail. */
+  icon?: ReactNode;
 }
 
 /** A labelled group of SideNav items. */
-export const SideNavSection = forwardRef<HTMLDivElement, SideNavSectionProps>(function SideNavSection({ title, className, children, ...props }, ref) {
+export const SideNavSection = forwardRef<HTMLDivElement, SideNavSectionProps>(function SideNavSection({ title, action, icon, className, children, ...props }, ref) {
   const id = useId();
+  const { collapsed } = useContext(NavContext);
+  if (collapsed && icon && title) {
+    return (
+      <div ref={ref} className={cx("faun-side-nav-section", className)} data-rail-section="" {...props}>
+        <ul className="faun-side-nav-list">
+          <RailFlyout label={title} icon={icon} items={itemElements(children)} />
+        </ul>
+      </div>
+    );
+  }
   return (
     <div ref={ref} className={cx("faun-side-nav-section", className)} {...props}>
-      {title ? <p id={id} className="faun-side-nav-section-title">{title}</p> : null}
+      {title ? (
+        <div className="faun-side-nav-section-head">
+          <p id={id} className="faun-side-nav-section-title">{title}</p>
+          {action ? <span className="faun-side-nav-section-action">{action}</span> : null}
+        </div>
+      ) : null}
       <ul className="faun-side-nav-list" aria-labelledby={title ? id : undefined}>{children}</ul>
     </div>
   );
@@ -309,6 +410,12 @@ export interface SideNavItemProps extends AnchorHTMLAttributes<HTMLAnchorElement
   count?: number;
   /** Items awaiting the user, e.g. approvals. Shown as an attention badge; `true` shows a dot. */
   attention?: number | boolean;
+  /** Progress of the thing the row stands for, 0 to 100. Shows the percentage and a thin bar under the row. `"done"` shows a check mark and a full bar. */
+  progress?: number | "done";
+  /** A small leading dot, e.g. for pinned rows. Decorative: say what it means in the section title. */
+  dot?: boolean;
+  /** Row-level controls at the end of the row, e.g. an `IconButton` with a vertical-dots icon that opens a menu. Rendered beside the link, not inside it, so it is its own tab stop. */
+  actions?: ReactNode;
   /** Render your router's link instead of `<a>`: `<SideNavItem asChild icon={…} label="Filings"><Link to="/filings" /></SideNavItem>`. */
   asChild?: boolean;
   /** Destination name when `asChild` is used (children is then the link element). */
@@ -317,7 +424,7 @@ export interface SideNavItemProps extends AnchorHTMLAttributes<HTMLAnchorElement
 
 /** A destination in the SideNav. Shows a tooltip with its name when the rail is collapsed. */
 export const SideNavItem = forwardRef<HTMLAnchorElement, SideNavItemProps>(function SideNavItem(
-  { icon, children, current, count, attention, asChild, label, className, ...props },
+  { icon, children, current, count, attention, progress, dot, actions, asChild, label, className, ...props },
   ref,
 ) {
   const { collapsed } = useContext(NavContext);
@@ -325,11 +432,20 @@ export const SideNavItem = forwardRef<HTMLAnchorElement, SideNavItemProps>(funct
   const text = label ?? (typeof children === "string" ? children : "");
   const attentionCount = typeof attention === "number" ? attention : undefined;
   const hasAttention = attention === true || (attentionCount !== undefined && attentionCount > 0);
+  const done = progress === "done";
+  const pct = progress === undefined ? undefined : done ? 100 : Math.max(0, Math.min(100, Math.round(progress)));
   const content = (
     <>
-      {icon ? <span className="faun-side-nav-icon" aria-hidden="true">{icon}</span> : null}
+      {icon ? <span className="faun-side-nav-icon" aria-hidden="true">{icon}</span> : dot ? <span className="faun-side-nav-dot" aria-hidden="true" /> : null}
       <span className="faun-side-nav-label">{text}</span>
-      {hasAttention ? (
+      {pct !== undefined ? (
+        <>
+          {done ? <span className="faun-side-nav-done" aria-hidden="true"><IconCheck size="sm" /></span> : <span className="faun-side-nav-count" aria-hidden="true">{pct}%</span>}
+          <VisuallyHidden>{done ? "complete" : `${pct}% complete`}</VisuallyHidden>
+          <span className="faun-side-nav-progress" style={{ "--_p": pct / 100 } as CSSProperties} aria-hidden="true" />
+        </>
+      ) : null}
+      {pct !== undefined ? null : hasAttention ? (
         <span className="faun-side-nav-attention" data-dot={attentionCount === undefined ? "" : undefined}>
           {attentionCount !== undefined ? <span aria-hidden="true">{attentionCount}</span> : null}
           <VisuallyHidden>{attentionCount !== undefined ? `${attentionCount} awaiting you` : "awaiting you"}</VisuallyHidden>
@@ -342,12 +458,13 @@ export const SideNavItem = forwardRef<HTMLAnchorElement, SideNavItemProps>(funct
   const Comp = asChild ? Slot : "a";
   const tip = hasAttention && attentionCount !== undefined ? `${text} · ${attentionCount}` : count !== undefined ? `${text} · ${count}` : text;
   return (
-    <li className="faun-side-nav-li">
+    <li className="faun-side-nav-li" data-no-icon={!icon && !dot && tier === 1 ? "" : undefined} data-has-actions={actions ? "" : undefined}>
       <Tooltip content={tip} side="right" disabled={!collapsed}>
         <Comp ref={ref} className={cx("faun-side-nav-item", className)} data-tier={tier === 2 ? "2" : undefined} aria-current={current ? "page" : undefined} data-current={current ? "" : undefined} {...props}>
           {asChild && isValidElement(children) ? cloneElement(children as ReactElement<{ children?: ReactNode }>, undefined, content) : content}
         </Comp>
       </Tooltip>
+      {actions ? <span className="faun-side-nav-row-actions">{actions}</span> : null}
     </li>
   );
 });
@@ -368,8 +485,6 @@ export interface SideNavGroupProps extends Omit<HTMLAttributes<HTMLLIElement>, "
   current?: boolean;
 }
 
-type ItemElement = ReactElement<SideNavItemProps>;
-const itemElements = (children: ReactNode) => Children.toArray(children).filter((c): c is ItemElement => isValidElement(c));
 
 /**
  * A second tier in the SideNav: a group that expands to show its destinations. A group that holds the current page starts open and
@@ -385,42 +500,7 @@ export const SideNavGroup = forwardRef<HTMLLIElement, SideNavGroupProps>(functio
 
   if (collapsed) {
     return (
-      <li ref={ref} className={cx("faun-side-nav-li", className)} data-has-current={holdsCurrent ? "" : undefined} {...props}>
-        <Popover>
-          <Tooltip content={label} side="right">
-            <PopoverTrigger asChild>
-              <button type="button" className="faun-side-nav-item faun-side-nav-group-trigger" data-has-current={holdsCurrent ? "" : undefined} aria-label={`${label}, ${items.length} pages`}>
-                <span className="faun-side-nav-icon" aria-hidden="true">{icon}</span>
-                {needsAttention ? <span className="faun-side-nav-attention" data-dot="" aria-hidden="true" /> : null}
-              </button>
-            </PopoverTrigger>
-          </Tooltip>
-          <PopoverContent className="faun-side-nav-flyout" side="right" align="start" size="auto" flush sideOffset={8} aria-label={label}>
-            <p className="faun-side-nav-flyout-title">{label}</p>
-            <ul className="faun-side-nav-flyout-list">
-              {items.map((i, idx) => {
-                const { children: kids, current: cur, count, attention, asChild, label: lbl, icon: _icon, className: _cn, ...rest } = i.props;
-                const text = lbl ?? (typeof kids === "string" ? kids : "");
-                const badge = typeof attention === "number" && attention > 0 ? attention : count;
-                const inner = (
-                  <>
-                    <span className="faun-side-nav-flyout-label">{text}</span>
-                    {attention === true ? <span className="faun-side-nav-attention" data-dot="" /> : badge !== undefined ? <span className="faun-side-nav-flyout-count">{badge}</span> : null}
-                  </>
-                );
-                const common = { className: "faun-side-nav-flyout-link", "aria-current": cur ? ("page" as const) : undefined, "data-current": cur ? "" : undefined };
-                return (
-                  <li key={idx}>
-                    {asChild && isValidElement(kids)
-                      ? cloneElement(kids as ReactElement<Record<string, unknown>>, common, inner)
-                      : <a {...(rest as AnchorHTMLAttributes<HTMLAnchorElement>)} {...common}>{inner}</a>}
-                  </li>
-                );
-              })}
-            </ul>
-          </PopoverContent>
-        </Popover>
-      </li>
+      <RailFlyout ref={ref} label={label} icon={icon} items={items} className={className} holdsCurrent={holdsCurrent} needsAttention={needsAttention} {...props} />
     );
   }
 
@@ -459,6 +539,7 @@ export const SideNavUser = forwardRef<HTMLElement, SideNavUserProps>(function Si
         <span className="faun-side-nav-user-name">{name}</span>
         {meta ? <span className="faun-side-nav-user-meta">{meta}</span> : null}
       </span>
+      {onOpenMenu ? <IconChevronDown size="sm" className="faun-side-nav-user-chevron" aria-hidden="true" /> : null}
     </>
   );
   if (onOpenMenu) {
