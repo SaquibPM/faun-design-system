@@ -41,7 +41,7 @@ jobs:
       reason: ${{ steps.guard.outputs.reason }}
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
       - id: guard
@@ -63,7 +63,7 @@ jobs:
         with:
           fetch-depth: 0 # the preflight scans the whole history
       - uses: pnpm/action-setup@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc
           cache: pnpm
