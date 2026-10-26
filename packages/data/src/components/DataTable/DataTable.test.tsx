@@ -124,7 +124,7 @@ describe("DataTable", () => {
     const { container } = renderTable({ stickyHeader: true, maxHeight: "12rem", density: "compact" });
     expect(container.firstElementChild).toHaveAttribute("data-sticky");
     expect(container.firstElementChild).toHaveAttribute("data-faun-density", "compact");
-    expect(screen.getByRole("region", { name: "Datapoints, scrollable" })).toHaveStyle({ maxBlockSize: "12rem" });
+    expect(screen.getByRole("region", { name: "Datapoints, scrollable" }).style.maxBlockSize).toBe("12rem");
   });
 
   it("resizes columns with the keyboard", async () => {

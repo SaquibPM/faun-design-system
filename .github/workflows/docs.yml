@@ -59,7 +59,7 @@ jobs:
       - name: Smoke test under the subpath (assets, hash routes, console errors, 404 fallback)
         run: node scripts/pages-smoke.mjs --dist apps/docs/dist --base "${{ steps.base.outputs.base }}"
 
-      - uses: actions/configure-pages@v5
+      - uses: actions/configure-pages@v6
         if: github.event_name != 'pull_request'
       - uses: actions/upload-pages-artifact@v5
         if: github.event_name != 'pull_request'

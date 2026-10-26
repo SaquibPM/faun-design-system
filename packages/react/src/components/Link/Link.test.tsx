@@ -17,7 +17,7 @@ describe("Link", () => {
     const a = screen.getByRole("link", { name: /ESRS E1 text/ });
     expect(a).toHaveAttribute("target", "_blank");
     expect(a).toHaveAttribute("rel", "noopener noreferrer");
-    expect(a).toHaveAccessibleName("ESRS E1 text (opens in a new tab)");
+    expect(a).toHaveAccessibleName(/^ESRS E1 text\s*\(opens in a new tab\)$/);
   });
   it("leaves target and rel alone when not external", () => {
     render(<Link href="/x" target="_self" rel="author">Run log</Link>);

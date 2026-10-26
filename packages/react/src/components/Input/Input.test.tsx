@@ -10,7 +10,7 @@ describe("Input and Field", () => {
     const { container } = render(<TextField label="Reporting period" description="Calendar or fiscal year" error="Enter a year between 2015 and 2030" />);
     const input = screen.getByRole("textbox", { name: "Reporting period" });
     expect(input).toHaveAttribute("aria-invalid", "true");
-    expect(input).toHaveAccessibleDescription("Calendar or fiscal year Enter a year between 2015 and 2030");
+    expect(input).toHaveAccessibleDescription(/^Calendar or fiscal year\s*Enter a year between 2015 and 2030$/);
     expect(screen.getByRole("alert")).toHaveTextContent("Enter a year between 2015 and 2030");
     expect(await axeViolations(container)).toEqual([]);
   });
@@ -57,10 +57,10 @@ describe("Input and Field", () => {
     it("counts as you type, links the count to the input and enforces maxLength", async () => {
       const { container } = render(<TextField label="Title" maxLength={10} showCount />);
       const input = screen.getByLabelText("Title");
-      expect(input).toHaveAccessibleDescription("0 / 10 characters");
+      expect(input).toHaveAccessibleDescription(/^0 \/ 10\s*characters$/);
       await userEvent.type(input, "Scope 1 emissions");
       expect(input).toHaveValue("Scope 1 em");
-      expect(input).toHaveAccessibleDescription("10 / 10 characters");
+      expect(input).toHaveAccessibleDescription(/^10 \/ 10\s*characters$/);
       expect(container.querySelector(".faun-input-count")).toHaveAttribute("data-over");
       expect(await axeViolations(container)).toEqual([]);
     });

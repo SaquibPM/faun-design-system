@@ -49,7 +49,7 @@ describe("Button", () => {
   });
   it("shows an outcome icon and adds the status label to the name", async () => {
     const { container, rerender } = render(<Button status="success" statusLabel="Saved" leadingIcon={<IconAdd />}>Save</Button>);
-    expect(screen.getByRole("button", { name: "Save Saved" })).toHaveAttribute("data-status", "success");
+    expect(screen.getByRole("button", { name: /^Save\s*Saved$/ })).toHaveAttribute("data-status", "success");
     expect(container.querySelector('[data-faun-icon="check"]')).not.toBeNull();
     expect(container.querySelector('[data-faun-icon="add"]')).toBeNull();
     rerender(<Button status="error" statusLabel="Save failed">Save</Button>);

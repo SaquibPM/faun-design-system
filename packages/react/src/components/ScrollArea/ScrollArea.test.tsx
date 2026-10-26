@@ -7,7 +7,7 @@ describe("ScrollArea", () => {
   it("renders its content and applies max height", () => {
     const { container } = render(<ScrollArea maxHeight="12rem"><p>Run 418 started</p></ScrollArea>);
     expect(screen.getByText("Run 418 started")).toBeInTheDocument();
-    expect(container.querySelector(".faun-scroll-area")).toHaveStyle({ maxBlockSize: "12rem" });
+    expect(container.querySelector<HTMLElement>(".faun-scroll-area")!.style.maxBlockSize).toBe("12rem");
   });
   it("makes a labelled region keyboard focusable", () => {
     render(<ScrollArea label="Run log"><p>Entry</p></ScrollArea>);

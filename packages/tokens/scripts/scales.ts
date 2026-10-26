@@ -10,7 +10,7 @@
  * then emitted as sRGB hex, as alpha twins (the same colour as a translucent overlay on the app background),
  * and as Display P3 for wide-gamut screens. Run:  pnpm --filter @faun-ds/tokens scales
  */
-import { clampChroma, converter, formatHex, type Oklch } from "culori";
+import { clampChroma, converter, formatHex, type Oklch, type P3 } from "culori";
 
 export type Appearance = "light" | "dark" | "light-hc" | "dark-hc";
 export type ScaleDef = {
@@ -89,8 +89,8 @@ export const SCALES: Record<string, ScaleDef> = {
   },
 };
 
-const toOklch = converter("oklch");
-const toP3 = converter("p3");
+const toOklch: (c: Parameters<typeof formatHex>[0]) => Oklch | undefined = converter("oklch");
+const toP3: (c: Parameters<typeof formatHex>[0]) => P3 | undefined = converter("p3");
 
 export function stepColour(def: ScaleDef, appearance: Appearance, step: number): Oklch {
   const i = step - 1;

@@ -78,7 +78,7 @@ describe("relief appearance", () => {
   it("fades gridlines at the ends in relief, and keeps them plain in flat", () => {
     const relief = render(<BarChart title="Relief" categories={categories} series={two} />);
     expect(relief.container.querySelector("linearGradient")).not.toBeNull();
-    expect(relief.container.querySelector<SVGLineElement>("line.faun-chart-grid")!.style.stroke).toMatch(/^url\(#faun-fade-/);
+    expect(relief.container.querySelector<SVGLineElement>("line.faun-chart-grid")!.style.stroke).toMatch(/^url\(["']?#faun-fade-/);
     const flat = render(<BarChart title="Flat" appearance="flat" categories={categories} series={two} />);
     expect(flat.container.querySelector("linearGradient")).toBeNull();
   });

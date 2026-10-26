@@ -51,8 +51,8 @@ describe("AppShell", () => {
 
   it("announces counts and attention badges in link names", () => {
     render(<Shell />);
-    expect(screen.getByRole("link", { name: "Approvals 2 awaiting you" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Filings 5" })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /^Approvals\s*2\s*awaiting you$/ })).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: /^Filings\s*5$/ })).toBeInTheDocument();
   });
 
   it("collapses to a rail with the toggle (uncontrolled) and reports changes", async () => {

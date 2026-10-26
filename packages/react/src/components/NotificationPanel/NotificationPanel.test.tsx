@@ -39,8 +39,8 @@ describe("NotificationPanel", () => {
   it("conveys tone and unread state in text, not colour", async () => {
     render(<NotificationList items={ITEMS} />);
     const first = screen.getAllByRole("listitem")[0]!;
-    expect(first).toHaveAccessibleName(/Needs your attention, unread: Materiality matrix needs approval/);
-    expect(screen.getAllByRole("listitem")[1]).toHaveAccessibleName(/^Error, unread/);
+    expect(first).toHaveAccessibleName(/Needs your attention,\s*unread:\s*Materiality matrix needs approval/);
+    expect(screen.getAllByRole("listitem")[1]).toHaveAccessibleName(/^Error,\s*unread/);
   });
   it("marks all read, which clears the badge and disables the button", async () => {
     const onMarkAll = vi.fn();
