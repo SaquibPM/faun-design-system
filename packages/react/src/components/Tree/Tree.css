@@ -1,0 +1,19 @@
+.faun-tree { --_indent: var(--faun-space-5); list-style: none; margin: 0; padding: 0; font-size: var(--faun-type-body-sm-font-size); line-height: var(--faun-type-body-sm-line-height); color: var(--faun-fg-default); }
+.faun-tree-group { list-style: none; margin: 0; padding: 0; }
+.faun-tree-item { outline: none; }
+.faun-tree-row { position: relative; display: flex; align-items: center; gap: var(--faun-space-1-5); min-block-size: var(--faun-space-8); padding-inline-end: var(--faun-space-2); border-radius: var(--faun-radius-sm); cursor: pointer; user-select: none; }
+.faun-tree-row:hover { background: var(--faun-bg-hover); }
+.faun-tree-row:where([data-selected]) { background: var(--faun-bg-selected); color: var(--faun-fg-brand); font-weight: var(--faun-font-weight-medium); }
+.faun-tree-row:where([data-selected]):hover { background: var(--faun-bg-selected-hover); }
+.faun-tree-row:where([data-disabled]) { color: var(--faun-fg-disabled); cursor: not-allowed; background: transparent; }
+.faun-tree-item:focus-visible > .faun-tree-row { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: -2px; }
+.faun-tree-guide { position: absolute; inset-block: 0; inline-size: 1px; background: var(--faun-border-subtle); }
+.faun-tree-twisty { display: inline-grid; place-items: center; flex: none; inline-size: var(--faun-space-5); block-size: var(--faun-space-5); border-radius: var(--faun-radius-xs); color: var(--faun-fg-muted); }
+.faun-tree-twisty > svg { transition: transform var(--faun-motion-duration-fast) var(--faun-motion-easing-standard); }
+.faun-tree-twisty:where([data-open]) > svg { transform: rotate(90deg); }
+.faun-tree-twisty:not(:empty):hover { background: var(--faun-bg-active); color: var(--faun-fg-default); }
+.faun-tree-icon { display: inline-flex; flex: none; color: var(--faun-fg-muted); }
+.faun-tree-row:where([data-selected]) .faun-tree-icon { color: var(--faun-fg-brand); }
+.faun-tree-label { flex: 1 1 auto; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.faun-tree-meta { flex: none; color: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size); font-feature-settings: var(--faun-font-feature-numeric); font-weight: var(--faun-font-weight-regular); }
+@media (forced-colors: active) { .faun-tree-row:where([data-selected]) { outline: 1px solid Highlight; } }

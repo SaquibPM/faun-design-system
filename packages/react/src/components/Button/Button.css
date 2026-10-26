@@ -1,0 +1,106 @@
+.faun-button {
+  /* Local knobs, set per variant × intent below. */
+  --_bg: transparent;
+  --_bg-hover: transparent;
+  --_bg-active: var(--_bg-hover);
+  --_fg: var(--faun-neutral-fg);
+  --_border: transparent;
+  --_border-hover: var(--_border);
+  --_shadow: none;
+  --_h: var(--faun-button-height-md);
+  --_px: var(--faun-button-px-md);
+
+  position: relative;
+  isolation: isolate;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--faun-button-gap);
+  block-size: var(--_h);
+  min-inline-size: var(--_h);
+  padding-inline: var(--_px);
+  border: var(--faun-border-width-hairline) solid var(--_border);
+  border-radius: var(--faun-button-radius);
+  background: var(--_bg);
+  color: var(--_fg);
+  box-shadow: var(--_shadow);
+  font-family: var(--faun-type-label-md-font-family);
+  font-size: var(--faun-type-label-md-font-size);
+  line-height: var(--faun-type-label-md-line-height);
+  font-weight: var(--faun-type-label-md-font-weight);
+  letter-spacing: var(--faun-type-label-md-letter-spacing);
+  white-space: nowrap;
+  text-decoration: none;
+  user-select: none;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard),
+    border-color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard),
+    color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard),
+    box-shadow var(--faun-motion-duration-fast) var(--faun-motion-easing-standard),
+    transform var(--faun-motion-duration-fast) var(--faun-motion-easing-standard);
+}
+.faun-button:hover { background: var(--_bg-hover); border-color: var(--_border-hover); }
+.faun-button:active:not(:disabled, [aria-disabled="true"]) { background: var(--_bg-active); transform: translateY(0.5px); }
+.faun-button:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 2px; }
+
+.faun-button:where([data-size="xs"]) { --_h: var(--faun-size-control-xs); --_px: var(--faun-button-px-sm); border-radius: var(--faun-button-radius-sm); font-size: var(--faun-type-label-sm-font-size); line-height: var(--faun-type-label-sm-line-height); }
+.faun-button:where([data-size="xl"]) { --_h: var(--faun-size-control-xl); --_px: var(--faun-button-px-lg); font-size: var(--faun-type-label-lg-font-size); line-height: var(--faun-type-label-lg-line-height); }
+.faun-button:where([data-size="sm"]) { --_h: var(--faun-button-height-sm); --_px: var(--faun-button-px-sm); border-radius: var(--faun-button-radius-sm); font-size: var(--faun-type-label-sm-font-size); line-height: var(--faun-type-label-sm-line-height); }
+.faun-button:where([data-size="lg"]) { --_h: var(--faun-button-height-lg); --_px: var(--faun-button-px-lg); font-size: var(--faun-type-label-lg-font-size); line-height: var(--faun-type-label-lg-line-height); }
+.faun-button:where([data-full-width]) { inline-size: 100%; }
+
+/* Wrapping labels: the height becomes a minimum and the label may break. */
+.faun-button:where([data-wrap]) { white-space: normal; block-size: auto; min-block-size: var(--_h); padding-block: var(--faun-space-1-5); text-align: start; }
+.faun-button:where([data-wrap]) .faun-button-label { overflow: visible; text-overflow: clip; overflow-wrap: anywhere; }
+.faun-button-icon[data-status="success"] { color: var(--faun-status-success-fg); }
+.faun-button-icon[data-status="error"] { color: var(--faun-status-danger-fg); }
+.faun-button-icon { display: inline-flex; flex: none; margin-inline: -2px; }
+.faun-button-icon > svg { inline-size: var(--faun-button-icon-size); block-size: var(--faun-button-icon-size); }
+.faun-button-label { display: inline-flex; align-items: center; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; }
+
+/* Solid and soft are flat (ADR 0008): a plain face, no outline, no extruded edge, no texture. Hover and pressed shift the face one step; the focus ring is unchanged. */
+.faun-button:where([data-variant="solid"][data-intent="accent"]) { --_bg: var(--faun-accent-solid-bg); --_bg-hover: var(--faun-accent-solid-bg-hover); --_fg: var(--faun-accent-solid-fg); }
+.faun-button:where([data-variant="solid"][data-intent="neutral"]) { --_bg: var(--faun-neutral-solid-bg); --_bg-hover: var(--faun-neutral-solid-bg-hover); --_fg: var(--faun-neutral-solid-fg); }
+.faun-button:where([data-variant="solid"][data-intent="danger"]) { --_bg: var(--faun-danger-solid-bg); --_bg-hover: var(--faun-danger-solid-bg-hover); --_fg: var(--faun-danger-solid-fg); }
+
+.faun-button:where([data-variant="soft"][data-intent="accent"]) { --_bg: var(--faun-accent-soft-bg); --_bg-hover: var(--faun-accent-soft-bg-hover); --_bg-active: var(--faun-accent-soft-bg-active); --_fg: var(--faun-accent-soft-fg); }
+.faun-button:where([data-variant="soft"][data-intent="neutral"]) { --_bg: var(--faun-neutral-soft-bg); --_bg-hover: var(--faun-neutral-soft-bg-hover); --_bg-active: var(--faun-neutral-soft-bg-active); --_fg: var(--faun-neutral-soft-fg); }
+.faun-button:where([data-variant="soft"][data-intent="danger"]) { --_bg: var(--faun-danger-soft-bg); --_bg-hover: var(--faun-danger-soft-bg-hover); --_bg-active: var(--faun-danger-soft-bg-active); --_fg: var(--faun-danger-soft-fg); }
+
+/* Outline (default) */
+.faun-button:where([data-variant="outline"]) { --_shadow: var(--faun-elevation-1); }
+.faun-button:where([data-variant="outline"][data-intent="neutral"]) { --_bg: var(--faun-neutral-outline-bg); --_bg-hover: var(--faun-neutral-outline-bg-hover); --_bg-active: var(--faun-neutral-outline-bg-active); --_border: var(--faun-neutral-outline-border); --_border-hover: var(--faun-neutral-outline-border-hover); --_fg: var(--faun-neutral-fg); }
+.faun-button:where([data-variant="outline"][data-intent="accent"]) { --_bg: var(--faun-neutral-outline-bg); --_bg-hover: var(--faun-accent-ghost-bg-hover); --_bg-active: var(--faun-accent-ghost-bg-active); --_border: var(--faun-accent-outline-border); --_border-hover: var(--faun-accent-outline-border-hover); --_fg: var(--faun-accent-fg); }
+.faun-button:where([data-variant="outline"][data-intent="danger"]) { --_bg: var(--faun-neutral-outline-bg); --_bg-hover: var(--faun-danger-ghost-bg-hover); --_bg-active: var(--faun-danger-ghost-bg-active); --_border: var(--faun-danger-outline-border); --_border-hover: var(--faun-danger-outline-border-hover); --_fg: var(--faun-danger-fg); }
+
+/* Ghost */
+.faun-button:where([data-variant="ghost"][data-intent="neutral"]) { --_bg-hover: var(--faun-neutral-ghost-bg-hover); --_bg-active: var(--faun-neutral-ghost-bg-active); --_fg: var(--faun-neutral-fg-muted); }
+.faun-button:where([data-variant="ghost"][data-intent="neutral"]):hover { --_fg: var(--faun-neutral-fg); }
+.faun-button:where([data-variant="ghost"][data-intent="accent"]) { --_bg-hover: var(--faun-accent-ghost-bg-hover); --_bg-active: var(--faun-accent-ghost-bg-active); --_fg: var(--faun-accent-fg); }
+.faun-button:where([data-variant="ghost"][data-intent="danger"]) { --_bg-hover: var(--faun-danger-ghost-bg-hover); --_bg-active: var(--faun-danger-ghost-bg-active); --_fg: var(--faun-danger-fg); }
+
+/* Link */
+.faun-button:where([data-variant="link"]) { --_px: 0; --_fg: var(--faun-fg-link); min-inline-size: 0; block-size: auto; text-decoration: underline; text-underline-offset: 0.2em; text-decoration-thickness: 1px; }
+.faun-button:where([data-variant="link"]):hover { --_fg: var(--faun-fg-link-hover); background: transparent; }
+.faun-button:where([data-variant="link"][data-intent="danger"]) { --_fg: var(--faun-danger-fg); }
+.faun-button:where([data-variant="link"][data-intent="neutral"]) { --_fg: var(--faun-fg-default); }
+
+/* Disabled */
+.faun-button:disabled,
+.faun-button[aria-disabled="true"] {
+  --_bg: var(--faun-bg-disabled); --_bg-hover: var(--faun-bg-disabled); --_fg: var(--faun-fg-disabled);
+  --_border: transparent; --_shadow: none; cursor: not-allowed;
+}
+.faun-button:where([data-variant="ghost"]):disabled, .faun-button:where([data-variant="link"]):disabled { --_bg: transparent; --_bg-hover: transparent; }
+
+/* Loading: keep width, hide content, overlay spinner. */
+.faun-button[data-loading] { cursor: progress; }
+.faun-button[data-loading] > :not(.faun-button-spinner) { visibility: hidden; }
+.faun-button-spinner { position: absolute; inset: 0; display: grid; place-items: center; }
+
+@media (forced-colors: active) {
+  .faun-button { border-color: ButtonText; box-shadow: none; }
+  .faun-button:where([data-variant="solid"]) { background: ButtonText; color: ButtonFace; }
+}

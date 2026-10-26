@@ -1,0 +1,95 @@
+export const meta = {
+  title: "Gauge",
+  description: "Shows one value on a dial between a minimum and a maximum, with an optional target and change.",
+  category: "Data",
+  status: "new",
+  components: ["GaugeChart"],
+  related: ["meter-chart", "bullet-chart", "stat", "chart-types"],
+  order: 29,
+};
+
+<Section tab="usage">
+
+<Example of="GaugeChart/Overview" layout="stretch" />
+
+## When to use
+
+- For a single headline measure with a natural range: data completeness, assurance coverage, renewable share.
+- On a dashboard where one number needs context.
+
+## When not to use
+
+- To compare several measures. Use a bullet chart.
+- For a plain figure with no range. Use a Stat.
+- To show change over time. Use a line chart or a sparkline.
+
+## Variants
+
+<Example of="GaugeChart/WithStatus" layout="stretch" title="Status colour" description="tone colours the arc with a status. Use it only when the colour means a status, and the status is named in text too." />
+
+<Example of="GaugeChart/Loading" layout="stretch" title="Loading" />
+
+
+<DoDont>
+  <Do of="GaugeChart/DoOneHeadline" caption="Use one gauge for one headline measure, with its target." />
+  <Dont of="GaugeChart/DontStatusAsDecoration" caption="Colour the arc red when red does not mean anything. Keep the default colour." />
+</DoDont>
+
+## Writing
+
+Title with what is measured and the period. Use `label` for the measure's name and `deltaLabel` for what the change is against (“vs last quarter”).
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title, the plot (a half-circle track, a rounded value arc, a target tick, min and max labels, the value in large type and the change or label beneath) and a tooltip with range, target, status and change.
+
+## Colour
+
+The arc is `dataviz.cat-1` (or `color`) by default. Pass `tone` to use a status colour; the status is also written in the tooltip and data table, and the change carries its sign in words.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.axis", "dataviz.surface", "status.success.solid", "status.warning.solid", "status.danger.solid", "bg.raised"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="GaugeChart/Overview" layout="stretch" code="open" />
+
+<Example of="GaugeChart/WithStatus" layout="stretch" code="open" />
+
+## Notes
+
+- `value`, `min` and `max` set the dial. Values outside the range are clamped in the drawing but shown as given.
+- `target` draws a tick; `delta` writes a signed change under the value.
+- `tone` is `neutral`, `info`, `success`, `warning` or `danger`.
+- A gauge has no legend, so `legend` and `toggleSeries` are not available.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. "], ["Arrow keys", "There is one value, so there is nothing to move between. Focusing the chart shows its tooltip."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the value, range, target, status and change in a polite live region.
+- The data table has one row with the value, range, target, status and change.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Marks against the surface meet 3:1 in every theme, and the categorical palette is checked for protan and deutan separation.
+- The arc and track are drawn with round caps; the track is a quiet tint of the axis colour.
+
+</Section>

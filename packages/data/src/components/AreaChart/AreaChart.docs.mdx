@@ -1,0 +1,101 @@
+export const meta = {
+  title: "Area chart",
+  description: "Shows change over time with the volume under the line filled. Simple areas compare series; stacked areas show how a total builds up.",
+  category: "Data",
+  status: "new",
+  components: ["AreaChart"],
+  related: ["line-chart", "bar-chart", "chart-types"],
+  order: 22,
+};
+
+<Section tab="usage">
+
+<Example of="AreaChart/Overview" layout="stretch" />
+
+## When to use
+
+- To show a total or a volume over an ordered axis: monthly consumption, cumulative savings.
+- Stacked, to show how the parts of a total change over time: supply by source, emissions by scope by month.
+
+## When not to use
+
+- To compare exact values across a few categories. Use a bar chart.
+- For many overlapping series. Simple areas hide each other; stack them, or use a line chart.
+- For values that do not start at zero. The fill implies the baseline.
+
+## Variants
+
+<Example of="AreaChart/Stacked" layout="stretch" title="Stacked" description="variant=&quot;stacked&quot; piles series so the top edge is the total. The tooltip and data table add a total." />
+
+<Example of="AreaChart/Stepped" layout="stretch" title="Stepped" description="step holds each value until the next point. Use it for budgets and limits that change at a moment." />
+
+<Example of="AreaChart/WithGap" layout="stretch" title="Missing values" description="A null value breaks the area. It is never drawn as a zero, and the tooltip and data table say “No data”." />
+
+<Example of="AreaChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="AreaChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="AreaChart/DoStack" caption="Stack series that make up a whole, so the top edge means something." />
+  <Dont of="AreaChart/DontOverlap" caption="Overlap three or more filled series. The ones behind disappear." />
+</DoDont>
+
+## Writing
+
+Title the chart with what it shows and the period: “Electricity supply by source, 2026”. Use the description for the one-line takeaway. Put the unit in `unit`.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, an optional legend, the plot (grid, value axis with unit, category axis, a translucent fill and a solid line per series) and a tooltip. A guide line and a marker follow the active category.
+
+## Colour
+
+Series take `dataviz.cat-1` to `cat-8` in order, and never cycle. Series with the id `scope-1`, `scope-2` or `scope-3` take the GHG scope colours. The fill is the series colour at low opacity, so gridlines stay visible through it.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.cat-3", "dataviz.grid", "dataviz.axis", "dataviz.surface", "bg.raised", "dataviz.scope-1"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="AreaChart/Overview" layout="stretch" code="open" />
+
+<Example of="AreaChart/Stacked" layout="stretch" code="open" />
+
+## Notes
+
+- `variant` is `simple` (default) or `stacked`. Stacked areas treat a missing or negative value as zero.
+- `categories` and each series' `values` line up by index. Use `null` for no data.
+- `references` takes `{ label, value, kind }`. Use `kind: "target"` for a goal and the default for a baseline or limit. Keep to one or two lines so labels stay clear of each other.
+- `toggleSeries` makes the legend interactive. Control it with `hiddenSeries` and `onHiddenSeriesChange` (ids of the hidden series), or start from `defaultHiddenSeries`.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. With `toggleSeries`, the legend buttons come before it."], ["Enter / Space", "On a legend entry (when `toggleSeries` is on), shows or hides that series. The last visible one cannot be hidden."], ["Arrow Right / Arrow Left", "Moves to the next or previous category and shows its tooltip."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the category and all its values (and the total, when stacked) in a polite live region.
+- With `toggleSeries`, each legend entry is a button with `aria-pressed`. Hidden series leave the drawing, tooltip, announcements and data table.
+- Target and reference lines are listed at the foot of the data table.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Marks against the surface meet 3:1 in every theme, and the categorical palette is checked for protan and deutan separation.
+- The fill is never the only cue: each series also has a line and, on hover, a marker shape of its own.
+
+</Section>

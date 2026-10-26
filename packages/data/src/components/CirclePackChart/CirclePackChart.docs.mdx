@@ -1,0 +1,95 @@
+export const meta = {
+  title: "Circle pack",
+  description: "Shows a hierarchy as nested circles: leaf area is proportional to value and each group's circle encloses its members.",
+  category: "Data",
+  status: "new",
+  components: ["CirclePackChart"],
+  related: ["treemap-chart", "tree-chart", "chart-types"],
+  order: 34,
+};
+
+<Section tab="usage">
+
+<Example of="CirclePackChart/Overview" layout="stretch" />
+
+## When to use
+
+- To show a hierarchy where the grouping matters as much as the size: suppliers by spend category.
+- When a treemap's rectangles feel too rigid for the story.
+
+## When not to use
+
+- To compare exact values. Use a bar chart.
+- For more than about forty leaves. Group them.
+- For a flat list. Use a bar chart.
+
+## Variants
+
+<Example of="CirclePackChart/ByValue" layout="stretch" title="Shaded by size" description="colorBy=&quot;value&quot; shades leaves with the sequential ramp." />
+
+<Example of="CirclePackChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="CirclePackChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="CirclePackChart/DoFewGroups" caption="Keep to a few groups and a few dozen members." />
+  <Dont of="CirclePackChart/DontCompareExactValues" caption="Rely on circle size to rank near-equal values. Use a bar chart." />
+</DoDont>
+
+## Writing
+
+Title with the whole and the period. Group names label large circles; leaf names label circles big enough to hold them.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, a legend or colour key, the plot (group circles as faint outlines, leaf circles in the group colour, labels on chips) and a tooltip with the path, value and share.
+
+## Colour
+
+`group`: top-level groups take `dataviz.cat-1` to `cat-8` in order. `value`: `dataviz.seq-1` to `seq-7`. Group circles are the group colour at low opacity with an axis-coloured outline.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.cat-3", "dataviz.grid", "dataviz.axis", "dataviz.surface", "bg.raised", "dataviz.seq-1", "dataviz.seq-4", "dataviz.seq-7"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="CirclePackChart/Overview" layout="stretch" code="open" />
+
+<Example of="CirclePackChart/ByValue" layout="stretch" code="open" />
+
+## Notes
+
+- `data` has the same shape as for the treemap: a tree of `{ label, value?, children? }`.
+- Packing is deterministic: the same data always gives the same layout. There is no zoom; keep the hierarchy shallow.
+- `toggleSeries` makes the legend interactive. Control it with `hiddenSeries` and `onHiddenSeriesChange` (ids of the hidden groups), or start from `defaultHiddenSeries`.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. With `toggleSeries`, the legend buttons come before it."], ["Enter / Space", "On a legend entry (when `toggleSeries` is on), shows or hides that series. The last visible one cannot be hidden."], ["Arrow Right / Arrow Down", "Moves to the next item."], ["Arrow Left / Arrow Up", "Moves to the previous item."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the item's path, value and share in a polite live region.
+- The data table lists every leaf with its path, group, value and share.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Marks against the surface meet 3:1 in every theme, and the categorical palette is checked for protan and deutan separation.
+- The active leaf gets a foreground outline. Pointing at overlapping areas selects the smallest circle under the pointer.
+
+</Section>

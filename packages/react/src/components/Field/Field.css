@@ -1,0 +1,130 @@
+.faun-field { display: grid; gap: var(--faun-space-1-5); min-inline-size: 0; }
+.faun-field-label-row { display: flex; align-items: baseline; justify-content: space-between; gap: var(--faun-space-2); }
+.faun-field-label {
+  display: inline-flex; align-items: baseline; gap: var(--faun-space-1);
+  color: var(--faun-fg-default);
+  font-family: var(--faun-type-label-md-font-family);
+  font-size: var(--faun-type-label-md-font-size);
+  line-height: var(--faun-type-label-md-line-height);
+  font-weight: var(--faun-type-label-md-font-weight);
+}
+.faun-field[data-disabled] .faun-field-label { color: var(--faun-fg-disabled); }
+.faun-field-required { color: var(--faun-status-danger-fg); }
+.faun-field-optional { color: var(--faun-fg-muted); font-weight: var(--faun-font-weight-regular); font-size: var(--faun-type-caption-font-size); }
+.faun-field-label-action { font-size: var(--faun-type-caption-font-size); color: var(--faun-fg-muted); }
+.faun-field-description {
+  color: var(--faun-fg-muted);
+  font-size: var(--faun-type-caption-font-size);
+  line-height: var(--faun-type-caption-line-height);
+  margin: 0;
+}
+.faun-field-error {
+  display: flex; align-items: flex-start; gap: var(--faun-space-1-5);
+  color: var(--faun-status-danger-fg);
+  font-size: var(--faun-type-caption-font-size);
+  line-height: var(--faun-type-caption-line-height);
+  font-weight: var(--faun-font-weight-medium);
+  margin: 0;
+}
+.faun-field-error > svg { flex: none; margin-block-start: 1px; }
+.faun-fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: var(--faun-space-2); min-inline-size: 0; }
+.faun-fieldset-legend { padding: 0; color: var(--faun-fg-default); font-size: var(--faun-type-heading-sm-font-size); line-height: var(--faun-type-heading-sm-line-height); font-weight: var(--faun-type-heading-sm-font-weight); }
+.faun-fieldset-body { display: grid; gap: var(--faun-density-gap); }
+.faun-field-warn {
+  display: flex; align-items: flex-start; gap: var(--faun-space-1-5);
+  color: var(--faun-status-warning-fg);
+  font-size: var(--faun-type-caption-font-size);
+  line-height: var(--faun-type-caption-line-height);
+  font-weight: var(--faun-font-weight-medium);
+  margin: 0;
+}
+.faun-field-warn > svg { flex: none; margin-block-start: 1px; }
+
+/* ------------------------------------------------------------------ Field layouts */
+/* Inline: label to the left, control and messages in the second column. Stacks on narrow screens. */
+.faun-field[data-variant="inline"] { grid-template-columns: minmax(0, var(--faun-space-40)) minmax(0, 1fr); column-gap: var(--faun-space-4); align-items: start; }
+.faun-field[data-variant="inline"] > * { grid-column: 2; }
+.faun-field[data-variant="inline"] > .faun-field-label-row { grid-column: 1; grid-row: 1; min-block-size: var(--faun-input-height-md); align-items: center; }
+.faun-field[data-variant="inline"] > :nth-child(2) { grid-row: 1; }
+@media (max-width: 640px) {
+  .faun-field[data-variant="inline"] { grid-template-columns: minmax(0, 1fr); }
+  .faun-field[data-variant="inline"] > *, .faun-field[data-variant="inline"] > .faun-field-label-row { grid-column: 1; grid-row: auto; min-block-size: 0; }
+}
+
+/* Fluid: the label sits inside a taller box. */
+.faun-field[data-variant="fluid"] { position: relative; }
+.faun-field[data-variant="fluid"] > .faun-field-label-row {
+  position: absolute; z-index: 1; pointer-events: none;
+  inset-block-start: var(--faun-space-1-5); inset-inline: var(--faun-input-px);
+  justify-content: flex-start;
+}
+.faun-field[data-variant="fluid"] .faun-field-label { color: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size); line-height: var(--faun-type-caption-line-height); font-weight: var(--faun-font-weight-medium); }
+.faun-field[data-variant="fluid"] :is(.faun-input, .faun-field-trigger) { --_h: calc(var(--faun-input-height-lg) + var(--faun-space-3)); padding-block-start: var(--faun-space-4); }
+.faun-field[data-variant="fluid"] .faun-textarea .faun-textarea-control { padding-block-start: var(--faun-space-6); }
+.faun-field[data-variant="fluid"] .faun-input-control { align-self: end; block-size: auto; padding-block-end: var(--faun-space-1-5); }
+
+/* ------------------------------------------------------------------ Control state contract */
+/* Every control box carries the same data attributes: data-invalid, data-warn, data-readonly, data-skeleton. */
+
+/* Warn: amber outline plus an icon-and-text message (Field `warn`). Invalid always wins, so the two never combine. */
+:is(.faun-input, .faun-textarea, .faun-field-trigger)[data-warn][data-warn] { border-color: var(--faun-status-warning-fg); }
+:is(.faun-input, .faun-textarea)[data-warn][data-warn]:focus-within { box-shadow: 0 0 0 3px var(--faun-status-warning-bg); }
+.faun-field-trigger[data-warn]:focus-visible, .faun-field-trigger[data-warn][data-state="open"] { border-color: var(--faun-status-warning-fg); box-shadow: 0 0 0 3px var(--faun-status-warning-bg); }
+.faun-checkbox[data-warn]:not([data-state="checked"]), .faun-radio[data-warn]:not([data-state="checked"]) { border-color: var(--faun-status-warning-fg); }
+.faun-file-upload[data-warn] .faun-file-upload-dropzone { border-color: var(--faun-status-warning-fg); }
+.faun-slider[data-warn] .faun-slider-thumb { border-color: var(--faun-status-warning-solid); }
+.faun-slider[data-warn] .faun-slider-range { background: var(--faun-status-warning-solid); }
+
+/* Read-only: flat nested surface, no lift, no hover affordance, still focusable and selectable. */
+:is(.faun-input, .faun-textarea, .faun-field-trigger)[data-readonly] { background: var(--faun-bg-surface-nested); border-color: var(--faun-border-default); box-shadow: none; cursor: default; }
+:is(.faun-input, .faun-textarea, .faun-field-trigger)[data-readonly]:hover { border-color: var(--faun-border-default); }
+:is(.faun-input, .faun-textarea, .faun-field-trigger)[data-readonly] :is(input, textarea, button) { cursor: default; }
+.faun-field-trigger[data-readonly] .faun-field-trigger-icon:last-child { visibility: hidden; }
+.faun-checkbox[data-readonly], .faun-radio[data-readonly], .faun-checkbox-row[data-readonly] .faun-checkbox, .faun-radio-group[aria-readonly="true"] .faun-radio { background: var(--faun-bg-surface-nested); border-color: var(--faun-border-default); box-shadow: none; color: var(--faun-fg-default); cursor: default; }
+.faun-checkbox-row[data-readonly] :is(.faun-checkbox[data-state="checked"], .faun-checkbox[data-state="indeterminate"]),
+.faun-radio-group[aria-readonly="true"] .faun-radio[data-state="checked"] { background: var(--faun-bg-surface-nested); border-color: var(--faun-fg-muted); color: var(--faun-fg-default); }
+.faun-radio-group[aria-readonly="true"] .faun-radio-indicator { background: var(--faun-fg-default); }
+.faun-checkbox-row[data-readonly] .faun-checkbox-label, .faun-radio-group[aria-readonly="true"] .faun-radio-option { cursor: default; }
+.faun-switch[data-readonly] { cursor: default; background: var(--faun-bg-sunken); }
+.faun-switch[data-readonly][data-state="checked"] { background: var(--faun-fg-muted); }
+.faun-slider[data-readonly] .faun-slider-root { cursor: default; }
+.faun-slider[data-readonly] .faun-slider-range { background: var(--faun-fg-muted); }
+.faun-slider[data-readonly] .faun-slider-thumb { border-color: var(--faun-fg-muted); box-shadow: none; cursor: default; }
+
+/* Skeleton: a shimmering block in place of the control. Repeated attributes lift specificity above the :disabled and checked rules that load later. */
+:is(.faun-input, .faun-textarea, .faun-field-trigger, .faun-checkbox, .faun-switch)[data-skeleton][data-skeleton][data-skeleton],
+.faun-radio-option[data-skeleton] .faun-radio,
+.faun-slider[data-skeleton] .faun-slider-track,
+.faun-file-upload[data-skeleton] .faun-file-upload-dropzone,
+.faun-field[data-skeleton] .faun-field-label,
+.faun-choice-group[data-skeleton] .faun-choice-group-legend,
+.faun-checkbox-row[data-skeleton] .faun-checkbox-label,
+.faun-switch-row[data-skeleton] .faun-switch-label,
+.faun-radio-option[data-skeleton] .faun-radio-label {
+  background-color: var(--faun-bg-skeleton);
+  background-image: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--faun-bg-surface) 55%, transparent) 50%, transparent 100%);
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: faun-shimmer 1.6s linear infinite;
+  border-color: transparent;
+  box-shadow: none;
+  color: transparent;
+  pointer-events: none;
+  cursor: default;
+}
+:is(.faun-input, .faun-textarea, .faun-field-trigger, .faun-checkbox, .faun-switch)[data-skeleton] > *,
+.faun-file-upload[data-skeleton] .faun-file-upload-dropzone > * { visibility: hidden; }
+.faun-field[data-skeleton] .faun-field-label, .faun-choice-group[data-skeleton] .faun-choice-group-legend,
+.faun-checkbox-row[data-skeleton] .faun-checkbox-label, .faun-switch-row[data-skeleton] .faun-switch-label, .faun-radio-option[data-skeleton] .faun-radio-label { border-radius: var(--faun-radius-xs); }
+.faun-field[data-skeleton] :is(.faun-field-required, .faun-field-optional),
+.faun-radio-option[data-skeleton] :is(.faun-radio-indicator, .faun-radio-description),
+.faun-checkbox-row[data-skeleton] .faun-checkbox-description,
+.faun-switch-row[data-skeleton] .faun-switch-description,
+.faun-slider[data-skeleton] :is(.faun-slider-thumb, .faun-slider-range, .faun-slider-marks, .faun-slider-output) { visibility: hidden; }
+@media (prefers-reduced-motion: reduce) {
+  [data-skeleton], [data-skeleton] * { animation: none !important; background-image: none !important; }
+}
+[data-faun-calm] [data-skeleton], [data-faun-calm] [data-skeleton] * { animation: none !important; background-image: none !important; }
+@media (forced-colors: active) {
+  :is(.faun-input, .faun-textarea, .faun-field-trigger)[data-readonly] { border-style: dashed; }
+}

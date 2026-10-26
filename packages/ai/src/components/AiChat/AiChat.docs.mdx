@@ -1,0 +1,86 @@
+export const meta = {
+  title: "AI chat",
+  description: "Messages in a conversation with an agent: the agent's reply with its label, sources and feedback, the person's own message, a log, and suggested prompts.",
+  category: "AI and agents",
+  status: "new",
+  components: ["AIChatMessage", "AIChatList", "AIPromptSuggestions"],
+  related: ["prompt-composer", "streaming-text", "ai-feedback", "ai-label"],
+  order: 12,
+};
+
+<Section tab="usage">
+
+<Example of="AiChat/Overview" height={560} />
+
+## When to use
+
+- For an assistant a person talks to in the product: asking about a figure, drafting a paragraph, finding a filing.
+- Together with [Prompt composer](/components/prompt-composer) to type, and [Streaming text](/components/streaming-text), which a reply uses while it arrives.
+
+## When not to use
+
+- For a run an agent performs on its own. Use [Run trail](/components/run-trail).
+- For a single AI value in a form. Use [AI slot](/components/ai-slot).
+
+## A reply as it arrives
+
+<Example of="AiChat/Live" title="Streaming, then complete" description="While the agent writes, the reply shows Stop and no feedback. When it completes the sources and the rating, copy and regenerate controls appear. Press Stop to see the stopped state." height={420} />
+
+## With the composer
+
+<Example of="AiChat/WithComposer" title="Suggested prompts and the composer" description="Suggested prompts hand their text back so you can fill the composer or send it. Pressing one here fills the composer so the person can edit before sending." height={520} />
+
+<DoDont>
+  <Do of="AiChat/DoNameAndCite" caption="Name the agent, mark the reply as AI generated and cite what it rests on." />
+  <Dont of="AiChat/DontAnonymous" caption="Show an unnamed box of text. Nobody can tell who wrote it or where it came from." />
+</DoDont>
+
+## Writing
+
+Replies are short, state the answer first and name the figure and its unit. Suggested prompts are the questions people actually ask, under about six words.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A list of messages. A reply has a header (agent chip, AI label, time), the body, a numbered source list and the feedback row. The person's own message is a tinted bubble aligned to the end, never given the AI treatment, so machine and human text are always distinguishable.
+
+## Tokens
+
+<UsesTokens names={["bg.brand-soft", "bg.surface-nested", "border.subtle", "ai.bg", "ai.fg"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="AiChat/Overview" title="A short conversation" code="open" height={560} />
+
+## Notes
+
+- `AIChatMessage` takes `text` (streamed with StreamingText) or `children` for rich content with its own citation markers.
+- `state` is `streaming`, `complete` or `stopped`; `onStop` shows the Stop button while streaming.
+- `feedback` takes the AIFeedback props (rating, copy, regenerate, reasons) or `false` to leave it out.
+- `citations` appear under a completed reply and also feed the AI label's explanation.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves through the label, sources, feedback controls and the composer."], ["Enter", "Sends from the composer; Shift+Enter adds a line."]]} />
+
+## Screen readers
+
+- The list is a log named “Conversation” with live updates off. A streaming reply announces “Generating response” and “Response complete” itself, so people are not read every word.
+- Each message is an article named for its speaker and time.
+
+## Visual
+
+- Replies are marked by words (agent name, “AI generated”), not by colour. Message text keeps 7:1 body contrast.
+
+</Section>

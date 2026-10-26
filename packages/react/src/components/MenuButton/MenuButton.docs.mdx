@@ -1,0 +1,83 @@
+export const meta = {
+  title: "Menu button",
+  description: "A button that opens a menu, and a combo button that pairs a primary action with a menu of alternatives.",
+  category: "Actions",
+  status: "new",
+  components: ["MenuButton", "ComboButton"],
+  related: ["button", "menu", "overflow-menu"],
+  order: 3,
+};
+
+<Section tab="usage">
+
+<Example of="MenuButton/Overview" layout="start" />
+
+## When to use
+
+- Menu button: when one label stands for several related actions or formats (Export, Add filter, New).
+- Combo button: when one action is the usual choice and a few close variants exist (Run now, with Run with sample data).
+
+## When not to use
+
+- For a single action. Use a [Button](/components/button).
+- For per-row actions with no label. Use an [Overflow menu](/components/overflow-menu).
+- For choosing a value that stays selected. Use a [Select](/components/select).
+
+## Variants
+
+<Example of="MenuButton/Sizes" title="Sizes" description="The menu's rows match the button: small buttons open small menus." layout="start" />
+
+<Example of="MenuButton/Combo" title="Combo button" description="The label button runs the primary action. The chevron button, named “More actions”, opens alternatives. Use it for close variants of the same action." layout="start" />
+
+<Example of="MenuButton/ComboVariants" title="Combo emphasis" description="Solid accent by default. Outline and soft suit secondary placements." layout="start" />
+
+<DoDont>
+  <Do of="MenuButton/DoOneDefault" caption="Make the main action obvious, and keep alternatives close variants of it." />
+  <Dont of="MenuButton/DontUnrelatedItems" caption="Put unrelated items behind a primary action. People won't find them." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Menu button: a Button with a trailing chevron. Combo button: a Button and an Icon button joined with a hairline separator, sharing one outline.
+
+## Tokens
+
+<UsesTokens names={["accent.solid-bg", "neutral.outline-border", "bg.raised", "focus.ring"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="MenuButton/Overview" title="Export menu" code="open" layout="start" />
+
+<Example of="MenuButton/Combo" title="Combo button" code="open" layout="start" />
+
+## Notes
+
+- Pass menu content with `menu`. Everything else on MenuButton is a Button prop; `onClick` belongs to ComboButton's primary action only.
+- Set `menuLabel` on ComboButton to name the chevron for this action: “Run options”.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Enter, Space or ArrowDown", "Opens the menu and focuses the first item."], ["ArrowDown, ArrowUp", "Moves between items."], ["Escape", "Closes the menu and returns focus to the button."], ["Tab", "In a combo button, moves from the action to the chevron."]]} />
+
+## Screen readers
+
+- Menu buttons announce as menu buttons (`aria-haspopup="menu"`) with their expanded state.
+- A combo button is a labelled group of two buttons.
+
+## Visual
+
+- Both halves of a combo button are separate targets of at least the button height.
+
+</Section>

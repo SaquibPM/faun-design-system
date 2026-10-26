@@ -1,0 +1,83 @@
+export const meta = {
+  title: "Link",
+  description: "Takes a person to another page, document or evidence source. Underlined in running text so it never relies on colour alone.",
+  category: "Navigation",
+  status: "new",
+  components: ["Link"],
+  related: ["button", "breadcrumbs"],
+  order: 13,
+};
+
+<Section tab="usage">
+
+<Example of="Link/Overview" layout="start" />
+
+## When to use
+
+- To navigate to another page, a document, a run log or an external standard.
+- Inside sentences, captions and table cells where a button would be too heavy.
+
+## When not to use
+
+- To trigger an action such as approve, export or delete. Use [Button](/components/button).
+- For a trail of parent pages. Use [Breadcrumbs](/components/breadcrumbs).
+
+## Variants
+
+<Example of="Link/Underline" title="Underline" description="Always underline links inside running text. Use hover underline only for standalone links such as “View all”." />
+
+<Example of="Link/Tones" title="Tones" description="Muted links sit inside secondary text without competing with it." layout="start" />
+
+<Example of="Link/External" title="External links" description="Opens a new tab, adds an icon and tells screen readers." />
+
+<DoDont>
+  <Do of="Link/DoDescriptive" caption="Name the destination, so the link makes sense out of context." />
+  <Dont of="Link/DontClickHere" caption="Use “click here” or “read more”. Screen reader users list links without their surrounding text." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Link text in the link colour, an underline, and an optional external icon after the text. Links inherit the font size and weight of the text around them.
+
+## States
+
+Default, hover (darker colour, underline), focus (focus ring), disabled (`aria-disabled`).
+
+## Tokens
+
+<UsesTokens names={["fg.link", "fg.link-hover", "fg.muted", "focus.ring"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Link/Overview" title="Internal and external links" code="open" layout="start" />
+
+## Notes
+
+- Use `asChild` to render your router's link, so navigation stays client side.
+- `external` sets `target="_blank"` and `rel="noopener noreferrer"`. Set it only for other sites.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves focus to the next link."], ["Enter", "Follows the link."]]} />
+
+## Screen readers
+
+- External links add the hidden text “(opens in a new tab)” to the accessible name.
+
+## Visual
+
+- Link text meets 4.5:1 against every surface. Underlines mean links are not identified by colour alone.
+
+</Section>

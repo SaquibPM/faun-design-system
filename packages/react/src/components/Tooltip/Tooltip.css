@@ -1,0 +1,29 @@
+.faun-tooltip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--faun-space-2);
+  max-inline-size: var(--faun-tooltip-max-width);
+  padding: var(--faun-tooltip-py) var(--faun-tooltip-px);
+  border-radius: var(--faun-tooltip-radius);
+  background: var(--faun-bg-inverse);
+  color: var(--faun-fg-inverse);
+  box-shadow: var(--faun-elevation-3);
+  font-family: var(--faun-type-label-sm-font-family);
+  font-size: var(--faun-type-label-sm-font-size);
+  line-height: var(--faun-type-label-sm-line-height);
+  font-weight: var(--faun-type-label-sm-font-weight);
+  z-index: var(--faun-z-tooltip);
+  transform-origin: var(--radix-tooltip-content-transform-origin);
+  animation: faun-pop-in var(--faun-motion-duration-moderate) var(--faun-motion-easing-enter);
+  --_pop-y: 2px;
+}
+.faun-tooltip[data-state="closed"] { animation: faun-fade-out var(--faun-motion-duration-fast) var(--faun-motion-easing-exit); }
+.faun-tooltip-shortcut {
+  font-family: var(--faun-font-family-mono);
+  font-size: var(--faun-type-micro-font-size);
+  line-height: var(--faun-type-micro-line-height);
+  padding-inline: var(--faun-space-1);
+  border-radius: var(--faun-radius-xs);
+  background: color-mix(in srgb, var(--faun-fg-inverse) 14%, transparent);
+  color: color-mix(in srgb, var(--faun-fg-inverse) 80%, transparent);
+}

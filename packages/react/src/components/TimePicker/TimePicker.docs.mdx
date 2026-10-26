@@ -1,0 +1,99 @@
+export const meta = {
+  title: "Time picker",
+  description: "Type a time of day in a masked field, in 12 or 24 hour form, with steps and limits.",
+  category: "Forms",
+  status: "new",
+  components: ["TimePicker"],
+  related: ["date-picker", "field", "input"],
+  order: 7,
+};
+
+<Section tab="usage">
+
+<Example of="TimePicker/Overview" layout="start" />
+
+## When to use
+
+- To set a time of day: when a run starts, when a review closes, a cut-off.
+- With a [Date picker](/components/date-picker) when you need both. Keep them as two fields, date first.
+
+## When not to use
+
+- For a duration (“2 hours”). Use a number field with a unit.
+- For seconds or milliseconds. Use an Input with your own format.
+- For a choice among a few named times (“Morning, afternoon”). Use a Select or segmented control.
+
+## Variants
+
+<Example of="TimePicker/TwelveHour" title="12 hour" description='hourCycle={12} adds an AM/PM choice. People can also press A or P in the field. The stored value is always 24 hour "HH:mm", so the display setting never changes your data.' layout="start" />
+
+<Example of="TimePicker/Steps" title="Steps and limits" description="step is the minutes between allowed times; min and max bound the day. Arrow Up and Down move one step and wrap. A time off the grid is flagged." layout="start" />
+
+<Example of="TimePicker/Validation" title="Validation" description="Problems are written under the field and set aria-invalid. onValidate reports the same message so a Field can show it." layout="start" />
+
+<DoDont>
+  <Do of="TimePicker/DoDateAndTime" caption="Label what the time means (“Run time”) and pair it with its own date field." />
+  <Dont of="TimePicker/DontSecondsPrecision" caption="Ask for seconds in a field that only takes hours and minutes." />
+</DoDont>
+
+## Writing
+
+Label the event, not the control: “Review closes”, not “Time”. Say the time zone in the description (“Local time”, “UTC”). Messages say what to enter: “Use 15 minute steps, for example 09:00.”
+
+## Warn, read-only and loading
+
+<Example of="TimePicker/StateContract" title="Warn, read-only and skeleton" description="Warn marks a time that is allowed but worth a second look and never sets aria-invalid. Read-only shows the time flat and ignores typing. Skeleton replaces the control while its data loads. Set them on a Field and every control inside follows." />
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+An input-styled box with a clock icon, the masked hh:mm text, and for 12 hour an AM/PM select on a nested surface. A message line sits under the box when something is wrong, with an icon so it is not colour alone.
+
+## Tokens
+
+<UsesTokens names={["bg.surface", "bg.surface-nested", "border.control", "focus.halo", "status.danger.fg"]} />
+
+<ComponentTokens name="input" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="TimePicker/TwelveHour" title="Controlled value" layout="start" code="open" />
+
+## Notes
+
+- `value` is a string `"HH:mm"` (24 hour) or `null`. `min` and `max` use the same form. Steps count from `min` (or midnight).
+- `onValueChange` fires as soon as the text is a complete valid time and with `null` when it stops being one.
+- `onValidate({ status, message })` reports `empty`, `incomplete`, `valid`, `invalid`, `before-min`, `after-max` or `off-step`. An incomplete time is only called out after the field loses focus.
+- The picker does not handle time zones. Store the zone beside the time and say it in the description.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[
+  ["Type", "Digits fill hours then minutes. A first digit that cannot start an hour gets a zero (9 becomes 09). A colon pads a one-digit hour."],
+  ["Arrow Up / Arrow Down", "Moves the time by one step. Wraps inside the limits."],
+  ["A / P", "On a 12 hour field, switches to AM or PM."],
+  ["Tab", "Moves from the time to the AM/PM choice, then on."],
+]} />
+
+## Screen readers
+
+- A text input named by its Field. The description gives the format, the arrow-key behaviour and the step. On 12 hour fields the AM/PM select is named "AM or PM".
+- A problem is linked with `aria-describedby`, shown as text with an icon and announced politely.
+- Read-only keeps the value readable and focusable.
+
+## Visual
+
+- Digits use tabular figures. The invalid border is paired with the message and icon. Targets meet the minimum size.
+
+</Section>

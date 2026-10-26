@@ -1,0 +1,24 @@
+.faun-hover-card {
+  --_w: calc(var(--faun-space-20) * 4);
+  display: grid;
+  gap: var(--faun-space-2);
+  inline-size: min(var(--_w), calc(100vw - var(--faun-space-4)));
+  max-block-size: var(--radix-hover-card-content-available-height);
+  overflow: auto;
+  padding: var(--faun-popover-padding);
+  border-radius: var(--faun-popover-radius);
+  border: var(--faun-border-width-hairline) solid var(--faun-border-subtle);
+  background: var(--faun-bg-raised);
+  color: var(--faun-fg-default);
+  box-shadow: var(--faun-elevation-3);
+  font-size: var(--faun-type-body-sm-font-size);
+  line-height: var(--faun-type-body-sm-line-height);
+  z-index: var(--faun-z-popover);
+  outline: none;
+  transform-origin: var(--radix-hover-card-content-transform-origin);
+  animation: faun-pop-in var(--faun-motion-duration-moderate) var(--faun-motion-easing-enter);
+}
+.faun-hover-card[data-state="closed"] { animation: faun-pop-out var(--faun-motion-duration-fast) var(--faun-motion-easing-exit); }
+.faun-hover-card:where([data-side="top"]) { --_pop-y: calc(var(--faun-space-1) * -1); }
+.faun-hover-card:where([data-size="sm"]) { --_w: calc(var(--faun-space-20) * 3); }
+@media (forced-colors: active) { .faun-hover-card { border-color: CanvasText; } }

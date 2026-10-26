@@ -1,0 +1,75 @@
+export const meta = {
+  title: "Accordion",
+  description: "Sections that expand and collapse in place. Includes Collapsible for a single show/hide region.",
+  category: "Navigation",
+  status: "stable",
+  components: ["Accordion", "AccordionItem", "AccordionTrigger", "AccordionContent", "Collapsible"],
+  related: ["tabs", "card"],
+  order: 14,
+};
+
+<Section tab="usage">
+
+<Example of="Accordion/Overview" height={260} />
+
+## When to use
+
+- For supporting content most people don't need at once: methodology notes, advanced options, FAQs.
+- To keep a long settings or review page scannable while keeping everything on one page.
+
+## When not to use
+
+- For the main content of the page. Don't hide what people came to see.
+- For sections people compare or switch between often: use Tabs.
+- For a single optional region: use Collapsible.
+
+## Variants
+
+<Example of="Accordion/Multiple" title="Multiple, with icons and meta" description="type=&quot;multiple&quot; lets several sections stay open. Meta (a count or badge) helps people decide what to open." height={220} />
+
+<Example of="Accordion/Separated" title="Separated" description="Each item as its own card. Use inside a page that already has dividers." height={220} />
+
+<Example of="Accordion/CollapsibleExample" title="Collapsible" description="One region toggled by any trigger, for “show more” and advanced filters." height={120} />
+
+<DoDont>
+  <Do of="Accordion/DoOptional" caption="Collapse supplementary detail." />
+  <Dont of="Accordion/DontPrimary" caption="Hide the primary content behind a click." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A full-width trigger with optional icon, title, description, meta and a chevron that rotates when open, followed by the content. Divided items share hairlines; separated items are bordered cards.
+
+## Tokens
+
+<UsesTokens names={["border.default", "bg.hover", "fg.muted", "bg.surface"]} />
+
+</Section>
+
+<Section tab="code">
+
+<Example of="Accordion/Overview" title="Single, collapsible" code="open" height={260} />
+
+## Notes
+
+- `type="single"` needs `collapsible` for people to close the open item.
+- Content height animates; reduced motion removes the animation.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Enter / Space", "Expands or collapses the focused section."], ["Down / Up arrow", "Moves to the next or previous trigger, wrapping at the ends."], ["Home / End", "Moves to the first or last trigger."]]} />
+
+## Screen readers
+
+- Triggers are buttons inside headings, with `aria-expanded` and `aria-controls`. Collapsed content is hidden from assistive technology.
+- Disabled sections stay announced as unavailable.
+
+</Section>

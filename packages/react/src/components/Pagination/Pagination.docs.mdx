@@ -1,0 +1,75 @@
+export const meta = {
+  title: "Pagination",
+  description: "Move through a long list page by page, with a range summary and an optional page size.",
+  category: "Navigation",
+  status: "stable",
+  components: ["Pagination"],
+  related: ["tabs", "breadcrumbs"],
+  order: 12,
+};
+
+<Section tab="usage">
+
+<Example of="Pagination/Overview" height={90} />
+
+## When to use
+
+- Under tables and lists with more rows than fit on one screen, where people need to find a position (“page 12”).
+- When the total is known and the list is stable while someone browses it.
+
+## When not to use
+
+- For fewer items than one page: hide the control.
+- For feeds or logs people read top to bottom: use load more or infinite scroll.
+- For unknown totals: use previous and next only (`variant="compact"`) and omit the summary.
+
+## Variants
+
+<Example of="Pagination/Middle" title="Ellipsis" description="Pages collapse around the current page: first and last always stay, with one neighbour on each side." height={90} />
+
+<Example of="Pagination/Compact" title="Compact" description="Arrows with “Page 3 of 42”. Used automatically below 640px." height={90} />
+
+<DoDont>
+  <Do of="Pagination/DoTotals" caption="Show the range and the total so people know how much is left." />
+  <Dont of="Pagination/DontFewItems" caption="Paginate a list that fits on one page." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Page size picker, range summary, then previous, numbered pages and next, aligned to the end. The current page has a border and semibold weight. Numbers use tabular figures and thousands separators.
+
+## Tokens
+
+<UsesTokens names={["fg.muted", "fg.default", "border.strong", "bg.hover", "border.control"]} />
+
+</Section>
+
+<Section tab="code">
+
+<Example of="Pagination/Overview" title="Controlled" code="open" height={90} />
+
+## Notes
+
+- Fully controlled: you own `page` and `pageSize`. Reset to page 1 when the page size or filters change.
+- The page size picker is a native select, which keeps it fast and accessible on touch.
+- `paginationRange` is exported if you need the same page list elsewhere.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves through previous, each page, next, and the page size select."], ["Enter / Space", "Goes to the page."]]} />
+
+## Screen readers
+
+- A `nav` landmark named “Pagination”. Page buttons are named “Page 3” and the current one has `aria-current="page"`.
+- The range summary is a polite live region, so changing page announces “Showing 26–50 of 1,034”.
+- Disabled previous and next stay in the tab order flow as disabled buttons.
+
+</Section>

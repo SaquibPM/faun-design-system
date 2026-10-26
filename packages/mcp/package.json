@@ -1,0 +1,67 @@
+{
+  "name": "@faun-ds/mcp",
+  "version": "0.1.0",
+  "description": "A Model Context Protocol server that gives coding agents Faun's components, props, tokens, status map and icons as tools.",
+  "license": "Apache-2.0",
+  "author": "Saquib Jawed and Faun contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaquibPM/faun-design-system.git",
+    "directory": "packages/mcp"
+  },
+  "homepage": "https://saquibpm.github.io/faun-design-system",
+  "bugs": {
+    "url": "https://github.com/SaquibPM/faun-design-system/issues"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "design-system",
+    "ai-agents",
+    "claude",
+    "coding-agents"
+  ],
+  "type": "module",
+  "bin": {
+    "faun-mcp": "./dist/cli.js"
+  },
+  "files": [
+    "dist",
+    "data",
+    "README.md"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "data": "node scripts/build-data.mjs",
+    "build": "node scripts/build-data.mjs && tsup",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "1.32.1",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@faun-ds/icons": "workspace:*",
+    "@faun-ds/tokens": "workspace:*",
+    "@types/node": "^22.10.2",
+    "tsup": "8.5.1",
+    "typescript": "5.9.3",
+    "vitest": "3.2.7"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

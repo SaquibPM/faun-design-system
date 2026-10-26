@@ -1,0 +1,4 @@
+.faun-confidence-badge:where([tabindex]) { cursor: help; }
+.faun-confidence-badge:where([tabindex]):focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 2px; }
+.faun-confidence-bars { display: block; }
+.faun-confidence-score { font-feature-settings: var(--faun-font-feature-numeric); }

@@ -1,0 +1,16 @@
+.faun-toolbar {
+  display: flex; align-items: center; gap: var(--faun-space-1);
+  min-inline-size: 0;
+  padding: var(--faun-space-1);
+  border: var(--faun-border-width-hairline) solid var(--faun-border-subtle);
+  border-radius: var(--faun-radius-md);
+  background: var(--faun-bg-surface);
+}
+.faun-toolbar:where([data-orientation="vertical"]) { flex-direction: column; align-items: stretch; inline-size: max-content; }
+.faun-toolbar:where([data-overflow]) { overflow: hidden; }
+.faun-toolbar [hidden] { display: none; }
+.faun-toolbar-separator { flex: none; align-self: stretch; inline-size: var(--faun-border-width-hairline); margin-block: var(--faun-space-1); margin-inline: var(--faun-space-1); background: var(--faun-border-subtle); }
+.faun-toolbar:where([data-orientation="vertical"]) .faun-toolbar-separator { inline-size: auto; block-size: var(--faun-border-width-hairline); margin-inline: var(--faun-space-1); margin-block: var(--faun-space-1); }
+.faun-toolbar-button, .faun-toolbar-more { flex: none; }
+.faun-toolbar-more { margin-inline-start: auto; }
+@media (forced-colors: active) { .faun-toolbar { border-color: CanvasText; } }

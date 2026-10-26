@@ -1,0 +1,47 @@
+{
+  "name": "faun",
+  "private": true,
+  "description": "Faun \u2014 an open design system for agentic enterprise software.",
+  "license": "Apache-2.0",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "turbo build",
+    "test": "turbo test",
+    "typecheck": "turbo typecheck",
+    "tokens": "pnpm --filter @faun-ds/tokens build",
+    "changeset": "changeset",
+    "release": "turbo build && changeset publish",
+    "dev": "pnpm --filter @faun-ds/docs dev",
+    "docs:build": "pnpm build:llms && pnpm --filter @faun-ds/docs build",
+    "e2e": "playwright test -c e2e/playwright.config.ts",
+    "check:icons": "node scripts/check-icons.mjs",
+    "readme:shots": "node scripts/readme-shots.mjs",
+    "format": "prettier --write .",
+    "build:llms": "node scripts/build-llms.mjs",
+    "lint": "eslint .",
+    "preflight": "node scripts/preflight-publish.mjs",
+    "check:generated": "node scripts/check-generated.mjs",
+    "rename-scope": "node scripts/rename-scope.mjs",
+    "set-owner": "node scripts/set-owner.mjs",
+    "check:pages": "node scripts/pages-smoke.mjs"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.11",
+    "playwright": "1.49.1",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2",
+    "@playwright/test": "1.49.1",
+    "prettier": "^3.4.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaquibPM/faun-design-system.git"
+  },
+  "homepage": "https://saquibpm.github.io/faun-design-system",
+  "bugs": {
+    "url": "https://github.com/SaquibPM/faun-design-system/issues"
+  }
+}

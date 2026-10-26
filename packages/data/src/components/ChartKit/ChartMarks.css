@@ -1,0 +1,61 @@
+/* Shared by the chart types built on ChartShell. Colours are always data-viz tokens or neutral chart chrome. */
+.faun-chart[data-bare] { gap: 0; inline-size: auto; display: inline-block; vertical-align: middle; }
+.faun-chart[data-bare] .faun-chart-plot { cursor: default; }
+.faun-chart-swatch[data-kind="dot"] { inline-size: var(--faun-space-3); block-size: var(--faun-space-3); }
+.faun-chart-legend-ramp { display: flex; flex-direction: column; gap: var(--faun-space-1); inline-size: calc(var(--faun-space-24) * 2); color: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size); line-height: var(--faun-type-caption-line-height); }
+.faun-chart-ramp-steps { display: flex; block-size: var(--faun-space-2); border-radius: var(--faun-radius-xs); overflow: hidden; }
+.faun-chart-ramp-steps > span { flex: 1; }
+.faun-chart-ramp-ends { display: flex; justify-content: space-between; font-feature-settings: var(--faun-font-feature-numeric); }
+
+.faun-chart-stem { stroke-width: var(--faun-border-width-thick); stroke-linecap: round; }
+.faun-chart-dot { stroke: var(--faun-dataviz-surface); stroke-width: var(--faun-border-width-hairline); }
+.faun-chart-area { stroke: none; opacity: 0.32; }
+.faun-chart-area[data-stacked] { opacity: 0.55; }
+.faun-chart-bubble { stroke-width: var(--faun-border-width-hairline); fill-opacity: 0.55; }
+.faun-chart-active-ring { fill: none; stroke: var(--faun-fg-default); stroke-width: var(--faun-border-width-thick); }
+.faun-chart-poly { stroke-width: var(--faun-border-width-thick); stroke-linejoin: round; }
+.faun-chart-poly-fill { stroke: none; opacity: 0.16; }
+.faun-chart-ring { fill: none; stroke: var(--faun-dataviz-grid); stroke-width: var(--faun-border-width-hairline); }
+.faun-chart-spoke { stroke: var(--faun-dataviz-grid); stroke-width: var(--faun-border-width-hairline); }
+.faun-chart-slice { stroke: var(--faun-dataviz-surface); stroke-width: var(--faun-border-width-thick); stroke-linejoin: round; }
+.faun-chart-slice[data-active] { stroke: var(--faun-fg-default); }
+.faun-chart-cell { stroke: var(--faun-dataviz-surface); stroke-width: var(--faun-border-width-thick); }
+.faun-chart-cell[data-active] { stroke: var(--faun-fg-default); }
+.faun-chart-tile { stroke: var(--faun-dataviz-surface); stroke-width: var(--faun-border-width-thick); }
+.faun-chart-tile[data-active] { stroke: var(--faun-fg-default); }
+.faun-chart-chip { fill: var(--faun-dataviz-surface); fill-opacity: 0.88; }
+.faun-chart-chip-text { fill: var(--faun-fg-default); font-size: var(--faun-type-caption-font-size); font-weight: var(--faun-font-weight-medium); font-feature-settings: var(--faun-font-feature-numeric); }
+.faun-chart-cell-text { fill: var(--faun-fg-default); font-size: var(--faun-type-caption-font-size); font-weight: var(--faun-font-weight-medium); font-feature-settings: var(--faun-font-feature-numeric); paint-order: stroke; stroke: var(--faun-dataviz-surface); stroke-width: 3px; stroke-linejoin: round; }
+.faun-chart-big { fill: var(--faun-fg-default); font-family: var(--faun-font-family-serif); font-size: var(--faun-type-figure-md-font-size); font-feature-settings: var(--faun-font-feature-numeric); }
+.faun-chart-sub { fill: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size); }
+.faun-chart-track { fill: var(--faun-dataviz-axis); opacity: 0.14; }
+.faun-chart-range { fill: var(--faun-dataviz-axis); }
+.faun-chart-whisker { stroke: var(--faun-dataviz-axis); stroke-width: var(--faun-border-width-thick); }
+.faun-chart-median { stroke: var(--faun-fg-default); stroke-width: var(--faun-border-width-thick); }
+.faun-chart-box { fill-opacity: 0.45; stroke-width: var(--faun-border-width-thick); }
+.faun-chart-outlier { fill: none; stroke-width: var(--faun-border-width-thick); }
+.faun-chart-target-mark { stroke: var(--faun-fg-default); stroke-width: var(--faun-border-width-thick); stroke-linecap: round; }
+.faun-chart-link { fill-opacity: 0.32; stroke: none; }
+.faun-chart-link[data-active] { fill-opacity: 0.6; }
+.faun-chart-node { stroke: var(--faun-dataviz-surface); stroke-width: var(--faun-border-width-hairline); }
+.faun-chart-edge { fill: none; stroke: var(--faun-dataviz-axis); stroke-width: var(--faun-border-width-thick); opacity: 0.45; }
+.faun-chart-branch-node { stroke: var(--faun-dataviz-surface); stroke-width: var(--faun-border-width-thick); }
+.faun-chart-branch-node[data-active] { stroke: var(--faun-fg-default); }
+.faun-chart-pack { stroke: var(--faun-dataviz-surface); stroke-width: var(--faun-border-width-thick); }
+.faun-chart-pack[data-branch] { fill-opacity: 0.18; stroke: var(--faun-dataviz-axis); stroke-width: var(--faun-border-width-hairline); }
+.faun-chart-pack[data-active] { stroke: var(--faun-fg-default); stroke-width: var(--faun-border-width-thick); }
+.faun-chart-word { font-family: var(--faun-font-family-sans); font-weight: var(--faun-font-weight-semibold); }
+.faun-chart-word[data-active] { text-decoration: underline; }
+.faun-chart-spark-line { fill: none; stroke-width: var(--faun-border-width-thick); stroke-linejoin: round; stroke-linecap: round; }
+.faun-chart-meter-seg { stroke: var(--faun-dataviz-surface); stroke-width: var(--faun-border-width-thick); }
+.faun-chart-meter-seg[data-active] { stroke: var(--faun-fg-default); }
+.faun-chart-axis-label { fill: var(--faun-fg-default); font-size: var(--faun-type-caption-font-size); }
+@media (forced-colors: active) {
+  .faun-chart-slice, .faun-chart-cell, .faun-chart-tile, .faun-chart-node, .faun-chart-dot { stroke: CanvasText; }
+}
+.faun-chart-ref:where(circle, path, polygon) { fill: none; }
+.faun-chart-track-arc { fill: none; stroke: var(--faun-dataviz-axis); opacity: 0.14; stroke-linecap: round; }
+.faun-chart-value-arc { fill: none; stroke-linecap: round; }
+.faun-chart-track-bar { fill: var(--faun-dataviz-axis); opacity: 0.14; }
+.faun-chart-knockout { paint-order: stroke; stroke: var(--faun-dataviz-surface); stroke-width: 3; stroke-linejoin: round; }
+.faun-chart-ref-label { paint-order: stroke; stroke: var(--faun-dataviz-surface); stroke-width: 3; stroke-linejoin: round; }

@@ -1,0 +1,75 @@
+.faun-menu {
+  min-inline-size: var(--faun-menu-min-width);
+  max-inline-size: min(calc(var(--faun-space-24) * 4), calc(100vw - var(--faun-space-4)));
+  max-block-size: var(--radix-dropdown-menu-content-available-height, var(--radix-context-menu-content-available-height));
+  overflow-y: auto;
+  padding: var(--faun-menu-padding);
+  border-radius: var(--faun-menu-radius);
+  border: var(--faun-border-width-hairline) solid var(--faun-border-subtle);
+  background: var(--faun-bg-raised);
+  color: var(--faun-fg-default);
+  box-shadow: var(--faun-elevation-3);
+  z-index: var(--faun-z-dropdown);
+  outline: none;
+  transform-origin: var(--radix-dropdown-menu-content-transform-origin, var(--radix-context-menu-content-transform-origin));
+  animation: faun-pop-in var(--faun-motion-duration-moderate) var(--faun-motion-easing-enter);
+}
+.faun-menu[data-state="closed"] { animation: faun-pop-out var(--faun-motion-duration-fast) var(--faun-motion-easing-exit); }
+.faun-menu:where([data-side="top"]) { --_pop-y: calc(var(--faun-space-1) * -1); }
+.faun-menu-item {
+  --_fg: var(--faun-fg-default);
+  --_icon: var(--faun-fg-muted);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--faun-space-2);
+  min-block-size: var(--faun-menu-item-height);
+  padding: var(--faun-space-1) var(--faun-menu-item-px);
+  border-radius: var(--faun-menu-item-radius);
+  color: var(--_fg);
+  font-family: var(--faun-type-body-md-font-family);
+  font-size: var(--faun-type-body-md-font-size);
+  line-height: var(--faun-type-body-sm-line-height);
+  cursor: default;
+  user-select: none;
+  outline: none;
+  text-decoration: none;
+}
+.faun-menu-item:where([data-intent="danger"]) { --_fg: var(--faun-danger-fg); --_icon: var(--faun-danger-fg); }
+.faun-menu-item[data-highlighted] { background: var(--faun-bg-hover); }
+.faun-menu-item:where([data-intent="danger"])[data-highlighted] { background: var(--faun-danger-ghost-bg-hover); }
+.faun-menu-item[data-state="open"]:not([data-indicator]) { background: var(--faun-bg-hover); }
+.faun-menu-item[data-disabled] { --_fg: var(--faun-fg-disabled); --_icon: var(--faun-fg-disabled); pointer-events: none; }
+.faun-menu-indicator { display: inline-flex; align-items: center; justify-content: center; inline-size: var(--faun-size-icon-md); flex: none; color: var(--faun-fg-brand); }
+.faun-menu-radio-dot { display: block; inline-size: 6px; block-size: 6px; border-radius: var(--faun-radius-full); background: currentColor; }
+.faun-menu-icon { display: inline-flex; flex: none; color: var(--_icon); }
+.faun-menu-icon > svg { inline-size: var(--faun-size-icon-md); block-size: var(--faun-size-icon-md); }
+.faun-menu-text { display: grid; flex: 1 1 auto; min-inline-size: 0; }
+.faun-menu-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.faun-menu-description { color: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size); line-height: var(--faun-type-caption-line-height); }
+.faun-menu-item:where([data-intent="danger"]) .faun-menu-description { color: var(--faun-fg-muted); }
+.faun-menu-shortcut {
+  margin-inline-start: auto;
+  padding-inline-start: var(--faun-space-4);
+  color: var(--faun-fg-muted);
+  font-family: var(--faun-font-family-mono);
+  font-size: var(--faun-type-micro-font-size);
+  line-height: var(--faun-type-micro-line-height);
+  letter-spacing: var(--faun-type-micro-letter-spacing);
+}
+.faun-menu-sub-chevron { display: inline-flex; margin-inline-start: auto; color: var(--faun-fg-muted); }
+.faun-menu-group-label {
+  padding: var(--faun-space-2) var(--faun-menu-item-px) var(--faun-space-1);
+  color: var(--faun-fg-muted);
+  font-size: var(--faun-type-label-sm-font-size);
+  line-height: var(--faun-type-label-sm-line-height);
+  font-weight: var(--faun-type-label-sm-font-weight);
+}
+.faun-menu-separator { block-size: 1px; margin: var(--faun-space-1) calc(var(--faun-menu-padding) * -1); background: var(--faun-border-subtle); }
+@media (forced-colors: active) {
+  .faun-menu { border-color: CanvasText; }
+  .faun-menu-item[data-highlighted] { outline: 2px solid Highlight; outline-offset: -2px; }
+}
+.faun-menu:where([data-size="sm"]) .faun-menu-item { min-block-size: var(--faun-size-control-sm); }
+.faun-menu:where([data-size="md"]) .faun-menu-item { min-block-size: var(--faun-size-control-md); }
+.faun-menu:where([data-size="lg"]) .faun-menu-item { min-block-size: var(--faun-size-control-lg); }

@@ -1,0 +1,98 @@
+export const meta = {
+  title: "Dialog",
+  description: "A focused window above the page for one decision or short task. Traps focus, locks scroll and returns focus when it closes.",
+  category: "Overlays",
+  status: "stable",
+  components: ["DialogContent", "DialogHeader", "DialogFooter"],
+  related: ["alert-dialog", "sheet", "popover"],
+  order: 1,
+};
+
+<Section tab="usage">
+
+<Example of="Dialog/Overview" height={120} />
+
+## When to use
+
+- To confirm or complete one short task that needs the person's full attention: submit for approval, name a snapshot.
+- When the task must finish or be cancelled before the person goes back to the page.
+
+## When not to use
+
+- To confirm destruction or an irreversible action. Use [Alert dialog](/components/alert-dialog), which needs an explicit choice.
+- For long forms or detail the person needs next to the page. Use [Sheet](/components/sheet).
+- For small contextual content tied to a control. Use [Popover](/components/popover).
+
+## Variants
+
+<Example of="Dialog/WithForm" title="With a form" description="Set dismissible to false so a stray click on the scrim does not lose typed input. Use the footer start slot for status such as “Not saved yet”." height={120} />
+
+<Example of="Dialog/Sizes" title="Sizes" description="Extra small 320, small 420, medium 560, large 760, extra large 1040. On narrow screens a dialog becomes a bottom sheet." height={120} />
+
+<Example of="Dialog/XsPassive" title="Passive, extra small" description="A passive dialog gives information and asks for no decision. It has a single Close action and the close button. Extra small is 320 wide." height={120} />
+
+<Example of="Dialog/Danger" title="Danger" description="The danger variant puts a labelled danger icon in the header and a danger rule on the panel. The destructive button is the only filled button. For irreversible actions that need a typed confirmation use Alert dialog." height={120} />
+
+<Example of="Dialog/LongContent" title="Long content" description="When the body is taller than the dialog it scrolls under a fixed header and footer, draws a divider on each side with more content and becomes a labelled region that takes focus, so the arrow keys scroll it." height={120} />
+
+<DoDont>
+  <Do of="Dialog/DoOneDecision" caption="Ask for one decision, with the primary action last and named for what it does." />
+  <Dont of="Dialog/DontStackedDialogs" caption="Open a dialog from a dialog. Rework the flow into steps or use a Sheet." />
+</DoDont>
+
+## Writing
+
+- Title is a question or a verb phrase: “Submit the CSRD statement?”.
+- Description says the consequence in one or two sentences.
+- Buttons repeat the action: “Submit for approval”, not “OK”.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Scrim, panel, header (optional icon, title in the display face, description), scrolling body, footer (start slot and end-aligned actions) and a close button.
+
+## Sizes and layers
+
+Panels use the extra large radius, elevation 5 and the modal layer. The scrim fades over the slow duration and the panel scales in.
+
+## Tokens
+
+<UsesTokens names={["bg.raised", "bg.scrim", "border.subtle", "fg.muted", "status.danger.solid", "status.danger.fg"]} />
+
+<ComponentTokens name="dialog" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Dialog/Overview" title="Basic dialog" code="open" height={120} />
+
+## Notes
+
+- `Dialog` is the Radix root: control it with `open` and `onOpenChange`.
+- `DialogHeader` requires a title. Without a description it adds a hidden one so assistive technology has a name and a description.
+- Use `DialogClose asChild` around buttons that should close the dialog.
+- `variant` is `default`, `passive` or `danger`. `size` is `xs`, `sm`, `md`, `lg` or `xl`. Set `scrollLabel` on `DialogBody` to name the content when it scrolls.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves focus within the dialog. Focus cannot leave it."], ["Shift + Tab", "Moves focus backwards, wrapping at the start."], ["Arrow keys, Page Down", "Scroll a long body once it has focus."], ["Escape", "Closes the dialog and returns focus to the trigger."]]} />
+
+## Screen readers
+
+- Announced as a dialog named by its title and described by its description. Content behind it is inert. A body that overflows is exposed as a labelled region (`scrollLabel`) so it can be reached and scrolled with the keyboard; a short body is not a region.
+
+## Visual
+
+- The close button is labelled and meets the minimum target size. The scrim keeps the panel at 3:1 against the page.
+
+</Section>

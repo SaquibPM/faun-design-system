@@ -1,0 +1,86 @@
+export const meta = {
+  title: "Citation",
+  description: "Numbered references inside AI text, and the list of sources behind them.",
+  category: "AI and agents",
+  status: "new",
+  components: ["CitationMarker", "SourceList"],
+  related: ["provenance-trail", "popover", "confidence-badge"],
+  order: 4,
+};
+
+<Section tab="usage">
+
+<Example of="Citation/Overview" layout="start" />
+
+## When to use
+
+- After any statement or figure an agent wrote that rests on evidence: a survey answer, an invoice, an emission factor.
+- Under generated narrative, as a list of sources a reader can open and check.
+
+## When not to use
+
+- To show how a number was calculated. Use [Provenance trail](/components/provenance-trail).
+- For links in ordinary content. Use [Link](/components/link).
+
+## Parts
+
+<Example of="Citation/Marker" title="Marker" description="A small numbered button. It opens a card with the source's kind, publisher, locator and the quoted passage." layout="start" />
+
+<Example of="Citation/LinkedToList" title="Linked to the list" description="onOpen tells you which source was opened, so you can highlight it in the list." layout="start" />
+
+<DoDont>
+  <Do of="Citation/DoCiteTheClaim" caption="Place the marker right after the claim it supports." />
+  <Dont of="Citation/DontCiteTheParagraph" caption="Pile unexplained numbers at the end of a paragraph. The reader cannot tell which claim each supports." />
+</DoDont>
+
+## Writing
+
+- Source titles name the thing as people know it: “Supplier survey 2026”, “Invoice INV-20931”.
+- Locators are exact: “Sheet 2!C14”, “p. 2”. A reviewer should reach the passage in one step.
+- Quote the passage that supports the claim, not the whole document.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A marker is a 16px pill with the number, in the AI roles so it reads as generated-content metadata. A source card shows the title (a link when there is an address), a line with the kind icon, kind, publisher, locator and retrieval time, and the quoted passage on a rule. A source list is a numbered stack of the same.
+
+## Tokens
+
+<UsesTokens names={["ai.fg", "ai.bg", "ai.border", "fg.muted", "border.subtle", "bg.surface"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Citation/Overview" title="Text with sources" code="open" layout="start" />
+
+## Notes
+
+- A `Citation` pairs a 1-based `index` with a `Source`. Number markers in order of first use.
+- `SourceList` gives each entry the id `<idPrefix>-<index>` so your own links can point at it.
+- A marker's accessible name is “Source 1: Supplier survey 2026”.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves to each marker."], ["Enter", "Opens the source card."], ["Space", "Opens the source card."], ["Escape", "Closes the card and returns focus to the marker."]]} />
+
+## Screen readers
+
+- Markers are buttons named by number and source title. The card is a dialog with the same name.
+- The source list is an ordered list, so its numbers match the markers.
+
+## Visual
+
+- The visible marker is small. Its hit area extends to the minimum target size.
+- Marker text meets 4.5:1 on the AI wash in every theme.
+
+</Section>

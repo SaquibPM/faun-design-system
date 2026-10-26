@@ -1,0 +1,5 @@
+.faun-filter-bar { display: flex; align-items: center; flex-wrap: wrap; gap: var(--faun-space-2); min-inline-size: 0; }
+.faun-filter-bar .faun-filter-bar-chips { display: flex; flex-wrap: wrap; gap: var(--faun-space-2); min-inline-size: 0; margin: 0; padding: 0; list-style: none; }
+.faun-filter-bar-chips > li { display: inline-flex; max-inline-size: 100%; }
+.faun-filter-bar-field { color: var(--faun-fg-muted); }
+.faun-filter-bar-extra { display: inline-flex; align-items: center; gap: var(--faun-space-2); margin-inline-start: auto; }

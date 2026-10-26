@@ -1,0 +1,18 @@
+.faun-ai-chat-list { display: flex; flex-direction: column; gap: var(--faun-space-5); min-inline-size: 0; }
+.faun-ai-message { display: flex; flex-direction: column; gap: var(--faun-space-2); min-inline-size: 0; }
+.faun-ai-message:where([data-role="user"]) { align-items: flex-end; }
+.faun-ai-message-bubble {
+  max-inline-size: min(100%, calc(var(--faun-space-20) * 7));
+  padding: var(--faun-space-2-5) var(--faun-space-4);
+  border-radius: var(--faun-radius-lg);
+  border-end-end-radius: var(--faun-radius-xs);
+  background: var(--faun-bg-brand-soft);
+  color: var(--faun-fg-default);
+  font-size: var(--faun-type-body-md-font-size); line-height: var(--faun-type-body-md-line-height);
+  overflow-wrap: anywhere;
+}
+.faun-ai-message-head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--faun-space-2); }
+.faun-ai-message-time { color: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size); font-feature-settings: var(--faun-font-feature-numeric); }
+.faun-ai-message-body { min-inline-size: 0; max-inline-size: var(--faun-layout-reading-max); font-size: var(--faun-type-body-md-font-size); line-height: var(--faun-type-body-md-line-height); }
+.faun-ai-message-sources { max-inline-size: var(--faun-layout-reading-max); padding: var(--faun-space-3); border: var(--faun-border-width-hairline) solid var(--faun-border-subtle); border-radius: var(--faun-radius-md); background: var(--faun-bg-surface-nested); }
+.faun-ai-suggestions { display: flex; flex-wrap: wrap; gap: var(--faun-space-2); }

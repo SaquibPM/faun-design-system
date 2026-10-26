@@ -1,0 +1,85 @@
+export const meta = {
+  title: "Stepper",
+  description: "Shows progress through an ordered process, including steps that failed or are waiting for a person.",
+  category: "Navigation",
+  status: "stable",
+  components: ["Stepper"],
+  related: ["tabs", "progress"],
+  order: 13,
+};
+
+<Section tab="usage">
+
+<Example of="Stepper/Overview" height={120} />
+
+## When to use
+
+- For a process with a fixed order and a clear end: filing a report, importing data, onboarding a framework.
+- To show where an agent's workflow is paused for a human.
+
+## When not to use
+
+- For sections people can visit in any order: use Tabs.
+- For more than six steps: group them, or show progress with a Progress bar.
+- For a single long operation: use Progress.
+
+## Variants
+
+<Example of="Stepper/Vertical" title="Vertical" description="Use in side panels or when steps carry long descriptions." height={280} />
+
+<Example of="Stepper/States" title="States" description="Complete, current and upcoming derive from the current index. Set state to error when a step failed, or awaiting-human when a person must act before the process continues." height={130} />
+
+<Example of="Stepper/Statuses" title="Visible status and unavailable steps" description="showStatus writes each state under the label. A step with disabled and onSelect is a disabled button that reads Unavailable." height={150} />
+
+<Example of="Stepper/Clickable" title="Navigable" description="Give completed steps onSelect to let people go back. Leave upcoming steps non-interactive." height={120} />
+
+<DoDont>
+  <Do of="Stepper/DoLabels" caption="Short noun labels, three to five steps." />
+  <Dont of="Stepper/DontTwoStep" caption="Generic labels and many steps. Group or simplify." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A numbered marker, label, optional description and a connector to the next step. Complete steps show a check and an accent connector; errors show a cross; awaiting-human shows a person.
+
+## Responsive
+
+On narrow screens horizontal steppers show markers only, with the current step's text expanded.
+
+## Tokens
+
+<UsesTokens names={["accent.solid-bg", "border.default", "status.danger.fg", "status.attention.fg", "fg.muted"]} />
+
+</Section>
+
+<Section tab="code">
+
+<Example of="Stepper/States" title="Flagged steps" code="open" height={130} />
+
+## Notes
+
+- The component is display-only; you own the current index. Set `state` on a step to override what is derived.
+- Pair with a heading that names the process, and pass `aria-label` for the list.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Only steps with onSelect (and not disabled) are focusable."], ["Enter / Space", "Goes to that step."]]} />
+
+## Screen readers
+
+- An ordered list; the current step has `aria-current="step"`.
+- Each step includes status text (“Completed”, “Current step”, “Not started”, “Needs attention”, “Waiting for a person”, “Unavailable”), hidden by default and shown with `showStatus`, so state never depends on colour or icon alone.
+
+## Visual
+
+Markers use distinct glyphs per state, and colours meet contrast on both themes.
+
+</Section>

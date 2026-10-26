@@ -1,0 +1,18 @@
+.faun-link {
+  color: var(--faun-fg-link);
+  font: inherit;
+  text-decoration-line: underline;
+  text-decoration-thickness: var(--faun-border-width-hairline);
+  text-underline-offset: 0.2em;
+  border-radius: var(--faun-radius-xs);
+  cursor: pointer;
+  transition: color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard);
+}
+.faun-link:where([data-tone="muted"]) { color: var(--faun-fg-muted); }
+.faun-link:where([data-underline="hover"]) { text-decoration-line: none; }
+.faun-link:hover { color: var(--faun-fg-link-hover); text-decoration-line: underline; }
+.faun-link:where([data-tone="muted"]):hover { color: var(--faun-fg-default); }
+.faun-link:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 2px; }
+.faun-link[aria-disabled="true"] { color: var(--faun-fg-disabled); pointer-events: none; cursor: not-allowed; }
+.faun-link-icon { display: inline-block; inline-size: 0.9em; block-size: 0.9em; margin-inline-start: var(--faun-space-0-5); vertical-align: -0.1em; }
+@media (forced-colors: active) { .faun-link { color: LinkText; } }

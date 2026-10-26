@@ -1,0 +1,96 @@
+export const meta = {
+  title: "Word cloud",
+  description: "Shows which terms stand out in a body of text, with type size set by value.",
+  category: "Data",
+  status: "new",
+  components: ["WordCloudChart"],
+  related: ["bar-chart", "treemap-chart", "chart-types"],
+  order: 37,
+};
+
+<Section tab="usage">
+
+<Example of="WordCloudChart/Overview" layout="stretch" />
+
+## When to use
+
+- To give a first impression of themes in free text: stakeholder feedback, survey comments, audit findings.
+- When the exact ranking matters less than the overall mix.
+
+## When not to use
+
+- To rank or compare values. Use a bar chart.
+- For long phrases. Use short terms.
+- As the only way to read the data. The data table is sorted by value for that.
+
+## Variants
+
+<Example of="WordCloudChart/Ungrouped" layout="stretch" title="Without groups" description="Without groups, all words use one neutral colour and size carries the message." />
+
+<Example of="WordCloudChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="WordCloudChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="WordCloudChart/DoShortTerms" caption="Use short terms and a clear spread of values." />
+  <Dont of="WordCloudChart/DontExactComparison" caption="Use a word cloud when values are near-equal. Size says nothing." />
+</DoDont>
+
+## Writing
+
+Title with the source and period: “Topics raised in stakeholder feedback, FY2026”. Lower-case the words unless they are proper nouns.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, a legend when words have groups, the plot (words placed outward from the centre, largest first, horizontal only) and a tooltip with the value, share and group.
+
+## Colour
+
+Words with a `group` take `dataviz.cat-1` to `cat-8` in order of first appearance. Words without a group use the axis colour, which meets text contrast on the surface.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.cat-3", "dataviz.grid", "dataviz.axis", "dataviz.surface", "bg.raised"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="WordCloudChart/Overview" layout="stretch" code="open" />
+
+<Example of="WordCloudChart/Ungrouped" layout="stretch" code="open" />
+
+## Notes
+
+- `words` are `{ text, value, group? }`. The layout is deterministic, so the same words always sit in the same place.
+- A word that cannot fit shrinks, and is left out of the drawing only if it still cannot be placed; it stays in the data table.
+- `layoutWords(words, width, height)` is exported for tests.
+- `toggleSeries` makes the legend interactive. Control it with `hiddenSeries` and `onHiddenSeriesChange` (ids of the hidden groups), or start from `defaultHiddenSeries`.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. With `toggleSeries`, the legend buttons come before it."], ["Enter / Space", "On a legend entry (when `toggleSeries` is on), shows or hides that series. The last visible one cannot be hidden."], ["Arrow Right / Arrow Down", "Moves to the next word."], ["Arrow Left / Arrow Up", "Moves to the previous word."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the word, its value, share and group in a polite live region.
+- The data table lists every word with its value, largest first, so the ranking is available without the picture.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Words are horizontal and never overlap. Type size runs from 13 to 44 px.
+- Group colours meet 3:1 on the surface; neutral words use the axis colour, which meets 4.5:1.
+
+</Section>

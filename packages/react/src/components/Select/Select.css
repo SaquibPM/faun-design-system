@@ -1,0 +1,7 @@
+.faun-select-trigger[data-placeholder] .faun-field-trigger-value,
+.faun-select-trigger .faun-field-trigger-value [data-placeholder] { color: var(--faun-fg-placeholder); }
+.faun-select-trigger .faun-field-trigger-value .faun-listbox-option-label { white-space: nowrap; }
+.faun-select-content { min-inline-size: var(--radix-select-trigger-width); max-block-size: var(--radix-select-content-available-height); }
+.faun-select-content .faun-listbox-option { padding-inline-end: var(--faun-space-2); }
+.faun-select-scroll { display: grid; place-items: center; block-size: var(--faun-space-6); color: var(--faun-fg-muted); cursor: default; }
+.faun-select-scroll > svg { inline-size: var(--faun-size-icon-sm); block-size: var(--faun-size-icon-sm); }

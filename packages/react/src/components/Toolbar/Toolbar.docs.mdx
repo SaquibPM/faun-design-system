@@ -1,0 +1,89 @@
+export const meta = {
+  title: "Toolbar",
+  description: "A row of related controls that is one tab stop, moves with the arrow keys and folds into a menu when it runs out of room.",
+  category: "Actions",
+  status: "new",
+  components: ["Toolbar", "ToolbarButton", "ToolbarSeparator"],
+  related: ["button-group", "overflow-menu", "icon-button"],
+  order: 9,
+};
+
+<Section tab="usage">
+
+<Example of="Toolbar/Overview" layout="start" />
+
+## When to use
+
+- For three or more related actions on one object: table actions, text formatting, chart tools.
+- When tabbing through every button would be tedious: a toolbar is one tab stop, and arrow keys move inside it.
+
+## When not to use
+
+- For one or two actions. Use plain [Buttons](/components/button).
+- For choosing between exclusive options. Use a [Segmented control](/components/segmented-control).
+- For a set of buttons that act as one control. Use [Button group](/components/button-group).
+- For a long list of commands. Use a [Menu](/components/menu).
+
+## Overflow
+
+<Example of="Toolbar/Overflowing" title="Folds into a menu" description="With overflow, controls that do not fit move into a More menu, in order, and move back when there is room. Toggles keep their state in the menu as checked items." layout="start" height={160} />
+
+## Vertical
+
+<Example of="Toolbar/Vertical" title="Vertical" description="Up and Down move instead of Left and Right. Overflow is for horizontal toolbars." layout="start" />
+
+<DoDont>
+  <Do of="Toolbar/DoGrouped" caption="Group related controls with separators and keep every control the same kind: all icons." />
+  <Dont of="Toolbar/DontMixed" caption="Mix icon buttons and text buttons. The toolbar looks uneven and the gaps jump." />
+</DoDont>
+
+## Writing
+
+Every control needs a name: it is the tooltip and what a screen reader says. Name the action, not the icon: “Export”, not “Download arrow”.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A bordered strip with ghost icon buttons (28px by default), separators between groups, and a trailing More button when folding. A pressed toggle is tinted and carries `aria-pressed`.
+
+## Tokens
+
+<UsesTokens names={["bg.surface", "border.subtle", "radius.md"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Toolbar/Overview" title="Actions and a toggle" code="open" layout="start" />
+
+## Notes
+
+- `label` is required and names the toolbar.
+- A `ToolbarButton` with `pressed` is a toggle; give it `onPressedChange`. Without it the button takes `onClick`.
+- Use `showLabel` for a text button; do not mix with icon-only controls in one toolbar.
+- Controls report themselves to the toolbar, so any nesting depth works as long as they render inside it.
+- Overflow measures each control once while it is visible, so fixed-width controls work best.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Enters the toolbar on its current control and leaves it on the next Tab. The last control used is remembered."], ["Left and Right", "Move between controls, wrapping at the ends. Up and Down in a vertical toolbar."], ["Home and End", "Jump to the first and last control."], ["Enter or Space", "Activate the control or toggle it."]]} />
+
+## Screen readers
+
+- A `toolbar` with a name and orientation. Toggles are announced as pressed or not pressed. Disabled controls are skipped by the arrow keys.
+- Controls folded into the menu keep their names; toggles become checked menu items.
+
+## Visual
+
+- Icon controls meet the minimum target size. Focus shows the standard ring. Pressed state is a tint and is also announced as a state, so it does not rely on colour.
+
+</Section>

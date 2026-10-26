@@ -1,0 +1,91 @@
+export const meta = {
+  title: "Avatar",
+  description: "Shows who did something: a person as a photo or initials, an agent (Agent, Sub-agent) as the Faun mark, with an optional ring for working or waiting.",
+  category: "Display",
+  status: "new",
+  components: ["Avatar", "AvatarGroup"],
+  related: ["timeline", "app-shell"],
+  order: 10,
+};
+
+<Section tab="usage">
+
+<Example of="Avatar/Overview" />
+
+## When to use
+
+- Next to an actor's name in activity feeds, approvals, comments and ownership fields.
+- In groups to show reviewers, owners or participants at a glance.
+
+## When not to use
+
+- As the only identification of someone in a decision or audit trail: always show the name too.
+- For organisations, sites or data sources: use an icon.
+
+## Kinds
+
+<Example of="Avatar/Kinds" title="People and agents" description="People never use the agent mark and agents never use initials, so it is always clear whether a human or an agent acted." />
+
+<DoDont>
+  <Do of="Avatar/DoAgentMark" caption="Show agents with the agent mark." />
+  <Dont of="Avatar/DontAgentInitials" caption="Give an agent initials. It reads as a colleague, which misattributes the work." />
+</DoDont>
+
+## Status
+
+<Example of="Avatar/Status" title="Working and waiting" description="A pulsing running ring while an agent works; an attention ring when a person or agent is waiting on you. Both are also announced in the accessible name." />
+
+## Groups
+
+<Example of="Avatar/Group" title="Avatar group" description="Overlapping avatars with a +N counter after `max`. The group's accessible name lists everyone, including those hidden behind the counter." />
+
+</Section>
+
+<Section tab="style">
+
+## Sizes
+
+<Example of="Avatar/Sizes" description="xs 20, sm 24, md 32, lg 40, xl 56. Use sm in tables and feeds, md in headers, xl only on profile pages." />
+
+## Colour
+
+Initials sit on a soft tint picked from six data-viz-safe hues by hashing the name, so the same person always gets the same colour. Agents always use the accent.
+
+## Tokens
+
+<UsesTokens names={["status.running.solid", "status.attention.solid", "bg.surface"]} />
+
+<ComponentTokens name="avatar" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Avatar/Group" title="Group with overflow" code="open" />
+
+## Notes
+
+- Images load through Radix Avatar; initials or the agent mark show until the image loads and if it fails.
+- Use `decorative` when the name is printed next to the avatar, so screen readers don't hear it twice.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+Avatars are not focusable. Wrap one in a link or button if it opens a profile.
+
+## Screen readers
+
+- By default an avatar is `role="img"` named after the person or agent, plus its status ("Ledger Resolver, working").
+- `decorative` removes it from the accessibility tree.
+- AvatarGroup is a named group listing every member.
+
+## Visual
+
+- Initials meet 4.5:1 on their tint in every theme. Status rings are 2px and are also announced, so colour is never the only signal.
+
+</Section>

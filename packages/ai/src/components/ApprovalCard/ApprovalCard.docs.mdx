@@ -1,0 +1,97 @@
+export const meta = {
+  title: "Approval card",
+  description: "A decision an agent is waiting on, with approve, request changes and reject.",
+  category: "AI and agents",
+  status: "new",
+  components: ["ApprovalCard"],
+  related: ["run-trail", "banner", "actor-chip"],
+  order: 2,
+};
+
+<Section tab="usage">
+
+<Example of="ApprovalCard/Overview" layout="start" />
+
+## When to use
+
+- When an agent must stop for a person before it files, publishes, spends or overwrites something.
+- For one decision with a clear yes, no or “change this”. Put the evidence the person needs inside the card.
+
+## When not to use
+
+- For confirming a destructive click the person just made. Use [Alert dialog](/components/alert-dialog).
+- For FYI messages that need no answer. Use [Banner](/components/banner) or [Toast](/components/toast).
+- For many decisions in a queue. Show a table of requests and open one card per decision.
+
+## Variants
+
+<Example of="ApprovalCard/WithEvidence" title="With evidence" description="Pass children to show the figures, diff or draft the person is approving." layout="start" />
+
+<Example of="ApprovalCard/Interactive" title="Interactive" description="Approve at once. Request changes and reject ask for words first, so the audit trail always says why." layout="start" />
+
+<Example of="ApprovalCard/Approved" title="Approved" description="After the decision the actions go away and the card records who decided, when and why." layout="start" />
+
+<Example of="ApprovalCard/Rejected" title="Rejected" layout="start" />
+
+<DoDont>
+  <Do of="ApprovalCard/DoSayWhatHappensNext" caption="Say what each answer does: “Drafting continues” and “The draft returns with your reason”." />
+  <Dont of="ApprovalCard/DontHideConsequences" caption="Ask “Please review” with no summary and no consequences. People approve what they cannot read." />
+</DoDont>
+
+## Writing
+
+- The title names the thing and the action: “Approve the ESRS E1-6 draft for FY2025”.
+- The summary states what the agent did and the number that matters, in one or two sentences.
+- Buttons stay as Approve, Request changes and Reject. The one solid accent button is Approve. Reject turns solid danger only in its confirmation step.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A header with the approval gate icon, the title, who asked and when, and an approval status badge. A body with the summary, evidence, and what happens after approve or reject. A footer with actions. While a decision is pending a plum edge marks the card as waiting on a person.
+
+## States
+
+Pending shows actions. Approved and rejected show who decided, when and why, with no actions. While an opened form is showing, the footer holds a labelled text area with a confirm and a cancel.
+
+## Tokens
+
+<UsesTokens names={["status.attention.border", "status.attention.solid", "status.attention.fg", "bg.surface-nested", "border.subtle", "fg.muted"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="ApprovalCard/Interactive" title="Handling each outcome" code="open" layout="start" />
+
+## Notes
+
+- `request` is an `ApprovalRequest`. Update its `state`, `decidedBy`, `decidedAt` and `comment` after you save the decision, and the card switches to its decided view.
+- `onRequestChanges` leaves the request pending. Store the comment and let the agent revise.
+- Pass `busy` while a decision is saving. Actions are disabled and Approve shows a spinner.
+- Use `headingLevel` to fit the page outline.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves through Approve, Request changes and Reject."], ["Enter", "Activates the focused button. In the reason box, adds a line."], ["Escape", "Closes the reason form and returns focus to the button that opened it."]]} />
+
+## Screen readers
+
+- The card is a region named by its title. The approval state is a word in a badge.
+- Opening a reason form moves focus to its text area, which is labelled and required.
+- Confirm stays disabled until there is a reason, so a decision without a reason cannot be sent.
+
+## Visual
+
+- Waiting on a person is shown by a plum edge, the approval icon and the words “Approval needed”, never by colour alone.
+- Actions wrap to full-width buttons on narrow screens so targets stay large.
+
+</Section>

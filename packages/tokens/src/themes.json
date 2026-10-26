@@ -1,0 +1,8 @@
+{
+  "$description": "Theme registry. 'appearance' picks which scale values apply; 'extends' inherits semantic overrides. Set data-faun-theme on any element; themes nest.",
+  "light": { "appearance": "light", "extends": null, "colorScheme": "light", "label": "Light", "description": "Default. Warm paper surfaces on a warm gray canvas, deep moss green navigation." },
+  "dark": { "appearance": "dark", "extends": null, "colorScheme": "dark", "label": "Dark", "description": "Green-black canvas with lifted surfaces and highlight edges." },
+  "light-hc": { "appearance": "light-hc", "extends": "light", "colorScheme": "light", "label": "Light high contrast", "description": "Darker text and borders, no shadows. For low vision and bright rooms." },
+  "dark-hc": { "appearance": "dark-hc", "extends": "dark", "colorScheme": "dark", "label": "Dark high contrast", "description": "Brighter text and borders on a deeper canvas." },
+  "print": { "appearance": "light", "extends": "light", "colorScheme": "light", "label": "Print", "description": "White page, no shadows. Regulatory exports and PDF." }
+}

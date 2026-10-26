@@ -1,0 +1,107 @@
+export const meta = {
+  title: "Line chart",
+  description: "Shows change over an ordered axis such as months or years. Series differ by marker shape as well as colour.",
+  category: "Data",
+  status: "new",
+  components: ["LineChart"],
+  related: ["chart-types", "area-chart", "combo-chart", "bar-chart", "sparkline"],
+  order: 8,
+};
+
+<Section tab="usage">
+
+<Example of="LineChart/Overview" layout="stretch" />
+
+## When to use
+
+- For a trend: monthly consumption, intensity per year, a grid factor over time.
+- To compare two or three series that share a unit.
+
+## When not to use
+
+- For comparing a few categories at one moment. Use a bar chart.
+- For parts of a total. Use a stacked bar chart.
+- For a single latest figure. Use a Stat.
+
+## Variants
+
+<Example of="LineChart/Scopes" layout="stretch" title="GHG scopes" description="Series with the ids scope-1 and scope-2 take the scope colours." />
+
+<Example of="LineChart/Step" layout="stretch" title="Step" description="variant=&quot;step&quot; holds each value until the next point, then steps to it. Use it for values that change at a moment and stay there, such as an emission factor, a tariff or a limit." />
+
+<Example of="LineChart/FittedAxis" layout="stretch" title="Fitted axis" description="Set zeroBaseline to false when changes are small next to the values. Say so in the description." />
+
+<Example of="LineChart/WithReference" layout="stretch" title="Target and reference lines" description="Mark a pathway, budget or baseline. Lines extend the axis if needed and are listed in the data table." />
+
+<Example of="LineChart/SeriesToggle" layout="stretch" title="Toggle series" description="With toggleSeries the legend entries are buttons. This one starts with the UK hidden (uncontrolled); the axis fits the series that are shown." />
+
+<Example of="LineChart/Loading" layout="stretch" title="Loading" />
+
+<DoDont>
+  <Do of="LineChart/DoMarkers" caption="Keep markers. Shape and colour together tell series apart for everyone." />
+  <Dont of="LineChart/DontZeroForGaps" caption="Enter zero for a period nobody reported. Use null, and the line breaks honestly." />
+</DoDont>
+
+## Writing
+
+State the period and the measure in the title. Mention in the description when a series lags or is partial.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Grid and axes, one line per series with a marker per point (every point when there are 24 or fewer, otherwise only the active one), a guide line and halo on the active category, and a tooltip.
+
+## Colour and shape
+
+Series take `dataviz.cat-1` to `cat-8` in order and a marker shape (circle, square, diamond, triangle). The legend and tooltip repeat the shape.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.scope-1", "dataviz.scope-2", "dataviz.grid", "dataviz.axis", "dataviz.surface"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="LineChart/Overview" layout="stretch" code="open" />
+
+## Notes
+
+- `variant` is `line` (default) or `step`.
+- Categories are evenly spaced. For unevenly spaced time, resample to a regular axis first.
+- `null` breaks the line; the tooltip and data table say “No data”.
+- `references` draws target (heavy dash) and reference (dotted) lines across the plot, labelled with their value. They are also rows at the foot of the data table.
+- `toggleSeries` lets people hide series from the legend; control it with `hiddenSeries` and `onHiddenSeriesChange`, or start from `defaultHiddenSeries`. At least one series always stays visible, and series keep their colour and marker shape.
+- Smoothing is not offered: a curve implies values that were not measured.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[
+  ["Tab", "When `toggleSeries` is on, visits each legend toggle first, then the chart (one tab stop)."],
+  ["Enter / Space", "On a legend entry (when `toggleSeries` is on), shows or hides that series. The last visible series cannot be hidden."],
+  ["Arrow Right / Arrow Left", "Moves to the next or previous point in time and shows the tooltip."],
+  ["Home / End", "First or last point."],
+  ["Escape", "Hides the tooltip."],
+]} />
+
+## Screen readers
+
+- A figure named by its title with a data table fallback. Arrow keys announce the category and every series' value.
+
+- With `toggleSeries`, each legend entry is a button with `aria-pressed` (true = shown). Hiding or showing is announced politely, for example “Market-based hidden”. The last visible series is marked `aria-disabled` and stays on.
+- Hidden series leave the drawing, the tooltip, the live announcements and the data table, so what is read matches what is seen.
+- Target and reference lines are listed at the foot of the data table with their kind, label and value, for example “Target: 2030 pathway: 14,000 tCO₂e”.
+
+## Visual
+
+- Lines are two pixels thick against the surface, and marker shapes differ per series so colour is never the only cue.
+- On hover, the nearest category is chosen, so thin lines do not need precise aim.
+
+</Section>

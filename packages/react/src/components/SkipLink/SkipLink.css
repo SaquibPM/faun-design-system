@@ -1,0 +1,11 @@
+.faun-skip-link {
+  position: absolute; inset-block-start: var(--faun-space-2); inset-inline-start: var(--faun-space-2); z-index: var(--faun-z-toast);
+  padding: var(--faun-space-2) var(--faun-space-3);
+  border-radius: var(--faun-radius-md);
+  background: var(--faun-bg-raised); color: var(--faun-fg-default); box-shadow: var(--faun-elevation-3);
+  border: var(--faun-border-width-hairline) solid var(--faun-border-default);
+  font-weight: var(--faun-font-weight-medium);
+  transform: translateY(-200%);
+}
+.faun-skip-link:focus { transform: none; outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 2px; }
+@media (forced-colors: active) { .faun-skip-link { border-color: CanvasText; } }

@@ -1,0 +1,12 @@
+.faun-button-group { display: flex; flex-wrap: wrap; align-items: center; gap: var(--faun-space-2); }
+.faun-button-group:where([data-align="end"]) { justify-content: flex-end; }
+.faun-button-group:where([data-align="stretch"]) > * { flex: 1 1 0; }
+.faun-button-group:where([data-equal]) > * { flex: 1 1 0; min-inline-size: 0; }
+.faun-button-group:where([data-stack="always"]) { flex-direction: column; align-items: stretch; }
+@media (max-width: 480px) { .faun-button-group:where([data-stack="narrow"]) { flex-direction: column-reverse; align-items: stretch; } }
+.faun-button-group:where([data-layout="joined"]) { flex-wrap: nowrap; gap: 0; }
+.faun-button-group:where([data-layout="joined"]) > .faun-button { border-radius: 0; }
+.faun-button-group:where([data-layout="joined"]) > .faun-button:first-child { border-start-start-radius: var(--faun-button-radius); border-end-start-radius: var(--faun-button-radius); }
+.faun-button-group:where([data-layout="joined"]) > .faun-button:last-child { border-start-end-radius: var(--faun-button-radius); border-end-end-radius: var(--faun-button-radius); }
+.faun-button-group:where([data-layout="joined"]) > .faun-button + .faun-button { margin-inline-start: calc(var(--faun-border-width-hairline) * -1); }
+.faun-button-group:where([data-layout="joined"]) > .faun-button:is(:hover, :focus-visible) { z-index: 1; }

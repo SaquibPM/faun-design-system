@@ -1,0 +1,13 @@
+.faun-inline-loading {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--faun-space-1-5);
+  min-block-size: var(--faun-space-5);
+  color: var(--faun-fg-muted);
+  font-size: var(--faun-type-body-sm-font-size);
+  line-height: var(--faun-type-body-sm-line-height);
+}
+.faun-inline-loading > svg { flex: none; }
+.faun-inline-loading[data-status="finished"] { color: var(--faun-status-success-fg); }
+.faun-inline-loading[data-status="error"] { color: var(--faun-status-danger-fg); font-weight: var(--faun-font-weight-medium); }
+.faun-inline-loading-text { min-inline-size: 0; }

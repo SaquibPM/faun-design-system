@@ -1,0 +1,98 @@
+export const meta = {
+  title: "Banner",
+  description: "A message about the state of a page, section or system: something failed, something needs attention, something changed. Five tones, inline or full width, optionally dismissible.",
+  category: "Feedback",
+  status: "new",
+  components: ["Banner"],
+  related: ["toast", "empty-state", "badge"],
+  order: 1,
+};
+
+<Section tab="usage">
+
+<Example of="Banner/Overview" />
+
+## When to use
+
+- To tell people about a condition that affects the content around it and stays true until something changes: a failed import, an approaching deadline, work waiting on them.
+- At the top of a page (`variant="page"`) for conditions that affect the whole page or workspace.
+
+## When not to use
+
+- For the result of an action the person just took: use a Toast.
+- For the status of one item in a list or table: use a Badge.
+- For a page with nothing to show: use EmptyState.
+
+## Tones
+
+<Example of="Banner/Tones" title="Info, success, warning, danger, attention" description="Attention is for work waiting on this person (approvals, reviews) and has its own purple tone so it never competes with warning. Danger and warning are announced immediately; the rest politely." layout="padded" />
+
+## Low and high contrast
+
+<Example of="Banner/Contrast" title="Contrast" description="Low contrast (default) tints the banner and suits most messages. High contrast fills it with the tone colour for the one message on the page that must not be missed. Use at most one high-contrast banner per view." layout="padded" />
+
+## Actionable and timestamped
+
+<Example of="Banner/Actionable" title="One action and a time" description="actionLabel and onAction add a single text action. Use timestamp for messages that arrive while someone is away; the full list of them belongs in the notification panel." layout="padded" />
+
+## Page banners
+
+<Example of="Banner/PageBanner" title="Page variant" description="Full width, square, sitting directly under the top bar. One per page at most." layout="padded" />
+
+## Dismissing
+
+<Example of="Banner/Dismissible" title="Dismissible" description="Only offer dismissal for information that doesn't block work. Warnings and errors stay until the condition is fixed." />
+
+<DoDont>
+  <Do of="Banner/DoSpecific" caption="Say what happened and what to do: the row and the fix." />
+  <Dont of="Banner/DontVague" caption="Write “Error” and “Something went wrong”. It gives no way forward." />
+</DoDont>
+
+## Writing
+
+Titles are one short sentence stating the condition. Text adds the detail or the next step. Put the action (Review, Fix file) in `actions` rather than in prose.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Tone icon, title, optional text, optional timestamp, optional action, optional actions slot, optional dismiss button. A visually hidden tone word (“Error”, “Warning”) precedes the title for screen readers. Icons come from the status map so each tone is recognisable without colour.
+
+## Tokens
+
+<UsesTokens names={["status.info.bg", "status.success.bg", "status.warning.bg", "status.danger.bg", "status.attention.bg", "status.attention.border", "status.attention.fg", "status.danger.solid", "status.danger.on-solid"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Banner/Dismissible" title="Dismissible banner" code="open" />
+
+## Notes
+
+- `role` is chosen from the tone (`alert` for danger and warning, `status` otherwise). Override with the `role` prop when a banner appears on page load and should not interrupt.
+- `contrast` is `low` or `high`. `actionLabel` with `onAction` is the single action of an actionable notification; `actions` is still there for several.
+- Pass `icon={null}` to hide the icon or any node to replace it.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves to actions and the dismiss button."], ["Enter / Space", "Activates the focused action or dismisses the banner."]]} />
+
+## Screen readers
+
+- Danger and warning banners use `role="alert"` and are announced when they appear; other tones use `role="status"`.
+- The dismiss button is named “Dismiss”. When dismissing, move focus somewhere sensible, such as the next control.
+
+## Visual
+
+- Text meets 4.5:1 on the tone background in every theme. High contrast uses the solid tone with its on-solid text, which meets 4.5:1. The tone is carried by icon and wording as well as colour.
+
+</Section>

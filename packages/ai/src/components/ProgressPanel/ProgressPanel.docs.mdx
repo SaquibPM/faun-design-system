@@ -1,0 +1,102 @@
+export const meta = {
+  title: "Progress panel",
+  description: "Where an agent is in a task: steps with a status each, the current step named, time elapsed and overall progress. Inline in the conversation or docked beside it.",
+  category: "AI and agents",
+  status: "new",
+  components: ["ProgressPanel"],
+  related: ["run-trail", "artifact-panel", "chat-layout", "progress"],
+  order: 13,
+};
+
+<Section tab="usage">
+
+<Example of="ProgressPanel/Overview" layout="start" height={460} />
+
+## When to use
+
+- To show a person that an agent is working on a task they asked for in a conversation, and which step it is on.
+- For a short list of steps, up to about eight, that a person can read at a glance.
+- Docked beside the conversation for work that takes minutes, so it stays visible while the person keeps typing.
+
+## When not to use
+
+- To audit a run: tool calls, inputs, outputs, nested sub-agents. Use [Run trail](/components/run-trail).
+- For one operation with a percentage and no steps. Use [Progress](/components/progress).
+- For a decision waiting on a person. Use an approval card; the panel only says that a step is waiting.
+
+## Variants
+
+<Example of="ProgressPanel/Folded" title="Inline, folded" description="In the thread the panel is a card under the message that started the task. Folded, it keeps the title, the current step, the elapsed time and the bar, and hides the list." layout="start" />
+
+<Example of="ProgressPanel/Docked" title="Docked" description="Beside the conversation the panel fills a column, has a Close button and closes on Escape. It is not collapsible: the steps are the point." layout="start" height={520} />
+
+<Example of="ProgressPanel/Failed" title="A step failed" description="The failed step says why in one line. The panel offers one next action." layout="start" />
+
+<Example of="ProgressPanel/WaitingForYou" title="Waiting for a person" description="A step that needs a person is plum, not lagoon, and the panel says who it waits for." layout="start" />
+
+<DoDont>
+  <Do of="ProgressPanel/DoNameTheWork" caption="Name the task and each step by what is done: “Apply emission factors”." />
+  <Dont of="ProgressPanel/DontVagueSteps" caption="Title the task “Working” and the steps “Step 1”. Nobody learns what is happening." />
+</DoDont>
+
+## Writing
+
+- The title is the task in the present participle: “Drafting the ESRS E1 disclosure”.
+- Step titles start with a verb and fit on one line. Put counts and reasons in the detail line, not the title.
+- Show elapsed time as given by your timer. Do not estimate time remaining unless you can stand behind it.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A header with the title, the overall status badge, any actions and a Close button when docked. Under it one summary line (“Step 2 of 5: Apply emission factors · Elapsed 5 min 50 s”) and a progress bar. Below, a vertical list of steps, each with a marker, a title, its time, a status badge and an optional detail line.
+
+## Status
+
+Each step and the whole task use the `run` and `task` domains of the status map: tone, icon and word together, never colour alone. The current step is bold and carries `aria-current="step"`. The marker of a running step pulses; it stops under reduced motion.
+
+## Tokens
+
+<UsesTokens names={["bg.surface", "border.subtle", "fg.muted", "status.running.solid", "status.attention.solid", "status.success.solid", "status.danger.solid"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="ProgressPanel/Overview" title="Inline, with a live timer" code="open" layout="start" height={460} />
+
+<Example of="ProgressPanel/Docked" title="Docked with Close" code="open" layout="start" height={520} />
+
+## Notes
+
+- The panel is controlled by data: pass `steps` and `elapsedMs` and rerender as the task advances. It owns only whether the list is folded (`open`, `defaultOpen`, `onOpenChange`).
+- The overall `state` is derived (failed, blocked, waiting for a person, completed, otherwise running). Pass `state` to override it.
+- `variant="docked"` takes focus when it mounts and gives it back when it unmounts. Inline panels never take focus. Set `autoFocus` to change either.
+- Inside a [Chat layout](/components/chat-layout) a docked panel sits above the artifact panel, or alone in the right column, and becomes a bottom sheet under 768 px.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves to the fold toggle in the title, then to any actions and Close."], ["Enter or Space", "Folds or unfolds the steps."], ["Escape", "Closes a docked panel that has `onClose`, when focus is inside it."]]} />
+
+## Screen readers
+
+- The panel is a region named by its title. The steps are an ordered list named “Steps”, and the current one is marked `aria-current="step"`.
+- Every status is a word as well as an icon: “Done”, “Running”, “Waiting for you”.
+- A polite live region announces a change of current step (“Step 3 of 5, Draft the E1-6 narrative, in progress”). It says nothing when the panel first appears, and the progress bar announces its own milestones.
+- The fold toggle is a button inside the heading with `aria-expanded`.
+
+## Visual
+
+- Status never relies on colour: the badge has an icon and a word. Markers are decoration.
+- Targets meet the minimum size. Focus rings are visible on the toggle, the title and every button.
+- Forced colours: markers use the text colour and the inline card keeps a visible border.
+
+</Section>

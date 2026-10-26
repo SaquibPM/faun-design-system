@@ -1,0 +1,91 @@
+export const meta = {
+  title: "Header panel",
+  description: "Global actions at the end of the header, and the panels they open: notifications, help and the product switcher.",
+  category: "Navigation",
+  status: "new",
+  components: ["HeaderActions", "HeaderAction", "HeaderPanel", "SwitcherPanel"],
+  related: ["app-shell", "header-nav", "notification-panel"],
+  order: 8,
+};
+
+<Section tab="usage">
+
+<Example of="HeaderPanel/Overview" height={480} />
+
+## When to use
+
+- For information or controls that belong to the whole product and that people open briefly: notifications, help, the product switcher.
+- When the page behind should stay usable while the panel is open.
+
+## When not to use
+
+- For detail about the object on the page. Use a [Sheet](/components/sheet) with `modal={false}`.
+- For a decision that must be made first. Use a [Dialog](/components/dialog).
+- For a short list of commands. Use a [Menu](/components/menu).
+
+## The switcher
+
+<Example of="HeaderPanel/Switcher" title="Product switcher" description="Sections of links (recent, frequent, all) with dividers between. The current product is marked in words as well as with a tint. The switcher is the last action, at the far right." height={540} />
+
+## Behaviour
+
+- One panel is open at a time: opening another closes the first.
+- The trigger has an outline while its panel is open, and pressing it closes the panel.
+- Escape, a press outside, the close button and choosing a link all close it. Focus returns to the trigger.
+- Panels hang from the header and are full width below 768px.
+
+<DoDont>
+  <Do of="HeaderPanel/DoOrder" caption="Order actions from specific to general: notifications, help, then the product switcher at the far right. Badge only what needs attention." />
+  <Dont of="HeaderPanel/DontBadgeEverything" caption="Put badges on every action. When everything is flagged, nothing is." />
+</DoDont>
+
+## Writing
+
+Panel titles are nouns: “Notifications”, “Products”. Action names say what opens: “Switch product”.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+An icon button, an optional badge (a count, or a dot), and a panel anchored under the header at the right edge with a title, a close button, a scrolling body and an optional footer. It sits on elevation 4 with a subtle border.
+
+## Tokens
+
+<UsesTokens names={["bg.raised", "border.subtle", "bg.active", "bg.selected", "status.attention.solid", "fg.muted"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="HeaderPanel/Overview" title="Actions with panels" code="open" height={480} />
+
+## Notes
+
+- Wrap actions in `HeaderActions` to get the one-at-a-time rule. Control it with `openId` and `onOpenIdChange`.
+- A `HeaderAction` without a `HeaderPanel` child is a plain icon button; give it `onClick`.
+- `badge` is a number, or `true` for a dot. The count is also in the button's accessible name.
+- `useHeaderPanel().close()` closes the panel from a custom item. Links inside the panel close it by default (`closeOnSelect`).
+- The panel positions against the nearest positioned ancestor; inside `TopBar` that is the bar, which is sticky.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Enter or Space", "Opens or closes the panel from its icon."], ["Tab", "Moves through the panel's content in order; focus is not trapped, since the page is still available."], ["Escape", "Closes the panel and returns focus to its icon."]]} />
+
+## Screen readers
+
+- Each icon is a button named for what it opens and, with a badge, the count (“Notifications, 2 new”). It reports expanded state.
+- The panel is a dialog named by its title. The switcher is a navigation named “Products”, with a heading per section, and marks the current product with `aria-current`.
+
+## Visual
+
+- The open trigger is outlined and tinted as well as expanded, so the connection to its panel is visible. Badges carry a number or a shape, never colour alone.
+
+</Section>

@@ -1,0 +1,98 @@
+export const meta = {
+  title: "Sparkline",
+  description: "A word-sized trend with no axes, for a table cell or beside a figure. Line, area or bar.",
+  category: "Data",
+  status: "new",
+  components: ["Sparkline"],
+  related: ["line-chart", "stat", "data-table", "chart-types"],
+  order: 38,
+};
+
+<Section tab="usage">
+
+<Example of="Sparkline/Overview" layout="stretch" />
+
+## When to use
+
+- Beside a figure or in a table cell to show direction at a glance.
+- On a dashboard row where every KPI needs a trend.
+
+## When not to use
+
+- When readers need values or axes. Use a line chart.
+- As the only place a number appears. Show the figure too.
+- For comparing trends with different scales. Each sparkline scales to its own data.
+
+## Variants
+
+<Example of="Sparkline/InTable" layout="stretch" title="In a table" description="A sparkline sits in a cell next to the row's total. The cell's row header names it." />
+
+<Example of="Sparkline/WithGap" layout="stretch" title="Missing values" description="A null value breaks the line or area." />
+
+<Example of="Sparkline/Loading" layout="stretch" title="Loading" />
+
+<Example of="Sparkline/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="Sparkline/DoTitleIt" caption="Give every sparkline a title that says what it shows and the unit." />
+  <Dont of="Sparkline/DontStandAlone" caption="Leave a sparkline with a vague title. Screen reader users get “Trend” and nothing else." />
+</DoDont>
+
+## Writing
+
+The title is read by screen readers and used for the data table, so write it as a full phrase: “Scope 2 emissions by month, tCO₂e”. Give `labels` so the tooltip names each point.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A single plot with no axes, grid, legend or visible title: a line with an end dot, a filled area, or small bars. A tooltip appears on hover and focus.
+
+## Colour
+
+One categorical colour (`dataviz.cat-1` unless you set `color`). The area is the same colour at low opacity.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.surface", "bg.raised"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Sparkline/Overview" layout="stretch" code="open" />
+
+<Example of="Sparkline/InTable" layout="stretch" code="open" />
+
+## Notes
+
+- `width` (default 120) and `height` (default 32) are in px; the sparkline is an inline block.
+- The line scales to the range of its data; bars and areas start at zero.
+- `showEnd` marks the last value with a dot.
+- Sparklines have no legend or series toggle.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. "], ["Arrow Right / Arrow Down", "Moves to the next point."], ["Arrow Left / Arrow Up", "Moves to the previous point."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the point's label and value in a polite live region.
+- Every sparkline has a hidden data table with each point's label and value.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Marks against the surface meet 3:1 in every theme, and the categorical palette is checked for protan and deutan separation.
+- Because the plot is small, the active point gets a ring so it can be seen under a finger or a cursor.
+
+</Section>

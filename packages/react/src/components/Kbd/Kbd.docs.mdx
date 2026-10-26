@@ -1,0 +1,77 @@
+export const meta = {
+  title: "Kbd",
+  description: "Shows a keyboard key or shortcut in tooltips, menus and help text, with spoken names for symbols so screen readers hear “Command K”, not “⌘ K”.",
+  category: "Display",
+  status: "new",
+  components: ["Kbd"],
+  related: ["tooltip", "icon-button"],
+  order: 12,
+};
+
+<Section tab="usage">
+
+<Example of="Kbd/Overview" />
+
+## When to use
+
+- Beside an action to teach its shortcut: in menus, tooltips, the command palette and search field hints.
+- In documentation and help text when naming a key.
+
+## When not to use
+
+- To decorate text that isn't a key.
+- As the only way to discover a shortcut: shortcuts need visible alternatives.
+
+## Forms
+
+<Example of="Kbd/Forms" title="One key or a combination" description="Pass a string, an array of keys, or a “+”-joined string. Use the symbols ⌘ ⌥ ⇧ ⌃ ↵ on macOS and words (Ctrl, Alt) elsewhere." />
+
+<Example of="Kbd/Sizes" title="Sizes" description="sm inside tooltips and menu items, md in prose and help text." />
+
+<DoDont>
+  <Do of="Kbd/DoOnePerShortcut" caption="Render the whole shortcut as one Kbd, so it is read as one thing." />
+  <Dont of="Kbd/DontPlusTyped" caption="Place separate keys with a typed “+”. The plus is read aloud and the shortcut isn't grouped." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Each key is a small raised cap in the mono face; a group lays caps side by side with a small gap.
+
+## Tokens
+
+<UsesTokens names={["bg.surface", "border.default", "fg.muted"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Kbd/Forms" title="Accepted forms of keys" code="open" />
+
+## Notes
+
+- Symbols map to names for assistive technology: ⌘ Command, ⌥ Option, ⇧ Shift, ⌃ Control, ↵ Enter, arrows, Esc.
+- Tooltip and IconButton accept a `shortcut` string and render it with Kbd.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+Kbd is not interactive.
+
+## Screen readers
+
+- Combinations and symbol keys are given an `aria-label` with spoken names; the visual caps are hidden to avoid double reading.
+
+## Visual
+
+- Caps meet 4.5:1 for their text and a visible border in forced-colours mode.
+
+</Section>

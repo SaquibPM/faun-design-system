@@ -1,0 +1,121 @@
+name: Release
+
+# Three ways to run this workflow:
+#   * push to main        later releases only (Changesets opens or merges the "chore: release" pull request and publishes).
+#                         It never performs the FIRST publish: see scripts/release-guard.mjs.
+#   * Run workflow, dry-run = true (default)
+#                         builds, tests and runs `pnpm publish --dry-run`. Publishes nothing.
+#   * Run workflow, dry-run = false, dist-tag = next
+#                         publishes the versions in main to npm under the `next` dist-tag. Run the registry smoke test, then
+#                         promote with `npm dist-tag add` (docs/RELEASING.md).
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      dry-run:
+        description: "Dry run: build, test and `pnpm publish --dry-run`, publish nothing"
+        type: boolean
+        default: true
+      dist-tag:
+        description: "npm dist-tag to publish under (use next for the first release, then promote)"
+        type: choice
+        options: [next, latest]
+        default: next
+
+permissions:
+  contents: write
+  pull-requests: write
+  id-token: write # npm provenance
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+jobs:
+  guard:
+    # Never skips silently: when publishing is not allowed this job says why in an annotation and in the run summary.
+    runs-on: ubuntu-latest
+    outputs:
+      enabled: ${{ steps.guard.outputs.enabled }}
+      reason: ${{ steps.guard.outputs.reason }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+      - id: guard
+        run: node scripts/release-guard.mjs --event "${{ github.event_name }}" --repository "${{ github.repository }}"
+        env:
+          # Set the repository variable RELEASE_REPO (Settings, Secrets and variables, Actions, Variables) to
+          # "owner/name" to publish from a repository other than the one named in package.json.
+          RELEASE_REPO: ${{ vars.RELEASE_REPO }}
+
+  release:
+    needs: guard
+    if: needs.guard.outputs.enabled == 'true'
+    runs-on: ubuntu-latest
+    env:
+      DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs['dry-run'] || 'false' }}
+      DIST_TAG: ${{ github.event_name == 'workflow_dispatch' && inputs['dist-tag'] || 'latest' }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # the preflight scans the whole history
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+          registry-url: https://registry.npmjs.org
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm build && pnpm test
+      - name: Preflight (CODEOWNERS, licence, forbidden strings, history, published files)
+        run: node scripts/preflight-publish.mjs --offline
+
+      - name: Dry run (publishes nothing)
+        if: env.DRY_RUN == 'true'
+        run: pnpm -r publish --dry-run --no-git-checks --access public --tag "$DIST_TAG"
+        env:
+          NPM_CONFIG_PROVENANCE: "false"
+
+      # Push to main: Changesets opens or merges the release pull request and publishes under `latest`.
+      - name: Changesets (push to main)
+        if: github.event_name == 'push'
+        uses: changesets/action@v1
+        with:
+          version: pnpm changeset version
+          publish: pnpm changeset publish
+          title: "chore: release"
+          commit: "chore: release"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
+
+      # Manual run: publish every version that is not on npm yet, under the chosen dist-tag.
+      - name: Publish under the "${{ env.DIST_TAG }}" dist-tag
+        if: github.event_name == 'workflow_dispatch' && env.DRY_RUN != 'true'
+        run: |
+          pnpm changeset publish --tag "$DIST_TAG"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git push origin --tags
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NPM_CONFIG_PROVENANCE: true
+
+      - name: Next steps
+        if: github.event_name == 'workflow_dispatch'
+        run: |
+          # shellcheck disable=SC2016  # the single-quoted echoes print literal backticks on purpose
+          {
+            echo "### Release run: dry-run=$DRY_RUN, dist-tag=$DIST_TAG"
+            if [ "$DRY_RUN" = "true" ]; then
+              echo "Nothing was published. Re-run with dry-run unchecked to publish under \`$DIST_TAG\`."
+            elif [ "$DIST_TAG" = "next" ]; then
+              echo "Published under \`next\`. Now:"
+              echo '1. `node scripts/consumer-smoke.mjs --registry --tag next` (or the Consumer smoke (registry) workflow)'
+              echo '2. Promote each package: `npm dist-tag add <package>@<version> latest` (docs/RELEASING.md)'
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"

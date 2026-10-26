@@ -1,0 +1,94 @@
+export const meta = {
+  title: "Number field",
+  description: "Enters a number with a unit, bounds and optional steppers, formatted for the reader's locale.",
+  category: "Forms",
+  status: "stable",
+  components: ["NumberField"],
+  related: ["input", "slider", "field"],
+  order: 4,
+};
+
+<Section tab="usage">
+
+<Example of="NumberField/Overview" layout="start" />
+
+## When to use
+
+- For quantities with a unit: fuel in litres, water in m³, emissions in tCO₂e.
+- For values with limits, such as a percentage between 0 and 100.
+
+## When not to use
+
+- For identifiers made of digits, such as account numbers. Use [Input](/components/input).
+- For picking a rough value. Use [Slider](/components/slider).
+
+## Variants
+
+<Example of="NumberField/Stepper" title="Steppers" description="Show increment and decrement buttons for small adjustments." layout="start" />
+
+<Example of="NumberField/UnitsAndPrefix" title="Units and prefix" description="Units sit in the suffix. Currency symbols sit in the prefix." layout="start" />
+
+<Example of="NumberField/Controlled" title="Controlled" description="Value is a number or null when empty." layout="start" />
+
+<Example of="NumberField/Invalid" title="Invalid" description="Pair with a Field error that states the bounds." layout="start" />
+
+<DoDont>
+  <Do of="NumberField/DoUnit" caption="Show the unit inside the field and keep the label clean." />
+  <Dont of="NumberField/DontUnitInLabel" caption="Put the unit in the label. It is easy to miss and not read with the value." />
+</DoDont>
+
+## Writing
+
+State bounds in the description or error: “Enter a value between 0 and 100.” Do not use words for numbers.
+
+## Warn, read-only and loading
+
+<Example of="NumberField/StateContract" title="Warn, read-only and skeleton" description="Warn marks a value that is allowed but worth a second look. It is never the same as invalid: it does not set aria-invalid and never blocks submission, and the message carries an icon and text so it is not colour alone. Read-only shows the value flat, keeps it focusable and copyable, and ignores changes. Skeleton replaces the control while its data loads; the label stays for screen readers. Set all three on a Field and every control inside follows." />
+
+Set `warn` (a message), `readOnly` and `skeleton` on the surrounding `Field`. On a standalone number field, pass `readOnly` and `skeleton` directly; give `warn` a message through a Field so it is announced. An error always replaces a warning.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+An input with right-aligned tabular figures, an optional prefix and unit, and optional stepper buttons. The displayed number is formatted for the locale and parsed back when it loses focus.
+
+## Tokens
+
+<UsesTokens names={["bg.surface", "border.control", "focus.halo", "fg.muted"]} />
+
+<ComponentTokens name="input" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="NumberField/Controlled" title="Controlled value" layout="start" code="open" />
+
+## Notes
+
+- `value` is `number | null`. `min`, `max` and `step` clamp the value.
+- `locale` and `formatOptions` use `Intl.NumberFormat`.
+- The field never rejects typing. It clamps and formats on blur.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["↑ / ↓", "Increases or decreases by one step."], ["Page Up / Page Down", "Changes by ten steps."], ["Home / End", "Sets the minimum or maximum, if set."], ["Enter", "Commits the typed value."]]} />
+
+## Screen readers
+
+- Announced as a spin button with its minimum and maximum. The unit is part of the visible value.
+
+## Visual
+
+- Tabular figures keep digits aligned. Stepper targets meet the minimum size.
+
+</Section>

@@ -1,0 +1,31 @@
+{
+  "$description": "Component tokens: dimensions and typography per component, referencing foundations. Colours are not here: components use semantic colour roles directly so every theme and tenant accent applies everywhere.",
+  "button": {
+    "height-sm": "{size.control.sm}", "height-md": "{density.control-height}", "height-lg": "{size.control.lg}",
+    "px-sm": "{space.2-5}", "px-md": "{space.3}", "px-lg": "{space.4}",
+    "gap": "{space.1-5}", "radius": "{radius.md}", "radius-sm": "{radius.sm}", "icon-size": "{size.icon.md}"
+  },
+  "input": {
+    "height-sm": "{size.control.sm}", "height-md": "{density.control-height}", "height-lg": "{size.control.lg}",
+    "px": "{space.2-5}", "radius": "{radius.md}", "radius-sm": "{radius.sm}"
+  },
+  "checkbox": { "size": "16px", "radius": "{radius.xs}" },
+  "switch": { "width": "32px", "height": "18px", "thumb": "14px" },
+  "badge": { "height-sm": "20px", "height-md": "22px", "px": "{space.2}", "radius": "{radius.full}", "gap": "{space.1}" },
+  "tag": { "height": "24px", "px": "{space.2}", "radius": "{radius.sm}" },
+  "card": { "radius": "{radius.lg}", "padding": "{density.panel-padding}", "gap": "{space.3}" },
+  "table": {
+    "row-height": "{density.row-height}", "cell-px": "{density.cell-px}", "cell-py": "{density.cell-py}",
+    "header-height": "36px", "radius": "{radius.lg}"
+  },
+  "menu": { "radius": "{radius.md}", "padding": "{space.1}", "item-height": "32px", "item-px": "{space.2}", "item-radius": "{radius.sm}", "min-width": "200px" },
+  "tooltip": { "radius": "{radius.sm}", "px": "{space.2}", "py": "{space.1}", "max-width": "280px" },
+  "popover": { "radius": "{radius.lg}", "padding": "{space.4}" },
+  "dialog": { "radius": "{radius.xl}", "padding": "{space.6}", "gap": "{space.4}" },
+  "sheet": { "padding": "{space.6}" },
+  "tabs": { "height": "40px", "px": "{space.3}", "indicator": "2px" },
+  "nav": { "item-height": "34px", "item-px": "{space.2-5}", "item-radius": "{radius.md}", "width": "{layout.nav-width}", "collapsed-width": "{layout.nav-collapsed-width}" },
+  "toast": { "width": "380px", "radius": "{radius.lg}", "padding": "{space.4}" },
+  "avatar": { "radius": "{radius.full}" },
+  "kpi": { "padding": "{space.5}" }
+}

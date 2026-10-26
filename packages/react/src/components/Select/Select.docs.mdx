@@ -1,0 +1,95 @@
+export const meta = {
+  title: "Select",
+  description: "Picks one value from a short list of known options in a dropdown.",
+  category: "Forms",
+  status: "stable",
+  components: ["Select", "SelectItem"],
+  related: ["combobox", "radio-group", "field"],
+  order: 11,
+};
+
+<Section tab="usage">
+
+<Example of="Select/Overview" layout="start" />
+
+## When to use
+
+- For one choice from about 4 to 15 options that people recognise.
+- When the list should take little space until needed.
+
+## When not to use
+
+- For a long or searchable list. Use [Combobox](/components/combobox).
+- For two or three options. Use [Radio group](/components/radio-group) or [Segmented control](/components/segmented-control).
+- For several values. Use [Multi select](/components/multi-select).
+
+## Variants
+
+<Example of="Select/Sizes" title="Sizes" description="Heights follow the control sizes and the density mode." layout="start" />
+
+<Example of="Select/WithIcon" title="With icon" description="A leading icon helps identify the field in dense toolbars." layout="start" />
+
+<Example of="Select/Composed" title="Composed" description="Use SelectItem, SelectGroup and SelectLabel for custom content." layout="start" />
+
+<Example of="Select/WithError" title="Error" description="Pair with a Field error." layout="start" />
+
+<DoDont>
+  <Do of="Select/DoShortList" caption="Use a select for a short list of known values." />
+  <Dont of="Select/DontLongList" caption="Hide a long list in a select. People can't search. Use a combobox." />
+</DoDont>
+
+## Writing
+
+Placeholders ask for the choice: “Select a method”. Options are sentence case and parallel. Order by frequency or logic, not alphabet, unless the list is long.
+
+## Warn, read-only and loading
+
+<Example of="Select/StateContract" title="Warn, read-only and skeleton" description="Warn marks a value that is allowed but worth a second look. It is never the same as invalid: it does not set aria-invalid and never blocks submission, and the message carries an icon and text so it is not colour alone. Read-only shows the value flat, keeps it focusable and copyable, and ignores changes. Skeleton replaces the control while its data loads; the label stays for screen readers. Set all three on a Field and every control inside follows." />
+
+Set `warn` (a message), `readOnly` and `skeleton` on the surrounding `Field`. On a standalone select, pass `readOnly` and `skeleton` directly; give `warn` a message through a Field so it is announced. An error always replaces a warning.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A trigger styled like an input and a raised list panel. Options can have an icon and description, can be grouped, and show a check beside the selected one.
+
+## Tokens
+
+<UsesTokens names={["bg.raised", "bg.hover", "border.control", "focus.halo"]} />
+
+<ComponentTokens name="input" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Select/Controlled" title="Controlled value" layout="start" code="open" />
+
+## Notes
+
+- Pass `options` for the common case, or `children` made of `SelectItem` for custom layouts.
+- Value is a string. An empty string is not valid: use a placeholder for no selection.
+- Works inside a [Field](/components/field).
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Enter / Space", "Opens the list, or selects the highlighted option."], ["↓ / ↑", "Opens the list and moves the highlight."], ["Type", "Jumps to the option that starts with the typed text."], ["Escape", "Closes the list without changing the value."]]} />
+
+## Screen readers
+
+- The trigger is announced as a combobox with its value and expanded state. Options are announced with their label and position.
+
+## Visual
+
+- Focus shows a ring and halo on the trigger. The selected option has a check, and highlighting uses a background and an outline in forced-colours mode.
+
+</Section>

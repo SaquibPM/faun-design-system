@@ -1,0 +1,149 @@
+export const meta = {
+  title: "Bar chart",
+  description: "Compares values across categories, such as emissions by site. Simple, grouped, stacked, floating, diverging and lollipop bars, vertical or horizontal.",
+  category: "Data",
+  status: "new",
+  components: ["BarChart"],
+  related: ["chart-types", "stacked-bar-chart", "line-chart", "combo-chart", "data-table"],
+  order: 6,
+};
+
+<Section tab="usage">
+
+<Example of="BarChart/Overview" layout="stretch" />
+
+## When to use
+
+- To compare a measure across a small set of categories: sites, suppliers, frameworks, years.
+- To show the same measure two ways side by side, such as location-based and market-based Scope 2.
+
+## When not to use
+
+- For change over time with many points. Use a line chart.
+- For parts of a whole with many parts. Use a treemap, or a donut for a few.
+- For exact values people need to look up. Use a data table, or add `showValues`.
+- For more than about a dozen categories. Group the tail as “Other”, or use a table.
+
+## Variants
+
+<Example of="BarChart/Clustered" layout="stretch" title="Clustered" description="Several series sit side by side in each category. Colours come from the categorical palette in order." />
+
+<Example of="BarChart/GroupedQuarters" layout="stretch" title="Grouped" description="variant=&quot;grouped&quot; draws one bar per series in each category. It is what several series give you by default; naming it makes the intent clear." />
+
+<Example of="BarChart/Stacked" layout="stretch" title="Stacked" description="variant=&quot;stacked&quot; piles series into one bar per category, with a total in the tooltip and table. showTotals writes the total above each bar. Series with the ids scope-1, scope-2 and scope-3 take the GHG scope colours." />
+
+<Example of="BarChart/StackedHorizontal" layout="stretch" title="Stacked, horizontal" description="Every variant works in both orientations." />
+
+<Example of="BarChart/Floating" layout="stretch" title="Floating" description="variant=&quot;floating&quot; draws each bar from series.base to series.values, so it shows a range such as a forecast or a min and max. Floating bars do not start at zero." />
+
+<Example of="BarChart/Diverging" layout="stretch" title="Diverging" description="variant=&quot;diverging&quot; colours bars by sign with the diverging ramp, and by size with its three steps. positiveIs says whether above zero is the better or the worse end; divergingLabels names the two sides in the colour key. Use one series." />
+
+<Example of="BarChart/Lollipop" layout="stretch" title="Lollipop" description="variant=&quot;lollipop&quot; draws a stem and a dot instead of a bar. Less ink, which helps when many values are close or labels are long." />
+
+<Example of="BarChart/Horizontal" layout="stretch" title="Horizontal" description="orientation=&quot;horizontal&quot; puts categories down the side, which suits long names such as suppliers. The chart grows with the number of categories unless you set height." />
+
+<Example of="BarChart/WithTarget" layout="stretch" title="Target and reference lines" description="references draws a line at a value on the measure axis. A target is a heavier dash for a goal; a reference is a quiet dotted line for a baseline or limit. The axis grows to include them." />
+
+<Example of="BarChart/SeriesToggle" layout="stretch" title="Toggle series" description="toggleSeries turns the legend into buttons that show or hide each series. The axis rescales to what is visible, and one series always stays on." />
+
+<Example of="BarChart/WithGap" layout="stretch" title="Missing values" description="A null value leaves a gap. It is never drawn as a zero, and the tooltip and data table say “No data”." />
+
+<Example of="BarChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="BarChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="BarChart/DoZeroBaseline" caption="Start bars at zero. Bar length is the value." />
+  <Dont of="BarChart/DontTooManyCategories" caption="Plot dozens of categories. Labels thin out and bars become slivers. Group or use a table." />
+</DoDont>
+
+<DoDont>
+  <Do of="BarChart/Diverging" caption="Use the diverging variant for variance around a meaningful zero, such as over and under budget." />
+  <Dont of="BarChart/DontDivergingForAll" caption="Use it when every value is positive. One-sided bars in a diverging colour say nothing about direction." />
+</DoDont>
+
+## Writing
+
+Title the chart with what it shows and the period: “Scope 1 emissions by site, FY2026”. Use the description for the one-line takeaway. Put the unit in `unit`, not in every label.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, an optional legend, the plot (grid, value axis with unit, category axis, bars), and a tooltip. Gridlines are quiet, bars have a hairline surface edge so neighbours stay distinct.
+
+## Colour
+
+Series take `dataviz.cat-1` to `cat-8` in order, and never cycle: a ninth series is not drawn. Eight is the limit of what the palette separates for colour-blind readers; group the rest. Series with the id `scope-1`, `scope-2` or `scope-3` take the GHG scope colours. The diverging variant colours by sign instead, from `dataviz.div-neg-3` through `div-mid` to `div-pos-3`: moss is the better side and oxblood the worse (set `positiveIs`). `dataviz.div-alt-*` is the same ramp in blue and amber, for audiences where green and red cannot be told apart.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.cat-3", "dataviz.scope-1", "dataviz.div-neg-3", "dataviz.div-pos-3", "dataviz.grid", "dataviz.axis", "dataviz.surface", "bg.raised"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="BarChart/Overview" layout="stretch" code="open" />
+
+## Appearance
+
+Charts draw in relief by default: a tinted face with a wave texture, a thin outline and a darker extruded side, with a distinct wave per series. Set `appearance="flat"` for the classic solid look, or `data-appearance="flat"` on any ancestor to flatten charts and buttons beneath it. High-contrast themes, print and forced colours draw flat solid fills with a hatch automatically.
+
+<Example of="BarChart/Appearance" layout="stretch" code="open" />
+
+## Pastel palettes
+
+Four colour options, one prop. `palette="default"` is Faun's saturated categorical set. `meadow`, `dawn` and `harbour` are pastel: the face of each bar is a soft tint, and the outline, side and wave texture, derived from a deeper colour of the same hue, carry the 3:1 contrast. Moss stays series 1 in all of them. Set `data-viz-palette` on any ancestor to recolour every chart beneath it. Lines, points and flat bars use the deep colour, and high-contrast themes and print always use the default palette.
+
+<PaletteSwitch />
+
+<Example of="BarChart/Palettes" layout="stretch" code="open" />
+
+## Notes
+
+- `palette` is `default`, `meadow`, `dawn` or `harbour`. The same switch is `data-viz-palette` on any ancestor.
+- `appearance` is `relief` (default) or `flat`. Texture is a second channel besides colour; it never replaces the tooltip or data table.
+- `categories` and each series' `values` line up by index. Use `null` for no data.
+- `variant` is `simple` (default), `grouped`, `stacked`, `floating`, `diverging` or `lollipop`. Stacked bars put positive values above the baseline and negative values below it. Floating series need `base`, the lower end of each bar.
+- `orientation="horizontal"` swaps the axes. Long category names are truncated at 32 characters in the drawing; the data table has the full name.
+- `references` takes `{ label, value, kind }`. Use `kind: "target"` for a goal and the default for a baseline or limit. Keep to one or two lines so labels stay clear of each other.
+- `toggleSeries` makes the legend interactive. Control it with `hiddenSeries` and `onHiddenSeriesChange` (ids of the hidden series), or start from `defaultHiddenSeries`. Colours stay with their series when others are hidden.
+- The width follows the container; set `height` in px (default 280).
+- `format` controls ticks, tooltip and table; the default adds thousands separators and up to one decimal.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[
+  ["Tab", "Focuses the chart. It is one tab stop, however many bars there are. With `toggleSeries`, the legend buttons come before it."],
+  ["Arrow Right / Arrow Left", "Moves to the next or previous category and shows its tooltip."],
+  ["Arrow Down / Arrow Up", "In a horizontal chart, the same as Right and Left."],
+  ["Enter / Space", "On a legend entry (when `toggleSeries` is on), shows or hides that series. The last visible series cannot be hidden."],
+  ["Home / End", "Moves to the first or last category."],
+  ["Escape", "Hides the tooltip."],
+]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the category and all its values in a polite live region.
+
+- With `toggleSeries`, each legend entry is a button with `aria-pressed` (true = shown). Hiding or showing is announced politely, for example “Market-based hidden”. The last visible series is marked `aria-disabled` and stays on.
+- Hidden series leave the drawing, the tooltip, the live announcements and the data table, so what is read matches what is seen.
+- Target and reference lines are listed at the foot of the data table with their kind, label and value, for example “Target: 2030 pathway: 14,000 tCO₂e”.
+
+## Visual
+
+- Hovering a category highlights it and shows a tooltip with every series. The same appears on keyboard focus.
+- Series are told apart by position and legend order as well as colour. The categorical palette is checked for protan and deutan separation.
+- Bar fills against the surface meet 3:1.
+- Diverging bars are told apart by direction (left or right of the baseline, above or below) as well as colour, and the colour key names both sides.
+
+</Section>

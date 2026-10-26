@@ -1,0 +1,17 @@
+.faun-spinner {
+  --_size: var(--faun-size-icon-md);
+  display: inline-flex;
+  inline-size: var(--_size);
+  block-size: var(--_size);
+  flex: none;
+  color: inherit;
+}
+.faun-spinner[data-size="xs"] { --_size: var(--faun-size-icon-xs); }
+.faun-spinner[data-size="sm"] { --_size: var(--faun-size-icon-sm); }
+.faun-spinner[data-size="lg"] { --_size: var(--faun-size-icon-lg); }
+.faun-spinner[data-size="xl"] { --_size: var(--faun-size-icon-xl); }
+.faun-spinner svg {
+  inline-size: 100%;
+  block-size: 100%;
+  animation: faun-spin var(--faun-motion-duration-spin) linear infinite;
+}

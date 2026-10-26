@@ -1,0 +1,18 @@
+.faun-skeleton {
+  display: block;
+  inline-size: 100%;
+  border-radius: var(--faun-radius-sm);
+  background-color: var(--faun-bg-skeleton);
+  background-image: linear-gradient(90deg, transparent 0%, color-mix(in srgb, var(--faun-bg-surface) 55%, transparent) 50%, transparent 100%);
+  background-size: 200% 100%;
+  background-repeat: no-repeat;
+  animation: faun-shimmer 1.6s linear infinite;
+}
+.faun-skeleton:where([data-shape="text"]) { block-size: 0.75em; margin-block: 0.35em; border-radius: var(--faun-radius-xs); }
+.faun-skeleton:where([data-shape="circle"]) { border-radius: var(--faun-radius-full); inline-size: var(--faun-size-avatar-md); block-size: var(--faun-size-avatar-md); flex: none; }
+.faun-skeleton:where([data-shape="rect"]) { block-size: var(--faun-space-24); border-radius: var(--faun-radius-md); }
+.faun-skeleton-lines { display: grid; inline-size: 100%; }
+.faun-skeleton-rows { display: grid; inline-size: 100%; }
+.faun-skeleton-row { display: grid; gap: var(--faun-space-4); align-items: center; block-size: var(--faun-density-row-height); padding-inline: var(--faun-density-cell-px); border-bottom: var(--faun-border-width-hairline) solid var(--faun-border-subtle); }
+@media (prefers-reduced-motion: reduce) { .faun-skeleton { animation: none; background-image: none; } }
+[data-faun-calm] .faun-skeleton { animation: none; background-image: none; }

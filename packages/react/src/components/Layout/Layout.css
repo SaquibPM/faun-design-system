@@ -1,0 +1,21 @@
+.faun-stack { display: flex; flex-direction: column; gap: var(--_gap); min-inline-size: 0; }
+.faun-inline { display: flex; flex-direction: row; gap: var(--_gap); min-inline-size: 0; }
+.faun-inline:where([data-wrap]) { flex-wrap: wrap; }
+.faun-stack:where([data-align="start"]), .faun-inline:where([data-align="start"]) { align-items: flex-start; }
+.faun-stack:where([data-align="center"]), .faun-inline:where([data-align="center"]) { align-items: center; }
+.faun-stack:where([data-align="end"]), .faun-inline:where([data-align="end"]) { align-items: flex-end; }
+.faun-stack:where([data-align="stretch"]), .faun-inline:where([data-align="stretch"]) { align-items: stretch; }
+.faun-inline:where([data-align="baseline"]) { align-items: baseline; }
+.faun-stack:where([data-justify="center"]), .faun-inline:where([data-justify="center"]) { justify-content: center; }
+.faun-stack:where([data-justify="end"]), .faun-inline:where([data-justify="end"]) { justify-content: flex-end; }
+.faun-stack:where([data-justify="between"]), .faun-inline:where([data-justify="between"]) { justify-content: space-between; }
+
+.faun-divider { background: var(--faun-border-subtle); flex: none; border: 0; margin: 0; }
+.faun-divider:where([data-orientation="horizontal"]) { block-size: 1px; inline-size: 100%; }
+.faun-divider:where([data-orientation="vertical"]) { inline-size: 1px; align-self: stretch; min-block-size: var(--faun-space-4); }
+.faun-divider:where([data-emphasis="default"]) { background: var(--faun-border-default); }
+.faun-divider-labelled { display: flex; align-items: center; gap: var(--faun-space-3); inline-size: 100%; color: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size); line-height: var(--faun-type-caption-line-height); }
+.faun-divider-labelled::before, .faun-divider-labelled::after { content: ""; flex: 1 1 0; block-size: 1px; background: var(--faun-border-subtle); }
+.faun-divider-labelled:where([data-emphasis="default"])::before, .faun-divider-labelled:where([data-emphasis="default"])::after { background: var(--faun-border-default); }
+.faun-divider-label { flex: none; white-space: nowrap; }
+@media (forced-colors: active) { .faun-divider, .faun-divider-labelled::before, .faun-divider-labelled::after { background: CanvasText; } }

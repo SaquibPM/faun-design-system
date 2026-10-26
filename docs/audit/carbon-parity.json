@@ -1,0 +1,975 @@
+{
+  "generated": "2026-10-22",
+  "legend": {
+    "status": [
+      "Covered",
+      "Partial",
+      "Missing"
+    ],
+    "priority": {
+      "P0": "needed by any product",
+      "P1": "expected by enterprise",
+      "P2": "nice to have"
+    },
+    "effort": {
+      "S": "under 2 days",
+      "M": "2 to 5 days",
+      "L": "over 5 days"
+    }
+  },
+  "totals": {
+    "components": {
+      "Covered": 50,
+      "Partial": 6,
+      "Missing": 7
+    },
+    "patterns": {
+      "Covered": 8,
+      "Partial": 10,
+      "Missing": 3
+    },
+    "combined": {
+      "Covered": 58,
+      "Partial": 16,
+      "Missing": 10
+    },
+    "dataTableVariants": {
+      "Covered": 16,
+      "Partial": 1,
+      "Missing": 2
+    }
+  },
+  "components": [
+    {
+      "id": "C01",
+      "carbon": "Accordion",
+      "faun": "`Accordion`, `AccordionItem/Trigger/Content`, `Collapsible`",
+      "status": "Covered",
+      "gaps": "No flush alignment (zero inline padding for side panels); heading level fixed at h3 (Radix Header), no `level` prop; no start-side chevron. Extras: icon, description, meta, separated variant.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C02",
+      "carbon": "AI label",
+      "faun": "None as a component. Neighbours: `ActorChip`, `ConfidenceBadge`, `StreamingText appearance=\"draft\"`, `CitationMarker`",
+      "status": "Covered",
+      "gaps": "No `AILabel` (default 16-64 px and inline sizes), no explainability popover (overview, details, artefacts, actions), no revert-to-AI-value control, no AI-presence styling hook on Input, Select, Textarea, Tag, Card or table cells. `ai.*` colour roles exist in tokens but nothing consumes them as a label. Batch 3 (22 Oct 2026): AILabel (`@faun-ds/ai`): label or icon, agent and model, summary, confidence, sources and revert in one explainability popover; `AISlot` gives fields, tiles and text areas the suggested/accepted/edited treatment. Still open: AI presence on table cells and Tag.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C03",
+      "carbon": "Aspect ratio†",
+      "faun": "None",
+      "status": "Missing",
+      "gaps": "Fixed-ratio media/chart/tile wrapper (16:9, 4:3, 1:1 and inverses). Today consumers set `aspect-ratio` by hand.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C04",
+      "carbon": "Breadcrumb",
+      "faun": "`Breadcrumbs`",
+      "status": "Covered",
+      "gaps": "No size prop (Carbon sm/md); no explicit mobile rule (collapse to one crumb); long labels rely on CSS ellipsis plus `title`. Overflow menu (first + last two) and `renderLink` router hook are present.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C05",
+      "carbon": "Button",
+      "faun": "`Button`, `IconButton`",
+      "status": "Covered",
+      "gaps": "Sizes: only sm 28 / md 32 / lg 40 exposed; xs (24) and xl (48) tokens exist but no prop value; no 2xl. No `ButtonGroup`/button set. `loading` has no finished/error outcome. Label is `white-space: nowrap` (Carbon wraps to a second line). Danger is not blocked from icon-only use. See section 2. Batch 1 (22 Oct 2026): `xs` (24) and `xl` (48) sizes, `wrap` for long labels, `status` success/error with `statusLabel`, `ButtonGroup` (set, joined, equal, stacked), icon-only `danger` removed from the `IconButton` type. Still open: no 2xl, no fluid joined set with 1px separator across a form.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C06",
+      "carbon": "Checkbox",
+      "faun": "`Checkbox`, `CheckboxGroup`",
+      "status": "Covered",
+      "gaps": "No read-only and no warning state (invalid only); sizes sm/md only; no AI variant. Group has legend, description, error, horizontal, select-all with indeterminate. Batch 1: `warn` message on `CheckboxGroup` and via `Field`, `readOnly` (value kept, `aria-readonly`), `skeleton`. Still open: AI variant.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C07",
+      "carbon": "Code snippet",
+      "faun": "None in the library (a docs-only `CodeBlock` lives in apps/docs; `JsonViewer` has copy)",
+      "status": "Missing",
+      "gaps": "Inline, single-line (horizontal scroll) and multi-line (show more/less, scroll after ~9 lines) snippets; copy with live \"Copied\" confirmation; wrap option; on-layer background.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C08",
+      "carbon": "Combo box",
+      "faun": "`Combobox` (typed input with listbox popup)",
+      "status": "Covered",
+      "gaps": "The control is a button that opens a search panel, not an editable input: no typing in the field, no inline autocomplete, no custom value committed on blur/Enter, no multi-token entry. No warn/read-only/fluid. Present: async `onSearchChange`, `loading`, groups, clear button, empty message. Batch 2 (22 Oct 2026): a real typed field: `input role=\"combobox\"` with `aria-expanded`, `aria-controls`, `aria-autocomplete` and `aria-activedescendant`, local filter on label, description and keywords, clear, chevron toggle, polite result count, `allowCustomValue` (opt in; commit on Enter, blur or the Use row; `customValueLabel`), same props as before (`searchPlaceholder` now ignored, ref is the input). Still open: inline autocomplete, multi-token entry.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C09",
+      "carbon": "Contained list",
+      "faun": "None",
+      "status": "Missing",
+      "gaps": "On-page and disclosed lists with header (title, search, action), row sizes 32-64, inline row actions, optional sticky header, dividers. `Listbox` is internal only.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C10",
+      "carbon": "Content switcher",
+      "faun": "`SegmentedControl`; `Tabs variant=\"segmented\"`",
+      "status": "Covered",
+      "gaps": "No high/low contrast pair; selection is activation-only (no auto vs manual choice). Sizes sm/md/lg, icon-only with `aria-label`, disabled per item and whole group are present.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C11",
+      "carbon": "Data table",
+      "faun": "`DataTable` (@faun-ds/data), `Pagination`, `FilterBar`",
+      "status": "Covered",
+      "gaps": "Strong core (sorting, selection, expansion, batch bar, server paging, sticky, resize, column menu, virtualisation). Missing distinct Carbon variants: single-select (radio), built-in toolbar with search and action slot, five row sizes (Faun has three densities), zebra, expand-all, row overflow integration, inline editing, AI presence. Variant breakdown in table 1b. Batch 2 (22 Oct 2026): single select (`selectionMode=\"single\"`, radio), `toolbar` slot with `DataTableToolbar` (search, filters, actions) that the selection bar replaces while rows are selected, five row sizes (`rowSize` xs 24 to xl 64, `rowSizeMenu`), `zebra`, `stickyFirstColumn`, and `DataTableRowActions`. Still open: expand-all, inline editing, AI presence.",
+      "priority": "P0",
+      "effort": "L"
+    },
+    {
+      "id": "C12",
+      "carbon": "Date picker",
+      "faun": "`DatePicker`, `DateRangePicker`, `Calendar` (typed by default; `entry=\"button\"` keeps the trigger)",
+      "status": "Covered",
+      "gaps": "Trigger is a button; no typed or masked text entry, no simple text-only variant, no time picker, no warn/read-only/fluid/skeleton. Present: single and range, presets with fiscal year, min/max, disabled dates, clear, locale, week start, arrow-key grid. Batch 2 (22 Oct 2026): typed entry with a format mask (`inputFormat`: dd/MM/yyyy, MM/dd/yyyy, yyyy-MM-dd), validation in words (not a real date, before min, after max, disabled) with `aria-invalid`, `onValidate`, calendar button and Alt+Down; range has start and end fields in one box; time picker is C43. Still open: time-zone select, fluid layout check, locale-driven default format.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C13",
+      "carbon": "Dropdown",
+      "faun": "`Select` (Radix); `Combobox`; `MultiSelect`",
+      "status": "Covered",
+      "gaps": "No inline variant, no warn, no read-only, no fluid. Sizes follow 28/32/40 (Carbon 32/40/48). Groups, descriptions, icons, scroll buttons and keyboard type-ahead are present. Batch 1: `warn`, `readOnly` (focusable, does not open, `aria-readonly`), `skeleton` on Select, Combobox and MultiSelect via the shared state contract; `Field variant=\"fluid\"` styles the trigger. Still open: inline label inside the control, typed entry.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C14",
+      "carbon": "File uploader",
+      "faun": "`FileUpload`",
+      "status": "Covered",
+      "gaps": "Drop-zone only: no button-only variant (Carbon's default). Per-file queued/uploading/done/error with progress bar, retry and remove are present, plus type, size and count validation. Visible focus on the hidden input is handled (`:has(input:focus-visible)`).",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C15",
+      "carbon": "Form",
+      "faun": "`Field`, `Fieldset`, `TextField`; pattern \"Settings form\"",
+      "status": "Partial",
+      "gaps": "No `Form` anatomy component (header, body, footer, spacing), no form-level error summary component (the pattern composes `Banner`), no multistep/wizard form, no fluid form, no column grid helper. Required and optional markers are both supported. Validation timing differs on purpose (on submit, then live).",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C16",
+      "carbon": "Inline loading",
+      "faun": "None (`Spinner`; `Button loading`)",
+      "status": "Covered",
+      "gaps": "States inactive, active, finished, error with a text label (\"Saving...\" to \"Saved\"), auto-reset after about 1.5 s, success callback, polite live-region announcement. Batch 1: `InlineLoading` (inactive, active, finished, error; description text; `successDelay` default 1500 ms; `onSuccess`; polite live region, assertive for error).",
+      "priority": "P0",
+      "effort": "S"
+    },
+    {
+      "id": "C17",
+      "carbon": "Link",
+      "faun": "`Link`",
+      "status": "Covered",
+      "gaps": "No visited colour; disabled only through `aria-disabled` styling (no `disabled` prop); no sizes (inherits text); no leading/trailing icon slot except the external icon. Inline vs standalone is covered by `underline=\"always\" / \"hover\"`.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C18",
+      "carbon": "List†",
+      "faun": "None",
+      "status": "Missing",
+      "gaps": "Ordered/unordered lists with nested levels and the dash/square/number/letter markers; productive and expressive sizes.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C19",
+      "carbon": "Loading",
+      "faun": "`Spinner` (5 sizes), `Skeleton`, `SkeletonRows`, `Button loading`, `DataTable loading`",
+      "status": "Partial",
+      "gaps": "No full-screen or container overlay with inert background, no overlay-with-spinner for a region, no documented thresholds (spinner vs skeleton vs progress). Spinner has no determinate form (use `ProgressCircle`).",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C20",
+      "carbon": "Menu",
+      "faun": "`DropdownMenu*`, `ContextMenu*`",
+      "status": "Covered",
+      "gaps": "No size scale matching trigger height (xs-lg); no item-count guard. Present: groups, separators, labels, submenus, checkbox and radio items, danger intent, shortcut hints, descriptions, context menu, type-ahead, matchTriggerWidth.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C21",
+      "carbon": "Menu buttons",
+      "faun": "Compose `DropdownMenuTrigger` + `Button`",
+      "status": "Covered",
+      "gaps": "No `MenuButton` (button with chevron and menu in one) and no `ComboButton` (primary action plus chevron menu); no size tie-in between trigger and item height. Batch 1: `MenuButton` and `ComboButton` (primary action plus chevron menu, named chevron); `DropdownMenuContent size` ties item height to the trigger size.",
+      "priority": "P0",
+      "effort": "S"
+    },
+    {
+      "id": "C22",
+      "carbon": "Overflow menu",
+      "faun": "Compose `IconButton` + `DropdownMenu`",
+      "status": "Covered",
+      "gaps": "No `OverflowMenu` (ghost \"more\" icon button with a fixed accessible label, flip-aware), no hover-reveal in table rows with persistent display on touch, no table-row helper. Needed by every list and table. Batch 1: `OverflowMenu` (required `label`, horizontal and vertical, size-matched menu). Still open (batch 2): hover-reveal in table rows with persistent display on touch, table row helper. Batch 2: `DataTableRowActions` (icon buttons for one or two actions, overflow menu for three or more or any destructive one; hover-reveal on pointer devices that stays visible on focus, while open and always on touch and forced colours; disabled while rows are selected for a batch). Remaining: lists and cards other than DataTable do not have a row helper.",
+      "priority": "P0",
+      "effort": "S"
+    },
+    {
+      "id": "C23",
+      "carbon": "Modal",
+      "faun": "`Dialog` (sm/md/lg/xl), `AlertDialog`",
+      "status": "Covered",
+      "gaps": "Passive, transactional and danger (typed confirmation, async confirm) are covered. Missing: non-modal dialog, acknowledgement and multi-step (Cancel/Previous/Next) footers as presets, scroll-shadow on the body, full-screen size. Focus trap, Escape, focus return and scrim handling come from Radix. Batch 3 (22 Oct 2026): `size=\"xs\"`, `variant` passive and danger (labelled icon, danger rule), scrolling body that is keyboard reachable with dividers. Still open: non-modal preset, multi-step footer, full-screen size.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C24",
+      "carbon": "Multiselect",
+      "faun": "`MultiSelect`",
+      "status": "Covered",
+      "gaps": "No tri-state parent \"All\" row (a footer has Select all/Clear), no inline variant, no warn, no read-only, no fluid. Chips with +N, search, groups, async, bulk actions are present.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C25",
+      "carbon": "Notification (inline, toast, actionable, callout)",
+      "faun": "`Banner` (inline, page), `Toast` + `toast()` store",
+      "status": "Covered",
+      "gaps": "No high/low contrast pair on Banner; no toast timestamp; a toast with an action still auto-dismisses after 5 s (Carbon keeps actionable toasts until dismissed); no callout-specific role (a Banner without `onDismiss` works). Present: 5 tones with icon, actions, dismiss, promise/loading/update API, max stack, swipe, position. Batch 2 (22 Oct 2026): a toast with an action no longer auto-dismisses (stays until acted on or dismissed); `duration` opts back in to a timer and `persistent` keeps any toast. Still open: toast timestamp. Batch 3 (22 Oct 2026): Popover `tone` inverse, SVG caret, `arrowPadding`, alignment checked.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C26",
+      "carbon": "Notification panel†",
+      "faun": "None (pattern text mentions a notification centre)",
+      "status": "Covered",
+      "gaps": "Chronological list grouped by time/source/urgency, read state, preferences link, unread dot on trigger, works alongside toasts. Batch 3 (22 Oct 2026): `NotificationPanel`, `NotificationList`, `NotificationItem`, `NotificationBell`: grouped by time, read state, actions, mark all as read.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C27",
+      "carbon": "Number input",
+      "faun": "`NumberField`",
+      "status": "Covered",
+      "gaps": "No warn, no fluid. Present: min/max clamp, step and Shift x10, PageUp/PageDown, Home/End, locale formatting on blur, unit and prefix, steppers, read-only, `aria-valuenow`/`valuetext`.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C28",
+      "carbon": "Pagination",
+      "faun": "`Pagination` (+ `paginationRange`)",
+      "status": "Covered",
+      "gaps": "No size prop to match table density; no jump-to-page select; no looping; no unknown-total (\"unbound\") mode. Page buttons with ellipsis, items per page, summary, compact variant and live announcements are present.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C29",
+      "carbon": "Popover",
+      "faun": "`Popover*`",
+      "status": "Covered",
+      "gaps": "No tab-tip variant (attached to a toolbar/header), no inverse/high-contrast style, no flush \"no tip\" alignment. Arrow, close button, sizes, header/body/footer, collision handling present.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C30",
+      "carbon": "Progress bar",
+      "faun": "`ProgressBar`, `Meter`, `ProgressCircle`",
+      "status": "Covered",
+      "gaps": "No status prop: no success/error state with icon and required helper text (tone is colour-only, against Faun's own icon-plus-label rule); no inline/indent label alignment. Determinate, indeterminate, value label, segments, ARIA are present. Batch 2 (22 Oct 2026): `status` (`active`, `finished`, `error`) with icon plus text (\"Finished\", \"Failed\" or `statusText`), `aria-valuetext`, and an announcement contract (silent on mount; \"in progress\" on turning indeterminate; 25, 50 and 75 percent milestones; finished polite; failed as an alert; `announce={false}`). Still open: inline and indent label alignment.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C31",
+      "carbon": "Progress indicator",
+      "faun": "`Stepper`",
+      "status": "Covered",
+      "gaps": "No disabled step, no arrow-key movement between interactive steps (steps are buttons in tab order), no secondary label slot beyond description. States complete, current, upcoming, error and awaiting-human; horizontal and vertical; interactive via `onSelect`. Batch 2 (22 Oct 2026): disabled step (`disabled`, reads Unavailable) and `showStatus` for visible text status. Still open: arrow-key movement between interactive steps, secondary label slot.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C32",
+      "carbon": "Radio button",
+      "faun": "`RadioGroup`",
+      "status": "Covered",
+      "gaps": "No warn, no read-only. Vertical and horizontal, card (tile) variant with icon and meta, helper text, group error present. Batch 1: `warn`, `readOnly` (`aria-readonly`, selection kept), `skeleton` on `RadioGroup`.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C33",
+      "carbon": "Search",
+      "faun": "`SearchField`; `CommandPalette`",
+      "status": "Covered",
+      "gaps": "Sizes sm/md/lg (Carbon xs-lg); no expandable (icon-collapse) variant, no scope select, no fluid, no results-panel behaviour (active/focused search) outside `CommandPalette`. Clear, Escape, Enter to `onSearch`, loading, shortcut hint present.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C34",
+      "carbon": "Select (native)",
+      "faun": "`Select` is Radix-based; no native `<select>` component (Pagination uses an unstyled one)",
+      "status": "Partial",
+      "gaps": "No `NativeSelect` for mobile pickers and plain forms; inline, warn, read-only, fluid shared with C13.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C35",
+      "carbon": "Slider",
+      "faun": "`Slider`",
+      "status": "Covered",
+      "gaps": "No paired number input(s) (Carbon default), no read-only, no warn. Single and range, marks with labels, vertical, `onValueCommit`, `formatValue`, per-thumb labels present.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C36",
+      "carbon": "Structured list",
+      "faun": "None (`DescriptionList` is key-value; a compact `DataTable` covers most uses)",
+      "status": "Missing",
+      "gaps": "Header row with columns, condensed and flush modes, selectable single-row list with radio/check icon.",
+      "priority": "P2",
+      "effort": "M"
+    },
+    {
+      "id": "C37",
+      "carbon": "Tabs",
+      "faun": "`Tabs`, `TabsList/Trigger/Content`",
+      "status": "Covered",
+      "gaps": "No dismissible tabs, no secondary label, no scroll arrows (Faun scrolls with edge fades), manual-activation mode not documented (Radix `activationMode` passes through), vertical is line-only, no icon-only guard. Line, contained, segmented, sm/md, icon, count, end slot present.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C38",
+      "carbon": "Tag",
+      "faun": "`Tag`, `FilterChip`",
+      "status": "Covered",
+      "gaps": "Read-only (default/framework/brand), dismissible and selectable (`FilterChip`) exist. Missing: operational tag (opens a popover/modal of more tags), the hue palette (Carbon ~12 colours; Faun 3 variants, status colour lives on `Badge`), lg size, truncation with tooltip, disabled, skeleton, inline AI label. Batch 3 (22 Oct 2026): Selectable, dismissible, operational and filter variants, lg, disabled, and `TagGroup` with a +N popover.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C39",
+      "carbon": "Text input",
+      "faun": "`Input`, `TextField`, `Field`",
+      "status": "Covered",
+      "gaps": "No warn, no password toggle, no inline label, no fluid, no character counter on the single-line input, no skeleton, no AI label. Invalid, read-only styling, disabled, helper, prefix/suffix, numeric alignment present. See section 2. Batch 1: `warn`, shared read-only style (also Textarea), `skeleton`, `showCount` counter on `Input`, password toggle, Field `inline` and `fluid` variants. Still open: word counter, AI label and revert.",
+      "priority": "P0",
+      "effort": "M"
+    },
+    {
+      "id": "C40",
+      "carbon": "Password input†",
+      "faun": "None",
+      "status": "Covered",
+      "gaps": "Show/hide toggle (pressed state, accessible name), requirement helper text, autocomplete hints (`current-password`, `new-password`). Batch 1: `PasswordInput` and `type=\"password\"` toggle with changing accessible name, custom labels, `autoComplete` default. Requirement helper text is the Field description.",
+      "priority": "P0",
+      "effort": "S"
+    },
+    {
+      "id": "C41",
+      "carbon": "Text area",
+      "faun": "`Textarea`",
+      "status": "Covered",
+      "gaps": "No word counter, no read-only styling (native attribute passes through but nothing marks it), no warn, no skeleton. Character counter with polite near-limit message, auto-grow, resize control present.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C42",
+      "carbon": "Tile (base, clickable, selectable, expandable)",
+      "faun": "`Card` (surface), `Tile`, `ClickableTile`, `SelectableTile`, `TileGroup`, `ExpandableTile`",
+      "status": "Covered",
+      "gaps": "Clickable works through `asChild`. No `SelectableTile` (radio/check icon, hover-selected state, multi-select), no `ExpandableTile`, no disabled state. Single-select cards exist only inside `RadioGroup variant=\"card\"`. Batch 2 (22 Oct 2026): `ClickableTile` (link or button), `SelectableTile` with checkbox semantics alone or in `TileGroup type=\"checkbox\"` and radio semantics in `TileGroup type=\"radio\"` (native inputs, fieldset legend, disabled, read-only, filled check or dot indicator), `ExpandableTile` (button with `aria-expanded`, region). Still open: tile-level AI label.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C43",
+      "carbon": "Time picker",
+      "faun": "`TimePicker`",
+      "status": "Covered",
+      "gaps": "Hour/minute entry with 12/24 h, AM/PM and time-zone selects, validation. Batch 2 (22 Oct 2026): `TimePicker`: masked hh:mm field, 12 or 24 hour (`hourCycle`, AM/PM select, A and P keys), `step` with Arrow Up and Down, `min`, `max`, validation in words, `onValidate`, value always 24 hour HH:mm. Still open: time-zone select, a list of slots.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C44",
+      "carbon": "Toggle",
+      "faun": "`Switch`",
+      "status": "Covered",
+      "gaps": "No state text (\"On\"/\"Off\"), no read-only, no skeleton. Sizes sm/md, label position, description, disabled present.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C45",
+      "carbon": "Toggletip",
+      "faun": "None (`Popover` is the base; `HoverCard` is hover-only)",
+      "status": "Covered",
+      "gaps": "No `Toggletip`: info icon button that opens a small popover on click/Enter/Space, may hold actions, Escape closes, content announced politely. Batch 3 (22 Oct 2026): `Toggletip`: button trigger, non-modal popover, Escape and focus return.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C46",
+      "carbon": "Tooltip",
+      "faun": "`Tooltip`, `TooltipProvider`",
+      "status": "Covered",
+      "gaps": "Icon tooltip behaviour is built into `IconButton`. Delay, side, align, Escape, shortcut hint present; content is deliberately non-interactive. Definition tooltip is separate (C47).",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C47",
+      "carbon": "Definition tooltip",
+      "faun": "None",
+      "status": "Covered",
+      "gaps": "Dotted-underline term whose definition opens on hover, focus or click. Batch 3 (22 Oct 2026): `DefinitionTooltip`: dotted-underline term, definition on focus, hover and tap.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C48",
+      "carbon": "Tree view",
+      "faun": "`Tree`",
+      "status": "Covered",
+      "gaps": "No xs size, no multi-select or checkbox tree, no async/lazy children, collapsed parent does not inherit the selected state of a hidden descendant. WAI-ARIA tree keys (arrows, Home/End, `*`, type-ahead), guides, icons, meta present.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C49",
+      "carbon": "UI shell: header",
+      "faun": "`TopBar`, `PageHeader`, `AppShell` skip link",
+      "status": "Covered",
+      "gaps": "No header navigation links with dropdown sub-menus, no defined utilities order (search left, switcher right), no unread badge slot on header icons. Nav toggle, breadcrumbs slot, search slot, actions slot, skip link and `<header>` landmark present. Batch 3 (22 Oct 2026): `HeaderNav` links with current page and collapse below 768, `HeaderActions`, `SkipLink`.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C50",
+      "carbon": "UI shell: side nav",
+      "faun": "`SideNav`, `SideNavSection/Item/Workspace/User`",
+      "status": "Covered",
+      "gaps": "Items are flat links: no expandable groups or second tier. Present: icon rail with tooltips, mobile drawer with inert page and focus return, sections, counts, attention badges, `aria-current`, workspace and user blocks. Batch 3 (22 Oct 2026): `SideNavGroup` second tier: collapsible, current page marked, flyout popover in the collapsed rail.",
+      "priority": "P0",
+      "effort": "M"
+    },
+    {
+      "id": "C51",
+      "carbon": "UI shell: header panel",
+      "faun": "None (a non-modal `Sheet` could host one)",
+      "status": "Covered",
+      "gaps": "Right panel anchored to a header icon, one open at a time, outlined trigger, closes on item select or trigger press. Batch 3 (22 Oct 2026): `HeaderPanel` with `useHeaderPanel`, one panel open at a time, focus return.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C52",
+      "carbon": "UI shell: switcher",
+      "faun": "`SideNavWorkspace onSwitch` (callback only)",
+      "status": "Covered",
+      "gaps": "No switcher panel: recent/frequent/all products, dividers, far-right placement rule. Batch 3 (22 Oct 2026): `SwitcherPanel`: grouped product list with current marked.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C53",
+      "carbon": "Skeleton",
+      "faun": "`Skeleton`, `SkeletonRows`",
+      "status": "Covered",
+      "gaps": "No per-component skeleton states (input, button, tag, tile, list) and no card preset. Text, circle, rect, multi-line and table shapes present.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C54",
+      "carbon": "Icon indicator",
+      "faun": "`StatusBadge`, `Badge` with icon",
+      "status": "Covered",
+      "gaps": "Pill chrome only: no chrome-less inline icon + label form, one icon size. 20 status icons across 7 tones, always icon plus label, from the status map.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C55",
+      "carbon": "Shape indicator",
+      "faun": "`Badge dot`",
+      "status": "Partial",
+      "gaps": "Only a round dot, so meaning rests on colour; Carbon varies the shape and outlines light tones. No dedicated component or shape set.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C56",
+      "carbon": "Notification badge (count, dot)",
+      "faun": "`SideNavItem attention/count`, `TabsTrigger count`",
+      "status": "Partial",
+      "gaps": "No badge overlay for `IconButton` (header and toolbar icons); no overflow cap rule (99+).",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C57",
+      "carbon": "Differential indicator",
+      "faun": "`Stat delta`",
+      "status": "Covered",
+      "gaps": "Direction arrow plus sentiment colour present. No standalone inline `Delta` for table cells.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C58",
+      "carbon": "Stack",
+      "faun": "`Stack`, `Inline`, `Divider` (Layout)",
+      "status": "Covered",
+      "gaps": "Gap from the space scale, align, justify, wrap, `asChild`. No responsive gap values.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C59",
+      "carbon": "Grid and layers",
+      "faun": "`@faun-ds/grid` (`Grid`, `Column`); layers via tokens",
+      "status": "Covered",
+      "gaps": "Wide, narrow, condensed modes; 4/8/12 columns; offsets; per-breakpoint spans. No subgrid helper, no `Layer` component.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "C60",
+      "carbon": "Fluid variants",
+      "faun": "None",
+      "status": "Missing",
+      "gaps": "Fluid text input, text area, dropdown, select, number, date, search, time, form: label inside the field, 64 px height, helper in a tooltip.",
+      "priority": "P2",
+      "effort": "L"
+    },
+    {
+      "id": "C61",
+      "carbon": "Copy button†",
+      "faun": "None (`DescriptionList copyValue`, `JsonViewer` copy)",
+      "status": "Missing",
+      "gaps": "Icon button with \"Copied\" feedback and live-region announcement; shared by snippets, IDs and tables.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "C62",
+      "carbon": "Toolbar†",
+      "faun": "None",
+      "status": "Covered",
+      "gaps": "`role=\"toolbar\"` container with roving tabindex, arrow-key movement, overflow into a menu. Needed by table toolbars and the text-toolbar pattern. Batch 3 (22 Oct 2026): `Toolbar`, `ToolbarButton`, `ToolbarSeparator`: roving tabindex, overflow menu. Overflow tested with stubbed widths only.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "C63",
+      "carbon": "Side panel and tearsheet†",
+      "faun": "`Sheet` (modal and non-modal, left/right/bottom, sm/md/lg)",
+      "status": "Partial",
+      "gaps": "Side panel covered. No tearsheet (large overlay stacking above a page with steps) and no stacked-panel behaviour.",
+      "priority": "P2",
+      "effort": "L"
+    }
+  ],
+  "dataTableVariants": [
+    {
+      "id": "V01",
+      "carbon": "Default, five row sizes (24/32/40/48/64)",
+      "faun": "`density` compact 36 / comfortable 44 / spacious 52",
+      "status": "Covered",
+      "gaps": "No xs 24 or xl 64 rows; header height does not separate from rows. Batch 2 (22 Oct 2026): `rowSize` xs 24, sm 32, md 40, lg 48, xl 64 px from control-size tokens, overriding density; header height unchanged.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "V02",
+      "carbon": "Selection, multi (checkbox)",
+      "faun": "`selectable`, indeterminate header, per-page vs all semantics",
+      "status": "Covered",
+      "gaps": "Header checkbox labelled; selection survives paging.",
+      "priority": "-",
+      "effort": "-"
+    },
+    {
+      "id": "V03",
+      "carbon": "Selection, single (radio)",
+      "faun": "None",
+      "status": "Covered",
+      "gaps": "Radio column, one row at a time. Batch 2 (22 Oct 2026): `selectionMode=\"single\"`: radio column, no select-all or bar, arrow keys move between rows, Space chooses.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "V04",
+      "carbon": "Batch actions",
+      "faun": "Selection bar with count, Clear selection, `selectionActions` slot",
+      "status": "Covered",
+      "gaps": "Does not take over the toolbar; row-level actions are not disabled in batch mode; no Cancel wording. Batch 2 (22 Oct 2026): the selection bar replaces the toolbar strip while rows are selected, and row actions switch off in batch mode.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "V05",
+      "carbon": "Expansion",
+      "faun": "`renderExpanded`, Left/Right keys, `isRowExpandable`",
+      "status": "Covered",
+      "gaps": "No expand-all control in the header.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "V06",
+      "carbon": "Expansion + selection",
+      "faun": "Both props together",
+      "status": "Covered",
+      "gaps": "-",
+      "priority": "-",
+      "effort": "-"
+    },
+    {
+      "id": "V07",
+      "carbon": "Sorting",
+      "faun": "`sortable`, `aria-sort`, three states, announcements, `manualSort`",
+      "status": "Covered",
+      "gaps": "-",
+      "priority": "-",
+      "effort": "-"
+    },
+    {
+      "id": "V08",
+      "carbon": "Search in toolbar",
+      "faun": "`SearchField` placed above the table by the consumer",
+      "status": "Covered",
+      "gaps": "No toolbar slot inside the table surface; no collapsible active-search. Batch 2 (22 Oct 2026): search lives in `DataTableToolbar` (a `SearchField` in the `search` slot), inside the table surface. Collapsible active-search is not built.",
+      "priority": "P0",
+      "effort": "M"
+    },
+    {
+      "id": "V09",
+      "carbon": "Toolbar (actions, filter, export)",
+      "faun": "`columnMenu` only; `FilterBar` composed outside",
+      "status": "Covered",
+      "gaps": "No `toolbar` slot, no overflow into a menu, no size pairing with row height. Batch 2 (22 Oct 2026): `toolbar` slot with search, filters and actions, plus the Row height menu (`rowSizeMenu`); the strip wraps on narrow screens. No overflow-into-menu (the Toolbar primitive is still open).",
+      "priority": "P0",
+      "effort": "M"
+    },
+    {
+      "id": "V10",
+      "carbon": "Skeleton / loading",
+      "faun": "`loading`, `loadingRows`, `aria-busy`",
+      "status": "Covered",
+      "gaps": "-",
+      "priority": "-",
+      "effort": "-"
+    },
+    {
+      "id": "V11",
+      "carbon": "Sticky header",
+      "faun": "`stickyHeader`, `maxHeight`, `virtualize`",
+      "status": "Covered",
+      "gaps": "No sticky first column or sticky toolbar. Batch 2 (22 Oct 2026): `stickyFirstColumn` pins the selection and first data columns. Sticky toolbar not built.",
+      "priority": "P2",
+      "effort": "M"
+    },
+    {
+      "id": "V12",
+      "carbon": "Pagination",
+      "faun": "Client and server (`totalRows`), page size options, announcements",
+      "status": "Covered",
+      "gaps": "Pagination size does not follow row size.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "V13",
+      "carbon": "Zebra stripes",
+      "faun": "None",
+      "status": "Covered",
+      "gaps": "Optional alternating row background. Batch 2 (22 Oct 2026): `zebra`, by data position, under hover and selected.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "V14",
+      "carbon": "Row overflow menu / inline actions",
+      "faun": "None (compose in a cell)",
+      "status": "Covered",
+      "gaps": "Persistent vs hover-reveal, disabled in batch mode, icon buttons when fewer than three. Batch 2 (22 Oct 2026): `DataTableRowActions`: persistent or hover-reveal, always visible on touch, on focus and while open; disabled in batch mode; icon buttons when fewer than three actions, otherwise `OverflowMenu`.",
+      "priority": "P0",
+      "effort": "S"
+    },
+    {
+      "id": "V15",
+      "carbon": "Inline editing",
+      "faun": "None",
+      "status": "Missing",
+      "gaps": "Editable cells with commit/cancel and validation.",
+      "priority": "P2",
+      "effort": "L"
+    },
+    {
+      "id": "V16",
+      "carbon": "AI presence",
+      "faun": "None",
+      "status": "Missing",
+      "gaps": "AI label on table, column, row or cell.",
+      "priority": "P2",
+      "effort": "M"
+    },
+    {
+      "id": "V17",
+      "carbon": "Filtering",
+      "faun": "`FilterBar` chips above the table",
+      "status": "Partial",
+      "gaps": "See pattern P06.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "V18",
+      "carbon": "Empty and error",
+      "faun": "`emptyState`, `error` with retry",
+      "status": "Covered",
+      "gaps": "-",
+      "priority": "-",
+      "effort": "-"
+    },
+    {
+      "id": "V19",
+      "carbon": "Column resize, hide, virtualise (Faun extras)",
+      "faun": "`resizableColumns`, `columnMenu`, `virtualize`",
+      "status": "Covered",
+      "gaps": "Beyond Carbon.",
+      "priority": "-",
+      "effort": "-"
+    }
+  ],
+  "patterns": [
+    {
+      "id": "P01",
+      "carbon": "Common actions (add, cancel, clear, close, copy, delete, edit, errors, next, refresh, remove, reset)",
+      "faun": "Button/IconButton docs; \"Confirm destructive action\" pattern",
+      "status": "Partial",
+      "gaps": "No pattern page for the 12 actions. Delete tiering exists in part (reversible vs typed confirmation). No copy-with-tooltip feedback, no refresh, reset or remove guidance.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "P02",
+      "carbon": "Dialogs (modal passive, transactional, acknowledgement, progress; non-modal)",
+      "faun": "`Dialog`, `AlertDialog`, \"Confirm destructive action\"",
+      "status": "Partial",
+      "gaps": "Only the confirm case is a pattern. No guidance for passive, acknowledgement, progress or non-modal, nor button placement rules.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "P03",
+      "carbon": "Disabled states (disabled, read-only, hidden)",
+      "faun": "Foundations > States (disabled tokens)",
+      "status": "Partial",
+      "gaps": "Disabled is documented; read-only and hidden-by-permission rules are not, and read-only is implemented on only two controls. Batch 1: read-only is now documented and implemented on all 13 control families. Still open: hidden-by-permission rule.",
+      "priority": "P0",
+      "effort": "S"
+    },
+    {
+      "id": "P04",
+      "carbon": "Disclosures (profile menu, settings/filter popover, combo button, toggletip)",
+      "faun": "`Popover`, `Accordion`, `Collapsible`, `HoverCard`",
+      "status": "Partial",
+      "gaps": "No pattern page; combo button and toggletip components missing; no rule set (one open at a time, no nesting, width cap).",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "P05",
+      "carbon": "Empty states",
+      "faun": "`EmptyState` + \"Empty, error and no access\"",
+      "status": "Covered",
+      "gaps": "Four kinds, sizes sm/md, actions. Missing the in-depth alternatives (in-line documentation, onboarding, starter content); the Home pattern shows a first-use hint set.",
+      "priority": "P2",
+      "effort": "S"
+    },
+    {
+      "id": "P06",
+      "carbon": "Filtering (single/multi, batch/instant, applied indicator, reset)",
+      "faun": "`FilterBar`, `FilterChip`, `MultiSelect`",
+      "status": "Partial",
+      "gaps": "Chips, add menu and Clear all are good. No batch mode with Apply, no filter drawer/popover with applied-count on the trigger, no per-category reset, no range (date, number) filters, no saved views.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "P07",
+      "carbon": "Forms",
+      "faun": "`Field`, `Fieldset`, \"Settings form\"",
+      "status": "Partial",
+      "gaps": "Covers labels, required/optional, error summary banner, save. Missing: dialog vs side panel vs multistep guidance, wizard, button placement and spacing rules, fluid forms.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "P08",
+      "carbon": "Global header",
+      "faun": "`TopBar`, `AppShell`",
+      "status": "Partial",
+      "gaps": "See C49 to C52.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "P09",
+      "carbon": "Loading (skeleton, indicators, progress, progressive, load more)",
+      "faun": "`Skeleton`, `Spinner`, `ProgressBar`, `DataTable loading`",
+      "status": "Partial",
+      "gaps": "Components exist; no pattern page with thresholds; no inline loading, overlay or load-more.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "P10",
+      "carbon": "Login",
+      "faun": "None",
+      "status": "Missing",
+      "gaps": "Progressive/SSO/password variants, centred and split layouts, server error handling, generic credentials message.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "P11",
+      "carbon": "Notifications",
+      "faun": "\"Notifications and toasts\" pattern; `Banner`, `Toast`",
+      "status": "Covered",
+      "gaps": "Toast vs banner vs notification centre vs dialog is explained. The notification centre has no component (C26).",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "P12",
+      "carbon": "Read-only inputs",
+      "faun": "`Input`, `NumberField` only",
+      "status": "Covered",
+      "gaps": "Styled read-only exists on two of the 13 control families (Input, NumberField); Textarea, Select, Combobox, MultiSelect, DatePicker, Checkbox, Radio, Switch, Slider have none. Batch 1: read-only styling and semantics on all 13 families (native `readonly` where the element supports it; `aria-readonly` plus blocked changes elsewhere).",
+      "priority": "P0",
+      "effort": "M"
+    },
+    {
+      "id": "P13",
+      "carbon": "Search (basic, active, focused, scoped, recent, no results)",
+      "faun": "`SearchField`, `CommandPalette`, \"Search and command palette\"",
+      "status": "Partial",
+      "gaps": "Command palette is solid. No results-page, active-search panel, scope filter with counts, recent/trending searches or zero-result guidance.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "P14",
+      "carbon": "Text toolbar",
+      "faun": "None",
+      "status": "Missing",
+      "gaps": "Formatting toolbar pattern (needs `Toolbar`, rich-text surface).",
+      "priority": "P2",
+      "effort": "M"
+    },
+    {
+      "id": "P15",
+      "carbon": "Status indicators (icon, shape, badge, differential; severity tiers)",
+      "faun": "`StatusBadge`, status map (ADR 0003), `Stat delta`, `DataQualityCell`",
+      "status": "Covered",
+      "gaps": "Icon + label, 7 tones, domain/state map. Gaps: shape indicator set, notification badge, a pattern page stating severity tiers and the five-or-six-per-view limit.",
+      "priority": "P1",
+      "effort": "S"
+    },
+    {
+      "id": "P16",
+      "carbon": "Overflow content (truncation, show more, ellipsis menu)†",
+      "faun": "None; ad hoc CSS ellipsis",
+      "status": "Covered",
+      "gaps": "No `Truncate` (end, middle, front), no `ShowMore`/load-more, no rule for tooltips on truncated text. Batch 1: `Truncate` (end, middle, start, multi-line, tooltip only when cut, focusable while cut) and `ShowMore` (line clamp, toggle only when cut). Load-more for lists is not part of this.",
+      "priority": "P0",
+      "effort": "M"
+    },
+    {
+      "id": "P17",
+      "carbon": "Saving and editing†",
+      "faun": "\"Settings form\" (explicit save; Switch applies at once)",
+      "status": "Missing",
+      "gaps": "No inline edit, autosave, unsaved-changes guard, or saving/saved feedback pattern.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "P18",
+      "carbon": "Drag and drop†",
+      "faun": "None",
+      "status": "Missing",
+      "gaps": "No sortable list, drop target or keyboard-operable reorder; column resize is the only drag.",
+      "priority": "P2",
+      "effort": "L"
+    },
+    {
+      "id": "P19",
+      "carbon": "Data table patterns (bulk, list and detail, empty, filtering)†",
+      "faun": "\"Bulk actions on a table\", \"List and detail\"",
+      "status": "Partial",
+      "gaps": "Bulk and list-detail covered; toolbar, inline editing, row actions and filtering patterns absent.",
+      "priority": "P1",
+      "effort": "M"
+    },
+    {
+      "id": "P20",
+      "carbon": "Generative AI patterns (AI label, explainability, revert, feedback, chat)†",
+      "faun": "`@faun-ds/ai` + \"Agent run viewer\", \"Approval flow\", foundations > Agents",
+      "status": "Partial",
+      "gaps": "Run, approval, provenance, confidence and streaming are ahead of Carbon. Missing: AI label and explainability popover, revert, feedback controls (helpful, copy, regenerate), suggested prompts component, message list/bubbles, reasoning disclosure, AI-presence styling.",
+      "priority": "P1",
+      "effort": "L"
+    },
+    {
+      "id": "P21",
+      "carbon": "Text-based navigation (links, tabs, breadcrumbs, pagination)†",
+      "faun": "`Link`, `Tabs`, `Breadcrumbs`, `Pagination`, `SideNav`",
+      "status": "Partial",
+      "gaps": "Components exist; no page on choosing between them.",
+      "priority": "P2",
+      "effort": "S"
+    }
+  ]
+}

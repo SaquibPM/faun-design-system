@@ -1,0 +1,90 @@
+export const meta = {
+  title: "Provenance trail",
+  description: "Data lineage for a reported figure: source, extraction, factor, calculation, review and the final value.",
+  category: "AI and agents",
+  status: "new",
+  components: ["ProvenanceTrail"],
+  related: ["run-trail", "citation", "timeline", "description-list"],
+  order: 3,
+};
+
+<Section tab="usage">
+
+<Example of="ProvenanceTrail/Overview" layout="start" />
+
+## When to use
+
+- Beside a disclosed number, so an auditor can see where it came from and what happened to it.
+- When a value passed through machines and people: an extraction, a factor, a calculation and a review.
+
+## When not to use
+
+- To show the work an agent did in a run. Use [Run trail](/components/run-trail).
+- To cite a statement in running text. Use [Citation](/components/citation).
+- For who edited a record over time. Use [Timeline](/components/timeline).
+
+## Variants
+
+<Example of="ProvenanceTrail/WithEstimate" title="With an estimate" description="An estimate step carries an “Estimated” badge so it cannot pass for a measured value." layout="start" />
+
+<Example of="ProvenanceTrail/Short" title="From a factor" description="Show only the part of the lineage the reader needs, for example in a popover on a table cell." layout="start" />
+
+<DoDont>
+  <Do of="ProvenanceTrail/DoShowTheValueAtEachStep" caption="Show the value at each step so the reader can follow it from 1,284 MWh to 919 tCO₂e." />
+  <Dont of="ProvenanceTrail/DontStepsWithoutValues" caption="List steps with no values or sources. “Data processed” tells an auditor nothing." />
+</DoDont>
+
+## Writing
+
+- Titles say what happened: “Consumption read from the bills”, not “Extraction”. The kind label is added for you.
+- Put units on every value. Use tabular figures and the same unit style as the rest of the page: tCO₂e, MWh.
+- End with the datapoint as it appears in the disclosure, including its ESRS reference.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+An ordered list joined by a line. Each node has a marker with the kind's icon, a kind label, a title, the value it carried, optional detail, and a line naming who or what did it, the source and when. The final reported value is set in the display face on a moss marker.
+
+## Colour
+
+Machine steps (extraction, factor, calculation) are lagoon. Human review is plum. Estimates are warning. Sources are neutral. Each node also names its kind in words.
+
+## Tokens
+
+<UsesTokens names={["fg.default", "fg.muted", "border.strong", "status.running.fg", "status.attention.fg", "status.warning.fg", "bg.brand"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="ProvenanceTrail/Overview" title="Lineage of a datapoint" code="open" layout="start" />
+
+## Notes
+
+- Nodes are `ProvenanceNode` objects, in order from source to reported value. The last node is styled as the result.
+- `value` is pre-formatted text so you control rounding and units.
+- Give the list an `aria-label` that names the figure.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves to links to sources. The trail itself has no controls."]]} />
+
+## Screen readers
+
+- An ordered list, so the order is announced. Each node starts with its kind as text.
+- Marker icons are decorative. Times use the `time` element with a machine-readable value.
+
+## Visual
+
+- Estimates are labelled “Estimated” with a warning icon. Colour never carries the meaning alone.
+
+</Section>

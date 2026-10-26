@@ -1,0 +1,77 @@
+export const meta = {
+  title: "Truncate",
+  description: "Shortens text to the room it has and gives the full text back in a tooltip, only when it was actually cut.",
+  category: "Display",
+  status: "new",
+  components: ["Truncate"],
+  related: ["show-more", "tooltip", "tag"],
+  order: 12,
+};
+
+<Section tab="usage">
+
+<Example of="Truncate/Overview" layout="start" />
+
+## When to use
+
+- In table cells, tags, breadcrumbs, file names and ids where the width is fixed.
+- When the full text still has to be reachable.
+
+## When not to use
+
+- For long prose people need to read. Use [Show more](/components/show-more) or let it wrap.
+- For text that is essential to a decision. Never hide it behind a tooltip.
+
+## Modes
+
+<Example of="Truncate/Modes" title="End, middle and start" description="End suits names and sentences. Middle keeps the tail of ids and paths visible. Start keeps the end of a path when the beginning is shared." layout="start" />
+
+<Example of="Truncate/MultiLine" title="Several lines" description="lines clamps to a number of lines in end mode." layout="start" />
+
+<DoDont>
+  <Do of="Truncate/DoMiddleForIds" caption="Cut the middle of ids so the distinguishing end stays visible." />
+  <Dont of="Truncate/DontEndForIds" caption="Cut the end of ids. Every row then starts with the same characters." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A single-line block with an ellipsis. In middle mode, a shrinking head and a fixed tail of `tail` characters. The tooltip appears only while the text is cut, using the standard tooltip.
+
+## Tokens
+
+<UsesTokens names={["focus.ring", "bg.inverse", "fg.inverse"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Truncate/Modes" title="Modes" code="open" layout="start" />
+
+## Notes
+
+- Children must be a string. The full text stays in the DOM in every mode.
+- Truncation is measured with a resize observer, so the tooltip follows layout changes.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses text that is cut, so its tooltip can be read. Text that fits is not focusable."], ["Escape", "Closes the tooltip."]]} />
+
+## Screen readers
+
+- Screen readers read the full text once, whatever the visual cut. In middle mode the visual head and tail are hidden from assistive technology.
+
+## Visual
+
+- Focus shows the standard ring. Do not rely on the tooltip for essential information.
+
+</Section>

@@ -1,0 +1,75 @@
+export const meta = { title: "Adopting Faun in an existing product", description: "A staged plan to move a product with its own CSS variables onto Faun: a bridge first, the Tailwind preset next, then route by route.", order: 3 };
+
+A product that already ships does not need a big-bang rewrite. Adopt Faun in stages so contrast, theming and consistency improve at once and the rest follows route by route.
+
+## Stage 1: map your legacy variables with your own bridge
+
+One pull request, no component changes.
+
+1. Add the packages to the product (a local `link:` until you install from the registry).
+
+   ```json
+   "@faun-ds/tokens": "link:../faun/packages/tokens",
+   "@faun-ds/icons": "link:../faun/packages/icons",
+   "@faun-ds/react": "link:../faun/packages/react"
+   ```
+
+2. List the CSS variables your product defines or uses today (`--ink`, `--surface`, `--border`, `--cta`, status colours, layout sizes). Write a small stylesheet, the bridge, that redefines each one in terms of a Faun role.
+
+   ```css
+   /* faun-bridge.css */
+   :root,
+   [data-faun-theme] {
+     --ink: var(--faun-fg-default);
+     --ink-muted: var(--faun-fg-muted);
+     --surface: var(--faun-bg-surface);
+     --border: var(--faun-border-subtle);
+     --cta: var(--faun-accent-solid-bg);
+     --danger: var(--faun-danger-solid-bg);
+   }
+   ```
+
+3. Import Faun, then your bridge, in place of the old token file.
+
+   ```css
+   @import "@faun-ds/tokens/css";
+   @import "./faun-bridge.css";
+   ```
+
+4. Map Faun's font variables to the fonts your framework already loads, so fonts are not downloaded twice.
+
+   ```css
+   :root {
+     --faun-font-family-sans: var(--font-plex-sans);
+     --faun-font-family-serif: var(--font-plex-serif);
+     --faun-font-family-mono: var(--font-plex-mono);
+   }
+   ```
+
+Existing classes such as `text-[var(--ink-muted)]` keep working and become themeable. Check every legacy variable resolves to a Faun token; the list of tokens is in the tokens JSON (`@faun-ds/tokens/json`).
+
+**What this fixes immediately:** contrast on muted text and borders, undefined variables, and one palette across every screen. Verify with your existing end-to-end tests and screenshots of the busiest routes.
+
+## Stage 2: add the Tailwind preset
+
+Add `@faun-ds/tokens/tailwind` once the bridge is stable. The preset redefines `rounded-*` and `shadow-*`, so audit the radius and shadow change in screenshots before merging. Faun's `rounded-lg` is 14px.
+
+## Stage 3: adopt, route by route
+
+For each route:
+
+- Replace hand-built controls with Faun components: buttons, fields, menus, tabs, tables.
+- Replace bespoke overlays with `Dialog`, `AlertDialog`, `Sheet` and `Popover`.
+- Replace status badges and dots with `StatusBadge` (domain states come from the status map) and `Tag`.
+- Replace inline SVGs and emoji with `@faun-ds/icons`.
+- Replace agent run, approval and citation UI with `@faun-ds/ai`.
+- Swap legacy variables for utilities: `var(--ink-muted)` becomes `text-fg-muted`, `var(--surface)` becomes `bg-surface`.
+
+## Finish
+
+When every route has moved:
+
+1. Switch to `@faun-ds/tokens/tailwind/strict`.
+2. Delete the bridge stylesheet and its import.
+3. Delete the product's own colour maps.
+4. Turn on the Faun lint rules that ban hex colours, arbitrary values and unlabelled icon buttons (`@faun-ds/eslint-plugin`).

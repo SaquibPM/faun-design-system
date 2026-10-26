@@ -1,0 +1,79 @@
+export const meta = {
+  title: "Skip link",
+  description: "A link that stays hidden until it gets keyboard focus and then jumps past the navigation to the main content.",
+  category: "Navigation",
+  status: "new",
+  components: ["SkipLink"],
+  related: ["app-shell", "link"],
+  order: 6,
+};
+
+<Section tab="usage">
+
+<Example of="SkipLink/Overview" height={200} />
+
+## When to use
+
+- On every page that has repeated navigation before the content: side navigation, a header with links.
+- It is already part of [App shell](/components/app-shell). Use `SkipLink` on its own for pages without the shell.
+
+## When not to use
+
+- Do not hide it permanently. It must appear on focus, otherwise sighted keyboard users cannot see where they are.
+- Do not use it for in-page links to sections. Use [Link](/components/link) with an anchor.
+
+## Revealed
+
+<Example of="SkipLink/Revealed" title="On focus" description="The link moves in from above the page and takes the standard focus ring." height={100} />
+
+<DoDont>
+  <Do of="SkipLink/DoFirst" caption="Make it the first focusable element, named for where it goes." />
+  <Dont of="SkipLink/DontHidden" caption="Hide it with display none or visibility hidden. It then never receives focus." />
+</DoDont>
+
+## Writing
+
+“Skip to main content” is the default. For a page with one obvious target, name it: “Skip to the filings table”.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A raised, bordered chip placed in the top-left corner above the header layer. It is translated off screen until focused.
+
+## Tokens
+
+<UsesTokens names={["bg.raised", "fg.default", "border.default", "focus.ring"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="SkipLink/Overview" title="Skip to a focusable target" code="open" height={200} />
+
+## Notes
+
+- `href` is the hash of the target. Give the target `tabIndex={-1}` so focus lands on it; the link also sets this if missing.
+- AppShell uses the `skipLinkLabel` prop to change its text.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "On a fresh page the first press focuses the skip link."], ["Enter", "Moves focus to the main content, skipping the navigation."]]} />
+
+## Screen readers
+
+- Announced as a link with its label. Screen reader users can also jump by landmark; the skip link serves keyboard-only users.
+
+## Visual
+
+- When focused it is fully visible with a 2px focus ring and 3:1 contrast against the page.
+
+</Section>

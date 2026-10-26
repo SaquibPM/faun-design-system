@@ -1,0 +1,65 @@
+{
+  "$description": "Canonical mapping from domain states to Faun's seven status tones. Every state carries tone + icon + label so status is never colour alone. Icons are @faun-ds/icons names. Extend per product; never invent tones.",
+  "tones": {
+    "neutral": { "icon": "status-neutral", "meaning": "Not started, inactive, informational absence." },
+    "info": { "icon": "status-info", "meaning": "Guidance or a human-driven activity in progress." },
+    "success": { "icon": "status-success", "meaning": "Complete, verified, healthy." },
+    "warning": { "icon": "status-warning", "meaning": "Needs care: estimated, partial, blocked, deprecated." },
+    "danger": { "icon": "status-danger", "meaning": "Failed, missing, rejected, critical." },
+    "running": { "icon": "status-running", "meaning": "An agent or job is executing now. The icon animates unless reduced motion is on." },
+    "attention": { "icon": "status-attention", "meaning": "Waiting on a person: approval, review, sign-off." }
+  },
+  "domains": {
+    "lifecycle": {
+      "$description": "Agent, Sub-agent, Tool, policy and document lifecycle.",
+      "draft": { "tone": "neutral", "icon": "status-draft", "label": "Draft" },
+      "active": { "tone": "success", "icon": "status-success", "label": "Active" },
+      "published": { "tone": "success", "icon": "status-success", "label": "Published" },
+      "inactive": { "tone": "neutral", "icon": "status-inactive", "label": "Inactive" },
+      "deprecated": { "tone": "warning", "icon": "status-archived", "label": "Deprecated" },
+      "archived": { "tone": "neutral", "icon": "status-archived", "label": "Archived" }
+    },
+    "task": {
+      "$description": "Task-graph nodes and workflow steps.",
+      "pending": { "tone": "neutral", "icon": "status-neutral", "label": "Pending" },
+      "in_progress": { "tone": "running", "icon": "status-running", "label": "In progress" },
+      "awaiting_human": { "tone": "attention", "icon": "status-attention", "label": "Awaiting you" },
+      "blocked": { "tone": "warning", "icon": "status-blocked", "label": "Blocked" },
+      "done": { "tone": "success", "icon": "status-success", "label": "Done" },
+      "failed": { "tone": "danger", "icon": "status-failed", "label": "Failed" },
+      "skipped": { "tone": "neutral", "icon": "status-skipped", "label": "Skipped" }
+    },
+    "run": {
+      "$description": "Agent / agent run states.",
+      "pending": { "tone": "neutral", "icon": "status-queued", "label": "Queued" },
+      "running": { "tone": "running", "icon": "status-running", "label": "Running" },
+      "awaiting_approval": { "tone": "attention", "icon": "status-attention", "label": "Awaiting approval" },
+      "blocked": { "tone": "warning", "icon": "status-blocked", "label": "Blocked" },
+      "completed": { "tone": "success", "icon": "status-success", "label": "Completed" },
+      "failed": { "tone": "danger", "icon": "status-failed", "label": "Failed" },
+      "cancelled": { "tone": "neutral", "icon": "status-skipped", "label": "Cancelled" }
+    },
+    "progress": {
+      "$description": "Human-driven work items (disclosures, assessments).",
+      "not_started": { "tone": "neutral", "icon": "status-neutral", "label": "Not started" },
+      "in_progress": { "tone": "info", "icon": "status-partial", "label": "In progress" },
+      "in_review": { "tone": "attention", "icon": "status-review", "label": "In review" },
+      "complete": { "tone": "success", "icon": "status-success", "label": "Complete" },
+      "deferred": { "tone": "neutral", "icon": "status-paused", "label": "Deferred" }
+    },
+    "approval": {
+      "pending": { "tone": "attention", "icon": "status-attention", "label": "Approval needed" },
+      "approved": { "tone": "success", "icon": "status-approved", "label": "Approved" },
+      "rejected": { "tone": "danger", "icon": "status-failed", "label": "Rejected" }
+    },
+    "data-quality": {
+      "$description": "Evidence and data provenance for disclosed figures.",
+      "actual": { "tone": "success", "icon": "status-verified", "label": "Actual" },
+      "evidenced": { "tone": "success", "icon": "status-verified", "label": "Evidenced" },
+      "estimated": { "tone": "warning", "icon": "status-warning", "label": "Estimated" },
+      "partial": { "tone": "warning", "icon": "status-partial", "label": "Partial" },
+      "missing": { "tone": "danger", "icon": "status-unknown", "label": "Missing" },
+      "gap": { "tone": "danger", "icon": "status-unknown", "label": "Gap" }
+    }
+  }
+}

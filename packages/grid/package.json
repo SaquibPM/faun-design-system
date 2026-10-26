@@ -1,0 +1,79 @@
+{
+  "name": "@faun-ds/grid",
+  "version": "0.1.0",
+  "description": "Faun layout grid: a 12-column responsive CSS grid (4, 8 and 12 columns) with wide, narrow and condensed modes, and React Grid and Column components.",
+  "license": "Apache-2.0",
+  "author": "Saquib Jawed and Faun contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaquibPM/faun-design-system.git",
+    "directory": "packages/grid"
+  },
+  "homepage": "https://saquibpm.github.io/faun-design-system",
+  "bugs": {
+    "url": "https://github.com/SaquibPM/faun-design-system/issues"
+  },
+  "keywords": [
+    "css-grid",
+    "layout",
+    "responsive",
+    "react",
+    "design-system"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./styles.css": {
+      "types": "./dist/styles.d.ts",
+      "default": "./dist/styles.css"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "build": "tsup && node scripts/styles.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0 || ^19.0.0",
+    "react-dom": "^18.2.0 || ^19.0.0"
+  },
+  "dependencies": {
+    "@faun-ds/tokens": "workspace:*",
+    "clsx": "2.1.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "6.10.0",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.8",
+    "@types/node": "^22.10.2",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "axe-core": "4.14.0",
+    "jsdom": "25.0.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "tsup": "8.5.1",
+    "typescript": "5.9.3",
+    "vitest": "3.2.7"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

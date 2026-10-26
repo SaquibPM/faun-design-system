@@ -1,0 +1,95 @@
+export const meta = {
+  title: "Multi select",
+  description: "Picks several values from a searchable list, with selected values shown in the trigger and optional select-all actions.",
+  category: "Forms",
+  status: "stable",
+  components: ["MultiSelect"],
+  related: ["combobox", "checkbox", "tag"],
+  order: 8,
+};
+
+<Section tab="usage">
+
+<Example of="MultiSelect/Overview" layout="start" />
+
+## When to use
+
+- To choose several entities, sites or frameworks from a long list.
+- When selections should be visible at a glance in the trigger.
+
+## When not to use
+
+- For up to about 6 options. Use a [Checkbox](/components/checkbox) group.
+- For one value. Use [Select](/components/select) or [Combobox](/components/combobox).
+
+## Variants
+
+<Example of="MultiSelect/Overflow" title="Overflow" description="Selections beyond maxVisible collapse into a “+N” count." layout="start" />
+
+<Example of="MultiSelect/Controlled" title="Controlled" description="Own the selected values to drive a filter." layout="start" />
+
+<Example of="MultiSelect/WithError" title="Error" description="Pair with a Field error." layout="start" />
+
+<Example of="MultiSelect/Sizes" title="Sizes" description="Heights follow the control sizes and the density mode." layout="start" />
+
+<DoDont>
+  <Do of="MultiSelect/DoBulkWithManyOptions" caption="Offer select all and clear when the list is long." />
+  <Dont of="MultiSelect/DontNoVisibleLimit" caption="Let selected values grow without a limit. The trigger fills the page." />
+</DoDont>
+
+## Writing
+
+Placeholders name the thing: “Select sites”. Selected values are the option labels.
+
+## Warn, read-only and loading
+
+<Example of="MultiSelect/StateContract" title="Warn, read-only and skeleton" description="Warn marks a value that is allowed but worth a second look. It is never the same as invalid: it does not set aria-invalid and never blocks submission, and the message carries an icon and text so it is not colour alone. Read-only shows the value flat, keeps it focusable and copyable, and ignores changes. Skeleton replaces the control while its data loads; the label stays for screen readers. Set all three on a Field and every control inside follows." />
+
+Set `warn` (a message), `readOnly` and `skeleton` on the surrounding `Field`. On a standalone multi-select, pass `readOnly` and `skeleton` directly; give `warn` a message through a Field so it is announced. An error always replaces a warning.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A trigger styled like an input that shows selected values as tags, and a panel with a search field, a checkable list and a footer with bulk actions.
+
+## Tokens
+
+<UsesTokens names={["bg.raised", "bg.hover", "accent.solid-bg", "border.control"]} />
+
+<ComponentTokens name="input" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="MultiSelect/Controlled" title="Controlled selection" layout="start" code="open" />
+
+## Notes
+
+- `value` is a string array. `maxVisible` (default 3) controls how many tags show before “+N”.
+- `bulkActions` (on by default) adds Select all and Clear to the footer.
+- Options share the shape used by Select and Combobox.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Enter", "Opens the list, or toggles the highlighted option."], ["↓ / ↑", "Moves the highlight."], ["Type", "Filters the options."], ["Escape", "Closes the list and returns focus to the trigger."]]} />
+
+## Screen readers
+
+- The list is announced as multiselectable, and each option announces whether it is checked.
+- Selected values are a list named “Selected”, and each remove button is named “Remove” followed by the value.
+
+## Visual
+
+- Selected options show a check in a box as well as a background, so selection never relies on colour.
+
+</Section>

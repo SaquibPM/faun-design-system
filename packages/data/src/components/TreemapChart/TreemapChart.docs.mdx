@@ -1,0 +1,100 @@
+export const meta = {
+  title: "Treemap",
+  description: "Shows how a whole divides into nested parts, with area proportional to value. A second variable can shade each tile.",
+  category: "Data",
+  status: "new",
+  components: ["TreemapChart"],
+  related: ["circle-pack-chart", "pie-chart", "heatmap-chart", "chart-types"],
+  order: 33,
+};
+
+<Section tab="usage">
+
+<Example of="TreemapChart/Overview" layout="stretch" />
+
+## When to use
+
+- For part-to-whole with many parts and a hierarchy: Scope 3 by category and source, spend by region and supplier.
+- With `colorBy="change"`, to show size and direction of change together.
+
+## When not to use
+
+- For a few parts. Use a pie, donut or bar chart.
+- To compare exact values. Use a bar chart; area is hard to compare.
+- For values that can be negative.
+
+## Variants
+
+<Example of="TreemapChart/ByValue" layout="stretch" title="Shaded by size" description="colorBy=&quot;value&quot; shades tiles with the sequential ramp." />
+
+<Example of="TreemapChart/ByChange" layout="stretch" title="Size and change" description="colorBy=&quot;change&quot; shades tiles with the diverging ramp from each leaf's change value." />
+
+<Example of="TreemapChart/GroupToggle" layout="stretch" title="Toggle groups" description="With group colours, toggleSeries lets people hide a group; the rest fill the space." />
+
+<Example of="TreemapChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="TreemapChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="TreemapChart/DoPartToWhole" caption="Use a treemap for a part-to-whole with several levels." />
+  <Dont of="TreemapChart/DontNegativeOrTiny" caption="Mix a giant with many tiny items. The small tiles are too small to label or point at." />
+</DoDont>
+
+## Writing
+
+Title with the whole and the period. Keep labels short: they sit on the tiles and are cut to fit.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, a legend (groups) or colour key (size or change), the plot (group headings, tiles packed by the squarified algorithm, labels on chips for tiles big enough to hold them) and a tooltip with the path, value and share.
+
+## Colour
+
+`group`: top-level groups take `dataviz.cat-1` to `cat-8` in order. `value`: `dataviz.seq-1` to `seq-7`. `change`: the diverging ramp. Labels sit on a surface-coloured chip, so text contrast does not depend on the tile.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.cat-3", "dataviz.grid", "dataviz.axis", "dataviz.surface", "bg.raised", "dataviz.seq-1", "dataviz.seq-4", "dataviz.seq-7", "dataviz.div-neg-3", "dataviz.div-neg-1", "dataviz.div-mid", "dataviz.div-pos-1", "dataviz.div-pos-3"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="TreemapChart/Overview" layout="stretch" code="open" />
+
+<Example of="TreemapChart/ByChange" layout="stretch" code="open" />
+
+## Notes
+
+- `data` is a tree of `{ label, value?, change?, children? }`. The root is only a container; its children are the top-level groups. Branches take the sum of their leaves.
+- Leaves with no value, and empty branches, are dropped. Up to eight groups get their own colour.
+- `positiveIs` (for `change`) says whether a positive change is the better or the worse end; default `worse`, for emissions.
+- `toggleSeries` makes the legend interactive. Control it with `hiddenSeries` and `onHiddenSeriesChange` (ids of the hidden groups), or start from `defaultHiddenSeries`.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. With `toggleSeries`, the legend buttons come before it."], ["Enter / Space", "On a legend entry (when `toggleSeries` is on), shows or hides that series. The last visible one cannot be hidden."], ["Arrow Right / Arrow Down", "Moves to the next item."], ["Arrow Left / Arrow Up", "Moves to the previous item."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the item's path, value, share and change in a polite live region.
+- The data table lists every leaf with its path, group, value and share, and the total at the foot.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Tiles are separated by a surface-coloured gap, and the active tile gets a foreground outline.
+- The sequential and diverging ramps are ordered by lightness, so shade can be read without hue.
+
+</Section>

@@ -1,0 +1,92 @@
+export const meta = {
+  title: "Slider",
+  description: "Picks a value or range within known bounds by dragging, with optional marks and a value bubble.",
+  category: "Forms",
+  status: "stable",
+  components: ["Slider"],
+  related: ["number-field", "field"],
+  order: 12,
+};
+
+<Section tab="usage">
+
+<Example of="Slider/Overview" layout="start" />
+
+## When to use
+
+- To choose a value where roughly right is good enough: a confidence cut-off, a materiality threshold.
+- To choose a range between two bounds.
+
+## When not to use
+
+- For exact values such as emissions. Use [Number field](/components/number-field).
+- For a small set of options. Use [Segmented control](/components/segmented-control).
+
+## Variants
+
+<Example of="Slider/Range" title="Range" description="Pass two values for a lower and upper thumb." layout="start" />
+
+<Example of="Slider/Marks" title="Marks" description="Show marks at meaningful values." layout="start" />
+
+<Example of="Slider/ValueBubble" title="Value bubble" description="Show the value while dragging." layout="start" />
+
+<Example of="Slider/Controlled" title="Controlled" description="Use onValueCommit to run work when dragging ends." layout="start" />
+
+<DoDont>
+  <Do of="Slider/DoBounded" caption="Use a slider for a bounded, approximate value." />
+  <Dont of="Slider/DontPrecise" caption="Use a slider for exact figures across a huge range. Use a number field." />
+</DoDont>
+
+## Writing
+
+Label what is chosen and show the unit in the value: “80%”. Keep the range short enough to be useful.
+
+## Warn, read-only and loading
+
+<Example of="Slider/StateContract" title="Warn, read-only and skeleton" description="Warn marks a value that is allowed but worth a second look. It is never the same as invalid: it does not set aria-invalid and never blocks submission, and the message carries an icon and text so it is not colour alone. Read-only shows the value flat, keeps it focusable and copyable, and ignores changes. Skeleton replaces the control while its data loads; the label stays for screen readers. Set all three on a Field and every control inside follows." />
+
+Set `warn` (a message), `readOnly` and `skeleton` on the surrounding `Field`. On a standalone slider, pass `readOnly` and `skeleton` directly; give `warn` a message through a Field so it is announced. An error always replaces a warning.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A track with a filled range, one or two thumbs, optional marks and a value shown inline or in a bubble.
+
+## Tokens
+
+<UsesTokens names={["accent.solid-bg", "bg.sunken", "focus.ring", "fg.muted"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Slider/Controlled" title="Controlled value" layout="start" code="open" />
+
+## Notes
+
+- `value` is always an array: one number, or two for a range.
+- `formatValue` formats the displayed value. `thumbLabels` names each thumb of a range.
+- `onValueChange` fires while dragging; `onValueCommit` fires on release.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["← / ↓", "Decreases by one step."], ["→ / ↑", "Increases by one step."], ["Page Up / Page Down", "Changes by a larger step."], ["Home / End", "Moves to the minimum or maximum."]]} />
+
+## Screen readers
+
+- Each thumb is announced as a slider with its value, minimum and maximum. Range thumbs are named by `thumbLabels`.
+
+## Visual
+
+- The thumb meets the minimum target size and has a visible focus ring. The value is also shown as text.
+
+</Section>

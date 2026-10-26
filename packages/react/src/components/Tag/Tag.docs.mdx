@@ -1,0 +1,95 @@
+export const meta = {
+  title: "Tag",
+  description: "A label for categorising: frameworks, topics, entities and applied filters. FilterChip is the toggleable version.",
+  category: "Display",
+  status: "stable",
+  components: ["Tag", "TagGroup", "FilterChip"],
+  related: ["badge"],
+  order: 3,
+};
+
+<Section tab="usage">
+
+<Example of="Tag/Overview" layout="start" />
+
+## When to use
+
+- To name the framework, topic or entity something belongs to: CSRD, ESRS E1-6, Climate.
+- To show filters that are already applied, with a way to remove them.
+- Use `FilterChip` for quick filters people switch on and off.
+
+## When not to use
+
+- For status of a run, filing or data point. Use [Badge](/components/badge) with a status.
+- For a counter. Use a solid Badge.
+
+## Variants
+
+<Example of="Tag/Removable" title="Removable" description="The remove button has its own accessible name, “Remove CDP climate”." layout="start" />
+
+<Example of="Tag/FilterChips" title="Filter chips" description="Chips are toggle buttons. A selected chip shows a check, so selection is never colour alone." layout="start" />
+
+<Example of="Tag/Selectable" title="Selectable" description="A selectable tag is a toggle button with a check when on. Use it to choose from a small set of tags, such as the frameworks a report covers." layout="start" />
+
+<Example of="Tag/FilterTags" title="Filter tags" description="Applied filters use the filter variant with a remove button, and an operational tag clears them all." layout="start" />
+
+<Example of="Tag/Operational" title="Operational" description="An operational tag does something when pressed: opens a list, a popover or a dialog. It takes trigger props on its button, so it works as a Popover trigger." height={180} layout="start" />
+
+<Example of="Tag/Overflow" title="Overflow with +N" description="TagGroup keeps the first tags and moves the rest into a +N tag that opens a popover. The remaining tags keep their remove buttons." height={220} layout="start" />
+
+<DoDont>
+  <Do of="Tag/DoFrameworkTag" caption="Use the framework variant for codes: it uses the mono face and stays neutral." />
+  <Dont of="Tag/DontStatusAsTag" caption="Use a tag for state like “Approved”. Use a status badge, which carries an icon and the shared tone." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Optional icon, label and optional remove button. Interactive tags (selectable, operational) put the icon and label inside a button; the remove button stays separate. Tags are fully rounded. Framework tags use the mono face.
+
+## Sizes
+
+<Example of="Tag/Large" title="Small, medium and large" layout="start" />
+
+## Tokens
+
+<UsesTokens names={["fg.default", "fg.muted", "bg.hover", "border.default", "border.control", "accent.soft-bg", "accent.soft-fg", "fg.disabled"]} />
+
+<ComponentTokens name="tag" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Tag/Removable" title="Removing tags" code="open" layout="start" />
+
+## Notes
+
+- Pass a string child so the default remove label can say what is removed, or set `removeLabel`.
+- `selectable` with `selected` and `onSelectedChange` makes a toggle; `variant="operational"` or `selectable` puts `onClick` and other props on the inner button. `disabled` greys the tag out and removes it from the tab order.
+- `TagGroup` takes `max`, `label` and `moreLabel`; keep the visible “+N” in the label.
+- `FilterChip` takes `selected` and `onSelectedChange`, and an optional `count`.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves to the remove button of a removable tag, or to a filter chip."], ["Enter", "Removes the tag, toggles a selectable tag or chip, or runs an operational tag."], ["Space", "Same as Enter."], ["Escape", "Closes the +N popover and returns focus to the +N tag."]]} />
+
+## Screen readers
+
+- Selectable tags and chips are announced as toggle buttons with a pressed state. Operational tags are plain buttons. The +N tag is named “+3 more”.
+- Filter chips are announced as toggle buttons with a pressed state. Remove buttons are named “Remove” followed by the tag text.
+
+## Visual
+
+- Text meets 4.5:1. The remove button keeps the minimum target size around the icon.
+
+</Section>

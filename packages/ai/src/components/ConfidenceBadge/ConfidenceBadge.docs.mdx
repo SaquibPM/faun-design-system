@@ -1,0 +1,87 @@
+export const meta = {
+  title: "Confidence badge",
+  description: "How sure an agent is about a result, in words and a three-bar glyph.",
+  category: "AI and agents",
+  status: "new",
+  components: ["ConfidenceBadge"],
+  related: ["badge", "citation", "provenance-trail"],
+  order: 5,
+};
+
+<Section tab="usage">
+
+<Example of="ConfidenceBadge/Overview" layout="start" />
+
+## When to use
+
+- Next to an extracted value, a matched supplier or a drafted statement, so people know where to look first.
+- In a table of agent output, to sort and filter by what needs a human check.
+
+## When not to use
+
+- For the status of a run or task. Use [Badge](/components/badge) with the status map.
+- For data quality of a reported figure (actual, estimated, gap). Use a data-quality status badge.
+
+## Variants
+
+<Example of="ConfidenceBadge/WithScore" title="With score" description="Add the percentage when the score is calibrated and people compare rows." layout="start" />
+
+<Example of="ConfidenceBadge/WithReason" title="With a reason" description="The reason shows on hover and focus and is read by screen readers. Say why the agent is unsure." layout="start" />
+
+<DoDont>
+  <Do of="ConfidenceBadge/DoShowReason" caption="Say why confidence is low so the reviewer knows what to check." />
+  <Dont of="ConfidenceBadge/DontScoreAlone" caption="Show a bare 0.41. Without a level and a reason it does not tell anyone what to do." />
+</DoDont>
+
+## Writing
+
+- The level is always a word: High, Medium or Low confidence.
+- Reasons name the evidence gap: “Matched on supplier name only. No unit of measure found.”
+- Low confidence is a prompt to check, not an error. It uses the warning tone, never danger.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A badge with a three-bar glyph that fills one, two or three bars, the level in words, and an optional score. Sizes: `md` (default) and `sm` for tables.
+
+## Colour
+
+High is success, medium is neutral and low is warning. The glyph and the word carry the level, so it is readable in grayscale and high contrast.
+
+## Tokens
+
+<UsesTokens names={["status.success.fg", "status.success.bg", "status.warning.fg", "status.warning.bg", "status.neutral.fg"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="ConfidenceBadge/WithReason" title="Level, score and reason" code="open" layout="start" />
+
+## Notes
+
+- `confidence` is the shared `Confidence` shape: `level`, optional `score` from 0 to 1, optional `reason`.
+- Scores are shown as whole percentages. Round in your own code if you need another style.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the badge when it has a reason, which shows the tooltip."], ["Escape", "Dismisses the tooltip."]]} />
+
+## Screen readers
+
+- The level is text. The reason is part of the badge's description, so it is read without opening the tooltip.
+
+## Visual
+
+- Three states differ by glyph fill, word and tone. The tooltip repeats content that is already available to assistive tech.
+
+</Section>

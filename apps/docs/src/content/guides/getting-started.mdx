@@ -1,0 +1,125 @@
+export const meta = { title: "Getting started", description: "Install Faun, load the styles and fonts, and render your first screen.", order: 1 };
+
+Faun ships as several packages. Most products need the first three.
+
+| Package | What it contains |
+| --- | --- |
+| `@faun-ds/tokens` | Colour, type, space, shape, motion and density as CSS variables, a Tailwind v4 preset, JSON, and `createAccent()` for tenant brands. |
+| `@faun-ds/icons` | 170+ tree-shakeable React icons with optical stroke weights, plus an SVG sprite. |
+| `@faun-ds/react` | Accessible components built on Radix primitives, styled with plain CSS in cascade layers. |
+| `@faun-ds/data` | Data table, filter bar, charts and JSON viewer for dense, data-heavy screens. |
+| `@faun-ds/ai` | Agent run, approval, citation, streaming and composer components for agentic products. |
+| `@faun-ds/grid` | 12-column responsive grid as CSS and React `Grid` and `Column`. |
+| `@faun-ds/eslint-plugin` | ESLint rules that keep product code on the system. |
+| `@faun-ds/mcp` | MCP server that gives coding agents components, props, tokens and icons. |
+
+## Install
+
+```bash
+pnpm add @faun-ds/tokens @faun-ds/icons @faun-ds/react
+```
+
+React 18.2 or 19 is required. Components are client components and carry a `"use client"` directive, so they work in the Next.js App Router without wrappers.
+
+## Load the styles
+
+Import once, at the root of the app, in this order.
+
+```tsx
+import "@faun-ds/tokens/css";        // tokens: themes, density, motion modes
+import "@faun-ds/tokens/css/fonts";  // IBM Plex Sans, Serif and Mono from Google Fonts (optional)
+import "@faun-ds/tokens/css/base";   // element defaults and type classes (optional)
+import "@faun-ds/react/styles.css";  // components
+// import "@faun-ds/data/styles.css";  if you use @faun-ds/data
+// import "@faun-ds/ai/styles.css";    if you use @faun-ds/ai
+```
+
+Component styles live in `@layer faun.components`, so any unlayered CSS in your app wins without `!important`.
+
+## Load the fonts
+
+Faun uses IBM Plex: Plex Serif for display, Plex Sans for the interface, Plex Mono for identifiers and numbers. All three are SIL OFL. Pick one way to load them.
+
+**Option 1: Google Fonts.** Import the convenience stylesheet (shown above), or add the link yourself:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@400;500;600&display=swap" />
+```
+
+**Option 2: self-host with Fontsource.** No third-party request, works offline and under strict CSP. Install the packages and import `fonts.css` instead of `css/fonts`:
+
+```bash
+pnpm add @fontsource/ibm-plex-sans @fontsource/ibm-plex-serif @fontsource/ibm-plex-mono
+```
+
+```tsx
+import "@faun-ds/tokens/fonts.css";
+```
+
+That file contains exactly these imports, which you can also write yourself:
+
+```tsx
+import "@fontsource/ibm-plex-sans/400.css";
+import "@fontsource/ibm-plex-sans/500.css";
+import "@fontsource/ibm-plex-sans/600.css";
+import "@fontsource/ibm-plex-serif/400.css";
+import "@fontsource/ibm-plex-serif/500.css";
+import "@fontsource/ibm-plex-serif/600.css";
+import "@fontsource/ibm-plex-mono/400.css";
+import "@fontsource/ibm-plex-mono/500.css";
+```
+
+<Callout tone="info" title="next/font">
+In Next.js, skip both and load the families with `next/font`, then point Faun at them: `--faun-font-family-sans: var(--font-plex-sans)` and likewise for `serif` and `mono`. Plex has no optical-size axis, so no `font-variation-settings` are needed.
+</Callout>
+
+## Set the theme and density
+
+Themes and density are attributes, so they work with server rendering and need no provider.
+
+```html
+<html data-faun-theme="system" data-faun-density="comfortable">
+```
+
+Themes: `light`, `dark`, `light-hc`, `dark-hc`, `print` and `system`. Density: `compact`, `comfortable`, `spacious`. Both can be set on any element to scope a region.
+
+## Render a screen
+
+```tsx
+import { Button, Dialog, DialogBody, DialogContent, DialogFooter, DialogHeader, DialogTrigger, StatusBadge, TextField, TooltipProvider } from "@faun-ds/react";
+import { IconAdd } from "@faun-ds/icons";
+
+export function App() {
+  return (
+    <TooltipProvider>
+      <StatusBadge domain="run" state="awaiting_approval" />
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button intent="accent" variant="solid" leadingIcon={<IconAdd />}>New facility</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader title="New facility" description="Facilities group meters and activity data for Scope 1 and 2." />
+          <DialogBody>
+            <TextField label="Name" required />
+          </DialogBody>
+          <DialogFooter>
+            <Button variant="ghost">Cancel</Button>
+            <Button intent="accent" variant="solid">Create facility</Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </TooltipProvider>
+  );
+}
+```
+
+`TooltipProvider` is the only provider most apps need; wrap the app once. Add `Toaster` from `@faun-ds/react` if you use toasts.
+
+## Next steps
+
+- [Use Faun with Tailwind](#/guides/tailwind) if your product uses utility classes.
+- [Theme for a tenant](#/foundations/theming) to apply a customer's brand colour.
+- [Adopt Faun in an existing product](#/guides/adopting-faun) for the staged adoption plan.
+- Read [AGENTS.md](#/guides/ai-agents) if coding agents will build with Faun.

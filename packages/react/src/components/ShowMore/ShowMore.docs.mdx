@@ -1,0 +1,78 @@
+export const meta = {
+  title: "Show more",
+  description: "Collapses long content to a few lines with a toggle. The toggle appears only when something is hidden.",
+  category: "Display",
+  status: "new",
+  components: ["ShowMore"],
+  related: ["truncate", "accordion"],
+  order: 13,
+};
+
+<Section tab="usage">
+
+<Example of="ShowMore/Overview" layout="start" />
+
+## When to use
+
+- For long supporting text in a card or panel: narratives, notes, lists of sources.
+- When most people need only the first lines.
+
+## When not to use
+
+- For single-line labels. Use [Truncate](/components/truncate).
+- For several sections with their own headings. Use an [Accordion](/components/accordion).
+- For anything people must read before acting.
+
+## Variants
+
+<Example of="ShowMore/NamedToggle" title="Named toggle" description="Name what is hidden when you can: “Read full narrative”." layout="start" />
+
+<Example of="ShowMore/ShortContent" title="Content that fits" description="No toggle appears when nothing is hidden." layout="start" />
+
+<DoDont>
+  <Do of="ShowMore/DoLongText" caption="Collapse supporting text that most people skim." />
+  <Dont of="ShowMore/DontHideCritical" caption="Collapse a warning. Critical information stays in full." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+The content clamped to `lines`, and a link-style toggle with a chevron beneath it.
+
+## Tokens
+
+<UsesTokens names={["fg.link", "fg.link-hover", "focus.ring"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="ShowMore/Overview" title="Narrative" code="open" layout="start" />
+
+## Notes
+
+- Controlled use: `expanded` and `onExpandedChange`. Start open with `defaultExpanded`.
+- The full content is in the page even when collapsed, so search and assistive technology can reach it.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves focus to the toggle."], ["Enter or Space", "Expands or collapses."]]} />
+
+## Screen readers
+
+- The toggle sets `aria-expanded` and `aria-controls` for the content, and its text changes between the more and less labels.
+
+## Visual
+
+- The toggle uses the link colour, meeting 4.5:1, and shows the standard focus ring.
+
+</Section>

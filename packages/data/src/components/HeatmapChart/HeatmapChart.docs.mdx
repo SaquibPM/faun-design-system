@@ -1,0 +1,95 @@
+export const meta = {
+  title: "Heatmap",
+  description: "Shows a measure for every pair of two categories as shaded cells, with a sequential or diverging scale.",
+  category: "Data",
+  status: "new",
+  components: ["HeatmapChart"],
+  related: ["treemap-chart", "bar-chart", "chart-types"],
+  order: 32,
+};
+
+<Section tab="usage">
+
+<Example of="HeatmapChart/Overview" layout="stretch" />
+
+## When to use
+
+- To find patterns across two dimensions: emissions by site and month, risk by supplier and topic.
+- Diverging: variance, change or deviation from a target around a neutral midpoint.
+
+## When not to use
+
+- For a few values. Use a bar chart.
+- When readers need exact values. Add `showValues`, or use a data table.
+- For a continuous map. Heatmaps are grids.
+
+## Variants
+
+<Example of="HeatmapChart/Diverging" layout="stretch" title="Diverging" description="scale=&quot;diverging&quot; shades two ways from a midpoint. positiveIs says which side is the better end." />
+
+<Example of="HeatmapChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="HeatmapChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="HeatmapChart/DoSequentialForMagnitude" caption="Use the sequential ramp for magnitudes: one hue, dark means more." />
+  <Dont of="HeatmapChart/DontDivergingForMagnitude" caption="Use a diverging scale where there is no meaningful midpoint." />
+</DoDont>
+
+## Writing
+
+Title with the measure and both dimensions. Keep row and column names short; long names are truncated in the drawing and complete in the table.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, a colour key (a ramp with the values at each end, and the midpoint for diverging), the plot (column labels on top, row labels at the left, cells with hairline gaps, optional values in cells) and a tooltip.
+
+## Colour
+
+Sequential: `dataviz.seq-1` to `seq-7` (the moss ramp), light to dark, in seven steps; `dataviz.seq-neutral-1` to `seq-neutral-7` is the warm-grey ramp. Diverging: `dataviz.div-neg-3` through `div-mid` to `div-pos-3`; negative is oxblood and positive is moss by default, so with `positiveIs="worse"` the oxblood end marks values above the midpoint. Missing data is a dashed empty cell, not a colour.
+
+<UsesTokens names={["dataviz.seq-1", "dataviz.seq-4", "dataviz.seq-7", "dataviz.div-neg-3", "dataviz.div-neg-1", "dataviz.div-mid", "dataviz.div-pos-1", "dataviz.div-pos-3", "dataviz.surface", "dataviz.grid", "bg.raised"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="HeatmapChart/Overview" layout="stretch" code="open" />
+
+<Example of="HeatmapChart/Diverging" layout="stretch" code="open" />
+
+## Notes
+
+- `values` is an array per row with one entry per column. Use `null` for no data.
+- `domain` fixes the ends of the scale (useful to compare two heatmaps); `midpoint` sets the neutral value of a diverging scale.
+- Cell values are written only when `showValues` is on and cells are large enough, with a surface halo so the text reads on any shade.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. "], ["Arrow Right / Arrow Left", "Moves to the next or previous cell in the row."], ["Arrow Down / Arrow Up", "Moves to the same column in the next or previous row."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the row, column and value in a polite live region.
+- The data table is a matrix with the row names down the side and the column names across.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- The sequential and diverging ramps are ordered by lightness, so shade can be read without hue.
+- A colour key states the value at each end of the scale.
+
+</Section>

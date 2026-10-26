@@ -1,0 +1,61 @@
+export const meta = { title: "Tailwind", description: "Use Faun tokens as Tailwind v4 utilities, with an optional strict preset that removes everything off-system.", order: 2 };
+
+Faun's Tailwind preset maps every semantic token to a utility, so `bg-surface`, `text-fg-muted` and `rounded-lg` mean the same thing as the components. The utilities point at CSS variables, so themes, tenant accents and density keep working.
+
+## Set up
+
+```css
+/* app.css */
+@import "@faun-ds/tokens/css";
+@import "tailwindcss";
+@import "@faun-ds/tokens/tailwind";
+```
+
+Requires Tailwind CSS 4.0 or later. No `tailwind.config.js` is needed.
+
+## What you get
+
+| Group | Examples |
+| --- | --- |
+| Backgrounds | `bg-canvas` `bg-surface` `bg-surface-nested` `bg-raised` `bg-hover` `bg-selected` |
+| Text | `text-fg` `text-fg-muted` `text-fg-subtle` `text-fg-link` `text-fg-brand` |
+| Borders | `border-line-subtle` `border-line` `border-line-strong` `border-line-control` |
+| Interaction | `bg-accent-solid` `hover:bg-accent-solid-hover` `bg-neutral-soft` `text-danger-fg` |
+| Status | `text-status-success` `bg-status-warning-soft` `border-status-danger-line` `bg-status-running-solid` |
+| AI | `text-ai` `bg-ai-soft` `border-ai-line` |
+| Data viz | `fill-viz-cat-1` … `fill-viz-cat-8` `fill-viz-scope-1` `stroke-viz-seq-4` |
+| Type | `text-heading-md` `text-body-sm` `text-label-md` `text-figure-lg` `text-code-sm` |
+| Shape | `rounded-xs` … `rounded-xl` `rounded-full` `shadow-1` … `shadow-5` |
+| Motion | `duration-fast` `duration-moderate` `ease-standard` `ease-enter` `ease-spring-snappy` |
+| Helpers | `numeric` `h-control` `focus-ring` `z-popover` `z-modal` |
+
+Type utilities set size, line height, weight and tracking together, so `text-heading-md` is the whole role.
+
+Status utilities are prefixed `status-` so they never collide with the intent utilities: `text-danger-fg` is for destructive actions, `text-status-danger` is for a failed state.
+
+## Strict mode
+
+The strict preset also removes Tailwind's default palette, type scale, radii, shadows, fonts and easings. Classes such as `text-gray-500` or `rounded-2xl` stop compiling, so drift can't creep back in.
+
+```css
+@import "@faun-ds/tokens/css";
+@import "tailwindcss";
+@import "@faun-ds/tokens/tailwind/strict";
+```
+
+Spacing stays on Tailwind's 4px scale, which Faun shares, so `p-4` is `--faun-space-4`.
+
+<Callout tone="warning" title="Adopting in an existing codebase">
+The standard preset redefines `rounded-*` and `shadow-*`, which changes the look of existing elements that use them. Adopt route by route and compare screenshots. Move to strict once a codebase is fully on Faun.
+</Callout>
+
+## Mixing with components
+
+Faun components accept `className`, but prefer props first: `<Button intent="danger">` rather than restyling a button. Use utilities for layout and for your own product surfaces.
+
+```tsx
+<section className="grid gap-4 rounded-lg border border-line-subtle bg-surface p-5">
+  <h2 className="text-heading-md">Scope 1 by facility</h2>
+  <p className="text-body-sm text-fg-muted">FY2026 · tCO₂e</p>
+</section>
+```

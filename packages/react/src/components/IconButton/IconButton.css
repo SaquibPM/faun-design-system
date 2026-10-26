@@ -1,0 +1,5 @@
+.faun-icon-button { --_px: 0; inline-size: var(--_h); }
+.faun-icon-button .faun-button-label { overflow: visible; }
+.faun-icon-button-icon { display: inline-flex; }
+.faun-icon-button-icon > svg { inline-size: var(--faun-button-icon-size); block-size: var(--faun-button-icon-size); }
+.faun-icon-button[data-size="lg"] .faun-icon-button-icon > svg { inline-size: var(--faun-size-icon-lg); block-size: var(--faun-size-icon-lg); }

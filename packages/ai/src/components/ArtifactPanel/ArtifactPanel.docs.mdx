@@ -1,0 +1,99 @@
+export const meta = {
+  title: "Artifact panel",
+  description: "A panel beside the conversation that shows what the agent made, on a Preview and a Code tab, with versions, copy, download, maximise and close. Resizable. A full-screen sheet on a phone.",
+  category: "AI and agents",
+  status: "new",
+  components: ["ArtifactPanel"],
+  related: ["chat-layout", "progress-panel", "ai-chat", "tabs"],
+  order: 14,
+};
+
+<Section tab="usage">
+
+<Example of="ArtifactPanel/Overview" layout="start" height={520} />
+
+## When to use
+
+- When an agent produces something a person will read, check or reuse: a disclosure draft, a table of figures, a chart, a block of code.
+- When the person should keep the conversation in view while they read it, so they can ask for a change.
+
+## When not to use
+
+- For a short answer. Keep it in the message.
+- For a long task that needs review and sign-off on its own page. Use a page template, and link to it from the message.
+- For a modal choice. Use [Dialog](/components/dialog).
+
+## Variants
+
+<Example of="ArtifactPanel/CodeTab" title="Code tab" description="Preview shows the result; Code shows its source as preformatted text. Copy and Download use the code." layout="start" height={520} />
+
+<Example of="ArtifactPanel/WithoutCode" title="Without a Code tab" description="Leave out `code` and the tabs disappear. Pass `onDownload` to export something other than text." layout="start" height={520} />
+
+<Example of="ArtifactPanel/Maximised" title="Maximised" description="Maximise fills the layout and hides the resize handle. Escape restores it before it closes the panel." layout="start" height={520} />
+
+<DoDont>
+  <Do of="ArtifactPanel/DoNameTheArtifact" caption="Name the artifact, say what kind it is and keep its versions." />
+  <Dont of="ArtifactPanel/DontUntitled" caption="Call it “Output” with no kind and no versions. Nobody can tell what it is or which one they are reading." />
+</DoDont>
+
+## Writing
+
+- The title is the thing: “ESRS E1-6 draft”, not “Result”. The kind above it is one word: Document, Table, Chart, Code.
+- Label versions with a number and a time: “v3, 10:42”. Newest first.
+- The message that opens the panel says what changed in it, so the panel does not have to.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A header with the kind, the title, a version picker, Copy, Download, Maximise and Close. Under it a Preview and Code tab list and the active pane, which scrolls on its own. A resize handle sits on the leading edge. Docked beside a thread the panel has a hairline border and no shadow; as a sheet it is raised.
+
+## Sizes
+
+Default width 560 px, minimum 320 px, maximum 960 px or whatever leaves 360 px for the thread. Under 768 px of layout width it fills the screen and the thread is inert. Maximise is hidden there because it is already maximal.
+
+## Tokens
+
+<UsesTokens names={["bg.surface", "bg.raised", "border.subtle", "border.strong", "focus.ring", "fg.muted"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="ArtifactPanel/Overview" title="Open from a button, focus returns on close" code="open" layout="start" height={520} />
+
+## Notes
+
+- `onClose` is required. Return focus to the control that opened the panel in it; the panel also restores the previously focused element when it unmounts.
+- Inside a [Chat layout](/components/chat-layout) the layout owns the width and the maximised state, and tells the panel when it must be a sheet. Standalone, use `width`, `defaultWidth`, `maximized` and their change callbacks.
+- Copy and Download use `copyText`, or `code` when it is a string. Download writes a text file named by `filename`. Pass `onDownload` for anything else.
+- Pass `code` as a node to show highlighted source from your own renderer. Pass `copyText` as well so Copy still works.
+- `versions` and `version` are controlled by your data: when the version changes, rerender `preview` and `code` with that version's content.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Escape", "Restores a maximised panel; otherwise closes the panel. Ignored when focus is in a popup such as the version list, which closes first."], ["Tab", "Header buttons, tab list, then the pane, which is focusable so it can be scrolled."], ["Left and Right arrows", "On the tab list: switch between Preview and Code. On the resize handle: make the panel wider or narrower by 16 px."], ["Shift with an arrow", "Resize by 64 px."], ["Home and End", "On the resize handle: smallest and largest width."]]} />
+
+## Screen readers
+
+- The panel is a region named by its title, which takes focus when the panel opens.
+- The resize handle is a separator with `aria-valuenow`, `aria-valuemin` and `aria-valuemax` in pixels.
+- Maximise is a toggle button with `aria-pressed` and a label that changes between “Maximise panel” and “Restore panel size”.
+- Copy announces “Copied to the clipboard” or “Copy failed” in a polite live region.
+- As a sheet, the thread behind is `inert`: focus and the virtual cursor stay in the panel.
+
+## Visual
+
+- Every action is an icon button with a label and a tooltip. Targets meet the minimum size.
+- Focus is visible on the handle, the tabs, the buttons and the scrolling panes.
+- Motion is a short fade, removed under reduced motion.
+
+</Section>

@@ -1,0 +1,999 @@
+{
+  "$description": "Semantic colour. Values reference scale steps for the active appearance: {gray.12}, {gray.a3}, {accent.9}. {accent.*} is the brand scale (moss by default) and is what tenant theming replaces. {dark:moss.9} pins an appearance. alpha({ref}, n) sets opacity. 'value' applies to every theme; keys named after a theme or its parent override it.",
+  "bg": {
+    "canvas": {
+      "$description": "Application background behind panels.",
+      "value": "{gray.3}",
+      "dark": "{gray.1}",
+      "print": "{white}"
+    },
+    "surface": {
+      "$description": "Primary surface: panels, cards, table body, main column.",
+      "value": "{gray.1}",
+      "dark": "{gray.2}"
+    },
+    "surface-nested": {
+      "$description": "A quieter layer inside a surface: table headers, nested panels, sidebars within cards.",
+      "value": "{gray.2}",
+      "dark": "{gray.3}"
+    },
+    "raised": {
+      "$description": "Floating surfaces: menus, popovers, toasts, dialogs. Always paired with an elevation.",
+      "value": "{white}",
+      "dark": "{gray.3}"
+    },
+    "sunken": {
+      "$description": "Wells below the surface: code blocks, drop zones, inset inputs.",
+      "value": "{gray.2}",
+      "dark": "{gray.1}"
+    },
+    "inverse": {
+      "$description": "Inverted surface: tooltips, snackbars.",
+      "value": "{gray.12}"
+    },
+    "hover": {
+      "$description": "Neutral hover tint over any surface.",
+      "value": "{gray.a3}"
+    },
+    "active": {
+      "$description": "Neutral pressed tint.",
+      "value": "{gray.a4}"
+    },
+    "selected": {
+      "$description": "Selected rows, chosen options, current nav item inside content.",
+      "value": "{accent.a3}"
+    },
+    "selected-hover": {
+      "value": "{accent.a4}"
+    },
+    "disabled": {
+      "$description": "Fill for disabled controls.",
+      "value": "{gray.a3}"
+    },
+    "skeleton": {
+      "$description": "Loading placeholders.",
+      "value": "{gray.a4}"
+    },
+    "scrim": {
+      "$description": "Overlay behind dialogs and sheets.",
+      "value": "alpha({gray.12}, 0.36)",
+      "dark": "alpha({black}, 0.62)"
+    },
+    "brand": {
+      "$description": "Brand fill for marks and hero moments.",
+      "value": "{accent.9}"
+    },
+    "brand-soft": {
+      "$description": "Quiet brand wash: onboarding, highlighted cards.",
+      "value": "{accent.a3}"
+    }
+  },
+  "layer": {
+    "$description": "Stacking layers. Aliases of the bg roles so the Carbon-style layer vocabulary maps onto Faun paper surfaces. Nest at most three deep; see ADR 0005.",
+    "background": {
+      "alias": "bg.canvas",
+      "$description": "Page ground. Equivalent to layer-00 / background."
+    },
+    "01": {
+      "alias": "bg.surface",
+      "$description": "First layer on the ground: panels, cards, table body."
+    },
+    "02": {
+      "alias": "bg.surface-nested",
+      "$description": "A layer inside layer 01: table headers, nested panels, sidebars within cards."
+    },
+    "03": {
+      "alias": "bg.sunken",
+      "$description": "The deepest layer: wells inside layer 02 (code blocks, drop zones, inset inputs). On warm paper a third nesting step reads as inset, not lifted."
+    },
+    "accent": {
+      "alias": "bg.brand-soft",
+      "$description": "Quiet brand wash layered on any surface."
+    },
+    "hover": {
+      "alias": "bg.hover",
+      "$description": "Neutral hover tint over any layer."
+    },
+    "selected": {
+      "alias": "bg.selected",
+      "$description": "Selected state over any layer."
+    }
+  },
+  "fg": {
+    "default": {
+      "$description": "Primary text and icons.",
+      "value": "{gray.12}"
+    },
+    "muted": {
+      "$description": "Secondary text: descriptions, metadata, column headers. Lowest tier for readable text (≥ 4.5:1).",
+      "value": "{gray.11}"
+    },
+    "subtle": {
+      "$description": "Non-essential marks only: decorative icons, separators in text. ≥ 3:1. Never body text.",
+      "value": "{gray.10}"
+    },
+    "placeholder": {
+      "$description": "Input placeholder, held to 4.5:1.",
+      "value": "{gray.11}"
+    },
+    "disabled": {
+      "$description": "Disabled labels (exempt from WCAG minimums).",
+      "value": "{gray.9}",
+      "dark": "{gray.8}"
+    },
+    "inverse": {
+      "$description": "Text on bg.inverse.",
+      "value": "{gray.1}"
+    },
+    "brand": {
+      "$description": "Brand-coloured text and icons.",
+      "value": "{accent.11}"
+    },
+    "link": {
+      "$description": "Inline links (underlined in running text).",
+      "value": "{accent.11}"
+    },
+    "link-hover": {
+      "value": "{accent.12}"
+    },
+    "on-accent": {
+      "$description": "Text on accent.solid fills.",
+      "value": "{white}",
+      "dark": "{accent.1}"
+    }
+  },
+  "border": {
+    "subtle": {
+      "$description": "Dividers between rows and sections.",
+      "value": "{gray.a5}"
+    },
+    "default": {
+      "$description": "Card, panel and table outlines.",
+      "value": "{gray.a6}"
+    },
+    "strong": {
+      "$description": "Emphasised separators, hovered cards.",
+      "value": "{gray.a8}"
+    },
+    "control": {
+      "$description": "Input, select, checkbox and radio outlines. ≥ 3:1 against surface and canvas (WCAG 1.4.11).",
+      "value": "{gray.9}"
+    },
+    "control-hover": {
+      "value": "{gray.11}"
+    },
+    "brand": {
+      "$description": "Selected cards and brand-accented outlines.",
+      "value": "{accent.8}"
+    },
+    "inverse": {
+      "value": "{gray.1}"
+    },
+    "disabled": {
+      "value": "{gray.a5}"
+    }
+  },
+  "focus": {
+    "ring": {
+      "$description": "Keyboard focus ring: 2px solid with a 2px offset. ≥ 3:1 against canvas and surface.",
+      "value": "{accent.9}",
+      "dark": "{accent.10}"
+    },
+    "halo": {
+      "$description": "Soft halo outside the ring for text inputs.",
+      "value": "{accent.a5}"
+    }
+  },
+  "accent": {
+    "$description": "Interaction matrix for the brand intent. Buttons, toggles, chips and links compose from these.",
+    "solid-bg": {
+      "value": "{accent.9}",
+      "$description": "Fill of the brand solid button and other high-emphasis controls."
+    },
+    "solid-bg-hover": {
+      "value": "{accent.10}",
+      "$description": "Hovered and pressed brand solid fill."
+    },
+    "solid-fg": {
+      "value": "{white}",
+      "dark": "{accent.1}",
+      "$description": "Label and icon on the brand solid fill."
+    },
+    "soft-bg": {
+      "value": "{accent.a3}",
+      "$description": "Tinted fill for brand soft controls: chips, selected toggles, soft buttons."
+    },
+    "soft-bg-hover": {
+      "value": "{accent.a4}",
+      "$description": "Hovered brand soft fill."
+    },
+    "soft-bg-active": {
+      "value": "{accent.a5}",
+      "$description": "Pressed or selected brand soft fill."
+    },
+    "soft-fg": {
+      "value": "{accent.11}",
+      "$description": "Label on brand soft fills."
+    },
+    "outline-border": {
+      "value": "{accent.a7}",
+      "$description": "Border of brand outline controls."
+    },
+    "outline-border-hover": {
+      "value": "{accent.a8}",
+      "$description": "Hovered brand outline border."
+    },
+    "ghost-bg-hover": {
+      "value": "{accent.a3}",
+      "$description": "Hover tint for brand ghost controls (no resting fill)."
+    },
+    "ghost-bg-active": {
+      "value": "{accent.a4}",
+      "$description": "Pressed tint for brand ghost controls."
+    },
+    "fg": {
+      "value": "{accent.11}",
+      "$description": "Text and icon colour for brand ghost, outline and link controls."
+    }
+  },
+  "neutral": {
+    "$description": "Interaction matrix for the neutral intent. The default secondary button is neutral outline.",
+    "solid-bg": {
+      "value": "{gray.12}",
+      "$description": "Fill of the neutral solid button and other high-emphasis controls."
+    },
+    "solid-bg-hover": {
+      "value": "{gray.11}",
+      "$description": "Hovered and pressed neutral solid fill."
+    },
+    "solid-fg": {
+      "value": "{gray.1}",
+      "$description": "Label and icon on the neutral solid fill."
+    },
+    "soft-bg": {
+      "value": "{gray.a3}",
+      "$description": "Tinted fill for neutral soft controls: chips, selected toggles, soft buttons."
+    },
+    "soft-bg-hover": {
+      "value": "{gray.a4}",
+      "$description": "Hovered neutral soft fill."
+    },
+    "soft-bg-active": {
+      "value": "{gray.a5}",
+      "$description": "Pressed or selected neutral soft fill."
+    },
+    "soft-fg": {
+      "value": "{gray.12}",
+      "$description": "Label on neutral soft fills."
+    },
+    "outline-bg": {
+      "value": "{white}",
+      "dark": "{gray.3}",
+      "$description": "Surface fill behind neutral outline controls (the default secondary button)."
+    },
+    "outline-bg-hover": {
+      "value": "{gray.2}",
+      "dark": "{gray.4}",
+      "$description": "Hovered neutral outline fill."
+    },
+    "outline-bg-active": {
+      "value": "{gray.3}",
+      "dark": "{gray.5}",
+      "$description": "Pressed neutral outline fill."
+    },
+    "outline-border": {
+      "value": "{gray.a7}",
+      "$description": "Border of neutral outline controls."
+    },
+    "outline-border-hover": {
+      "value": "{gray.a8}",
+      "$description": "Hovered neutral outline border."
+    },
+    "ghost-bg-hover": {
+      "value": "{gray.a3}",
+      "$description": "Hover tint for neutral ghost controls (no resting fill)."
+    },
+    "ghost-bg-active": {
+      "value": "{gray.a4}",
+      "$description": "Pressed tint for neutral ghost controls."
+    },
+    "fg": {
+      "value": "{gray.12}",
+      "$description": "Text and icon colour for neutral ghost, outline and link controls."
+    },
+    "fg-muted": {
+      "value": "{gray.11}",
+      "$description": "Quieter neutral ghost label, e.g. Cancel. Brightens on hover."
+    }
+  },
+  "danger": {
+    "$description": "Interaction matrix for destructive actions.",
+    "solid-bg": {
+      "value": "{ember.9}",
+      "light-hc": "{ember.11}",
+      "dark-hc": "{ember.11}",
+      "$description": "Fill of the destructive solid button and other high-emphasis controls."
+    },
+    "solid-bg-hover": {
+      "value": "{ember.10}",
+      "light-hc": "{ember.12}",
+      "dark-hc": "{ember.12}",
+      "$description": "Hovered and pressed destructive solid fill."
+    },
+    "solid-fg": {
+      "value": "{white}",
+      "dark": "{ember.1}",
+      "$description": "Label and icon on the destructive solid fill."
+    },
+    "soft-bg": {
+      "value": "{ember.a3}",
+      "$description": "Tinted fill for destructive soft controls: chips, selected toggles, soft buttons."
+    },
+    "soft-bg-hover": {
+      "value": "{ember.a4}",
+      "$description": "Hovered destructive soft fill."
+    },
+    "soft-bg-active": {
+      "value": "{ember.a5}",
+      "$description": "Pressed or selected destructive soft fill."
+    },
+    "soft-fg": {
+      "value": "{ember.11}",
+      "$description": "Label on destructive soft fills."
+    },
+    "outline-border": {
+      "value": "{ember.a7}",
+      "$description": "Border of destructive outline controls."
+    },
+    "outline-border-hover": {
+      "value": "{ember.a8}",
+      "$description": "Hovered destructive outline border."
+    },
+    "ghost-bg-hover": {
+      "value": "{ember.a3}",
+      "$description": "Hover tint for destructive ghost controls (no resting fill)."
+    },
+    "ghost-bg-active": {
+      "value": "{ember.a4}",
+      "$description": "Pressed tint for destructive ghost controls."
+    },
+    "fg": {
+      "value": "{ember.11}",
+      "$description": "Text and icon colour for destructive ghost, outline and link controls."
+    }
+  },
+  "status": {
+    "$description": "Seven tones. Always icon + label, never colour alone. fg: text/icons. bg: tinted container. border: container outline. solid: strong fill. on-solid: text on solid.",
+    "neutral": {
+      "fg": {
+        "value": "{gray.11}",
+        "$description": "Neutral: text and icons for this tone on any surface."
+      },
+      "bg": {
+        "value": "{gray.a3}",
+        "$description": "Neutral: tinted container: badges, banners, table cells."
+      },
+      "bg-hover": {
+        "value": "{gray.a4}",
+        "$description": "Neutral: hovered tinted container."
+      },
+      "border": {
+        "value": "{gray.a6}",
+        "$description": "Neutral: container outline."
+      },
+      "solid": {
+        "value": "{gray.11}",
+        "$description": "Neutral: strong fill: solid badges, dots, progress."
+      },
+      "solid-hover": {
+        "value": "{gray.12}",
+        "$description": "Neutral: hovered strong fill."
+      },
+      "on-solid": {
+        "value": "{white}",
+        "dark": "{gray.1}",
+        "$description": "Neutral: text on the strong fill."
+      }
+    },
+    "info": {
+      "fg": {
+        "value": "{blue.11}",
+        "$description": "Info: text and icons for this tone on any surface."
+      },
+      "bg": {
+        "value": "{blue.a3}",
+        "$description": "Info: tinted container: badges, banners, table cells."
+      },
+      "bg-hover": {
+        "value": "{blue.a4}",
+        "$description": "Info: hovered tinted container."
+      },
+      "border": {
+        "value": "{blue.a6}",
+        "$description": "Info: container outline."
+      },
+      "solid": {
+        "value": "{blue.9}",
+        "$description": "Info: strong fill: solid badges, dots, progress."
+      },
+      "solid-hover": {
+        "value": "{blue.10}",
+        "$description": "Info: hovered strong fill."
+      },
+      "on-solid": {
+        "value": "{white}",
+        "dark": "{blue.1}",
+        "$description": "Info: text on the strong fill."
+      }
+    },
+    "success": {
+      "fg": {
+        "value": "{grass.11}",
+        "$description": "Success: text and icons for this tone on any surface."
+      },
+      "bg": {
+        "value": "{grass.a3}",
+        "$description": "Success: tinted container: badges, banners, table cells."
+      },
+      "bg-hover": {
+        "value": "{grass.a4}",
+        "$description": "Success: hovered tinted container."
+      },
+      "border": {
+        "value": "{grass.a6}",
+        "$description": "Success: container outline."
+      },
+      "solid": {
+        "value": "{grass.9}",
+        "$description": "Success: strong fill: solid badges, dots, progress."
+      },
+      "solid-hover": {
+        "value": "{grass.10}",
+        "$description": "Success: hovered strong fill."
+      },
+      "on-solid": {
+        "value": "{white}",
+        "dark": "{grass.1}",
+        "$description": "Success: text on the strong fill."
+      }
+    },
+    "warning": {
+      "fg": {
+        "value": "{amber.11}",
+        "$description": "Warning: text and icons for this tone on any surface."
+      },
+      "bg": {
+        "value": "{amber.a3}",
+        "$description": "Warning: tinted container: badges, banners, table cells."
+      },
+      "bg-hover": {
+        "value": "{amber.a4}",
+        "$description": "Warning: hovered tinted container."
+      },
+      "border": {
+        "value": "{amber.a6}",
+        "$description": "Warning: container outline."
+      },
+      "solid": {
+        "value": "{amber.9}",
+        "$description": "Warning: strong fill: solid badges, dots, progress."
+      },
+      "solid-hover": {
+        "value": "{amber.10}",
+        "$description": "Warning: hovered strong fill."
+      },
+      "on-solid": {
+        "value": "{amber.12}",
+        "dark": "{amber.1}",
+        "$description": "Warning: text on the strong fill."
+      }
+    },
+    "danger": {
+      "fg": {
+        "value": "{ember.11}",
+        "$description": "Danger: text and icons for this tone on any surface."
+      },
+      "bg": {
+        "value": "{ember.a3}",
+        "$description": "Danger: tinted container: badges, banners, table cells."
+      },
+      "bg-hover": {
+        "value": "{ember.a4}",
+        "$description": "Danger: hovered tinted container."
+      },
+      "border": {
+        "value": "{ember.a6}",
+        "$description": "Danger: container outline."
+      },
+      "solid": {
+        "value": "{ember.9}",
+        "$description": "Danger: strong fill: solid badges, dots, progress."
+      },
+      "solid-hover": {
+        "value": "{ember.10}",
+        "$description": "Danger: hovered strong fill."
+      },
+      "on-solid": {
+        "value": "{white}",
+        "dark": "{ember.1}",
+        "$description": "Danger: text on the strong fill."
+      }
+    },
+    "running": {
+      "$description": "Machine activity in progress. Pairs with the spinner and pulse motion.",
+      "fg": {
+        "value": "{lagoon.11}",
+        "$description": "Running: text and icons for this tone on any surface."
+      },
+      "bg": {
+        "value": "{lagoon.a3}",
+        "$description": "Running: tinted container: badges, banners, table cells."
+      },
+      "bg-hover": {
+        "value": "{lagoon.a4}",
+        "$description": "Running: hovered tinted container."
+      },
+      "border": {
+        "value": "{lagoon.a6}",
+        "$description": "Running: container outline."
+      },
+      "solid": {
+        "value": "{lagoon.9}",
+        "$description": "Running: strong fill: solid badges, dots, progress."
+      },
+      "solid-hover": {
+        "value": "{lagoon.10}",
+        "$description": "Running: hovered strong fill."
+      },
+      "on-solid": {
+        "value": "{white}",
+        "dark": "{lagoon.1}",
+        "$description": "Running: text on the strong fill."
+      }
+    },
+    "attention": {
+      "$description": "Waiting on a person. Approvals, reviews, sign-off.",
+      "fg": {
+        "value": "{plum.11}",
+        "$description": "Attention: text and icons for this tone on any surface."
+      },
+      "bg": {
+        "value": "{plum.a3}",
+        "$description": "Attention: tinted container: badges, banners, table cells."
+      },
+      "bg-hover": {
+        "value": "{plum.a4}",
+        "$description": "Attention: hovered tinted container."
+      },
+      "border": {
+        "value": "{plum.a6}",
+        "$description": "Attention: container outline."
+      },
+      "solid": {
+        "value": "{plum.9}",
+        "$description": "Attention: strong fill: solid badges, dots, progress."
+      },
+      "solid-hover": {
+        "value": "{plum.10}",
+        "$description": "Attention: hovered strong fill."
+      },
+      "on-solid": {
+        "value": "{white}",
+        "dark": "{plum.1}",
+        "$description": "Attention: text on the strong fill."
+      }
+    }
+  },
+  "ai": {
+    "$description": "Machine-generated content. Lagoon marks machine activity (running, generated); plum marks people (attention). AI content keeps this marker until a person accepts it.",
+    "fg": {
+      "value": "{lagoon.11}",
+      "$description": "AI label, sparkle and generated-content text accents."
+    },
+    "bg": {
+      "value": "{lagoon.a2}",
+      "$description": "Wash behind AI-generated content awaiting acceptance."
+    },
+    "border": {
+      "value": "{lagoon.a6}",
+      "$description": "Outline of AI-generated content."
+    },
+    "mark-start": {
+      "$description": "Sparkle and generated-content rule gradient start.",
+      "value": "{lagoon.9}"
+    },
+    "mark-end": {
+      "value": "{blue.9}"
+    }
+  },
+  "sidebar": {
+    "$description": "Application navigation panel (open sidebar and collapsed icon rail share one surface). A deep moss green in every colour theme: moss.10 in light themes, a slightly deeper moss pinned from the light scale in dark themes so it reads as green against the near-black canvas. Text is white at set opacities, composited and contrast-tested on the surface and on the hover and active fills.",
+    "bg": {
+      "$description": "Panel surface, open and collapsed.",
+      "value": "{moss.10}",
+      "dark": "{light:moss.12}",
+      "print": "{white}"
+    },
+    "bg-hover": {
+      "$description": "Hovered item fill.",
+      "value": "alpha({white}, 0.09)",
+      "print": "{gray.a3}"
+    },
+    "bg-active": {
+      "$description": "Current and pressed item fill.",
+      "value": "alpha({white}, 0.15)",
+      "print": "{gray.a4}"
+    },
+    "fg": {
+      "$description": "Item label and icon.",
+      "value": "alpha({white}, 0.8)",
+      "light-hc": "alpha({white}, 0.97)",
+      "dark-hc": "alpha({white}, 0.97)",
+      "print": "{gray.11}"
+    },
+    "fg-muted": {
+      "$description": "Section labels, counts, workspace context, chevrons.",
+      "value": "alpha({white}, 0.72)",
+      "light-hc": "alpha({white}, 0.97)",
+      "dark-hc": "alpha({white}, 0.97)",
+      "print": "{gray.11}"
+    },
+    "fg-active": {
+      "$description": "Current and hovered item label, workspace and user names.",
+      "value": "{white}",
+      "print": "{gray.12}"
+    },
+    "border": {
+      "$description": "Panel divider and section rules.",
+      "value": "alpha({white}, 0.12)",
+      "light-hc": "alpha({white}, 0.3)",
+      "dark-hc": "alpha({white}, 0.3)",
+      "print": "{gray.a6}"
+    },
+    "accent": {
+      "$description": "Current-item indicator bar and focus ring on the panel.",
+      "value": "{dark:moss.9}",
+      "print": "{accent.9}"
+    },
+    "badge-bg": {
+      "$description": "Attention badge and dot on the panel: the plum from the dark scale, light enough to separate from deep moss.",
+      "value": "{dark:plum.9}",
+      "print": "{plum.9}"
+    },
+    "badge-fg": {
+      "$description": "Count inside the attention badge.",
+      "value": "{dark:plum.1}",
+      "print": "{white}"
+    }
+  },
+  "nav": {
+    "$description": "Deprecated alias of the sidebar group (same values); use sidebar.* in new code.",
+    "bg": {
+      "$description": "Deprecated: use sidebar.bg.",
+      "value": "{moss.10}",
+      "dark": "{light:moss.12}",
+      "print": "{white}"
+    },
+    "fg": {
+      "$description": "Deprecated: use sidebar.fg.",
+      "value": "alpha({white}, 0.8)",
+      "light-hc": "alpha({white}, 0.97)",
+      "dark-hc": "alpha({white}, 0.97)",
+      "print": "{gray.11}"
+    },
+    "fg-active": {
+      "$description": "Deprecated: use sidebar.fg-active.",
+      "value": "{white}",
+      "print": "{gray.12}"
+    },
+    "item-hover": {
+      "$description": "Deprecated: use sidebar.bg-hover.",
+      "value": "alpha({white}, 0.09)",
+      "print": "{gray.a3}"
+    },
+    "item-active": {
+      "$description": "Deprecated: use sidebar.bg-active.",
+      "value": "alpha({white}, 0.15)",
+      "print": "{gray.a4}"
+    },
+    "indicator": {
+      "$description": "Deprecated: use sidebar.accent.",
+      "value": "{dark:moss.9}",
+      "print": "{accent.9}"
+    },
+    "border": {
+      "$description": "Deprecated: use sidebar.border.",
+      "value": "alpha({white}, 0.12)",
+      "light-hc": "alpha({white}, 0.3)",
+      "dark-hc": "alpha({white}, 0.3)",
+      "print": "{gray.a6}"
+    },
+    "section": {
+      "$description": "Deprecated: use sidebar.fg-muted.",
+      "value": "alpha({white}, 0.72)",
+      "light-hc": "alpha({white}, 0.97)",
+      "dark-hc": "alpha({white}, 0.97)",
+      "print": "{gray.11}"
+    }
+  },
+  "dataviz": {
+    "$description": "Charts only. Re-derived from Faun's own scales (src/scales/viz.json, scripts/viz.ts): slot 1 is the brand moss, then lagoon, ochre, plum, oxblood, blue, grass and warm grey. Validated for colour-vision deficiency; assign in order, never cycle.",
+    "cat-1": {
+      "value": "{viz.moss}",
+      "$description": "Categorical series slot 1: brand moss (the brand solid step). Assign in order."
+    },
+    "cat-2": {
+      "value": "{viz.lagoon}",
+      "$description": "Categorical series slot 2: lagoon. Assign in order."
+    },
+    "cat-3": {
+      "value": "{viz.ochre}",
+      "$description": "Categorical series slot 3: ochre. Assign in order."
+    },
+    "cat-4": {
+      "value": "{viz.plum}",
+      "$description": "Categorical series slot 4: plum. Assign in order."
+    },
+    "cat-5": {
+      "value": "{viz.ember}",
+      "$description": "Categorical series slot 5: oxblood. Assign in order."
+    },
+    "cat-6": {
+      "value": "{viz.blue}",
+      "$description": "Categorical series slot 6: blue. Assign in order."
+    },
+    "cat-7": {
+      "value": "{viz.grass}",
+      "$description": "Categorical series slot 7: grass. Assign in order."
+    },
+    "cat-8": {
+      "value": "{viz.warmgray}",
+      "$description": "Categorical series slot 8: warm grey (always last). Assign in order."
+    },
+    "seq-1": {
+      "value": "{viz.seq-1}",
+      "$description": "Sequential magnitude step 1 of 7, moss ramp (low to high)."
+    },
+    "seq-2": {
+      "value": "{viz.seq-2}",
+      "$description": "Sequential magnitude step 2 of 7, moss ramp (low to high)."
+    },
+    "seq-3": {
+      "value": "{viz.seq-3}",
+      "$description": "Sequential magnitude step 3 of 7, moss ramp (low to high)."
+    },
+    "seq-4": {
+      "value": "{viz.seq-4}",
+      "$description": "Sequential magnitude step 4 of 7, moss ramp (low to high)."
+    },
+    "seq-5": {
+      "value": "{viz.seq-5}",
+      "$description": "Sequential magnitude step 5 of 7, moss ramp (low to high)."
+    },
+    "seq-6": {
+      "value": "{viz.seq-6}",
+      "$description": "Sequential magnitude step 6 of 7, moss ramp (low to high)."
+    },
+    "seq-7": {
+      "value": "{viz.seq-7}",
+      "$description": "Sequential magnitude step 7 of 7, moss ramp (low to high)."
+    },
+    "seq-neutral-1": {
+      "value": "{viz.seqn-1}",
+      "$description": "Sequential magnitude step 1 of 7, warm grey ramp (low to high). For quantity without a meaning, or beside the moss ramp."
+    },
+    "seq-neutral-2": {
+      "value": "{viz.seqn-2}",
+      "$description": "Sequential magnitude step 2 of 7, warm grey ramp (low to high). For quantity without a meaning, or beside the moss ramp."
+    },
+    "seq-neutral-3": {
+      "value": "{viz.seqn-3}",
+      "$description": "Sequential magnitude step 3 of 7, warm grey ramp (low to high). For quantity without a meaning, or beside the moss ramp."
+    },
+    "seq-neutral-4": {
+      "value": "{viz.seqn-4}",
+      "$description": "Sequential magnitude step 4 of 7, warm grey ramp (low to high). For quantity without a meaning, or beside the moss ramp."
+    },
+    "seq-neutral-5": {
+      "value": "{viz.seqn-5}",
+      "$description": "Sequential magnitude step 5 of 7, warm grey ramp (low to high). For quantity without a meaning, or beside the moss ramp."
+    },
+    "seq-neutral-6": {
+      "value": "{viz.seqn-6}",
+      "$description": "Sequential magnitude step 6 of 7, warm grey ramp (low to high). For quantity without a meaning, or beside the moss ramp."
+    },
+    "seq-neutral-7": {
+      "value": "{viz.seqn-7}",
+      "$description": "Sequential magnitude step 7 of 7, warm grey ramp (low to high). For quantity without a meaning, or beside the moss ramp."
+    },
+    "seq-lagoon-1": {
+      "value": "{viz.seqlagoon-1}",
+      "$description": "Sequential magnitude step 1 of 7, lagoon ramp (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-lagoon-2": {
+      "value": "{viz.seqlagoon-2}",
+      "$description": "Sequential magnitude step 2 of 7, lagoon ramp (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-lagoon-3": {
+      "value": "{viz.seqlagoon-3}",
+      "$description": "Sequential magnitude step 3 of 7, lagoon ramp (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-lagoon-4": {
+      "value": "{viz.seqlagoon-4}",
+      "$description": "Sequential magnitude step 4 of 7, lagoon ramp (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-lagoon-5": {
+      "value": "{viz.seqlagoon-5}",
+      "$description": "Sequential magnitude step 5 of 7, lagoon ramp (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-lagoon-6": {
+      "value": "{viz.seqlagoon-6}",
+      "$description": "Sequential magnitude step 6 of 7, lagoon ramp (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-lagoon-7": {
+      "value": "{viz.seqlagoon-7}",
+      "$description": "Sequential magnitude step 7 of 7, lagoon ramp (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-mauve-1": {
+      "value": "{viz.seqmauve-1}",
+      "$description": "Sequential magnitude step 1 of 7, mauve ramp (the plum scale) (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-mauve-2": {
+      "value": "{viz.seqmauve-2}",
+      "$description": "Sequential magnitude step 2 of 7, mauve ramp (the plum scale) (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-mauve-3": {
+      "value": "{viz.seqmauve-3}",
+      "$description": "Sequential magnitude step 3 of 7, mauve ramp (the plum scale) (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-mauve-4": {
+      "value": "{viz.seqmauve-4}",
+      "$description": "Sequential magnitude step 4 of 7, mauve ramp (the plum scale) (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-mauve-5": {
+      "value": "{viz.seqmauve-5}",
+      "$description": "Sequential magnitude step 5 of 7, mauve ramp (the plum scale) (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-mauve-6": {
+      "value": "{viz.seqmauve-6}",
+      "$description": "Sequential magnitude step 6 of 7, mauve ramp (the plum scale) (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-mauve-7": {
+      "value": "{viz.seqmauve-7}",
+      "$description": "Sequential magnitude step 7 of 7, mauve ramp (the plum scale) (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-ochre-1": {
+      "value": "{viz.seqochre-1}",
+      "$description": "Sequential magnitude step 1 of 7, ochre ramp (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-ochre-2": {
+      "value": "{viz.seqochre-2}",
+      "$description": "Sequential magnitude step 2 of 7, ochre ramp (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-ochre-3": {
+      "value": "{viz.seqochre-3}",
+      "$description": "Sequential magnitude step 3 of 7, ochre ramp (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-ochre-4": {
+      "value": "{viz.seqochre-4}",
+      "$description": "Sequential magnitude step 4 of 7, ochre ramp (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-ochre-5": {
+      "value": "{viz.seqochre-5}",
+      "$description": "Sequential magnitude step 5 of 7, ochre ramp (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-ochre-6": {
+      "value": "{viz.seqochre-6}",
+      "$description": "Sequential magnitude step 6 of 7, ochre ramp (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "seq-ochre-7": {
+      "value": "{viz.seqochre-7}",
+      "$description": "Sequential magnitude step 7 of 7, ochre ramp (low to high). Default ramp of a chart type (ADR 0008); the moss ramp stays the brand ramp."
+    },
+    "div-neg-3": {
+      "value": "{viz.div-neg-3}",
+      "$description": "Diverging, moss to oxblood through warm grey: worst end (oxblood)."
+    },
+    "div-neg-2": {
+      "value": "{viz.div-neg-2}",
+      "$description": "Diverging, moss to oxblood through warm grey: worse."
+    },
+    "div-neg-1": {
+      "value": "{viz.div-neg-1}",
+      "$description": "Diverging, moss to oxblood through warm grey: slightly worse."
+    },
+    "div-mid": {
+      "value": "{viz.div-mid}",
+      "$description": "Diverging, moss to oxblood through warm grey: midpoint, warm grey."
+    },
+    "div-pos-1": {
+      "value": "{viz.div-pos-1}",
+      "$description": "Diverging, moss to oxblood through warm grey: slightly better."
+    },
+    "div-pos-2": {
+      "value": "{viz.div-pos-2}",
+      "$description": "Diverging, moss to oxblood through warm grey: better."
+    },
+    "div-pos-3": {
+      "value": "{viz.div-pos-3}",
+      "$description": "Diverging, moss to oxblood through warm grey: best end (moss)."
+    },
+    "div-alt-neg-3": {
+      "value": "{viz.divalt-neg-3}",
+      "$description": "Diverging alternative, blue to amber through warm grey, safe for every colour-vision type: worst end (amber)."
+    },
+    "div-alt-neg-2": {
+      "value": "{viz.divalt-neg-2}",
+      "$description": "Diverging alternative, blue to amber through warm grey, safe for every colour-vision type: worse."
+    },
+    "div-alt-neg-1": {
+      "value": "{viz.divalt-neg-1}",
+      "$description": "Diverging alternative, blue to amber through warm grey, safe for every colour-vision type: slightly worse."
+    },
+    "div-alt-mid": {
+      "value": "{viz.divalt-mid}",
+      "$description": "Diverging alternative, blue to amber through warm grey, safe for every colour-vision type: midpoint, warm grey."
+    },
+    "div-alt-pos-1": {
+      "value": "{viz.divalt-pos-1}",
+      "$description": "Diverging alternative, blue to amber through warm grey, safe for every colour-vision type: slightly better."
+    },
+    "div-alt-pos-2": {
+      "value": "{viz.divalt-pos-2}",
+      "$description": "Diverging alternative, blue to amber through warm grey, safe for every colour-vision type: better."
+    },
+    "div-alt-pos-3": {
+      "value": "{viz.divalt-pos-3}",
+      "$description": "Diverging alternative, blue to amber through warm grey, safe for every colour-vision type: best end (blue)."
+    },
+    "scope-1": {
+      "$description": "GHG Scope 1 (direct emissions), oxblood. Fixed across the product.",
+      "value": "{viz.ember}"
+    },
+    "scope-2": {
+      "$description": "GHG Scope 2 (purchased energy), ochre. Fixed across the product.",
+      "value": "{viz.ochre}"
+    },
+    "scope-3": {
+      "$description": "GHG Scope 3 (value chain), blue. Fixed across the product.",
+      "value": "{viz.blue}"
+    },
+    "scope-outside": {
+      "$description": "Outside the scopes (biogenic and other reporting), warm grey.",
+      "value": "{gray.9}"
+    },
+    "grid": {
+      "value": "{gray.a5}"
+    },
+    "axis": {
+      "value": "{gray.11}"
+    },
+    "surface": {
+      "value": "{white}",
+      "dark": "{gray.2}"
+    }
+  },
+  "shadow": {
+    "$description": "Shadow colours per theme; composed into elevation tokens.",
+    "ambient": {
+      "value": "alpha({gray.12}, 0.06)",
+      "dark": "alpha({black}, 0.4)",
+      "light-hc": "alpha({black}, 0)",
+      "dark-hc": "alpha({black}, 0)",
+      "print": "alpha({black}, 0)"
+    },
+    "key": {
+      "value": "alpha({gray.12}, 0.1)",
+      "dark": "alpha({black}, 0.55)",
+      "light-hc": "alpha({black}, 0)",
+      "dark-hc": "alpha({black}, 0)",
+      "print": "alpha({black}, 0)"
+    },
+    "highlight": {
+      "$description": "Top-edge highlight that gives raised surfaces depth in dark themes.",
+      "value": "alpha({white}, 0)",
+      "dark": "alpha({white}, 0.05)",
+      "dark-hc": "alpha({white}, 0)"
+    }
+  }
+}

@@ -1,0 +1,93 @@
+export const meta = {
+  title: "Filter bar",
+  description: "The applied filters as removable chips, an Add filter menu and Clear all. It sits above a table or list.",
+  category: "Data",
+  status: "new",
+  components: ["FilterBar"],
+  related: ["data-table", "tag", "search-field", "menu"],
+  order: 4,
+};
+
+<Section tab="usage">
+
+<Example of="FilterBar/Overview" layout="stretch" />
+
+## When to use
+
+- Above a table or list where people narrow results by several attributes: scope, framework, data quality, owner.
+- When applied filters must stay visible, so nobody misreads a filtered list as the whole set.
+
+## When not to use
+
+- For one or two always-present toggles. Use FilterChip or a SegmentedControl.
+- For free text search alone. Use SearchField.
+- For switching between views of the same data. Use Tabs.
+
+## Variants
+
+<Example of="FilterBar/Empty" layout="stretch" title="No filters yet" description="The add button leads with a filter icon until something is applied." />
+
+<Example of="FilterBar/WithSearch" layout="stretch" title="With search" description="Children are placed after the chips, pushed to the end. Use for a SearchField or a sort control." />
+
+<Example of="FilterBar/WithTable" layout="stretch" title="With a table" description="FilterBar holds the state; you apply it to your data. Several values of one field match as any of; different fields combine as all of." />
+
+<DoDont>
+  <Do of="FilterBar/DoShowResultCount" caption="Show how many results match, so a filter that hides everything is obvious." />
+  <Dont of="FilterBar/DontHiddenFilters" caption="Filter the list without showing the filters. People read a filtered list as complete." />
+</DoDont>
+
+## Writing
+
+Field names are nouns (“Scope”, “Data quality”). Option labels are what people see in the data (“Scope 1”, “Estimated”). The chip reads “Field: option”.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Chips (Tag with a remove button), the Add filter button, Clear all (once any filter is applied) and an optional slot for extra controls. Everything wraps on narrow screens.
+
+## Tokens
+
+<UsesTokens names={["fg.muted", "bg.surface", "border.default"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="FilterBar/WithTable" layout="stretch" code="open" />
+
+## Notes
+
+- A filter is `{ field, value }`. Define the choices once in `fields`, each with its `options`.
+- Controlled with `value` and `onValueChange`, or uncontrolled with `defaultValue`.
+- Filters whose field or option is not in `fields` are ignored, so a stale URL cannot break the bar.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[
+  ["Tab", "Moves through the chips' remove buttons, Add filter, Clear all and any extra controls."],
+  ["Enter / Space", "On Add filter, opens the menu. On a remove button, removes the filter."],
+  ["Arrow Down / Arrow Up", "Moves between fields in the menu."],
+  ["Arrow Right", "Opens the options of the focused field."],
+  ["Arrow Left / Escape", "Closes the options, then the menu, and returns focus to Add filter."],
+]} />
+
+## Screen readers
+
+- The bar is a group named “Filters”. Chips are list items; each remove button is named in full, for example “Remove filter Scope: Scope 1”.
+- Options are menu checkboxes, so applied options are announced as checked.
+- A polite status announces the count: “2 filters applied”, “No filters applied”.
+
+## Visual
+
+- Chips show field and value as text. Focus rings use the focus token.
+
+</Section>

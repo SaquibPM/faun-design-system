@@ -1,0 +1,11 @@
+.faun-composer { display: grid; gap: var(--faun-space-2); padding: var(--faun-space-2-5) var(--faun-space-3); border: var(--faun-border-width-hairline) solid var(--faun-border-control); border-radius: var(--faun-radius-lg); background: var(--faun-bg-surface); box-shadow: var(--faun-elevation-2); min-inline-size: 0; transition: border-color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard), box-shadow var(--faun-motion-duration-fast) var(--faun-motion-easing-standard); }
+.faun-composer:hover { border-color: var(--faun-border-control-hover); }
+.faun-composer:focus-within { border-color: var(--faun-focus-ring); box-shadow: var(--faun-elevation-2), 0 0 0 3px var(--faun-focus-halo); }
+.faun-composer[data-disabled] { background: var(--faun-bg-disabled); border-color: var(--faun-border-disabled); box-shadow: none; }
+.faun-composer-attachments { display: flex; flex-wrap: wrap; gap: var(--faun-space-1-5); min-inline-size: 0; }
+.faun-composer .faun-composer-field, .faun-composer .faun-composer-field:hover, .faun-composer .faun-composer-field:focus-within { border: 0; border-radius: 0; background: transparent; box-shadow: none; }
+.faun-composer .faun-textarea-control { padding-inline: 0; }
+.faun-composer-bar { display: flex; align-items: center; justify-content: space-between; gap: var(--faun-space-2); }
+.faun-composer-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--faun-space-1); min-inline-size: 0; }
+.faun-composer-hint { margin: 0; color: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size); line-height: var(--faun-type-caption-line-height); }
+@media (forced-colors: active) { .faun-composer { border-color: CanvasText; } }

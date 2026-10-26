@@ -1,0 +1,5 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": { "noEmit": true, "allowImportingTsExtensions": true, "types": ["vite/client", "node", "mdx"], "jsx": "react-jsx", "paths": { "@faun-ds/react": ["../../packages/react/src/index.ts"], "@faun-ds/data": ["../../packages/data/src/index.ts"], "@faun-ds/ai": ["../../packages/ai/src/index.ts"] }, "noUncheckedIndexedAccess": false },
+  "include": ["src", "scripts", "vite.config.ts"]
+}

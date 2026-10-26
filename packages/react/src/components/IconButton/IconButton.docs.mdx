@@ -1,0 +1,81 @@
+export const meta = {
+  title: "Icon button",
+  description: "A square button with only an icon. It always has a label, which is also its tooltip.",
+  category: "Actions",
+  status: "stable",
+  components: ["IconButton"],
+  related: ["button", "tooltip"],
+  order: 2,
+};
+
+<Section tab="usage">
+
+<Example of="IconButton/Overview" />
+
+## When to use
+
+- For familiar, repeated actions in toolbars, table rows and card corners: edit, copy, download, more.
+- Where a text button would crowd the layout.
+
+## When not to use
+
+- For the primary action in a view. Use a [Button](/components/button) with a text label.
+- For an icon people might not recognise. Add text, or use a Button with a leading icon.
+
+## Variants
+
+<Example of="IconButton/Variants" title="Emphasis and intent" description="Ghost is the default because icon buttons usually sit in groups. Icon-only buttons are never danger: the icon alone cannot carry the consequence, so the type does not allow it. Put destructive actions in a menu item or a labelled Button inside a confirmation." />
+
+<DoDont>
+  <Do of="IconButton/DoLabelled" caption="Give every icon button a specific label. It becomes the accessible name and the tooltip." />
+  <Dont of="IconButton/DontUnlabelled" caption="Ship an icon-only button with no name. Screen readers announce “button” and nothing else." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A square button sized to the control height, with a centred icon. The tooltip shows the label and, optionally, the shortcut.
+
+## Sizes
+
+<Example of="IconButton/Sizes" title="Sizes" description="Extra small (24px) through extra large (48px). Medium follows the density mode." />
+
+## Tokens
+
+<UsesTokens names={["fg.default", "bg.hover", "focus.ring"]} />
+
+<ComponentTokens name="button" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="IconButton/Overview" title="Labelled icon buttons" code="open" />
+
+## Notes
+
+- `label` is required. Set `tooltip={false}` when a visible label or another tooltip already names the control (for example inside a Popover close).
+- It accepts every Button prop except icons, children and `asChild`.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves focus to the button and shows its tooltip."], ["Enter", "Activates the button."], ["Space", "Activates the button."], ["Escape", "Dismisses the tooltip."]]} />
+
+## Screen readers
+
+- The label becomes `aria-label`. The icon is hidden from assistive technology.
+
+## Visual
+
+- Targets meet the minimum size at every size. Focus shows the standard ring.
+
+</Section>

@@ -1,0 +1,54 @@
+.faun-avatar {
+  --_s: var(--faun-size-avatar-md);
+  --_bg: var(--faun-gray-a3);
+  --_fg: var(--faun-gray-11);
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  inline-size: var(--_s);
+  block-size: var(--_s);
+  border-radius: var(--faun-avatar-radius);
+  background: var(--_bg);
+  color: var(--_fg);
+  font-family: var(--faun-font-family-sans);
+  font-size: calc(var(--_s) * 0.4);
+  font-weight: var(--faun-font-weight-semibold);
+  line-height: 1;
+  letter-spacing: 0;
+  user-select: none;
+  vertical-align: middle;
+}
+.faun-avatar:where([data-size="xs"]) { --_s: var(--faun-size-avatar-xs); font-size: var(--faun-type-micro-font-size); }
+.faun-avatar:where([data-size="sm"]) { --_s: var(--faun-size-avatar-sm); font-size: var(--faun-type-micro-font-size); }
+.faun-avatar:where([data-size="lg"]) { --_s: var(--faun-size-avatar-lg); }
+.faun-avatar:where([data-size="xl"]) { --_s: var(--faun-size-avatar-xl); }
+.faun-avatar:where([data-hue="blue"]) { --_bg: var(--faun-blue-a4); --_fg: var(--faun-blue-11); }
+.faun-avatar:where([data-hue="lagoon"]) { --_bg: var(--faun-lagoon-a4); --_fg: var(--faun-lagoon-11); }
+.faun-avatar:where([data-hue="plum"]) { --_bg: var(--faun-plum-a4); --_fg: var(--faun-plum-11); }
+.faun-avatar:where([data-hue="amber"]) { --_bg: var(--faun-amber-a4); --_fg: var(--faun-amber-11); }
+.faun-avatar:where([data-hue="grass"]) { --_bg: var(--faun-grass-a4); --_fg: var(--faun-grass-11); }
+.faun-avatar:where([data-hue="moss"]) { --_bg: var(--faun-moss-a4); --_fg: var(--faun-moss-11); }
+.faun-avatar:where([data-kind="agent"]) { --_bg: var(--faun-accent-soft-bg); --_fg: var(--faun-accent-soft-fg); border-radius: var(--faun-radius-sm); box-shadow: inset 0 0 0 1px var(--faun-accent-a5); }
+.faun-avatar:where([data-kind="agent"][data-size="lg"], [data-kind="agent"][data-size="xl"]) { border-radius: var(--faun-radius-md); }
+.faun-avatar-image { inline-size: 100%; block-size: 100%; object-fit: cover; border-radius: inherit; }
+.faun-avatar-fallback { display: grid; place-items: center; inline-size: 100%; block-size: 100%; border-radius: inherit; }
+.faun-avatar-mark { inline-size: 62%; block-size: 62%; }
+.faun-avatar:where([data-status])::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  border: 2px solid var(--_ring);
+  pointer-events: none;
+}
+.faun-avatar:where([data-kind="agent"][data-status])::after { border-radius: calc(var(--faun-radius-sm) + 3px); }
+.faun-avatar:where([data-status="running"]) { --_ring: var(--faun-status-running-solid); }
+.faun-avatar:where([data-status="running"])::after { animation: faun-pulse var(--faun-motion-duration-pulse) var(--faun-motion-easing-standard) infinite; color: var(--faun-status-running-solid); }
+.faun-avatar:where([data-status="attention"]) { --_ring: var(--faun-status-attention-solid); }
+
+.faun-avatar-group { display: inline-flex; align-items: center; }
+.faun-avatar-group > .faun-avatar { box-shadow: 0 0 0 2px var(--faun-bg-surface); }
+.faun-avatar-group > .faun-avatar + .faun-avatar { margin-inline-start: calc(var(--_s) * -0.28); }
+.faun-avatar-more { --_bg: var(--faun-gray-a4); --_fg: var(--faun-fg-default); font-size: var(--faun-type-micro-font-size); font-weight: var(--faun-font-weight-medium); }
+@media (forced-colors: active) { .faun-avatar { border: 1px solid CanvasText; } }

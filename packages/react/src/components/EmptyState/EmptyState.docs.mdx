@@ -1,0 +1,84 @@
+export const meta = {
+  title: "Empty state",
+  description: "What to show when there is nothing to show. Four kinds (first use, no results, error, no permission) explain why and offer the next step.",
+  category: "Feedback",
+  status: "new",
+  components: ["EmptyState"],
+  related: ["banner", "skeleton"],
+  order: 4,
+};
+
+<Section tab="usage">
+
+<Example of="EmptyState/Overview" layout="padded" />
+
+## When to use
+
+- A list, table, panel or page that has no content: because nothing has been created, a filter matched nothing, loading failed, or the person can't see it.
+
+## When not to use
+
+- While content is loading: use Skeleton.
+- For a problem affecting a page that still has content: use Banner.
+
+## Kinds
+
+<Example of="EmptyState/Kinds" title="First use, no results, error, no permission" description="Each kind has its own default visual. First use is the hopeful one and should lead to creating something; no results offers to clear filters; error offers a retry; no permission names the role or person who can grant access." layout="padded" />
+
+## Sizes
+
+<Example of="EmptyState/Sizes" description="Use md for a whole page or large panel, sm inside cards and side panels." layout="padded" />
+
+<DoDont>
+  <Do of="EmptyState/DoNextStep" caption="Explain what the thing is and give the next step." />
+  <Dont of="EmptyState/DontDeadEnd" caption="Say “Nothing here” and stop. It's a dead end." />
+</DoDont>
+
+## Writing
+
+Title says what's missing in plain words (“No filings yet”). Description says why or what it's for, in one sentence. The primary action is a verb plus object (“New filing”). For errors, say what failed and offer retry; never blame the person.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Visual (icon or illustration, 48px area), title, description, actions. Content is centred and capped at a readable width.
+
+## Tokens
+
+<UsesTokens names={["fg.default", "fg.muted", "bg.brand-soft", "status.danger.fg"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="EmptyState/Overview" title="First use with two actions" code="open" layout="padded" />
+
+## Notes
+
+- Pass `icon` to replace the default visual with a domain icon.
+- `level` sets the heading level (default 2). Use 3 inside a card that has its own heading.
+- Actions are your own Buttons, so they can be links or open dialogs.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves to the actions."]]} />
+
+## Screen readers
+
+- The title is a real heading, so the empty state is discoverable by heading navigation.
+- The visual is decorative and hidden. If the state replaces content after a filter changes, announce the result count in a live region.
+
+## Visual
+
+- Text meets 4.5:1 on the surface; the visual conveys nothing the text doesn't.
+
+</Section>

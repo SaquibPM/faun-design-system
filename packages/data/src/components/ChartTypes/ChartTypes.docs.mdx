@@ -1,0 +1,147 @@
+export const meta = {
+  title: "Chart types",
+  description: "Every Faun chart on one page: pick by the question you are answering, then open the chart for variants, code and accessibility.",
+  category: "Data",
+  status: "new",
+  components: [],
+  related: ["bar-chart", "line-chart", "pie-chart", "heatmap-chart", "stat"],
+  order: 1,
+};
+
+<Section tab="usage">
+
+<PaletteSwitch label="Chart palette (applies to every chart on the page)" />
+
+<Example of="ChartTypes/Overview" layout="stretch" code="none" />
+
+## Choosing a chart
+
+Start from the question, not the chart.
+
+| You want to show | Use | Notes |
+| --- | --- | --- |
+| A measure across a few categories | Bar chart (simple, grouped) | Long names: horizontal. Many near-equal values: lollipop. |
+| How a total is made up | Stacked bar, pie or donut, treemap | Two to six parts: donut. Many parts or levels: treemap. |
+| A gap above or below a reference | Diverging bar | Colour by sign; say which side is better. |
+| A range per category | Floating bar | Forecast ranges, min to max. |
+| Change over time | Line chart, step line, area | Step for values that hold until they change. |
+| How a total builds up over time | Stacked area | The top edge is the total. |
+| A volume and a rate together | Combo chart | A second axis only for a different unit. |
+| How two measures relate | Scatter; bubble for a third measure | Label points so the table names them. |
+| The spread of one measure | Histogram | Show limits as reference lines. |
+| The spread across groups | Box plot | Needs about ten values per group. |
+| A measure for two dimensions | Heatmap | Sequential for magnitude, diverging for variance. |
+| Progress to a limit, or one value against its range | Meter, gauge, bullet chart | Bullet when there are several KPIs. |
+| A trend in a table cell | Sparkline | Always beside the figure it summarises. |
+| Parents and children | Tree, dendrogram | Shallow trees read best. |
+| Nested parts | Treemap, circle pack | Treemap for accuracy, circles for grouping. |
+| Flow between stages | Sankey (alluvial) | A few nodes per column. |
+| Themes in free text | Word cloud | A first impression, never a ranking. |
+
+## When a table is better
+
+If readers need to look up exact values, use a Data table. Every chart also carries a hidden data table with the same numbers, so the figures are available to assistive technology either way.
+
+## Not included
+
+Maps (choropleth, proportional symbol, connection), network diagrams and parallel coordinates need geometry or layout data that Faun does not ship. Use a dedicated mapping or graph library and keep the colours from the data-viz tokens.
+
+</Section>
+
+<Section tab="style">
+
+## Colour
+
+Charts draw only with data-viz tokens. A test fails if any chart source or example contains a literal colour, or reaches for a colour from outside the palette.
+
+| Kind of data | Tokens | Used by |
+| --- | --- | --- |
+| Categories, in order | `dataviz.cat-1` to `cat-8` | Every chart with series, slices, groups or nodes. A ninth category is not drawn; group the tail as “Other”. |
+| GHG scopes | `dataviz.scope-1`, `scope-2`, `scope-3` | Any series, slice or node with the id `scope-1`, `scope-2` or `scope-3`. |
+| Magnitude, low to high | `dataviz.seq-lagoon-1` to `seq-7` (heatmap), `seq-mauve-1` to `seq-7` (treemap), `seq-ochre-1` to `seq-7` (circle pack); `seq-1` to `seq-7` is the moss brand ramp for your own charts | Heatmap, treemap, circle pack, one hue each. |
+| Difference around a midpoint | `dataviz.div-neg-3` to `div-pos-3` | Diverging bar, diverging heatmap, treemap by change. |
+| Status | `status.*` | Gauge and meter only, and only when the colour means a status. |
+| Structure | `dataviz.grid`, `axis`, `surface` | Gridlines, axes, gaps between marks. |
+
+### One hue per chart type
+
+"Different colours for different components" is read as: when a chart draws a single series, its default colour depends on the chart type, so a page of charts is not a page of moss. The defaults are categorical tokens (never literals), so a palette or tenant theme recolours them, and an explicit `color` always wins.
+
+| Chart | Single-series default | Slot |
+| --- | --- | --- |
+| Bar (simple, lollipop, floating, diverging) | Moss, the brand anchor | `cat-1` |
+| Line, step, sparkline, histogram | Lagoon | `cat-2` |
+| Scatter, bubble | Ochre | `cat-3` |
+| Area | Plum | `cat-4` |
+| Radar, box plot | Blue | `cat-6` |
+| Gauge, bullet, meter | Grass | `cat-7` |
+| Pie, donut, stacked, grouped, combo | Full categorical, in order | `cat-1` to `cat-8` |
+
+With two or more series every chart starts at moss (`cat-1`) and follows the categorical order, in the default and in every pastel palette, so moss stays series 1. The defaults are exported as `CHART_DEFAULT_SLOT` and `CHART_DEFAULT_RAMP` (ADR 0008).
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.scope-1", "dataviz.seq-1", "dataviz.seq-7", "dataviz.seq-lagoon-4", "dataviz.seq-mauve-4", "dataviz.seq-ochre-4", "dataviz.div-neg-3", "dataviz.div-mid", "dataviz.div-pos-3", "dataviz.grid", "dataviz.axis", "dataviz.surface"]} />
+
+## Shared parts
+
+Every chart has the same frame: a title and one-line description, a legend or colour key, the plot, a tooltip on hover and keyboard focus, and reference lines where a target or limit makes sense. Quiet gridlines and a hairline gap between marks keep dense charts legible in light and dark themes.
+
+</Section>
+
+<Section tab="code">
+
+## Using a chart
+
+Every chart needs a `title`. Most take the same few props: `unit`, `format`, `height`, `legend`, `loading`, `references` and, where series can be hidden, `toggleSeries`.
+
+```tsx
+import { BarChart, LineChart, HeatmapChart } from "@faun-ds/data";
+
+<BarChart
+  variant="stacked"
+  title="Emissions by scope and site, FY2026"
+  unit="tCO₂e"
+  categories={sites}
+  series={[
+    { id: "scope-1", label: "Scope 1", values: [8200, 5400, 2100] },
+    { id: "scope-2", label: "Scope 2", values: [3900, 2800, 1100] },
+  ]}
+/>
+```
+
+## Notes
+
+- Every chart takes `palette="default" | "meadow" | "dawn" | "harbour"` (or `data-viz-palette` on any ancestor): three pastel options with moss as series 1. The pastel is the face of a relief mark; the outline, side and wave carry the contrast. High contrast and print use the default.
+- Every chart takes `appearance="relief"` (default: a pastel-tinted block with a faint wave grain, a thin outline and an extruded side; the wave is nearly invisible by design and becomes a clear hatch in high contrast, print and forced colours) or `"flat"`. Heatmap and sankey stay flat with an outline; high contrast, print and forced colours draw a solid hatch.
+- `BarChart` covers simple, grouped, stacked, floating, diverging and lollipop bars, vertical or horizontal. `LineChart` covers line and step. `AreaChart` covers simple and stacked areas. `PieChart` covers pie and donut. `MeterChart` covers standard and proportional meters. `ScatterChart` covers scatter and bubble. `TreeChart` covers tree and dendrogram.
+- `StackedBarChart` is `BarChart` with `variant="stacked"`.
+- The width follows the container. Charts redraw when it changes.
+- No chart library is used. All charts are plain SVG built on the same frame.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+Every chart is one tab stop. Arrow keys read it item by item; the exact keys are on each chart's page.
+
+<Keys rows={[
+  ["Tab", "Focuses the chart (legend buttons first when `toggleSeries` is on)."],
+  ["Arrow keys", "Move between items: categories, points, slices, cells, nodes or flows. In a heatmap, Up and Down move between rows."],
+  ["Home / End", "Move to the first or last item."],
+  ["Escape", "Hides the tooltip."],
+]} />
+
+## Screen readers
+
+- Each chart is a figure named by its title. The drawing is hidden from assistive technology.
+- A visually hidden data table carries every value with its unit, “No data” for gaps, and any target or reference lines.
+- Moving through the chart announces the item and its values in a polite live region.
+
+## Visual
+
+- Colour is never the only cue: series differ by marker shape, position or label as well, status is written in text, and the legend names every colour.
+- Marks meet 3:1 against the surface in every theme. The categorical palette is checked for protan and deutan separation; sequential and diverging ramps are ordered by lightness.
+- Charts respect reduced motion, forced colours and the density setting.
+
+</Section>

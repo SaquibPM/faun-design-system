@@ -1,0 +1,26 @@
+/* Shared keyframes and helpers used across components. */
+.faun-visually-hidden {
+  position: absolute !important; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+@keyframes faun-spin { to { transform: rotate(360deg); } }
+@keyframes faun-pulse {
+  0% { box-shadow: 0 0 0 0 color-mix(in srgb, currentColor 45%, transparent); }
+  100% { box-shadow: 0 0 0 6px transparent; }
+}
+@keyframes faun-fade-in { from { opacity: 0; } to { opacity: 1; } }
+@keyframes faun-fade-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes faun-pop-in { from { opacity: 0; transform: translateY(var(--_pop-y, 4px)) scale(0.97); } to { opacity: 1; transform: none; } }
+@keyframes faun-pop-out { from { opacity: 1; transform: none; } to { opacity: 0; transform: scale(0.97); } }
+@keyframes faun-dialog-in { from { opacity: 0; transform: translate(-50%, -48%) scale(0.96); } to { opacity: 1; transform: translate(-50%, -50%) scale(1); } }
+@keyframes faun-dialog-out { from { opacity: 1; transform: translate(-50%, -50%) scale(1); } to { opacity: 0; transform: translate(-50%, -49%) scale(0.98); } }
+@keyframes faun-slide-in-right { from { transform: translateX(100%); } to { transform: none; } }
+@keyframes faun-slide-out-right { from { transform: none; } to { transform: translateX(100%); } }
+@keyframes faun-slide-in-left { from { transform: translateX(-100%); } to { transform: none; } }
+@keyframes faun-slide-out-left { from { transform: none; } to { transform: translateX(-100%); } }
+@keyframes faun-slide-in-bottom { from { transform: translateY(100%); } to { transform: none; } }
+@keyframes faun-slide-out-bottom { from { transform: none; } to { transform: translateY(100%); } }
+@keyframes faun-shimmer { from { background-position: 150% 0; } to { background-position: -50% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  [class^="faun-"], [class*=" faun-"] { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+}

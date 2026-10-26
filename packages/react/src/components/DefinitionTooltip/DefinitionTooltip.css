@@ -1,0 +1,31 @@
+.faun-definition-term {
+  display: inline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: inherit;
+  cursor: help;
+  text-decoration: underline dotted;
+  text-decoration-thickness: var(--faun-border-width-hairline);
+  text-underline-offset: var(--faun-space-1);
+}
+.faun-definition-term:hover { text-decoration-style: solid; }
+.faun-definition-term:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 2px; border-radius: var(--faun-radius-xs); }
+.faun-definition-content {
+  max-inline-size: var(--faun-tooltip-max-width);
+  padding: var(--faun-tooltip-py) var(--faun-tooltip-px);
+  border-radius: var(--faun-tooltip-radius);
+  background: var(--faun-bg-inverse);
+  color: var(--faun-fg-inverse);
+  box-shadow: var(--faun-elevation-3);
+  font-size: var(--faun-type-body-sm-font-size);
+  line-height: var(--faun-type-body-sm-line-height);
+  z-index: var(--faun-z-tooltip);
+  transform-origin: var(--radix-tooltip-content-transform-origin);
+  animation: faun-pop-in var(--faun-motion-duration-moderate) var(--faun-motion-easing-enter);
+}
+.faun-definition-content[data-state="closed"] { animation: faun-fade-out var(--faun-motion-duration-fast) var(--faun-motion-easing-exit); }
+@media (forced-colors: active) { .faun-definition-content { border: var(--faun-border-width-hairline) solid CanvasText; } }

@@ -1,0 +1,30 @@
+name: Component proposal
+description: Propose a new component or pattern.
+labels: [component, proposal]
+body:
+  - type: input
+    id: name
+    attributes: { label: Name }
+    validations: { required: true }
+  - type: textarea
+    id: usecases
+    attributes:
+      label: Use cases
+      description: At least two real screens that need it, with screenshots or links.
+    validations: { required: true }
+  - type: textarea
+    id: overlap
+    attributes:
+      label: Overlap with existing components
+      description: Why can this not be a variant or composition of something that exists?
+    validations: { required: true }
+  - type: textarea
+    id: a11y
+    attributes:
+      label: Accessibility model
+      description: Roles, keyboard interactions and the WAI-ARIA pattern it follows.
+  - type: textarea
+    id: api
+    attributes:
+      label: Sketch of the API
+      render: tsx

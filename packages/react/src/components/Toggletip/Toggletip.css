@@ -1,0 +1,5 @@
+.faun-toggletip-trigger { color: var(--faun-fg-muted); }
+.faun-toggletip-trigger[aria-expanded="true"] { color: var(--faun-fg-default); background: var(--faun-bg-active); }
+.faun-toggletip { font-size: var(--faun-type-body-sm-font-size); line-height: var(--faun-type-body-sm-line-height); }
+.faun-toggletip .faun-popover-body { color: var(--faun-fg-default); }
+.faun-toggletip-actions { justify-content: flex-start; flex-wrap: wrap; }

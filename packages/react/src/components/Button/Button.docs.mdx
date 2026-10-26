@@ -1,0 +1,126 @@
+export const meta = {
+  title: "Button",
+  description: "Triggers an action: running a workflow, saving a change, opening a dialog. Five emphasis levels and three intents compose every button in the product.",
+  category: "Actions",
+  status: "stable",
+  components: ["Button"],
+  related: ["icon-button", "button-group", "menu-button", "inline-loading", "dialog"],
+  order: 1,
+};
+
+<Section tab="usage">
+
+<Example of="Button/Overview" />
+
+## When to use
+
+- To start, confirm or cancel an action that happens on this page or in a dialog.
+- To open an overlay (dialog, sheet, menu) that the user explicitly asked for.
+
+## When not to use
+
+- To navigate to another page: use a link. If it must look like a button, render a link with `asChild`.
+- For on/off settings: use a Switch. For one choice among a few: use a Segmented control.
+- For icon-only actions in toolbars and table rows: use an Icon button, which always carries a label and tooltip.
+
+## Hierarchy
+
+Every view has at most one primary action, usually the step that moves the work forward. Everything else steps down in emphasis.
+
+<Example of="Button/Hierarchy" title="Emphasis" description="Solid accent is the primary action. Outline is the default for secondary actions. Soft suits repeated actions inside cards. Ghost is for tertiary actions such as Cancel. Link sits inline with text." />
+
+<DoDont>
+  <Do of="Button/DoOnePrimary" caption="Pair one primary with quieter actions. Put the primary last in the row." />
+  <Dont of="Button/DontTwoPrimaries" caption="Show two primaries side by side. People can't tell which one moves the work forward." />
+</DoDont>
+
+## Intents
+
+<Example of="Button/Intents" title="Accent, neutral and danger" description="Accent is the brand intent for forward actions. Neutral is for everyday actions. Danger is only for actions that destroy data or can't be undone; place the solid danger button inside a confirmation dialog, not on the page." />
+
+## Writing labels
+
+Labels say exactly what happens, as a verb plus an object, in sentence case. The action keeps its name through the flow: a button that says **Approve materiality** produces a toast that says **Materiality approved**.
+
+<DoDont>
+  <Do of="Button/DoSpecificLabel" caption="Name the action and its scope: “Delete 3 tools”." />
+  <Dont of="Button/DontVagueLabel" caption="Use “OK”, “Submit” or “Yes” for consequential actions." />
+</DoDont>
+
+## States
+
+<Example of="Button/Loading" title="Loading" description="Use while the action runs and the user must wait for its result. The button keeps its width, shows a spinner and blocks repeat clicks. For long-running agent work, start the run and show progress elsewhere instead." />
+
+<Example of="Button/Outcome" title="Outcome" description="status=&quot;success&quot; or &quot;error&quot; swaps the leading icon for a check or an alert once the action is done, and statusLabel adds the result to the button's accessible name. Clear it after about 1.5 seconds. For a live announcement beside the button, add an InlineLoading." />
+
+<Example of="Button/Disabled" title="Disabled" description="Prefer leaving buttons enabled and explaining what's missing on click. When disabling is clearer, say why nearby: a disabled button with no explanation is a dead end." />
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A button is a label with an optional leading icon, an optional trailing icon (usually a chevron for menus), and a loading spinner that replaces the content without changing the width.
+
+<Example of="Button/WithIcons" title="With icons" />
+
+## Sizes
+
+<Example of="Button/Sizes" description="Medium follows the density setting: 28px compact, 32px comfortable, 40px spacious. Extra small (24px) and small suit dense toolbars and table rows; large and extra large (48px) suit touch-first surfaces and empty states." />
+
+<Example of="Button/WrappingLabel" title="Wrapping labels" description="wrap lets a long label break onto several lines instead of truncating. The height becomes a minimum. Prefer shorter labels first; use wrap in narrow columns and localised UI." />
+
+## Flat by design
+
+Buttons are flat: solid, soft, outline and ghost are a plain face with no extruded edge, no outline of their own and no texture (ADR 0008, which replaces the relief buttons of ADR 0006 and 0007). Hover and pressed shift the face one step, pressed also nudges it down half a pixel, and the focus ring is unchanged. Relief, with its wave texture, stays on chart marks. IconButton, MenuButton, ComboButton and ButtonGroup are flat too.
+
+<Example of="Button/Flat" title="Solid, soft, outline, ghost" description="One solid accent button per view. Labels keep 4.5:1 against every face in rest, hover and pressed states; the tokens tests compute this." />
+
+## Tokens
+
+Buttons compose from the interaction matrix: each intent supplies solid, soft, outline and ghost colours with hover and pressed states. Changing the tenant accent re-brands every accent button.
+
+<UsesTokens names={["accent.solid-bg", "accent.solid-bg-hover", "accent.solid-fg", "neutral.outline-bg", "neutral.outline-border", "neutral.fg", "danger.solid-bg", "focus.ring"]} />
+
+<ComponentTokens name="button" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Button/AsLink" title="As a link" description="Use asChild to give a router link button styling while keeping link semantics." code="open" />
+
+<Example of="Button/Loading" title="Async action" code="open" />
+
+## Notes
+
+- Defaults to `type="button"`, so a button inside a form never submits by accident. Pass `type="submit"` for the form's submit button.
+- All native button attributes pass through. Refs forward to the underlying element.
+- Group two or three related buttons with [ButtonGroup](/components/button-group). For a button that opens a menu use [MenuButton](/components/menu-button).
+- Icons passed to `leadingIcon` and `trailingIcon` are hidden from assistive technology; the label carries the meaning.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves focus to the button."], ["Enter", "Activates the button."], ["Space", "Activates the button."]]} />
+
+## Screen readers
+
+- The accessible name is the visible label. Don't override it with `aria-label` unless the label is ambiguous out of context.
+- When `status` is set, `statusLabel` is added to the name ("Save Saved"), and the icon is hidden from assistive technology.
+- While `loading`, the button sets `aria-busy="true"` and keeps its name, so the action is announced consistently.
+- Disabled buttons use the native `disabled` attribute and leave the tab order. If people need to discover why an action is unavailable, keep the button enabled and explain on activation.
+
+## Visual
+
+- Labels meet 4.5:1 on every fill in every theme (7:1 in high contrast); the primary fill meets 3:1 against the page so its boundary is visible.
+- Focus shows a 2px ring offset by 2px, meeting WCAG 2.2 focus appearance.
+- Medium buttons are at least 28px tall in compact density, above the 24px target minimum.
+
+</Section>

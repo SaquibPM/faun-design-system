@@ -1,0 +1,962 @@
+{
+  "font": {
+    "family": {
+      "$type": "fontFamily",
+      "sans": {
+        "$value": [
+          "IBM Plex Sans",
+          "ui-sans-serif",
+          "system-ui",
+          "-apple-system",
+          "Segoe UI",
+          "sans-serif"
+        ],
+        "$description": "Interface and body text."
+      },
+      "serif": {
+        "$value": [
+          "IBM Plex Serif",
+          "ui-serif",
+          "Georgia",
+          "serif"
+        ],
+        "$description": "Display. Page titles, headline figures and editorial moments. Never body text or dense UI."
+      },
+      "mono": {
+        "$value": [
+          "IBM Plex Mono",
+          "ui-monospace",
+          "SFMono-Regular",
+          "Menlo",
+          "Consolas",
+          "monospace"
+        ],
+        "$description": "Identifiers, codes, schemas."
+      }
+    },
+    "weight": {
+      "$type": "fontWeight",
+      "regular": {
+        "$value": 400
+      },
+      "medium": {
+        "$value": 500,
+        "$description": "Labels, buttons, emphasis, table headers."
+      },
+      "semibold": {
+        "$value": 600,
+        "$description": "Headings. The heaviest weight Faun uses."
+      }
+    },
+    "feature": {
+      "$type": "string",
+      "numeric": {
+        "$value": "\"tnum\" 1, \"lnum\" 1",
+        "$description": "Tabular lining figures for every number that lines up."
+      }
+    }
+  },
+  "type": {
+    "$description": "Type roles. Use roles, never raw sizes. Figures use the serif; everything else is IBM Plex Sans. Plex has no optical-size axis, so no role sets font-variation-settings.",
+    "figure-xl": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.serif}",
+        "fontSize": "52px",
+        "lineHeight": "56px",
+        "fontWeight": "{font.weight.regular}",
+        "letterSpacing": "-0.01em"
+      },
+      "$description": "Hero figure on overview pages."
+    },
+    "figure-lg": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.serif}",
+        "fontSize": "36px",
+        "lineHeight": "40px",
+        "fontWeight": "{font.weight.regular}",
+        "letterSpacing": "-0.0075em"
+      },
+      "$description": "KPI values."
+    },
+    "figure-md": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.serif}",
+        "fontSize": "30px",
+        "lineHeight": "34px",
+        "fontWeight": "{font.weight.regular}",
+        "letterSpacing": "-0.005em"
+      },
+      "$description": "Compact KPI values, stat cards."
+    },
+    "display-lg": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "36px",
+        "lineHeight": "44px",
+        "fontWeight": "{font.weight.semibold}",
+        "letterSpacing": "-0.0125em"
+      },
+      "$description": "Landing and empty-state titles."
+    },
+    "display-md": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "28px",
+        "lineHeight": "36px",
+        "fontWeight": "{font.weight.semibold}",
+        "letterSpacing": "-0.01em"
+      },
+      "$description": "Overview page titles."
+    },
+    "heading-xl": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "24px",
+        "lineHeight": "32px",
+        "fontWeight": "{font.weight.semibold}",
+        "letterSpacing": "-0.009em"
+      },
+      "$description": "Page title (h1)."
+    },
+    "heading-lg": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "20px",
+        "lineHeight": "28px",
+        "fontWeight": "{font.weight.semibold}",
+        "letterSpacing": "-0.007em"
+      },
+      "$description": "Dialog titles, major sections (h2)."
+    },
+    "heading-md": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "16px",
+        "lineHeight": "24px",
+        "fontWeight": "{font.weight.semibold}",
+        "letterSpacing": "-0.004em"
+      },
+      "$description": "Panel and card titles (h3)."
+    },
+    "heading-sm": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "14px",
+        "lineHeight": "20px",
+        "fontWeight": "{font.weight.semibold}",
+        "letterSpacing": "-0.002em"
+      },
+      "$description": "Sub-sections, group labels (h4)."
+    },
+    "body-lg": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "16px",
+        "lineHeight": "26px",
+        "fontWeight": "{font.weight.regular}",
+        "letterSpacing": "-0.003em"
+      },
+      "$description": "Long-form reading: narratives, chat answers, docs."
+    },
+    "body-md": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "14px",
+        "lineHeight": "22px",
+        "fontWeight": "{font.weight.regular}",
+        "letterSpacing": "-0.0015em"
+      },
+      "$description": "Default interface text."
+    },
+    "body-sm": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "13px",
+        "lineHeight": "20px",
+        "fontWeight": "{font.weight.regular}",
+        "letterSpacing": "0em"
+      },
+      "$description": "Dense tables, secondary descriptions."
+    },
+    "label-lg": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "14px",
+        "lineHeight": "20px",
+        "fontWeight": "{font.weight.medium}",
+        "letterSpacing": "-0.0015em"
+      },
+      "$description": "Large buttons, prominent labels."
+    },
+    "label-md": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "13px",
+        "lineHeight": "18px",
+        "fontWeight": "{font.weight.medium}",
+        "letterSpacing": "0em"
+      },
+      "$description": "Buttons, form labels, tabs, menu items."
+    },
+    "label-sm": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "12px",
+        "lineHeight": "16px",
+        "fontWeight": "{font.weight.medium}",
+        "letterSpacing": "0.004em"
+      },
+      "$description": "Badges, tags, small buttons, table headers."
+    },
+    "caption": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "12px",
+        "lineHeight": "16px",
+        "fontWeight": "{font.weight.regular}",
+        "letterSpacing": "0.004em"
+      },
+      "$description": "Metadata, timestamps, helper text. The 12px floor for running text."
+    },
+    "micro": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.sans}",
+        "fontSize": "11px",
+        "lineHeight": "14px",
+        "fontWeight": "{font.weight.medium}",
+        "letterSpacing": "0.01em"
+      },
+      "$description": "Counters inside badges and keyboard hints only. The 11px floor."
+    },
+    "code-md": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.mono}",
+        "fontSize": "13px",
+        "lineHeight": "20px",
+        "fontWeight": "{font.weight.regular}",
+        "letterSpacing": "0em"
+      },
+      "$description": "Code blocks, JSON."
+    },
+    "code-sm": {
+      "$type": "typography",
+      "$value": {
+        "fontFamily": "{font.family.mono}",
+        "fontSize": "12px",
+        "lineHeight": "16px",
+        "fontWeight": "{font.weight.regular}",
+        "letterSpacing": "0em"
+      },
+      "$description": "Inline codes: ESRS references, slugs, IDs."
+    }
+  },
+  "space": {
+    "$type": "dimension",
+    "$description": "4px grid with half steps at the small end.",
+    "0": {
+      "$value": "0px"
+    },
+    "px": {
+      "$value": "1px"
+    },
+    "0-5": {
+      "$value": "2px"
+    },
+    "1": {
+      "$value": "4px"
+    },
+    "1-5": {
+      "$value": "6px"
+    },
+    "2": {
+      "$value": "8px"
+    },
+    "2-5": {
+      "$value": "10px"
+    },
+    "3": {
+      "$value": "12px"
+    },
+    "3-5": {
+      "$value": "14px"
+    },
+    "4": {
+      "$value": "16px"
+    },
+    "5": {
+      "$value": "20px"
+    },
+    "6": {
+      "$value": "24px"
+    },
+    "7": {
+      "$value": "28px"
+    },
+    "8": {
+      "$value": "32px"
+    },
+    "10": {
+      "$value": "40px"
+    },
+    "12": {
+      "$value": "48px"
+    },
+    "14": {
+      "$value": "56px"
+    },
+    "16": {
+      "$value": "64px"
+    },
+    "20": {
+      "$value": "80px"
+    },
+    "24": {
+      "$value": "96px"
+    },
+    "32": {
+      "$value": "128px"
+    },
+    "40": {
+      "$value": "160px",
+      "$description": "Largest layout step (2x mini-unit scale ends at 160)."
+    }
+  },
+  "size": {
+    "$type": "dimension",
+    "control": {
+      "$description": "Heights for buttons, inputs, selects and segmented controls.",
+      "xs": {
+        "$value": "24px"
+      },
+      "sm": {
+        "$value": "28px"
+      },
+      "md": {
+        "$value": "32px"
+      },
+      "lg": {
+        "$value": "40px"
+      },
+      "xl": {
+        "$value": "48px"
+      }
+    },
+    "icon": {
+      "xs": {
+        "$value": "12px"
+      },
+      "sm": {
+        "$value": "14px"
+      },
+      "md": {
+        "$value": "16px"
+      },
+      "lg": {
+        "$value": "20px"
+      },
+      "xl": {
+        "$value": "24px"
+      },
+      "2xl": {
+        "$value": "32px"
+      }
+    },
+    "avatar": {
+      "xs": {
+        "$value": "20px"
+      },
+      "sm": {
+        "$value": "24px"
+      },
+      "md": {
+        "$value": "32px"
+      },
+      "lg": {
+        "$value": "40px"
+      },
+      "xl": {
+        "$value": "56px"
+      }
+    },
+    "target": {
+      "min": {
+        "$value": "24px",
+        "$description": "WCAG 2.2 SC 2.5.8."
+      },
+      "touch": {
+        "$value": "44px"
+      }
+    }
+  },
+  "radius": {
+    "$type": "dimension",
+    "$description": "Radius by role. Nested radii shrink by the padding between them.",
+    "none": {
+      "$value": "0px"
+    },
+    "xs": {
+      "$value": "4px",
+      "$description": "Checkboxes, inline codes, small chips."
+    },
+    "sm": {
+      "$value": "6px",
+      "$description": "Small controls, menu items, tooltips."
+    },
+    "md": {
+      "$value": "9px",
+      "$description": "Buttons, inputs, selects."
+    },
+    "lg": {
+      "$value": "14px",
+      "$description": "Cards, panels, table containers."
+    },
+    "xl": {
+      "$value": "20px",
+      "$description": "Dialogs, sheets, command palette."
+    },
+    "full": {
+      "$value": "9999px",
+      "$description": "Badges, tags, avatars, pills."
+    }
+  },
+  "border-width": {
+    "$type": "dimension",
+    "hairline": {
+      "$value": "1px"
+    },
+    "thick": {
+      "$value": "2px"
+    },
+    "focus": {
+      "$value": "2px"
+    }
+  },
+  "elevation": {
+    "$type": "shadow",
+    "$description": "Five levels. Tinted shadow colours come from the theme; dark themes add a highlight edge; high contrast and print drop shadows, so components also carry a border.",
+    "0": {
+      "$value": "none"
+    },
+    "1": {
+      "$value": [
+        {
+          "offsetX": "0px",
+          "offsetY": "1px",
+          "blur": "2px",
+          "spread": "0px",
+          "color": "{shadow.ambient}"
+        },
+        {
+          "offsetX": "0px",
+          "offsetY": "0px",
+          "blur": "0px",
+          "spread": "0px",
+          "color": "{shadow.highlight}",
+          "inset": true,
+          "offsetYInset": "1px"
+        }
+      ],
+      "$description": "Secondary buttons, inputs."
+    },
+    "2": {
+      "$value": [
+        {
+          "offsetX": "0px",
+          "offsetY": "1px",
+          "blur": "2px",
+          "spread": "0px",
+          "color": "{shadow.ambient}"
+        },
+        {
+          "offsetX": "0px",
+          "offsetY": "2px",
+          "blur": "8px",
+          "spread": "-2px",
+          "color": "{shadow.key}"
+        },
+        {
+          "offsetX": "0px",
+          "offsetY": "0px",
+          "blur": "0px",
+          "spread": "0px",
+          "color": "{shadow.highlight}",
+          "inset": true,
+          "offsetYInset": "1px"
+        }
+      ],
+      "$description": "Cards and panels."
+    },
+    "3": {
+      "$value": [
+        {
+          "offsetX": "0px",
+          "offsetY": "2px",
+          "blur": "4px",
+          "spread": "0px",
+          "color": "{shadow.ambient}"
+        },
+        {
+          "offsetX": "0px",
+          "offsetY": "10px",
+          "blur": "24px",
+          "spread": "-6px",
+          "color": "{shadow.key}"
+        },
+        {
+          "offsetX": "0px",
+          "offsetY": "0px",
+          "blur": "0px",
+          "spread": "0px",
+          "color": "{shadow.highlight}",
+          "inset": true,
+          "offsetYInset": "1px"
+        }
+      ],
+      "$description": "Menus, popovers, selects, tooltips."
+    },
+    "4": {
+      "$value": [
+        {
+          "offsetX": "0px",
+          "offsetY": "4px",
+          "blur": "8px",
+          "spread": "0px",
+          "color": "{shadow.ambient}"
+        },
+        {
+          "offsetX": "0px",
+          "offsetY": "20px",
+          "blur": "40px",
+          "spread": "-10px",
+          "color": "{shadow.key}"
+        },
+        {
+          "offsetX": "0px",
+          "offsetY": "0px",
+          "blur": "0px",
+          "spread": "0px",
+          "color": "{shadow.highlight}",
+          "inset": true,
+          "offsetYInset": "1px"
+        }
+      ],
+      "$description": "Sheets, toasts, the artifact panel."
+    },
+    "5": {
+      "$value": [
+        {
+          "offsetX": "0px",
+          "offsetY": "8px",
+          "blur": "16px",
+          "spread": "0px",
+          "color": "{shadow.ambient}"
+        },
+        {
+          "offsetX": "0px",
+          "offsetY": "32px",
+          "blur": "64px",
+          "spread": "-16px",
+          "color": "{shadow.key}"
+        },
+        {
+          "offsetX": "0px",
+          "offsetY": "0px",
+          "blur": "0px",
+          "spread": "0px",
+          "color": "{shadow.highlight}",
+          "inset": true,
+          "offsetYInset": "1px"
+        }
+      ],
+      "$description": "Dialogs, command palette."
+    }
+  },
+  "z": {
+    "$type": "number",
+    "base": {
+      "$value": 0
+    },
+    "raised": {
+      "$value": 10
+    },
+    "sticky": {
+      "$value": 100
+    },
+    "header": {
+      "$value": 200
+    },
+    "nav": {
+      "$value": 300
+    },
+    "dropdown": {
+      "$value": 1000
+    },
+    "scrim": {
+      "$value": 1100
+    },
+    "modal": {
+      "$value": 1200
+    },
+    "popover": {
+      "$value": 1300
+    },
+    "toast": {
+      "$value": 1400
+    },
+    "tooltip": {
+      "$value": 1500
+    }
+  },
+  "motion": {
+    "duration": {
+      "$type": "duration",
+      "instant": {
+        "$value": "0ms"
+      },
+      "fast": {
+        "$value": "120ms",
+        "$description": "Hover, press, toggle, colour changes."
+      },
+      "moderate": {
+        "$value": "200ms",
+        "$description": "Menus, popovers, tooltips, accordions."
+      },
+      "slow": {
+        "$value": "300ms",
+        "$description": "Dialogs, sheets, panels."
+      },
+      "deliberate": {
+        "$value": "450ms",
+        "$description": "Layout changes, artifact panel, page transitions."
+      },
+      "pulse": {
+        "$value": "1600ms",
+        "$description": "Live-agent indicator loop."
+      },
+      "spin": {
+        "$value": "900ms",
+        "$description": "Spinner rotation."
+      }
+    },
+    "easing": {
+      "$type": "cubicBezier",
+      "standard": {
+        "$value": [
+          0.2,
+          0,
+          0,
+          1
+        ],
+        "$description": "Movement within the page."
+      },
+      "enter": {
+        "$value": [
+          0,
+          0,
+          0.2,
+          1
+        ],
+        "$description": "Elements arriving."
+      },
+      "exit": {
+        "$value": [
+          0.4,
+          0,
+          1,
+          1
+        ],
+        "$description": "Elements leaving."
+      },
+      "emphasized": {
+        "$value": [
+          0.2,
+          0.9,
+          0.1,
+          1
+        ],
+        "$description": "Approval gates, completion moments."
+      }
+    },
+    "spring": {
+      "$type": "string",
+      "$description": "Spring curves as CSS linear(). Fall back to motion.easing.standard where linear() is unsupported.",
+      "snappy": {
+        "$value": "linear(0, 0.1286, 0.3688, 0.6042, 0.7874, 0.9094, 0.9798, 1.0136, 1.0246, 1.0244, 1.0191, 1.0128, 1.0074, 1.0036, 1.0012, 1, 1)",
+        "$description": "Stiffness 400, damping 30, slight overshoot. Use with 450ms: popovers, menus, toggles."
+      },
+      "gentle": {
+        "$value": "linear(0, 0.1229, 0.3429, 0.5383, 0.6942, 0.8004, 0.8723, 0.9209, 0.9507, 0.9696, 0.9817, 0.9888, 0.9933, 0.996, 0.9976, 0.9986, 1)",
+        "$description": "Stiffness 170, damping 26, no overshoot. Use with 700ms: sheets, panels, layout."
+      }
+    }
+  },
+  "breakpoint": {
+    "$type": "dimension",
+    "sm": {
+      "$value": "640px"
+    },
+    "md": {
+      "$value": "768px"
+    },
+    "lg": {
+      "$value": "1024px"
+    },
+    "xl": {
+      "$value": "1280px"
+    },
+    "2xl": {
+      "$value": "1536px"
+    }
+  },
+  "layout": {
+    "$type": "dimension",
+    "nav-width": {
+      "$value": "248px"
+    },
+    "nav-collapsed-width": {
+      "$value": "60px"
+    },
+    "topbar-height": {
+      "$value": "52px"
+    },
+    "content-max": {
+      "$value": "1440px"
+    },
+    "reading-max": {
+      "$value": "720px"
+    },
+    "page-padding-sm": {
+      "$value": "16px"
+    },
+    "page-padding-md": {
+      "$value": "24px"
+    },
+    "page-padding-lg": {
+      "$value": "32px"
+    },
+    "panel-padding": {
+      "$value": "20px"
+    },
+    "sheet-sm": {
+      "$value": "400px"
+    },
+    "sheet-md": {
+      "$value": "560px"
+    },
+    "sheet-lg": {
+      "$value": "760px"
+    },
+    "dialog-sm": {
+      "$value": "420px"
+    },
+    "dialog-md": {
+      "$value": "560px"
+    },
+    "dialog-lg": {
+      "$value": "760px"
+    },
+    "dialog-xl": {
+      "$value": "1040px"
+    }
+  },
+  "grid": {
+    "$description": "12-column grid that collapses to 8 and 4. Breakpoints are the breakpoint.* tokens; 'base' applies below sm. Consumed by @faun-ds/grid.",
+    "columns": {
+      "$type": "number",
+      "$description": "Column count per breakpoint.",
+      "base": {
+        "$value": 4
+      },
+      "sm": {
+        "$value": 4
+      },
+      "md": {
+        "$value": 8
+      },
+      "lg": {
+        "$value": 12
+      },
+      "xl": {
+        "$value": 12
+      },
+      "2xl": {
+        "$value": 12
+      }
+    },
+    "gutter": {
+      "$type": "dimension",
+      "$description": "Wide-mode gutter (column and row gap).",
+      "base": {
+        "$value": "16px"
+      },
+      "sm": {
+        "$value": "16px"
+      },
+      "md": {
+        "$value": "16px"
+      },
+      "lg": {
+        "$value": "24px"
+      },
+      "xl": {
+        "$value": "24px"
+      },
+      "2xl": {
+        "$value": "24px"
+      }
+    },
+    "gutter-narrow": {
+      "$type": "dimension",
+      "$description": "Narrow mode: half the wide gutter.",
+      "base": {
+        "$value": "8px"
+      },
+      "sm": {
+        "$value": "8px"
+      },
+      "md": {
+        "$value": "8px"
+      },
+      "lg": {
+        "$value": "12px"
+      },
+      "xl": {
+        "$value": "12px"
+      },
+      "2xl": {
+        "$value": "12px"
+      }
+    },
+    "gutter-condensed": {
+      "$type": "dimension",
+      "$value": "1px",
+      "$description": "Condensed mode: hairline gutter for dense tiles that read as one surface."
+    },
+    "margin": {
+      "$type": "dimension",
+      "$description": "Page margin (inline padding) per breakpoint. Above content-max the grid centres.",
+      "base": {
+        "$value": "16px"
+      },
+      "sm": {
+        "$value": "16px"
+      },
+      "md": {
+        "$value": "24px"
+      },
+      "lg": {
+        "$value": "24px"
+      },
+      "xl": {
+        "$value": "32px"
+      },
+      "2xl": {
+        "$value": "32px"
+      }
+    },
+    "max-width": {
+      "$type": "dimension",
+      "$value": "{layout.content-max}",
+      "$description": "Maximum content width, excluding margins."
+    }
+  },
+  "density": {
+    "$description": "Values that switch with data-faun-density. 'comfortable' is the default.",
+    "compact": {
+      "control-height": {
+        "$type": "dimension",
+        "$value": "{size.control.sm}"
+      },
+      "row-height": {
+        "$type": "dimension",
+        "$value": "36px"
+      },
+      "cell-px": {
+        "$type": "dimension",
+        "$value": "{space.2-5}"
+      },
+      "cell-py": {
+        "$type": "dimension",
+        "$value": "{space.1-5}"
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{space.3}"
+      },
+      "panel-padding": {
+        "$type": "dimension",
+        "$value": "{space.4}"
+      }
+    },
+    "comfortable": {
+      "control-height": {
+        "$type": "dimension",
+        "$value": "{size.control.md}"
+      },
+      "row-height": {
+        "$type": "dimension",
+        "$value": "44px"
+      },
+      "cell-px": {
+        "$type": "dimension",
+        "$value": "{space.3}"
+      },
+      "cell-py": {
+        "$type": "dimension",
+        "$value": "{space.2-5}"
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{space.4}"
+      },
+      "panel-padding": {
+        "$type": "dimension",
+        "$value": "{space.5}"
+      }
+    },
+    "spacious": {
+      "control-height": {
+        "$type": "dimension",
+        "$value": "{size.control.lg}"
+      },
+      "row-height": {
+        "$type": "dimension",
+        "$value": "52px"
+      },
+      "cell-px": {
+        "$type": "dimension",
+        "$value": "{space.4}"
+      },
+      "cell-py": {
+        "$type": "dimension",
+        "$value": "{space.3-5}"
+      },
+      "gap": {
+        "$type": "dimension",
+        "$value": "{space.5}"
+      },
+      "panel-padding": {
+        "$type": "dimension",
+        "$value": "{space.6}"
+      }
+    }
+  }
+}

@@ -1,0 +1,86 @@
+export const meta = {
+  title: "Segmented control",
+  description: "A short row of mutually exclusive options that switch a view or a setting immediately.",
+  category: "Selection",
+  status: "stable",
+  components: ["SegmentedControl"],
+  related: ["tabs", "radio-group", "switch"],
+  order: 1,
+};
+
+<Section tab="usage">
+
+<Example of="SegmentedControl/Overview" layout="start" />
+
+## When to use
+
+- To switch how the same content is shown: Gross or net, Table or chart.
+- For two to four short options that apply immediately.
+
+## When not to use
+
+- To move between sections of a page. Use [Tabs](/components/tabs).
+- For more than about four options. Use [Select](/components/select).
+- For choices submitted with a form. Use [Radio group](/components/radio-group).
+
+## Variants
+
+<Example of="SegmentedControl/WithIcons" title="With icons" description="Icons help scanning, but each option still needs a label or an aria-label." layout="start" />
+
+<Example of="SegmentedControl/FullWidth" title="Full width" description="Stretches to fill the container, for example in a narrow panel." layout="start" />
+
+<Example of="SegmentedControl/DisabledOption" title="Disabled option" description="Explain nearby why it is unavailable." layout="start" />
+
+<Example of="SegmentedControl/Sizes" title="Sizes" description="Heights follow the control sizes and the density mode." layout="start" />
+
+<DoDont>
+  <Do of="SegmentedControl/DoFewShortOptions" caption="Use two to four short labels." />
+  <Dont of="SegmentedControl/DontManyOptions" caption="Use many options. The row overflows on small screens. Use a select." />
+</DoDont>
+
+## Writing
+
+Labels are one or two words in sentence case. Options must be parallel.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A pill track with a sliding selected thumb. Options share equal padding. The thumb moves with the enter easing.
+
+## Tokens
+
+<UsesTokens names={["bg.sunken", "bg.surface", "fg.default", "focus.ring"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="SegmentedControl/WithIcons" title="Icons with labels" layout="start" code="open" />
+
+## Notes
+
+- `options` are `{ value, label, icon?, disabled?, aria-label? }`. Icon-only options need an `aria-label`.
+- The control needs an accessible name from `aria-label` or `aria-labelledby`.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves focus to the selected option."], ["← / → / ↑ / ↓", "Moves to and selects the previous or next option."], ["Home / End", "Moves to the first or last option."]]} />
+
+## Screen readers
+
+- Announced as a radio group with a name. Each option is a radio with a checked state, and arrow keys move the selection.
+
+## Visual
+
+- The selected option has a raised thumb, a stronger text colour and a border, so selection survives forced colours.
+
+</Section>

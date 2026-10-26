@@ -1,0 +1,102 @@
+export const meta = {
+  title: "Scatter and bubble chart",
+  description: "Plots two measures against each other to show how they relate. Bubbles add a third measure as area.",
+  category: "Data",
+  status: "new",
+  components: ["ScatterChart"],
+  related: ["bar-chart", "line-chart", "heatmap-chart", "chart-types"],
+  order: 23,
+};
+
+<Section tab="usage">
+
+<Example of="ScatterChart/Overview" layout="stretch" />
+
+## When to use
+
+- To see whether two measures move together, or to spot outliers: energy use against emissions, spend against emissions intensity.
+- Bubble: when a third measure decides how much a point matters, such as output or headcount.
+
+## When not to use
+
+- To compare values across a few categories. Use a bar chart.
+- To show change over time. Use a line chart.
+- For more than a few hundred points. Aggregate first, or use a heatmap.
+
+## Variants
+
+<Example of="ScatterChart/Bubble" layout="stretch" title="Bubble" description="variant=&quot;bubble&quot; sizes each point by area from its size value. Area, not radius, so a point twice the size looks twice as large." />
+
+<Example of="ScatterChart/WithLimit" layout="stretch" title="Limit line" description="references draws a line on the y axis, such as a policy limit." />
+
+<Example of="ScatterChart/SeriesToggle" layout="stretch" title="Toggle series" description="toggleSeries turns the legend into buttons. Hidden series leave the plot, tooltip and table." />
+
+<Example of="ScatterChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="ScatterChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="ScatterChart/DoLabelPoints" caption="Give points a label so the tooltip and table say which site or supplier each is." />
+  <Dont of="ScatterChart/DontTooManySeries" caption="Split points into many series. Beyond a few groups, colour and shape stop telling them apart." />
+</DoDont>
+
+## Writing
+
+Name both axes with a measure and a unit (`xTitle`, `xUnit`, `yTitle`, `unit`). Say in the description what the pattern means, not that there is one.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, a legend (one entry per series, with its marker shape), the plot (grid both ways, numeric ticks on both axes, axis titles), one mark per point and a tooltip. The active point gets a ring.
+
+## Colour
+
+Series take `dataviz.cat-1` to `cat-8` in order. In a scatter chart each series also has its own marker shape (circle, square, diamond, triangle), so series are told apart without colour. Bubbles are the series colour at 55% opacity with a solid outline, so overlaps stay readable.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.cat-3", "dataviz.grid", "dataviz.axis", "dataviz.surface", "bg.raised"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="ScatterChart/Overview" layout="stretch" code="open" />
+
+<Example of="ScatterChart/Bubble" layout="stretch" code="open" />
+
+## Notes
+
+- Each series has `points` of `{ x, y, size?, label? }`. Give every point a `label` so the tooltip and table name it.
+- Axes fit the data; they do not start at zero. Say so in the description when the choice matters.
+- `format`, `xFormat` and `sizeFormat` format the three measures; `unit`, `xUnit` and `sizeUnit` add units.
+- `references` takes `{ label, value, kind }`. Use `kind: "target"` for a goal and the default for a baseline or limit. Keep to one or two lines so labels stay clear of each other. References apply to the y axis.
+- `toggleSeries` makes the legend interactive. Control it with `hiddenSeries` and `onHiddenSeriesChange` (ids of the hidden series), or start from `defaultHiddenSeries`.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. With `toggleSeries`, the legend buttons come before it."], ["Enter / Space", "On a legend entry (when `toggleSeries` is on), shows or hides that series. The last visible one cannot be hidden."], ["Arrow Right / Arrow Down", "Moves to the next point."], ["Arrow Left / Arrow Up", "Moves to the previous point."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the point's label and its x, y and size values in a polite live region.
+- Points are read in series order, then in the order given. The data table lists every point with its series, label and values.
+- Pointing at the plot selects the nearest point, so small marks are easy to reach.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Marks against the surface meet 3:1 in every theme, and the categorical palette is checked for protan and deutan separation.
+- Bubble radius is limited to a range so large values do not cover the plot; compare bubbles by tooltip or table, not by eye alone.
+
+</Section>

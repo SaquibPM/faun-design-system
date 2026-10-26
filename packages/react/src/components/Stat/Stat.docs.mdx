@@ -1,0 +1,88 @@
+export const meta = {
+  title: "Stat",
+  description: "A single headline figure with its unit, change and comparison. StatGroup lays several out as a KPI row.",
+  category: "Data",
+  status: "stable",
+  components: ["Stat", "StatGroup"],
+  related: ["progress", "badge", "card"],
+  order: 1,
+};
+
+<Section tab="usage">
+
+<Example of="Stat/Overview" layout="start" />
+
+## When to use
+
+- To lead a page or card with the number that matters: emissions, coverage, open approvals.
+- In a KPI row, so people compare figures at a glance.
+
+## When not to use
+
+- For many numbers that need comparing across rows. Use a table.
+- For trends over time. Use a chart, and a Stat only for the latest value.
+
+## Variants
+
+<Example of="Stat/Group" title="KPI row" description="StatGroup puts stats on one surface and divides them evenly. The row wraps when stats get narrower than minItemWidth." />
+
+<Example of="Stat/WithVisual" title="With a visual" description="Add a progress bar or meter under the figure for coverage and targets." layout="start" />
+
+<DoDont>
+  <Do of="Stat/DoSentiment" caption="Mark whether a change is good news. Emissions falling is good." />
+  <Dont of="Stat/DontDirectionAsGood" caption="Treat down as bad for every metric. Sentiment is separate from direction." />
+</DoDont>
+
+## Writing
+
+Format numbers before passing them in: thousands separators, sensible decimals, units as a separate prop (“tCO₂e”, “%”). Say what a change compares to: “vs base year 2022”.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Label with an optional icon, the figure in the display face with its unit, an optional visual, and a footer line with the change arrow, comparison and footnote.
+
+## Sizes
+
+<Example of="Stat/Sizes" title="Sizes" description="Large for overview pages, medium for KPI rows, small for dense cards." />
+
+## Tokens
+
+<UsesTokens names={["fg.default", "fg.muted", "bg.surface", "border.subtle"]} />
+
+<ComponentTokens name="kpi" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Stat/Group" title="KPI row" code="open" />
+
+## Notes
+
+- Figures use tabular numerals so values line up across stats.
+- `delta.direction` draws the arrow. `delta.sentiment` (good, bad, neutral) sets the colour.
+- `variant="plain"` on StatGroup removes the shared surface.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+Stats are not interactive.
+
+## Screen readers
+
+- The change is spoken as words, for example “down 4.2% vs base year 2022”. The arrow and visible duplicate are hidden from assistive technology.
+
+## Visual
+
+- Colour never carries the change alone: the arrow gives direction, the text gives size. Sentiment colours meet 4.5:1.
+
+</Section>

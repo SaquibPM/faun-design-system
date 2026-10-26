@@ -1,0 +1,88 @@
+export const meta = {
+  title: "Card",
+  description: "A white surface on the sage canvas that groups one topic: a workflow, a site, a set of figures. Four variants cover static, clickable, chosen and secondary content.",
+  category: "Layout",
+  status: "new",
+  components: ["Card", "CardHeader", "CardBody", "CardFooter"],
+  related: ["stat", "layout", "app-shell"],
+  order: 2,
+};
+
+<Section tab="usage">
+
+<Example of="Card/Overview" />
+
+## When to use
+
+- To group content about one subject so it can be scanned as a unit on a page.
+- As a large target that opens a detail page (`interactive`), or as an option in a visual choice (`selected`).
+
+## When not to use
+
+- For a row of KPIs: use StatGroup, which draws one surface with dividers.
+- For a message about the page or system: use Banner.
+- Inside another card: use spacing, a Divider or a muted section instead.
+
+## Variants
+
+<Example of="Card/Variants" title="Default, interactive, selected, muted" description="Interactive cards lift on hover and must be a single link or button (use asChild). Selected uses the brand border. Muted sits back for secondary or nested content." layout="padded" />
+
+<Example of="Card/SelectableCards" title="Choosing between cards" description="Use selected with a radio pattern when people pick one of a few richly described options." layout="padded" />
+
+<DoDont>
+  <Do of="Card/DoOneLevel" caption="Keep one level of surface. Inside a card, separate with space or dividers." />
+  <Dont of="Card/DontNestCards" caption="Nest cards in cards. The stacked shadows read as noise and flatten the hierarchy." />
+</DoDont>
+
+## Writing
+
+Card titles are short nouns ("Workflow", "Emissions by scope"). Put the count or summary in the description, not the title.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Header (optional icon, title, description, actions), body, and footer (actions, optionally divided). Padding follows density by default.
+
+<Example of="Card/SiteCard" title="With icon and status" />
+
+## Tokens
+
+<UsesTokens names={["bg.surface", "border.subtle", "border.brand", "bg.sunken"]} />
+
+<ComponentTokens name="card" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Card/SelectableCards" title="Selectable cards" code="open" layout="padded" />
+
+## Notes
+
+- `asChild` renders your link or button as the card, so the whole surface is one target with native semantics. Don't put other interactive elements inside an interactive card.
+- `padding="none"` lets media or tables run edge to edge; add padding to inner sections yourself.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves to an interactive card, or to controls inside a static card."], ["Enter", "Activates an interactive card (link or button)."], ["Space", "Activates an interactive card rendered as a button."]]} />
+
+## Screen readers
+
+- CardHeader renders a real heading (level 3 by default). Set `level` so headings nest correctly on the page.
+- A static card adds no role. If cards form a list, render them inside a `ul` with Stack `asChild`.
+
+## Visual
+
+- Card boundaries are drawn with a hairline border plus shadow, so they stay visible in high contrast and forced-colours modes.
+- Selected adds a 2px brand border, not colour alone.
+
+</Section>

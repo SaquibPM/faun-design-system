@@ -1,0 +1,84 @@
+export const meta = {
+  title: "Toggletip",
+  description: "An information button that opens a small panel on press. It stays open, can hold a link or an action and works on touch.",
+  category: "Overlays",
+  status: "new",
+  components: ["Toggletip"],
+  related: ["tooltip", "popover", "definition-tooltip"],
+  order: 5,
+};
+
+<Section tab="usage">
+
+<Example of="Toggletip/Overview" height={240} />
+
+## When to use
+
+- For optional detail beside a label or a figure: how a score is calculated, what a field is for.
+- When the explanation is more than a phrase, or needs a link such as “How it is calculated”.
+- When the content must be reachable on touch screens, where hover does not exist.
+
+## When not to use
+
+- To name an icon-only control. [Tooltip](/components/tooltip) does this, and Icon button includes one.
+- To explain a single term inside a sentence. Use [Definition tooltip](/components/definition-tooltip).
+- For anything a person must read to finish the task. Put it on the page.
+- For a form or several actions. Use a [Popover](/components/popover) or a Dialog.
+
+## Placement
+
+<Example of="Toggletip/Placement" title="Side and alignment" description="Opens above by default. Choose a side that keeps the panel clear of nearby content; the panel flips at the viewport edge." height={220} />
+
+<DoDont>
+  <Do of="Toggletip/DoShortAndOptional" caption="Explain an optional detail in a sentence or two." />
+  <Dont of="Toggletip/DontEssential" caption="Hide a requirement behind the button. People will miss it. Say it on the page." />
+</DoDont>
+
+## Writing
+
+- Start with the answer. Two sentences at most; link out for more.
+- Name the button for what it explains: “About evidence coverage”, never just “Info”.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+An extra small ghost icon button, and a small popover with a caret, an optional title, the explanation and an optional row of actions.
+
+## Tokens
+
+<UsesTokens names={["bg.raised", "border.subtle", "fg.muted", "bg.active"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Toggletip/Overview" title="With a title and a link" code="open" height={240} />
+
+## Notes
+
+- Built on Popover: `open`, `defaultOpen` and `onOpenChange` control it.
+- `label` names the button and the panel. Always set it to something specific.
+- `icon` is `info`, `help` or your own element.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Enter or Space", "Opens the panel from the button, and closes it again."], ["Tab", "Moves into the panel to links and buttons, then on to the next control."], ["Escape", "Closes the panel and returns focus to the button."]]} />
+
+## Screen readers
+
+- The button is announced with its name and expanded or collapsed. The panel is a dialog with the same name; focus moves into it so its text is read.
+
+## Visual
+
+- The panel has a border as well as a shadow so it stays visible in high-contrast themes. The button meets the minimum target size.
+
+</Section>

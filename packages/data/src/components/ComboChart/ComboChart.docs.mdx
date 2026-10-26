@@ -1,0 +1,96 @@
+export const meta = {
+  title: "Combo chart",
+  description: "Combines bars and lines in one plot, optionally on two axes: a volume as bars and a rate or intensity as a line.",
+  category: "Data",
+  status: "new",
+  components: ["ComboChart"],
+  related: ["bar-chart", "line-chart", "chart-types"],
+  order: 31,
+};
+
+<Section tab="usage">
+
+<Example of="ComboChart/Overview" layout="stretch" />
+
+## When to use
+
+- To relate a volume to a rate over the same categories: emissions and intensity, spend and savings rate.
+- To lay a plan or glide path over actuals with the same unit.
+
+## When not to use
+
+- For two series in the same unit on two axes. Put them on one axis.
+- For more than one line on a second axis. Readers lose track of which axis is which.
+- When one chart type says it. Use a bar or line chart.
+
+## Variants
+
+<Example of="ComboChart/SharedAxis" layout="stretch" title="Shared axis" description="Bars and a line can share the primary axis. Here the line is the glide path the bars should follow." />
+
+<Example of="ComboChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="ComboChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="ComboChart/DoDifferentUnits" caption="Use a second axis only for a different unit, and name both units." />
+  <Dont of="ComboChart/DontSameUnitTwoAxes" caption="Put the same unit on two different scales. It implies a relationship that is not there." />
+</DoDont>
+
+## Writing
+
+Say in the description which series is on the right axis. Axis units sit at the top of each axis, and the data table marks the right-axis series.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, a legend (bars as swatches, lines with their marker shape), the plot (grid from the primary axis, optional right axis labels, clustered bars, lines with markers, reference lines) and a tooltip.
+
+## Colour
+
+Series take `dataviz.cat-1` to `cat-8` in order across both types, so the legend order matches the colour order. Lines also carry a marker shape each.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.cat-3", "dataviz.grid", "dataviz.axis", "dataviz.surface", "bg.raised"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="ComboChart/Overview" layout="stretch" code="open" />
+
+<Example of="ComboChart/SharedAxis" layout="stretch" code="open" />
+
+## Notes
+
+- Each series has `type` (`bar` or `line`) and `axis` (`primary` or `secondary`). Default is a bar on the primary axis.
+- `unit` and `format` apply to the primary axis; `secondaryUnit` and `secondaryFormat` to the secondary one.
+- `references` takes `{ label, value, kind }`. Use `kind: "target"` for a goal and the default for a baseline or limit. Keep to one or two lines so labels stay clear of each other. References apply to the primary axis.
+- `toggleSeries` makes the legend interactive. Control it with `hiddenSeries` and `onHiddenSeriesChange` (ids of the hidden series), or start from `defaultHiddenSeries`.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. With `toggleSeries`, the legend buttons come before it."], ["Enter / Space", "On a legend entry (when `toggleSeries` is on), shows or hides that series. The last visible one cannot be hidden."], ["Arrow Right / Arrow Left", "Moves to the next or previous category and shows its tooltip."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the category and every series' value, with its unit in a polite live region.
+- The data table names right-axis series (“Intensity (right axis)”) and writes each value with its own unit.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Marks against the surface meet 3:1 in every theme, and the categorical palette is checked for protan and deutan separation.
+- Bars start at zero on both axes. Lines are drawn above bars.
+
+</Section>

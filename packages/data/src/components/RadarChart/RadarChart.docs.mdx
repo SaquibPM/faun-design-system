@@ -1,0 +1,96 @@
+export const meta = {
+  title: "Radar chart",
+  description: "Compares several measures of one or more subjects on shared axes, such as a supplier's scores across ESG criteria.",
+  category: "Data",
+  status: "new",
+  components: ["RadarChart"],
+  related: ["bar-chart", "bullet-chart", "chart-types"],
+  order: 25,
+};
+
+<Section tab="usage">
+
+<Example of="RadarChart/Overview" layout="stretch" />
+
+## When to use
+
+- To compare a profile across five to eight measures that share one scale: maturity by disclosure area, supplier scores by criterion.
+- To lay one or two subjects against a target profile.
+
+## When not to use
+
+- For measures in different units. Use small multiples of bar charts.
+- For exact comparison. Use a bar chart; areas on a radar are hard to read.
+- For fewer than three measures, or more than about eight.
+
+## Variants
+
+<Example of="RadarChart/WithTarget" layout="stretch" title="Target ring" description="references draws a dashed ring at a value, such as the maturity the programme expects." />
+
+<Example of="RadarChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="RadarChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="RadarChart/DoSharedScale" caption="Put every axis on the same scale so the shape means something." />
+  <Dont of="RadarChart/DontMixUnits" caption="Mix units on one radar. The largest number sets the scale and the rest collapse." />
+</DoDont>
+
+## Writing
+
+Title with the subject and period. Name each axis with a short noun phrase; long names are truncated in the drawing but kept in the data table.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, a legend, the plot (concentric rings with value labels, one spoke and label per category, one polygon per series with markers) and a tooltip listing every series on the active axis.
+
+## Colour
+
+Series take `dataviz.cat-1` to `cat-8` in order. Each series has a translucent fill, a solid outline and its own marker shape, so overlapping polygons stay distinguishable. Target rings use the quiet reference styling shared with the other charts.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.cat-3", "dataviz.grid", "dataviz.axis", "dataviz.surface", "bg.raised"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="RadarChart/Overview" layout="stretch" code="open" />
+
+<Example of="RadarChart/WithTarget" layout="stretch" code="open" />
+
+## Notes
+
+- `categories` are the axes; each series' `values` line up with them. A `null` value is skipped and read as “No data”.
+- `max` sets the value at the outer ring. By default it is the largest value or reference, rounded up.
+- `references` takes `{ label, value, kind }`. Use `kind: "target"` for a goal and the default for a baseline or limit. Keep to one or two lines so labels stay clear of each other.
+- `toggleSeries` makes the legend interactive. Control it with `hiddenSeries` and `onHiddenSeriesChange` (ids of the hidden series), or start from `defaultHiddenSeries`.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. With `toggleSeries`, the legend buttons come before it."], ["Enter / Space", "On a legend entry (when `toggleSeries` is on), shows or hides that series. The last visible one cannot be hidden."], ["Arrow Right / Arrow Down", "Moves to the next axis."], ["Arrow Left / Arrow Up", "Moves to the previous axis."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the axis name and each series' value on it in a polite live region.
+- The data table has one row per axis and one column per series.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Marks against the surface meet 3:1 in every theme, and the categorical palette is checked for protan and deutan separation.
+- Pointing anywhere selects the axis nearest the pointer's angle.
+
+</Section>

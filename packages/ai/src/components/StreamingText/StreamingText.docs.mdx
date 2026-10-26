@@ -1,0 +1,93 @@
+export const meta = {
+  title: "Streaming text",
+  description: "Text that arrives while an agent writes: calm, stoppable, and still when motion is reduced.",
+  category: "AI and agents",
+  status: "new",
+  components: ["StreamingText"],
+  related: ["prompt-composer", "citation", "confidence-badge"],
+  order: 7,
+};
+
+<Section tab="usage">
+
+<Example of="StreamingText/Overview" layout="start" />
+
+## When to use
+
+- For a draft, summary or answer that a model produces token by token.
+- Anywhere generated text should be marked as a draft and attributed to the agent that wrote it.
+
+## When not to use
+
+- For text that is already complete. Pass `state="complete"` or render plain content.
+- For a long job with steps. Use [Run trail](/components/run-trail).
+
+## States
+
+<Example of="StreamingText/Live" title="Live" description="Words fade in as they arrive. Stop ends the response and keeps what was written." layout="start" />
+
+<Example of="StreamingText/Complete" title="Complete" layout="start" />
+
+<Example of="StreamingText/Stopped" title="Stopped" description="A stopped response says so, so nobody mistakes half a sentence for a finished one." layout="start" />
+
+<Example of="StreamingText/Plain" title="Plain" description="Use plain in a conversation where each message is already attributed." layout="start" />
+
+<DoDont>
+  <Do of="StreamingText/DoLetThemStop" caption="Offer Stop while text is arriving, and keep what was written." />
+  <Dont of="StreamingText/DontNoWayToStop" caption="Stream with no way to stop and no name on the writer." />
+</DoDont>
+
+## Writing
+
+- Name the agent: “Drafted by E1 Narrative Sub-agent”. Text a person has not accepted stays marked as a draft.
+- Keep the Stop label as “Stop generating”.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+An attribution line with the sparkle and agent chip, and a “Writing” badge while streaming. The text on a soft AI wash with a quiet caret. A Stop button below, and a note when stopped.
+
+## Motion
+
+New text fades in over 200ms. Nothing moves, scrolls or reflows apart from the text that grows. The caret breathes slowly. With reduced motion the text appears at once and the caret is still.
+
+## Tokens
+
+<UsesTokens names={["ai.fg", "ai.bg", "ai.border", "fg.default", "fg.muted"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="StreamingText/Live" title="Wiring a stream" code="open" layout="start" />
+
+## Notes
+
+- Pass the whole text received so far in `text`. The component animates only what was added. If the text is replaced rather than extended, it starts over.
+- Set `state` to `streaming`, then `complete` or `stopped`. Call your abort in `onStop` and set `stopped`.
+- Only the last twelve chunks keep their own element, so long responses stay light.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves to Stop generating while streaming."], ["Enter", "Stops the response."], ["Space", "Stops the response."]]} />
+
+## Screen readers
+
+- The text is not a live region, so assistive tech is not interrupted by every word. A polite status says “Generating response”, then “Response complete” or “Generation stopped”.
+- While streaming the text region is marked busy.
+
+## Visual
+
+- Respects `prefers-reduced-motion`: no fade, no caret animation.
+- State is shown in words (“Writing”, “Stopped”), not by colour.
+
+</Section>

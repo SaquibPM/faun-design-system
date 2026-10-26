@@ -1,0 +1,89 @@
+export const meta = {
+  title: "AI slot",
+  description: "Makes AI-suggested content in a field, text area or tile visibly different, with Accept, Edit and Revert.",
+  category: "AI and agents",
+  status: "new",
+  components: ["AISlot"],
+  related: ["ai-label", "confidence-badge", "field"],
+  order: 10,
+};
+
+<Section tab="usage">
+
+<Example of="AiSlot/Overview" height={300} />
+
+## When to use
+
+- When an agent pre-fills something a person owns: a field, a paragraph, a card of findings.
+- When the person must be able to see at a glance what has been accepted and what has not.
+
+## When not to use
+
+- For content that is fully automatic and never reviewed. Mark it with an [AI label](/components/ai-label) only.
+- For a decision that gates a run. Use [Approval card](/components/approval-card).
+- For a whole conversation. Use [AI chat](/components/ai-chat).
+
+## The three states
+
+<Example of="AiSlot/States" title="Suggested, accepted, edited" description="Suggested is tinted with a dashed border and has Accept and Edit. Accepted drops the tint and keeps the label. Edited says so in the label and offers Revert, which puts the AI original back." height={560} />
+
+## Text areas and blocks
+
+<Example of="AiSlot/TextArea" title="Text area" description="The same treatment around a Textarea. Edit moves focus into it." height={360} />
+
+<Example of="AiSlot/Block" title="Block" description="kind=block gives a tile or card room. The label text can be changed per state." height={320} />
+
+<DoDont>
+  <Do of="AiSlot/DoAccept" caption="Show AI proposals as suggestions that need a decision, with the label and Accept." />
+  <Dont of="AiSlot/DontSilentFill" caption="Fill a field with an AI value that looks like the person typed it. They cannot tell it from their own." />
+</DoDont>
+
+## Writing
+
+Buttons: Accept, Edit, Revert to AI version. The label: “AI suggested”, then “AI generated”, then “AI generated, edited”.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A frame around the control with the AI label above it, and an action row below. A suggestion is tinted with `ai.bg` and has a dashed `ai.border`; accepted content returns to the plain surface; edited content has a subtle outline. Inputs and text areas inside a suggestion sit on the surface colour so text stays legible.
+
+## Tokens
+
+<UsesTokens names={["ai.bg", "ai.border", "ai.fg", "bg.surface", "border.subtle"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="AiSlot/Overview" title="State wiring" code="open" height={300} />
+
+## Notes
+
+- You own the state: `onAccept` sets `accepted`; change `state` to `edited` when the value differs from the AI original; `onRevert` restores the value and sets `accepted`.
+- `explain` is passed to the AI label: `agent`, `model`, `summary`, `confidence`, `sources`, `actions`.
+- `labels` renames the label per state; `acceptLabel`, `editLabel` and `revertLabel` rename the buttons.
+- Edit calls `onEdit` and focuses the first input, textarea, select or editable element inside.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves through the label, the control and the action buttons in reading order."], ["Enter or Space", "Accepts, edits or reverts from the focused button."]]} />
+
+## Screen readers
+
+- State changes are announced politely: “Suggestion accepted.”, “Edited. You can revert to the AI version.”
+- The label button names the state in words, so the tint is not the only signal.
+
+## Visual
+
+- A suggestion is marked by a dashed border and a label as well as a tint, so it survives forced colours and colour-blindness.
+
+</Section>

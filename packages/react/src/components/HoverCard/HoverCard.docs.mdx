@@ -1,0 +1,82 @@
+export const meta = {
+  title: "Hover card",
+  description: "A short preview of what a link points to, shown on hover or keyboard focus. A convenience, never the only way to reach information.",
+  category: "Overlays",
+  status: "new",
+  components: ["HoverCardContent"],
+  related: ["tooltip", "popover"],
+  order: 14,
+};
+
+<Section tab="usage">
+
+<Example of="HoverCard/Overview" layout="start" height={220} />
+
+## When to use
+
+- To preview an agent, run, person or evidence item that a link points to, so people can decide whether to follow it.
+- When the preview is read-only and the full detail lives at the link.
+
+## When not to use
+
+- For a label or hint on a control. Use [Tooltip](/components/tooltip).
+- For content with actions, forms or anything people must reach. Use [Popover](/components/popover).
+- On touch-first screens as the only route to information. Touch devices have no hover.
+
+## Variants
+
+<Example of="HoverCard/Sizes" title="Sizes" description="Small (240) for a line or two, medium (320) for a short summary with a status." layout="start" height={140} />
+
+<DoDont>
+  <Do of="HoverCard/DoPreview" caption="Preview a summary of the destination. The link still goes to the full page." />
+  <Dont of="HoverCard/DontAction" caption="Put actions in the card. It closes when the pointer leaves and is invisible without hover." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A raised panel with a subtle border and elevation 3, opening beside its trigger with a short delay. It uses the popover radius and padding.
+
+## Sizes
+
+Small is 240 wide and medium is 320. Cards never exceed the viewport width less a small margin.
+
+## Tokens
+
+<UsesTokens names={["bg.raised", "border.subtle", "fg.default", "fg.muted"]} />
+
+<ComponentTokens name="popover" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="HoverCard/Controlled" title="Delays" description="Tune openDelay and closeDelay on HoverCard." code="open" layout="start" height={160} />
+
+## Notes
+
+- `HoverCard` is the Radix root: it accepts `open`, `defaultOpen`, `onOpenChange`, `openDelay` (700ms) and `closeDelay` (300ms).
+- Wrap a link or button with `HoverCardTrigger asChild` so the trigger is focusable.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focusing the trigger opens the card."], ["Escape", "Closes the card."]]} />
+
+## Screen readers
+
+- The preview is supplementary. Everything it says must be available at the link destination.
+
+## Visual
+
+- Text meets 4.5:1 on the raised surface. The card is not shown on touch input.
+
+</Section>

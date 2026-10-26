@@ -1,0 +1,84 @@
+export const meta = {
+  title: "Layout",
+  description: "Stack, Inline and Divider: the three primitives that space and separate everything else, using the space scale so screens stay on rhythm.",
+  category: "Layout",
+  status: "new",
+  components: ["Stack", "Inline", "Divider"],
+  related: ["card"],
+  order: 1,
+};
+
+<Section tab="usage">
+
+<Example of="Layout/Overview" />
+
+## When to use
+
+- **Stack** to space blocks vertically: sections of a card, fields in a form, cards in a column.
+- **Inline** for horizontal runs that may wrap: button rows, tag lists, meta lines.
+- **Divider** to separate groups that the spacing alone can't separate, or to label a break in a list ("Earlier this week").
+
+## When not to use
+
+- Two-dimensional layouts such as KPI rows or dashboards: use CSS grid, or StatGroup for KPIs.
+- To separate every item in a list: use the list's own divided option (DescriptionList `divided`, Card footers) instead of a Divider per row.
+
+## Gaps
+
+<Example of="Layout/StackGaps" title="Stack" description="Gaps come from the space scale. 1–2 for tightly related items, 3–4 inside a card, 6–8 between sections. `density` follows the person's density setting." />
+
+<Example of="Layout/InlineWrap" title="Inline" description="Wraps by default, so a row of framework tags reflows on narrow screens instead of overflowing." />
+
+<DoDont>
+  <Do of="Layout/DoUseGap" caption="Space siblings with the parent's gap. Every gap in the product then comes from one scale." />
+  <Dont of="Layout/DontUseMargins" caption="Add one-off margins to children. They drift from the scale and break when items wrap." />
+</DoDont>
+
+## Dividers
+
+<Example of="Layout/Dividers" title="Horizontal, labelled and vertical" description="Labelled dividers mark a break in a feed or list. Vertical dividers separate short facts in a meta line." />
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Stack and Inline are flex containers with no visual style of their own. Divider is a hairline in `border.subtle` (or `border.default` with `emphasis="default"`); a labelled divider centres caption text between two rules.
+
+## Tokens
+
+<UsesTokens names={["border.subtle", "border.default", "fg.muted"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Layout/Overview" title="Composing a card" code="open" />
+
+## Notes
+
+- `asChild` renders your element instead of a div, so a Stack can be a `ul` or `section` without an extra wrapper.
+- `gap` accepts space steps as strings (`"1.5"`, `"4"`) or `"density"`.
+- `Separator` is an alias of `Divider`.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+Layout primitives are not focusable.
+
+## Screen readers
+
+- Stack and Inline add no semantics. Use `asChild` with a list element when the children are a list.
+- Divider is decorative by default and hidden from assistive technology. Pass `decorative={false}` when the break is meaningful, which exposes `role="separator"` with its orientation.
+
+## Visual
+
+- Dividers are decorative and exempt from non-text contrast; don't use them as the only boundary of an interactive area.
+
+</Section>

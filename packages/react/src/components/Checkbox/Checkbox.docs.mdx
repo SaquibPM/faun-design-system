@@ -1,0 +1,100 @@
+export const meta = {
+  title: "Checkbox",
+  description: "Lets people turn one option on or off, or pick several from a list. Supports a mixed state for partial selection.",
+  category: "Forms",
+  status: "stable",
+  components: ["Checkbox", "CheckboxGroup"],
+  related: ["radio-group", "switch", "field"],
+  order: 3,
+};
+
+<Section tab="usage">
+
+<Example of="Checkbox/Overview" layout="start" />
+
+## When to use
+
+- To select any number of independent options: scopes to include, sites to report.
+- For a single agreement or setting that is applied on Save.
+- For selecting rows in a table, including a select-all with the mixed state.
+
+## When not to use
+
+- For exactly one choice from a list. Use [Radio group](/components/radio-group).
+- For a setting that takes effect immediately. Use [Switch](/components/switch).
+
+## Variants
+
+<Example of="Checkbox/Group" title="Group" description="CheckboxGroup adds the label, description and error for a set, and wires the group for assistive technology." layout="start" />
+
+<Example of="Checkbox/GroupSelectAll" title="Select all" description="Turn on selectAll for long groups. The parent checkbox shows the mixed state." layout="start" />
+
+<Example of="Checkbox/Indeterminate" title="Mixed state" description="Use for a parent whose children are partly selected. It is a display state, so the next press selects all." layout="start" />
+
+<Example of="Checkbox/WithError" title="Error" description="Say what is required and how to fix it." layout="start" />
+
+<DoDont>
+  <Do of="Checkbox/DoIndependent" caption="Use checkboxes when any combination of options makes sense." />
+  <Dont of="Checkbox/DontExclusive" caption="Use checkboxes for options that exclude each other. Use a radio group." />
+</DoDont>
+
+## Writing
+
+Label each box with the thing being chosen, not the action: “Scope 2”, not “Include Scope 2”. Put the answer in the label so it reads as true when checked.
+
+## Warn, read-only and loading
+
+<Example of="Checkbox/StateContract" title="Warn, read-only and skeleton" description="Warn marks a value that is allowed but worth a second look. It is never the same as invalid: it does not set aria-invalid and never blocks submission, and the message carries an icon and text so it is not colour alone. Read-only shows the value flat, keeps it focusable and copyable, and ignores changes. Skeleton replaces the control while its data loads; the label stays for screen readers. Set all three on a Field and every control inside follows." />
+
+Set `warn` (a message), `readOnly` and `skeleton` on the surrounding `Field`. On a standalone checkbox group, pass `readOnly` and `skeleton` directly; give `warn` a message through a Field so it is announced. An error always replaces a warning.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A square box with a check or dash, a label and an optional description. The box uses the extra small radius and the accent fill when checked.
+
+<Example of="Checkbox/Horizontal" title="Horizontal group" description="Use for two or three short options." layout="start" />
+
+<Example of="Checkbox/Disabled" title="Disabled" description="Explain nearby why an option is unavailable." layout="start" />
+
+## Tokens
+
+<UsesTokens names={["accent.solid-bg", "border.control", "focus.ring", "fg.disabled"]} />
+
+<ComponentTokens name="checkbox" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Checkbox/Group" title="Checkbox group with controlled values" layout="start" code="open" />
+
+## Notes
+
+- `CheckboxGroup` takes `options`, `value` (string array) and `onValueChange`. A single `Checkbox` takes `checked` and `onCheckedChange`, with `"indeterminate"` as a third state.
+- Inside a table row, omit the label and pass an `aria-label` that names the row.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves focus to the next checkbox."], ["Space", "Toggles the focused checkbox."]]} />
+
+## Screen readers
+
+- Announced as a checkbox with its checked, unchecked or mixed state. Groups are announced with their label.
+- Descriptions and errors are linked to the box.
+
+## Visual
+
+- The box border meets 3:1 against the surface. The target includes the label, so the whole row is clickable.
+- A check mark or dash shows state, so it never relies on colour alone.
+
+</Section>

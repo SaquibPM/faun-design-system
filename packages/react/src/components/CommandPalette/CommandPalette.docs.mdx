@@ -1,0 +1,86 @@
+export const meta = {
+  title: "Command palette",
+  description: "A search-first launcher for jumping to pages, agents and runs, or running an action, from anywhere with ⌘K.",
+  category: "Navigation",
+  status: "new",
+  components: ["CommandPalette"],
+  related: ["combobox", "kbd", "dialog"],
+  order: 14,
+};
+
+<Section tab="usage">
+
+<Example of="CommandPalette/Overview" height={160} />
+
+## When to use
+
+- To give power users one place to reach any page, agent, run or action by typing.
+- Alongside visible navigation, never instead of it.
+
+## When not to use
+
+- To pick a value for a form field. Use [Combobox](/components/combobox).
+- To page through results with filters. Build a search page.
+
+## Variants
+
+<Example of="CommandPalette/WithResults" title="Running commands" description="Each item has an onSelect. The palette closes when one runs." height={180} />
+
+<DoDont>
+  <Do of="CommandPalette/DoShortLabels" caption="Short verb-first labels with a quiet description for context." />
+  <Dont of="CommandPalette/DontLongSentences" caption="Write long sentences. Rows truncate and become hard to scan." />
+</DoDont>
+
+## Writing
+
+- Group commands as “Navigate”, “Actions” and “Recent runs”.
+- Add `keywords` for synonyms people will type (“disclosure” for a filing).
+- Empty message says what to try next.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A raised panel near the top of the screen over a scrim: a search row with an Esc hint, a scrolling grouped list, and a footer with key hints. Options reuse the list option row used by Select and Combobox.
+
+## States
+
+Rows highlight with the hover background as you arrow through them. Disabled rows are dimmed and skipped.
+
+## Tokens
+
+<UsesTokens names={["bg.raised", "bg.hover", "bg.scrim", "border.subtle", "fg.muted"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="CommandPalette/Overview" title="Controlled open state" code="open" height={160} />
+
+## Notes
+
+- The palette is controlled with `open` and `onOpenChange`. With `hotkey` (default) ⌘K and Ctrl+K toggle it from anywhere.
+- `shortcut` on an item is a display hint. Bind the key in your app.
+- Set `filter={false}` and use `onSearchChange` to search on the server.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["⌘ + K", "Opens or closes the palette (Ctrl + K on Windows and Linux)."], ["↑ / ↓", "Moves the highlight; wraps at the ends."], ["Enter", "Runs the highlighted command."], ["Escape", "Closes and returns focus to where it was."]]} />
+
+## Screen readers
+
+- Announced as a dialog with the name “Command palette”. The input is a combobox controlling the list, and the active row is announced as you arrow.
+
+## Visual
+
+- Focus stays in the search field. The highlighted row uses a background change plus the focus ring in forced-colours mode.
+
+</Section>

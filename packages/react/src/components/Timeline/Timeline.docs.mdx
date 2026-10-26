@@ -1,0 +1,81 @@
+export const meta = {
+  title: "Timeline",
+  description: "A chronological list of what people and agents did: the audit trail of a filing, a run or a record.",
+  category: "Data",
+  status: "stable",
+  components: ["Timeline"],
+  related: ["avatar", "badge", "stepper"],
+  order: 2,
+};
+
+<Section tab="usage">
+
+<Example of="Timeline/Overview" layout="start" />
+
+## When to use
+
+- To show who did what and when on a filing, run or evidence item.
+- To let auditors trace a figure back through approvals and agent steps.
+
+## When not to use
+
+- For the steps of a process the person moves through. Use [Stepper](/components/stepper).
+- For notifications. Use Banner or Toast.
+
+## Variants
+
+<Example of="Timeline/Dense" title="Dense" description="Use in side panels. Avatars shrink and spacing tightens." layout="start" />
+
+<Example of="Timeline/OpenDetails" title="Details" description="Extra detail is hidden behind a toggle. Open one initially when it explains the latest change." layout="start" />
+
+<DoDont>
+  <Do of="Timeline/DoSentenceFragment" caption="Write the action as a fragment after the actor: “approved the materiality matrix”." />
+  <Dont of="Timeline/DontFullSentence" caption="Repeat the actor in a full sentence. The name already appears before the action." />
+</DoDont>
+
+## Writing
+
+Agents show with the agent mark and name the agent, so people never mistake machine work for a person's. Use a time label people can read (“20 Oct, 09:12”) and an ISO time for machines.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+An ordered list. Each entry has an avatar marker joined by a line, an actor name with the action, a time, an optional status badge and an optional details panel.
+
+## Tokens
+
+<UsesTokens names={["fg.default", "fg.muted", "border.subtle"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Timeline/Overview" title="Audit trail" code="open" layout="start" />
+
+## Notes
+
+- Items are `{ id, actor, action, time, timeLabel?, status?, details?, defaultOpen? }`. `status` uses a domain and state from the status map.
+- Give the list an `aria-label` that names what it is the trail of.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves to each Details toggle."], ["Enter", "Opens or closes the details."], ["Space", "Opens or closes the details."]]} />
+
+## Screen readers
+
+- An ordered list of entries. Times use the `time` element with a machine-readable value. Avatars are decorative because the name is in the text.
+
+## Visual
+
+- Status always shows an icon and a word. Details toggles show a rotating chevron and their expanded state.
+
+</Section>

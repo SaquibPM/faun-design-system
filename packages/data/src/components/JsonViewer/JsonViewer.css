@@ -1,0 +1,38 @@
+.faun-json {
+  display: flex; flex-direction: column; min-inline-size: 0;
+  border: var(--faun-border-width-hairline) solid var(--faun-border-subtle);
+  border-radius: var(--faun-radius-lg);
+  background: var(--faun-bg-surface-nested);
+  overflow: hidden;
+}
+.faun-json-toolbar {
+  display: flex; align-items: center; gap: var(--faun-space-1); padding: var(--faun-space-1-5) var(--faun-space-2);
+  border-block-end: var(--faun-border-width-hairline) solid var(--faun-border-subtle);
+  background: var(--faun-bg-surface);
+}
+.faun-json-toolbar > :last-child { margin-inline-start: auto; }
+.faun-json-scroll { overflow: auto; padding: var(--faun-space-3); }
+.faun-json-scroll:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: -2px; }
+.faun-json .faun-json-tree, .faun-json .faun-json-children { display: block; margin: 0; padding: 0; list-style: none; }
+.faun-json .faun-json-children { margin-inline-start: var(--faun-space-4); padding-inline-start: var(--faun-space-3); border-inline-start: var(--faun-border-width-hairline) solid var(--faun-border-subtle); }
+.faun-json-tree, .faun-json-line {
+  font-family: var(--faun-type-code-sm-font-family); font-size: var(--faun-type-code-sm-font-size); line-height: var(--faun-space-5);
+  color: var(--faun-fg-default);
+}
+.faun-json-line { position: relative; min-inline-size: 0; overflow-wrap: anywhere; }
+.faun-json-line:not([data-container]) { padding-inline-start: var(--faun-space-5); }
+.faun-json-toggle {
+  display: inline-grid; place-items: center; inline-size: var(--faun-space-5); block-size: var(--faun-space-5); padding: 0; vertical-align: top;
+  border: 0; border-radius: var(--faun-radius-xs); background: transparent; color: var(--faun-fg-muted); cursor: pointer;
+}
+.faun-json-toggle:hover { background: var(--faun-bg-hover); color: var(--faun-fg-default); }
+.faun-json-toggle:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 0; }
+.faun-json-key { color: var(--faun-fg-default); font-weight: var(--faun-font-weight-medium); }
+.faun-json-index { color: var(--faun-fg-muted); }
+.faun-json-punct { color: var(--faun-fg-muted); }
+.faun-json-close { display: block; padding-inline-start: var(--faun-space-5); }
+.faun-json-string { color: var(--faun-status-success-fg); }
+.faun-json-number { color: var(--faun-status-info-fg); }
+.faun-json-bool { color: var(--faun-status-attention-fg); }
+.faun-json-null { color: var(--faun-fg-muted); font-style: italic; }
+.faun-json-summary { margin-inline: var(--faun-space-1-5); color: var(--faun-fg-subtle); font-style: italic; }

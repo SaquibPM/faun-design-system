@@ -1,0 +1,123 @@
+{
+  "name": "@faun-ds/tokens",
+  "version": "0.1.0",
+  "description": "Faun design tokens: 12-step colour scales, semantic roles, interaction states, five themes, type, space, shape, elevation, motion and component tokens.",
+  "license": "Apache-2.0",
+  "author": "Saquib Jawed and Faun contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaquibPM/faun-design-system.git",
+    "directory": "packages/tokens"
+  },
+  "homepage": "https://saquibpm.github.io/faun-design-system",
+  "bugs": {
+    "url": "https://github.com/SaquibPM/faun-design-system/issues"
+  },
+  "keywords": [
+    "design-tokens",
+    "design-system",
+    "css-variables",
+    "tailwind",
+    "theming",
+    "dark-mode",
+    "accessibility",
+    "enterprise"
+  ],
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "src",
+    "README.md"
+  ],
+  "main": "./dist/js/index.js",
+  "types": "./dist/js/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/js/index.d.ts",
+      "default": "./dist/js/index.js"
+    },
+    "./theme": {
+      "types": "./dist/runtime/accent.d.ts",
+      "default": "./dist/runtime/accent.js"
+    },
+    "./css": {
+      "types": "./dist/types/css.d.ts",
+      "default": "./dist/css/faun.css"
+    },
+    "./css/base": {
+      "types": "./dist/types/css.d.ts",
+      "default": "./dist/css/base.css"
+    },
+    "./css/fonts": {
+      "types": "./dist/types/css.d.ts",
+      "default": "./dist/css/fonts.css"
+    },
+    "./css/themes/*": {
+      "types": "./dist/types/css.d.ts",
+      "default": "./dist/css/themes/*.css"
+    },
+    "./tailwind": {
+      "types": "./dist/types/css.d.ts",
+      "default": "./dist/tailwind/faun.css"
+    },
+    "./tailwind/strict": {
+      "types": "./dist/types/css.d.ts",
+      "default": "./dist/tailwind/faun-strict.css"
+    },
+    "./json": "./dist/json/tokens.json",
+    "./scales": "./dist/json/scales.json",
+    "./status-map": "./dist/json/status-map.json",
+    "./contrast": "./dist/json/contrast.json",
+    "./package.json": "./package.json",
+    "./fonts.css": {
+      "types": "./dist/types/css.d.ts",
+      "default": "./dist/css/fonts-fontsource.css"
+    }
+  },
+  "scripts": {
+    "scales": "tsx scripts/generate-scales.ts",
+    "viz": "tsx scripts/generate-viz.ts",
+    "build": "tsx scripts/build.ts && tsup runtime/accent.ts --format esm --dts --out-dir dist/runtime --external culori --silent",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "4.0.14",
+    "@types/culori": "^2.1.1",
+    "@types/node": "^22.10.2",
+    "tailwindcss": "4.0.14",
+    "tsup": "8.5.1",
+    "tsx": "^4.19.2",
+    "typescript": "5.9.3",
+    "vitest": "3.2.7"
+  },
+  "dependencies": {
+    "culori": "4.0.1"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "peerDependencies": {
+    "@fontsource/ibm-plex-sans": "^5.0.0",
+    "@fontsource/ibm-plex-serif": "^5.0.0",
+    "@fontsource/ibm-plex-mono": "^5.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@fontsource/ibm-plex-sans": {
+      "optional": true
+    },
+    "@fontsource/ibm-plex-serif": {
+      "optional": true
+    },
+    "@fontsource/ibm-plex-mono": {
+      "optional": true
+    }
+  }
+}

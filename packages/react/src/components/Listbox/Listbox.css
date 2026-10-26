@@ -1,0 +1,130 @@
+/* Internal: shared popover panel, option rows and trigger for Select, Combobox, MultiSelect and DatePicker. Not a public component. */
+.faun-listbox-panel {
+  z-index: var(--faun-z-dropdown);
+  min-inline-size: var(--radix-popover-trigger-width, var(--radix-select-trigger-width, var(--faun-menu-min-width)));
+  max-inline-size: calc(100vw - var(--faun-space-4));
+  max-block-size: min(var(--radix-popover-content-available-height, var(--radix-select-content-available-height, 100vh)), calc(var(--faun-space-32) * 3));
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--faun-bg-raised);
+  color: var(--faun-fg-default);
+  border: var(--faun-border-width-hairline) solid var(--faun-border-subtle);
+  border-radius: var(--faun-menu-radius);
+  box-shadow: var(--faun-elevation-3);
+  transform-origin: var(--radix-popover-content-transform-origin, var(--radix-select-content-transform-origin));
+  animation: faun-pop-in var(--faun-motion-duration-moderate) var(--faun-motion-easing-enter);
+  outline: none;
+}
+.faun-listbox-panel[data-state="closed"] { animation: faun-pop-out var(--faun-motion-duration-fast) var(--faun-motion-easing-exit); }
+.faun-listbox-search {
+  display: flex; align-items: center; gap: var(--faun-space-2);
+  padding: var(--faun-space-2) var(--faun-space-3);
+  border-bottom: var(--faun-border-width-hairline) solid var(--faun-border-subtle);
+  color: var(--faun-fg-muted);
+}
+.faun-listbox-search > svg { flex: none; inline-size: var(--faun-size-icon-md); block-size: var(--faun-size-icon-md); }
+.faun-listbox-search input {
+  flex: 1 1 auto; min-inline-size: 0; border: 0; outline: 0; background: transparent; color: var(--faun-fg-default);
+  font-family: var(--faun-type-body-md-font-family); font-size: var(--faun-type-body-md-font-size); line-height: var(--faun-type-body-md-line-height);
+  block-size: var(--faun-size-control-sm);
+}
+.faun-listbox-search input::placeholder { color: var(--faun-fg-placeholder); }
+.faun-listbox-list { overflow-y: auto; padding: var(--faun-menu-padding); overscroll-behavior: contain; scrollbar-width: thin; }
+.faun-listbox-option {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  column-gap: var(--faun-space-2);
+  min-block-size: var(--faun-menu-item-height);
+  padding: var(--faun-space-1-5) var(--faun-menu-item-px);
+  border-radius: var(--faun-menu-item-radius);
+  color: var(--faun-fg-default);
+  font-size: var(--faun-type-body-md-font-size);
+  line-height: var(--faun-type-body-md-line-height);
+  cursor: pointer;
+  user-select: none;
+  outline: none;
+}
+.faun-listbox-option[data-highlighted],
+.faun-listbox-option[data-selected="true"]:not([aria-selected]),
+.faun-listbox-option[aria-selected="true"][data-cmdk-item] { background: var(--faun-bg-hover); }
+.faun-listbox-option[data-disabled="true"], .faun-listbox-option[aria-disabled="true"] { color: var(--faun-fg-disabled); cursor: not-allowed; background: transparent; }
+.faun-listbox-option-icon { display: inline-flex; color: var(--faun-fg-muted); grid-column: 1; }
+.faun-listbox-option-icon > svg { inline-size: var(--faun-size-icon-md); block-size: var(--faun-size-icon-md); }
+.faun-listbox-option-text { grid-column: 2; display: grid; min-inline-size: 0; }
+.faun-listbox-option-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.faun-listbox-option-desc { color: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size); line-height: var(--faun-type-caption-line-height); }
+.faun-listbox-option-check { grid-column: 3; display: inline-flex; color: var(--faun-fg-brand); }
+.faun-listbox-option-check > svg { inline-size: var(--faun-size-icon-md); block-size: var(--faun-size-icon-md); }
+.faun-listbox-group-label {
+  padding: var(--faun-space-2) var(--faun-menu-item-px) var(--faun-space-1);
+  color: var(--faun-fg-muted);
+  font-size: var(--faun-type-label-sm-font-size); line-height: var(--faun-type-label-sm-line-height); font-weight: var(--faun-type-label-sm-font-weight);
+}
+.faun-listbox-separator { block-size: var(--faun-border-width-hairline); margin: var(--faun-space-1) calc(var(--faun-menu-padding) * -1); background: var(--faun-border-subtle); }
+.faun-listbox-empty, .faun-listbox-loading {
+  display: flex; align-items: center; justify-content: center; gap: var(--faun-space-2);
+  padding: var(--faun-space-6) var(--faun-space-4);
+  color: var(--faun-fg-muted); font-size: var(--faun-type-body-sm-font-size); text-align: center;
+}
+.faun-listbox-footer {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--faun-space-2);
+  padding: var(--faun-space-1-5) var(--faun-space-2);
+  border-top: var(--faun-border-width-hairline) solid var(--faun-border-subtle);
+  color: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size);
+}
+
+/* Input-styled trigger shared by Select, Combobox, MultiSelect, DatePicker. */
+.faun-field-trigger {
+  --_h: var(--faun-input-height-md);
+  display: flex; align-items: center; gap: var(--faun-space-2);
+  inline-size: 100%;
+  min-block-size: var(--_h);
+  padding-inline: var(--faun-input-px) var(--faun-space-2);
+  border: var(--faun-border-width-hairline) solid var(--faun-border-control);
+  border-radius: var(--faun-input-radius);
+  background: var(--faun-bg-surface);
+  color: var(--faun-fg-default);
+  box-shadow: var(--faun-elevation-1);
+  font-family: var(--faun-type-body-md-font-family);
+  font-size: var(--faun-type-body-md-font-size);
+  line-height: var(--faun-type-body-md-line-height);
+  text-align: start;
+  cursor: pointer;
+  transition: border-color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard), box-shadow var(--faun-motion-duration-fast) var(--faun-motion-easing-standard);
+}
+.faun-field-trigger:where([data-size="sm"]) { --_h: var(--faun-input-height-sm); border-radius: var(--faun-input-radius-sm); font-size: var(--faun-type-body-sm-font-size); }
+.faun-field-trigger:where([data-size="lg"]) { --_h: var(--faun-input-height-lg); }
+.faun-field-trigger:hover { border-color: var(--faun-border-control-hover); }
+.faun-field-trigger:focus-visible, .faun-field-trigger:focus-within:has(:focus-visible), .faun-field-trigger[data-state="open"] { outline: none; border-color: var(--faun-focus-ring); box-shadow: 0 0 0 3px var(--faun-focus-halo); }
+.faun-field-trigger[data-invalid], .faun-field-trigger[aria-invalid="true"] { border-color: var(--faun-status-danger-fg); }
+.faun-field-trigger:disabled, .faun-field-trigger[data-disabled]:not([data-disabled="false"]) { background: var(--faun-bg-disabled); border-color: var(--faun-border-disabled); color: var(--faun-fg-disabled); box-shadow: none; cursor: not-allowed; }
+.faun-field-trigger-value { flex: 1 1 auto; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.faun-field-trigger-value[data-placeholder] { color: var(--faun-fg-placeholder); }
+.faun-field-trigger-icon { display: inline-flex; flex: none; color: var(--faun-fg-muted); }
+.faun-field-trigger-icon > svg { inline-size: var(--faun-size-icon-md); block-size: var(--faun-size-icon-md); }
+.faun-field-trigger-wrap { position: relative; display: block; min-inline-size: 0; }
+.faun-field-trigger-wrap .faun-field-trigger[data-has-clear] .faun-field-trigger-value { margin-inline-end: calc(var(--faun-size-control-xs) + var(--faun-space-1)); }
+.faun-field-trigger-clear {
+  all: unset;
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: var(--_clear-end, calc(var(--faun-space-2) + var(--faun-size-icon-md) + var(--faun-space-1)));
+  margin-block: auto;
+  display: grid;
+  place-items: center;
+  inline-size: var(--faun-size-control-xs);
+  block-size: var(--faun-size-control-xs);
+  border-radius: var(--faun-radius-sm);
+  color: var(--faun-fg-muted);
+  cursor: pointer;
+}
+.faun-field-trigger-clear:hover { background: var(--faun-bg-hover); color: var(--faun-fg-default); }
+.faun-field-trigger-clear:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); }
+.faun-field-trigger-clear > svg { inline-size: var(--faun-size-icon-sm); block-size: var(--faun-size-icon-sm); }
+@media (forced-colors: active) {
+  .faun-field-trigger, .faun-listbox-panel { border-color: CanvasText; }
+  .faun-listbox-option[data-highlighted] { outline: 2px solid Highlight; }
+}

@@ -1,0 +1,91 @@
+export const meta = {
+  title: "Chat layout",
+  description: "The frame of a conversation with an agent: thread, composer, and room beside them for a progress panel and an artifact panel, with header toggles for each. Becomes sheets on a phone.",
+  category: "AI and agents",
+  status: "new",
+  components: ["ChatLayout", "ChatLayoutControls"],
+  related: ["progress-panel", "artifact-panel", "ai-chat", "prompt-composer", "app-shell"],
+  order: 15,
+};
+
+<Section tab="usage">
+
+<Example of="ChatLayout/Overview" layout="start" height={620} />
+
+## When to use
+
+- For a full-height conversation with an agent that can also show progress and make things.
+- Inside the page area of an [App shell](/components/app-shell), so the left navigation, which belongs to the shell, can open or collapse around it. The [Chat with panels pattern](/patterns/chat-with-panels) shows all three together.
+
+## When not to use
+
+- For a one-off question box on a dashboard. Use [Prompt composer](/components/prompt-composer) and [AI chat](/components/ai-chat) directly.
+- For a run viewer that is not a conversation. Use the [Agent run viewer pattern](/patterns/agent-run-viewer).
+
+## Layouts
+
+<Example of="ChatLayout/ThreadOnly" title="Thread only" description="The default. The header toggles open each panel; nothing else changes." layout="start" height={620} />
+
+<Example of="ChatLayout/ProgressBeside" title="Progress beside the thread" description="A docked progress panel takes a column of 320 px. The thread keeps at least 360 px." layout="start" height={620} />
+
+<Example of="ChatLayout/Narrow" title="Artifact on a phone (390 px)" description="Under 768 px of layout width the artifact panel is a full-screen sheet. The thread is inert and Close returns to it." layout="start" height={660} />
+
+<Example of="ChatLayout/NarrowProgress" title="Progress on a phone (390 px)" description="The progress panel becomes a bottom sheet over a scrim." layout="start" height={660} />
+
+## Writing
+
+- The header names the conversation, not the product. Keep it to one line.
+- Open panels from the message that makes them useful: a button in the message that says “Open the draft”, a link on the progress card. Do not open them without being asked, except the first time work starts.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+The main column holds the header, the scrolling thread (centred to the reading width) and the composer. The panel column sits on its right: the progress panel on top when both are open, the artifact below it. The column is as wide as the artifact panel, or 320 px for the progress panel alone.
+
+## Behaviour by width
+
+- 768 px and wider: panels dock beside the thread. The artifact can be resized and maximised.
+- Under 768 px: the artifact is a full-screen sheet, the progress panel a bottom sheet. The thread is inert while either is open.
+
+## Tokens
+
+<UsesTokens names={["bg.canvas", "bg.surface", "bg.scrim", "border.subtle", "elevation.4"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="ChatLayout/Overview" title="Both panels, header toggles" code="open" layout="start" height={620} />
+
+## Notes
+
+- Render `progress` and `artifact` to open them and leave them out to close them. The layout does not keep that state; your header toggles do. `ChatLayoutControls` is a pair of pressed-state buttons for it.
+- The layout measures itself, not the window, so it also works inside a small frame.
+- `useChatLayout()` gives custom panels the same width, compact and maximised state that `ArtifactPanel` uses.
+- Put the layout in a parent with a height. It fills it and scrolls only the thread.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Header toggles, thread, composer, then the open panels."], ["Escape", "Closes the panel that has focus: the artifact panel, or the docked progress panel."]]} />
+
+## Screen readers
+
+- The thread column is a region named by `label`. Panels are regions named by their titles.
+- Header toggles are buttons with `aria-pressed` and a label that says what the next press does: “Show progress panel”, “Hide progress panel”.
+- While a panel is a sheet the thread is `inert`, so focus cannot reach it. When it closes, focus returns to the control that opened it.
+
+## Visual
+
+- Panels are separated from the thread by a hairline, and by a scrim for the progress sheet.
+- Forced colours: the dividers use the system text colour.
+
+</Section>

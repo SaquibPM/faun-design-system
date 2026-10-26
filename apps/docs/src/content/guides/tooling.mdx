@@ -1,0 +1,126 @@
+export const meta = { title: "Tooling", description: "Lint rules, llms.txt and an MCP server that keep people and coding agents on the system: what each does, how to install it and how it is built.", order: 6 };
+
+Faun's rules are only useful if they are checked. Three pieces of tooling turn the rules in `AGENTS.md` into something a build, an editor or an agent can enforce.
+
+| Tool | Package or file | Use it to |
+| --- | --- | --- |
+| ESLint plugin | `@faun-ds/eslint-plugin` | Fail the build on raw colours, arbitrary Tailwind values, unlabelled icon buttons and status shown by hue |
+| llms.txt | `/llms.txt`, `/llms-full.txt` | Give any model the whole system as plain text |
+| MCP server | `@faun-ds/mcp` | Let a coding agent look up components, props, tokens, status states and icons instead of guessing |
+
+## ESLint plugin
+
+```bash
+pnpm add -D @faun-ds/eslint-plugin eslint
+```
+
+Requires ESLint 9 or later with flat config. Add the recommended config, which turns every rule on as an error for JavaScript and TypeScript files:
+
+```js
+// eslint.config.js
+import faun from "@faun-ds/eslint-plugin";
+
+export default [faun.configs.recommended];
+```
+
+For TypeScript, add `typescript-eslint` to your config as usual. The rules read only strings, class attributes and JSX, so they work with any parser that produces JSX nodes.
+
+### Rules
+
+| Rule | Catches | Fix |
+| --- | --- | --- |
+| `@faun-ds/no-hex-colors` | `"#3e4c3a"`, `rgb(...)`, `hsl(...)`, `oklch(...)` in strings and templates | Use a semantic utility, `var(--faun-…)` or `vars` from `@faun-ds/tokens` |
+| `@faun-ds/no-arbitrary-tailwind-values` | `text-[11px]`, `rounded-[10px]`, `z-[80]`, `[mask-type:luminance]` in `className` and class helpers such as `cn` and `clsx` | Use a type role, a radius, the 4px spacing scale or a named layer |
+| `@faun-ds/icon-button-needs-label` | `IconButton` without a `label`, an empty `label`, and a native `button` that holds only icons | Add `label`, or use `IconButton` |
+| `@faun-ds/no-raw-status-colors` | `text-green-600`, `bg-red-100` and `style={{ color: "green" }}` | Use `StatusBadge` with a domain and state, or the `status-*` utilities |
+
+The rules only inspect class lists: a `className` or `class` attribute, or an argument to `cn`, `clsx`, `cx`, `classnames`, `twMerge`, `twJoin`, `cva` or `tv`. Plain strings elsewhere in your code are left alone.
+
+### Options
+
+Each rule takes an options object. Turn rules off or tune them in your own config entry:
+
+```js
+export default [
+  faun.configs.recommended,
+  {
+    rules: {
+      // Allow Radix's runtime variables in arbitrary values.
+      "@faun-ds/no-arbitrary-tailwind-values": ["error", { allow: ["^var\\(--radix-"], classFunctions: ["twx"] }],
+      // Ticket references such as "#123" look like three-digit colours.
+      "@faun-ds/no-hex-colors": ["error", { allow: ["#123"], functions: true }],
+      // Check a design-system wrapper too, and skip native buttons.
+      "@faun-ds/icon-button-needs-label": ["error", { components: ["IconButton", "ToolbarButton"], nativeButtons: false }],
+    },
+  },
+];
+```
+
+`var(--faun-…)` inside brackets, as in `w-[var(--faun-space-5)]`, is on-system and passes. Everything else needs `allow`.
+
+## llms.txt
+
+Faun publishes two plain-text files for language models, following the [llms.txt convention](https://llmstxt.org):
+
+- `/llms.txt` is an index with a one-line summary of every guide, foundation and component, each linking to its page.
+- `/llms-full.txt` is the whole system in one file: the agent rules, the guides, the status map, every token with its light and dark values, every icon, and each component page with its import line, props table and overview example.
+
+Point a model at the URL, or paste the file into a chat when the model can't browse. Both files are generated from the same sources as this site, so they never drift:
+
+```bash
+pnpm build:llms   # writes apps/docs/public/llms.txt and llms-full.txt
+```
+
+`pnpm docs:build` runs this first, so the deployed site always serves current files.
+
+## MCP server
+
+The Model Context Protocol lets an agent call tools instead of reading pages. `@faun-ds/mcp` runs locally over stdio and answers from a dataset built from the repository, so it works offline and costs no tokens until the agent asks.
+
+### Install
+
+Claude Code:
+
+```bash
+claude mcp add faun -- npx -y @faun-ds/mcp
+```
+
+Any client that reads an `mcpServers` block (Claude Desktop, Cursor and others):
+
+```json
+{
+  "mcpServers": {
+    "faun": { "command": "npx", "args": ["-y", "@faun-ds/mcp"] }
+  }
+}
+```
+
+### Tools
+
+| Tool | Arguments | Returns |
+| --- | --- | --- |
+| `list_components` | `category?`, `package?` | Every component with package, category, status and exported part names |
+| `get_component` | `name`, `examples?`, `docs?` | Import line, props with types and defaults, related components, tokens used, examples and the docs page. Accepts a name, slug or any part such as `DialogContent` |
+| `search_tokens` | `query`, `category?`, `limit?` | Tokens ranked by match, with CSS variable and value per theme |
+| `get_status_map` | `domain?` | The states of a domain with tone, icon, label and a ready-made `StatusBadge` line. Without a domain, every domain and tone |
+| `resolve_icon` | `name` | The matching icon with its import line, found by name, component name or keyword, plus alternatives |
+
+Misses return suggestions rather than an empty result: `get_component` with `Buton` offers `Button`, and `get_status_map` with an unknown domain lists the real ones.
+
+A useful instruction for a product's own `AGENTS.md` or `CLAUDE.md`:
+
+```markdown
+Before writing UI, call the faun MCP server: list_components to check a component exists,
+get_component for its props, search_tokens instead of writing a colour or size,
+get_status_map for any status, and resolve_icon for icons.
+```
+
+### Keeping data current
+
+The server reads `data/faun.json`, generated by `pnpm --filter @faun-ds/mcp build` from the component docs, the token JSON, the status map and the icon manifest. Set `FAUN_MCP_DATA` to point the server at a different file, for example one built from a tenant's fork.
+
+## Working on the tooling
+
+- The extraction shared by `llms.txt` and the MCP dataset lives in `scripts/lib/faun-docs.mjs`. It turns `*.docs.mdx` into Markdown, so a new component page appears in all three outputs with no extra work.
+- Add every new lint rule with `RuleTester` cases for valid and invalid code, then list it here and in the recommended config.
+- Tool functions in `packages/mcp/src/tools.ts` are pure and tested without a server. Keep them that way and keep the server a thin adapter.

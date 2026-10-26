@@ -1,0 +1,24 @@
+.faun-number-field[data-stepper] { padding-inline-end: 0; }
+.faun-number-field-steppers {
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  align-self: stretch;
+  flex: none;
+  border-inline-start: var(--faun-border-width-hairline) solid var(--faun-border-subtle);
+  margin-inline-start: var(--faun-space-1);
+}
+.faun-number-field-steppers button {
+  all: unset;
+  display: grid;
+  place-items: center;
+  inline-size: var(--faun-space-6);
+  color: var(--faun-fg-muted);
+  cursor: pointer;
+}
+.faun-number-field-steppers button + button { border-block-start: var(--faun-border-width-hairline) solid var(--faun-border-subtle); }
+.faun-number-field-steppers button:hover:not(:disabled) { background: var(--faun-bg-hover); color: var(--faun-fg-default); }
+.faun-number-field-steppers button:active:not(:disabled) { background: var(--faun-bg-active); }
+.faun-number-field-steppers button:disabled { color: var(--faun-fg-disabled); cursor: not-allowed; }
+.faun-number-field-steppers button:first-child { border-start-end-radius: var(--faun-input-radius); }
+.faun-number-field-steppers button:last-child { border-end-end-radius: var(--faun-input-radius); }
+.faun-number-field-steppers svg { inline-size: var(--faun-size-icon-xs); block-size: var(--faun-size-icon-xs); }

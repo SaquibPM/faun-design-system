@@ -1,0 +1,91 @@
+export const meta = {
+  title: "Switch",
+  description: "Turns one setting on or off with an immediate effect.",
+  category: "Forms",
+  status: "stable",
+  components: ["Switch"],
+  related: ["checkbox", "radio-group"],
+  order: 13,
+};
+
+<Section tab="usage">
+
+<Example of="Switch/Overview" layout="start" />
+
+## When to use
+
+- For settings that take effect as soon as they change: notify reviewers, show estimated values.
+- For a feature flag or preference in a settings list.
+
+## When not to use
+
+- For a choice that needs a Save or Submit. Use [Checkbox](/components/checkbox).
+- For picking among options. Use [Radio group](/components/radio-group).
+
+## Variants
+
+<Example of="Switch/Sizes" title="Sizes" description="Small for dense settings lists, medium by default." layout="start" />
+
+<Example of="Switch/LabelPosition" title="Label position" description="Put the label first in right-aligned settings lists." layout="start" />
+
+<Example of="Switch/Controlled" title="Controlled" description="Own the state when saving to a server." layout="start" />
+
+<Example of="Switch/Disabled" title="Disabled" description="Explain nearby why it can't be changed." layout="start" />
+
+<DoDont>
+  <Do of="Switch/DoImmediate" caption="Use a switch when the change applies immediately." />
+  <Dont of="Switch/DontNeedsSave" caption="Use a switch for an action that needs a Save. Use a button or checkbox." />
+</DoDont>
+
+## Writing
+
+Label the setting, not the state: “Notify reviewers”, not “Notifications are on”. Keep the label the same whether on or off.
+
+## Read-only and loading
+
+<Example of="Switch/StateContract" title="Read-only and loading" description="Read-only shows the setting's current value but ignores changes, and sets aria-readonly. Use it when a policy or role fixes the value, and say who controls it in the description. Skeleton replaces the switch while the setting loads. Switches have no warn state: a risky setting belongs in a Banner or confirmation." />
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A track with a sliding thumb, a label and an optional description. The on state fills the track with the accent colour.
+
+## Tokens
+
+<UsesTokens names={["accent.solid-bg", "bg.sunken", "border.control", "focus.ring"]} />
+
+<ComponentTokens name="switch" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Switch/Controlled" title="Controlled switch" layout="start" code="open" />
+
+## Notes
+
+- Uses `checked` and `onCheckedChange`.
+- Show a pending state if the change is saved to a server, and revert it with a message if saving fails.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves focus to the switch."], ["Space", "Toggles the switch."], ["Enter", "Toggles the switch."]]} />
+
+## Screen readers
+
+- Announced as a switch with an on or off state and its label and description.
+
+## Visual
+
+- The thumb position and track fill both show state. Forced colours use system colours for the thumb and track.
+
+</Section>

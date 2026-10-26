@@ -1,0 +1,95 @@
+export const meta = {
+  title: "Meter",
+  description: "Shows progress towards a limit (standard) or how one whole divides into parts (proportional) in a single bar.",
+  category: "Data",
+  status: "new",
+  components: ["MeterChart"],
+  related: ["gauge-chart", "bullet-chart", "pie-chart", "chart-types"],
+  order: 30,
+};
+
+<Section tab="usage">
+
+<Example of="MeterChart/Overview" layout="stretch" />
+
+## When to use
+
+- Standard: usage against a limit or capacity: carbon budget used, storage used.
+- Proportional: the parts of one whole in a row: Scope 3 by category, spend by region.
+
+## When not to use
+
+- For a value without a maximum. Use a Stat.
+- For several measures. Use a bullet chart.
+- For a task's progress. Use the Progress component.
+
+## Variants
+
+<Example of="MeterChart/Proportional" layout="stretch" title="Proportional" description="variant=&quot;proportional&quot; splits the bar into segments, one per part, with a legend." />
+
+<Example of="MeterChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="MeterChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="MeterChart/DoNameTheStatus" caption="Name the status zones, so the colour is never the only signal." />
+  <Dont of="MeterChart/DontColourAlone" caption="Use green and red zones with no names. Colour-blind readers cannot tell them apart." />
+</DoDont>
+
+## Writing
+
+Title with the thing being used up: “Annual carbon budget used”. Name zones with what they mean (“Within budget”, “Over limit”).
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title, a value line above the bar (value and status in text), the bar (track, fill, thin zone strip beneath) and min and max labels. Proportional: segments in order with hairline gaps and a legend.
+
+## Colour
+
+Standard uses `dataviz.cat-1` unless `zones` apply, in which case the bar takes the status colour of the zone the value is in. The status is always written next to the value. Proportional segments take `dataviz.cat-1` to `cat-8` in order.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.axis", "dataviz.surface", "status.success.solid", "status.warning.solid", "status.danger.solid"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="MeterChart/Overview" layout="stretch" code="open" />
+
+<Example of="MeterChart/Proportional" layout="stretch" code="open" />
+
+## Notes
+
+- Standard: `value`, `max` (default 100) and optional `zones` of `{ from, tone, label }`, ascending.
+- Proportional: `segments` of `{ id, label, value }` and `max` as the whole; any remainder shows as the empty track.
+- Proportional meters support `toggleSeries`; standard meters have no legend.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. With `toggleSeries`, the legend buttons come before it."], ["Enter / Space", "On a legend entry (when `toggleSeries` is on), shows or hides that series. The last visible one cannot be hidden."], ["Arrow Right / Arrow Down", "Moves to the next segment."], ["Arrow Left / Arrow Up", "Moves to the previous segment."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."], ["Standard meter", "One value, so there is nothing to move between; focusing the chart shows its tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the value against the maximum and the status (standard), or the segment, its value and share of the whole (proportional) in a polite live region.
+- The data table lists the value, maximum, share and status (standard), or each segment with its share of the whole.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Marks against the surface meet 3:1 in every theme, and the categorical palette is checked for protan and deutan separation.
+- Status zones are also drawn as a thin strip beneath the bar, so where the thresholds lie is visible.
+
+</Section>

@@ -1,0 +1,83 @@
+export const meta = {
+  title: "Overflow menu",
+  description: "An icon button that opens a menu of less common actions for a row, card or toolbar.",
+  category: "Actions",
+  status: "new",
+  components: ["OverflowMenu"],
+  related: ["menu", "icon-button", "menu-button"],
+  order: 4,
+};
+
+<Section tab="usage">
+
+<Example of="OverflowMenu/Overview" layout="start" />
+
+## When to use
+
+- In table rows, cards and list items that have several secondary actions.
+- In a toolbar that runs out of room.
+
+## When not to use
+
+- For the one action most people take. Give it its own [Button](/components/button) or [Icon button](/components/icon-button).
+- When the trigger should say what the menu is for. Use a [Menu button](/components/menu-button).
+- For more than about seven items or for navigation. Use a different pattern.
+
+## Variants
+
+<Example of="OverflowMenu/Orientation" title="Horizontal and vertical" description="Three dots across is the default. Use vertical in narrow rows and cards, where a horizontal glyph looks like a loading indicator." layout="start" />
+
+<Example of="OverflowMenu/Sizes" title="Sizes" description="Extra small to large. The menu rows follow the trigger size." layout="start" />
+
+<DoDont>
+  <Do of="OverflowMenu/DoNameTheObject" caption="Name the object: “Actions for Scope 2 import”. In a table, every row's button then has a distinct name." />
+  <Dont of="OverflowMenu/DontGenericLabel" caption="Label every row's button “More”. Screen reader users can't tell the rows apart." />
+</DoDont>
+
+## Writing
+
+Put the most common action first, a separator before destructive items, and the destructive item last, marked `intent="danger"`. Destructive items open a confirmation.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+An Icon button with a three-dot icon (the label doubles as its tooltip) and a Menu panel. The panel aligns to the end of the trigger so it opens inward from the edge of a row.
+
+## Tokens
+
+<UsesTokens names={["neutral.ghost-bg-hover", "bg.raised", "border.subtle", "focus.ring"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="OverflowMenu/Overview" title="Row actions" code="open" layout="start" />
+
+## Notes
+
+- `label` is required and becomes the accessible name. Include the object's name when several menus share a page.
+- Children are the regular menu parts (`DropdownMenuItem`, `DropdownMenuSeparator`, groups, checkbox and radio items).
+- Controlled use: `open` and `onOpenChange`.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Enter, Space or ArrowDown", "Opens the menu and focuses the first item."], ["ArrowDown, ArrowUp", "Moves between items."], ["Type a letter", "Jumps to a matching item."], ["Escape", "Closes the menu and returns focus to the button."]]} />
+
+## Screen readers
+
+- The button is announced with its label and as a menu button (`aria-haspopup="menu"`), expanded or collapsed.
+
+## Visual
+
+- The target is at least the button size. Focus shows the standard ring.
+
+</Section>

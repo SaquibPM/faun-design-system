@@ -1,0 +1,82 @@
+export const meta = {
+  title: "Tree",
+  description: "A hierarchy people expand and select from, such as an organisational boundary or the ESRS topic structure.",
+  category: "Navigation",
+  status: "stable",
+  components: ["Tree"],
+  related: ["accordion", "menu", "breadcrumbs"],
+  order: 5,
+};
+
+<Section tab="usage">
+
+<Example of="Tree/Overview" layout="start" />
+
+## When to use
+
+- To pick a node in a real hierarchy: entities, facilities, topics, folders.
+- When people need to see the whole structure and move around it quickly.
+
+## When not to use
+
+- For a flat list. Use [Select](/components/select) or a list.
+- For revealing content sections one at a time. Use [Accordion](/components/accordion).
+- For site navigation. Use the AppShell side navigation.
+
+## Variants
+
+<Example of="Tree/Controlled" title="Controlled" description="Own the expanded and selected state to sync with the page or the URL." layout="start" />
+
+<Example of="Tree/NoGuides" title="Without guides" description="Turn off indent guides for shallow trees." layout="start" />
+
+<DoDont>
+  <Do of="Tree/DoShallow" caption="Keep hierarchies to three or four levels." />
+  <Dont of="Tree/DontDeep" caption="Nest deeply. Indentation eats the width and people lose their place." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A list of rows, each with an expand chevron, optional icon, label and trailing meta. Children are indented one step per level, with subtle guides. The selected row has the selected background.
+
+## States
+
+Default, hover, selected, focus (ring on the row), disabled.
+
+## Tokens
+
+<UsesTokens names={["bg.hover", "bg.selected", "border.subtle", "fg.muted"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Tree/Controlled" title="Controlled expansion and selection" code="open" layout="start" />
+
+## Notes
+
+- Nodes are `{ id, label, icon?, meta?, children?, disabled?, textValue? }`. Give `textValue` when the label is not a string so type-ahead works.
+- `aria-label` is required.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves focus into and out of the tree. There is one tab stop."], ["↓ / ↑", "Moves to the next or previous visible node."], ["→", "Expands a closed node, or moves to its first child."], ["←", "Collapses an open node, or moves to its parent."], ["Home / End", "Moves to the first or last visible node."], ["Enter / Space", "Selects the focused node."], ["*", "Expands all siblings at the current level."], ["Type a letter", "Moves to the next node starting with it."]]} />
+
+## Screen readers
+
+- Announced as a tree. Each item exposes its level, position in its set and expanded state.
+
+## Visual
+
+- Selection uses a background plus a text change, and the focus ring is shown on the row.
+
+</Section>

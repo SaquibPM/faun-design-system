@@ -1,0 +1,81 @@
+export const meta = {
+  title: "Skeleton",
+  description: "A placeholder shaped like the content that is loading, so pages hold their layout and feel faster than a spinner would.",
+  category: "Feedback",
+  status: "new",
+  components: ["Skeleton", "SkeletonRows"],
+  related: ["spinner", "progress", "empty-state"],
+  order: 3,
+};
+
+<Section tab="usage">
+
+<Example of="Skeleton/Overview" />
+
+## When to use
+
+- When a page, card or table is loading and you know roughly what it will look like.
+- For waits of more than about 300ms. Shorter loads can render nothing and avoid a flash.
+
+## When not to use
+
+- For a short action on a button: use the button's loading state.
+- For long-running agent work with measurable progress: use Progress.
+- For content that has loaded and is empty: use EmptyState.
+
+## Shapes
+
+<Example of="Skeleton/Shapes" title="Text, circle and rectangle" description="Text lines end shorter, circles stand in for avatars, rectangles for charts and images." />
+
+## Tables
+
+<Example of="Skeleton/Table" title="Table rows" description="Matches the row height of the current density, with a wider first column, so the table doesn't jump when data arrives." layout="padded" />
+
+<DoDont>
+  <Do of="Skeleton/DoMatchShape" caption="Echo the layout that will appear: avatar, name, meta." />
+  <Dont of="Skeleton/DontGenericBlock" caption="Use one big block. It tells people nothing and shifts the page when content lands." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Motion
+
+A soft shimmer sweeps across at a slow, steady pace. It stops under reduced motion and in calm mode, leaving a static placeholder.
+
+## Tokens
+
+<UsesTokens names={["bg.skeleton", "bg.surface"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Skeleton/Overview" title="Card placeholder" code="open" />
+
+## Notes
+
+- Skeleton is `aria-hidden`. Put `aria-busy="true"` on the region that is loading and announce completion with a live region if it matters.
+- `SkeletonRows` is a `role="status"` with a label, so one message is announced for the whole table.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+Not focusable.
+
+## Screen readers
+
+- Individual skeleton shapes are hidden. Mark the loading region with `aria-busy="true"`; SkeletonRows announces its `label` (default “Loading”) as a status.
+- Replace the skeleton with real content in the same place so focus and reading position stay stable.
+
+## Visual
+
+- Placeholders are decorative; no contrast requirement applies. Motion is removed for reduced-motion users.
+
+</Section>

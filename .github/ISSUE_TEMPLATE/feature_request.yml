@@ -1,0 +1,19 @@
+name: Feature request
+description: Propose a new token, icon or capability.
+labels: [enhancement, triage]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: Where in a product does this come up, and what do people do today?
+    validations: { required: true }
+  - type: textarea
+    id: proposal
+    attributes: { label: Proposed solution }
+    validations: { required: true }
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Existing pieces considered
+      description: Which current tokens, components or patterns did you try, and why do they not fit?

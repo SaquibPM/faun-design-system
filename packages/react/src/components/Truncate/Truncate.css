@@ -1,0 +1,11 @@
+.faun-truncate { display: block; min-inline-size: 0; max-inline-size: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.faun-truncate[data-cut] { cursor: default; }
+.faun-truncate:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 2px; border-radius: var(--faun-radius-xs); }
+.faun-truncate:where([data-mode="end"][style*="--_lines"]) { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: var(--_lines); line-clamp: var(--_lines); white-space: normal; overflow-wrap: anywhere; }
+/* Start: the ellipsis leads, so the end of the text stays visible. */
+.faun-truncate:where([data-mode="start"]) { direction: rtl; text-align: start; }
+.faun-truncate:where([data-mode="start"]) > bdi { direction: ltr; unicode-bidi: isolate; }
+/* Middle: a shrinking head and a fixed tail. */
+.faun-truncate:where([data-mode="middle"]) { display: flex; overflow: visible; text-overflow: clip; }
+.faun-truncate-head { flex: 0 1 auto; min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; white-space: pre; }
+.faun-truncate-tail { flex: none; white-space: pre; }

@@ -1,0 +1,107 @@
+export const meta = {
+  title: "Input",
+  description: "A single-line text box with optional prefix and suffix. TextField adds the label, help text and error in one component.",
+  category: "Forms",
+  status: "stable",
+  components: ["Input", "PasswordInput", "TextField"],
+  related: ["field", "textarea", "number-field", "search-field"],
+  order: 1,
+};
+
+<Section tab="usage">
+
+<Example of="Input/Overview" layout="start" />
+
+## When to use
+
+- For short free text: names, identifiers, references, URLs.
+- Use `numeric` for figures that must line up, with a unit in the suffix.
+
+## When not to use
+
+- For numbers with steppers and bounds. Use [Number field](/components/number-field).
+- For longer text. Use [Textarea](/components/textarea).
+- For finding things. Use [Search field](/components/search-field).
+- For choosing from a list. Use [Select](/components/select) or [Combobox](/components/combobox).
+
+## Variants
+
+<Example of="Input/Affixes" title="Prefix and suffix" description="Use a prefix for an icon and a suffix for units such as litres or tCO₂e. Numeric inputs right-align with tabular figures." layout="start" />
+
+<DoDont>
+  <Do of="Input/DoSpecificLabel" caption="Use a visible label and a placeholder that shows an example." />
+  <Dont of="Input/DontPlaceholderAsLabel" caption="Use a placeholder as the only label. It disappears when typing and has weak contrast." />
+</DoDont>
+
+<Example of="Input/Password" title="Password" description="Use PasswordInput, or type=&quot;password&quot;. A button reveals the value and its name changes between Show password and Hide password. Turn it off with passwordToggle={false} only where revealing is unsafe." layout="start" />
+
+<Example of="Input/Counter" title="Character counter" description="showCount with maxLength shows the count inside the box. The browser enforces the limit; screen readers hear how many characters are left from 90 percent of the limit." layout="start" />
+
+<Example of="Input/InlineLabel" title="Inline label" description="variant=&quot;inline&quot; on the Field puts the label to the left, for settings forms and filters. It stacks below 640px." layout="start" />
+
+<Example of="Input/FluidLabel" title="Fluid" description="variant=&quot;fluid&quot; moves the label inside a taller box, for dense forms and panels where every row counts. Never hide the label in a fluid field." layout="start" />
+
+## Writing
+
+Labels name the thing in sentence case. Errors say what is wrong and how to fix it: “Enter a year between 2015 and 2026.”
+
+## Warn, read-only and loading
+
+<Example of="Input/StateContract" title="Warn, read-only and skeleton" description="Warn marks a value that is allowed but worth a second look. It is never the same as invalid: it does not set aria-invalid and never blocks submission, and the message carries an icon and text so it is not colour alone. Read-only shows the value flat, keeps it focusable and copyable, and ignores changes. Skeleton replaces the control while its data loads; the label stays for screen readers. Set all three on a Field and every control inside follows." />
+
+Set `warn` (a message), `readOnly` and `skeleton` on the surrounding `Field`. On a standalone text input, pass `readOnly` and `skeleton` directly; give `warn` a message through a Field so it is announced. An error always replaces a warning.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A bordered box with optional prefix, the text control, and optional suffix. Focus replaces the border colour and adds a halo.
+
+## Sizes
+
+<Example of="Input/Sizes" title="Sizes" description="Heights follow the control sizes and the density mode." layout="start" />
+
+## States
+
+<Example of="Input/States" title="Invalid, disabled and read only" layout="start" />
+
+## Tokens
+
+<UsesTokens names={["bg.surface", "border.control", "focus.halo", "fg.placeholder"]} />
+
+<ComponentTokens name="input" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Input/Overview" title="TextField" code="open" layout="start" />
+
+## Notes
+
+- `Input` works on its own or inside a [Field](/components/field), which supplies the id, description and error wiring.
+- `TextField` is Field plus Input. Pass `error` to mark it invalid, `warn` for a warning, `variant` for the inline or fluid layout.
+- `Input` and the other form controls share one state contract: `warn`, `readOnly` and `skeleton` flow from `Field` through `useFieldControl`. Custom controls get the same by calling `useFieldControl(props, { warn, readOnly, skeleton })` and spreading `state.attrs` on the control box.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves focus into and out of the input."], ["Escape", "Does nothing by default. Search fields clear on Escape."]]} />
+
+## Screen readers
+
+- The label, description, warning and error are associated with the input. Errors are announced assertively and warnings politely when they appear.
+- The password button has a fixed-position, named toggle; the counter is part of the input's description.
+
+## Visual
+
+- Borders meet 3:1 against the surface. Placeholder text is a hint only and never the label.
+
+</Section>

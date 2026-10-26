@@ -1,0 +1,9 @@
+.faun-scroll-area { position: relative; overflow: hidden; min-inline-size: 0; }
+.faun-scroll-viewport { inline-size: 100%; block-size: 100%; border-radius: inherit; }
+.faun-scroll-viewport:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: -2px; }
+.faun-scrollbar { display: flex; padding: 2px; user-select: none; touch-action: none; transition: background-color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard); }
+.faun-scrollbar[data-orientation="vertical"] { inline-size: var(--faun-space-2-5); }
+.faun-scrollbar[data-orientation="horizontal"] { flex-direction: column; block-size: var(--faun-space-2-5); }
+.faun-scrollbar:hover { background: var(--faun-gray-a2); }
+.faun-scroll-thumb { position: relative; flex: 1; border-radius: var(--faun-radius-full); background: var(--faun-gray-a7); }
+.faun-scroll-thumb:hover { background: var(--faun-gray-a9); }

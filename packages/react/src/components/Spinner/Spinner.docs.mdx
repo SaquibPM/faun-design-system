@@ -1,0 +1,81 @@
+export const meta = {
+  title: "Spinner",
+  description: "Shows that something is loading when the wait is short and the length is unknown.",
+  category: "Feedback",
+  status: "stable",
+  components: ["Spinner"],
+  related: ["progress", "skeleton", "button"],
+  order: 5,
+};
+
+<Section tab="usage">
+
+<Example of="Spinner/Overview" layout="start" />
+
+## When to use
+
+- For a short wait, up to a few seconds, where the length is unknown: loading a list, saving a form.
+- Inside a button that is running an action (Button has a `loading` prop).
+
+## When not to use
+
+- When you know how far along the work is. Use [Progress](/components/progress).
+- For page or table layouts that load in. Use [Skeleton](/components/skeleton).
+- For agent runs that take minutes. Start the run and show its state with a status badge and a progress indicator.
+
+## Variants
+
+<Example of="Spinner/InButton" title="In a button" description="Button's loading prop shows a spinner, keeps the width and blocks repeat clicks." />
+
+<DoDont>
+  <Do of="Spinner/DoNameTheWait" caption="Say what is happening next to the spinner." />
+  <Dont of="Spinner/DontLongWait" caption="Use a spinner for a long wait. People can't tell if it is stuck. Show progress instead." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A circular track with a rotating arc. The spinner draws in the current text colour, so it matches the context it sits in.
+
+## Sizes
+
+<Example of="Spinner/Sizes" title="Sizes" description="Extra small 12, small 14, medium 16, large 20, extra large 24." layout="start" />
+
+<Example of="Spinner/InheritsColour" title="Colour" description="Set the colour on the parent. Spinners never set their own." layout="start" />
+
+## Motion
+
+One turn per second, linear. With reduced motion the spin slows to a near-still arc.
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Spinner/Overview" title="Spinner with a message" code="open" layout="start" />
+
+## Notes
+
+- `label` defaults to “Loading”. Pass a specific label such as “Drafting ESRS E1-6”, or `label={null}` when a parent already announces the busy state.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+Spinners are not interactive.
+
+## Screen readers
+
+- A spinner is a status with the accessible name from `label`. With `label={null}` it is hidden and the parent must announce progress (a Button sets `aria-busy`).
+
+## Visual
+
+- The arc meets 3:1 against its background. Never rely on the spinner alone: pair it with text when the wait is more than a moment.
+
+</Section>

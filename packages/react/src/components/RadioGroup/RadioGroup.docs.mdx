@@ -1,0 +1,93 @@
+export const meta = {
+  title: "Radio group",
+  description: "Lets people choose exactly one option from a short list, with every option visible.",
+  category: "Forms",
+  status: "stable",
+  components: ["RadioGroup"],
+  related: ["checkbox", "select", "segmented-control"],
+  order: 9,
+};
+
+<Section tab="usage">
+
+<Example of="RadioGroup/Overview" layout="start" />
+
+## When to use
+
+- For one choice from two to about six options that people should compare.
+- When each option needs a description, as with methods or scopes.
+
+## When not to use
+
+- For more than about six options. Use [Select](/components/select).
+- For independent options. Use [Checkbox](/components/checkbox).
+- For on and off. Use [Switch](/components/switch).
+
+## Variants
+
+<Example of="RadioGroup/Cards" title="Card options" description="Use cards for options with a description, icon or meta." layout="start" />
+
+<Example of="RadioGroup/Horizontal" title="Horizontal" description="Use for two or three short options." layout="start" />
+
+<Example of="RadioGroup/WithError" title="Error" description="Say that a choice is needed." layout="start" />
+
+<Example of="RadioGroup/DisabledOption" title="Disabled option" description="Explain why an option is unavailable." layout="start" />
+
+<DoDont>
+  <Do of="RadioGroup/DoShowAllOptions" caption="Show all the options so they can be compared." />
+  <Dont of="RadioGroup/DontToggle" caption="Use radios for on and off. A switch or checkbox is clearer." />
+</DoDont>
+
+## Writing
+
+Make options parallel and sentence case. Put the default first and preselect it where there is a safe default.
+
+## Warn, read-only and loading
+
+<Example of="RadioGroup/StateContract" title="Warn, read-only and skeleton" description="Warn marks a value that is allowed but worth a second look. It is never the same as invalid: it does not set aria-invalid and never blocks submission, and the message carries an icon and text so it is not colour alone. Read-only shows the value flat, keeps it focusable and copyable, and ignores changes. Skeleton replaces the control while its data loads; the label stays for screen readers. Set all three on a Field and every control inside follows." />
+
+Set `warn` (a message), `readOnly` and `skeleton` on the surrounding `Field`. On a standalone radio group, pass `readOnly` and `skeleton` directly; give `warn` a message through a Field so it is announced. An error always replaces a warning.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A labelled group of circular radios with labels and optional descriptions. The card variant draws each option as a bordered tile with the radio at the start.
+
+## Tokens
+
+<UsesTokens names={["accent.solid-bg", "border.control", "bg.selected", "focus.ring"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="RadioGroup/Controlled" title="Controlled value" layout="start" code="open" />
+
+## Notes
+
+- `options` are `{ value, label, description?, icon?, meta?, disabled? }`.
+- The group takes `label` as its accessible name. Use `hideLabel` only when context makes it obvious.
+- `columns` lays cards out in 1, 2 or 3 columns.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves focus into the group, to the selected option or the first."], ["↓ / → ", "Moves to and selects the next option."], ["↑ / ←", "Moves to and selects the previous option."], ["Space", "Selects the focused option."]]} />
+
+## Screen readers
+
+- Announced as a radio group with its label. Each option announces its position, for example “2 of 3”, and its selected state.
+
+## Visual
+
+- Selected radios show a filled centre. Cards add a stronger border and background so selection is clear without colour.
+
+</Section>

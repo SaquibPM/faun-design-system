@@ -1,0 +1,26 @@
+.faun-header-nav { display: flex; align-self: stretch; min-inline-size: 0; }
+.faun-header-nav-list { display: flex; align-items: stretch; gap: var(--faun-space-1); margin: 0; padding: 0; list-style: none; }
+.faun-header-nav-li { display: flex; align-items: stretch; }
+.faun-header-nav-link {
+  position: relative;
+  display: inline-flex; align-items: center; gap: var(--faun-space-1);
+  margin: var(--faun-space-2) 0; padding-inline: var(--faun-space-3);
+  border: 0; border-radius: var(--faun-radius-md);
+  background: transparent; color: var(--faun-fg-muted);
+  font: inherit; font-size: var(--faun-type-label-md-font-size); font-weight: var(--faun-type-label-md-font-weight); line-height: var(--faun-type-label-md-line-height);
+  text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: background-color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard), color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard);
+}
+.faun-header-nav-link:hover { background: var(--faun-bg-hover); color: var(--faun-fg-default); }
+.faun-header-nav-link[data-state="open"] { background: var(--faun-bg-active); color: var(--faun-fg-default); }
+.faun-header-nav-link[data-current] { color: var(--faun-fg-default); font-weight: var(--faun-font-weight-semibold); }
+.faun-header-nav-link[data-current]::after {
+  content: ""; position: absolute; inset-inline: var(--faun-space-3); inset-block-end: calc(var(--faun-space-1) * -1);
+  block-size: var(--faun-border-width-thick); border-radius: var(--faun-radius-full);
+  background: var(--faun-accent-solid-bg);
+}
+.faun-header-nav-link:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 2px; }
+.faun-header-nav-chevron { color: var(--faun-fg-subtle); transition: transform var(--faun-motion-duration-fast) var(--faun-motion-easing-standard); }
+.faun-header-nav-link[data-state="open"] .faun-header-nav-chevron { transform: rotate(180deg); }
+.faun-header-nav[data-narrow] { align-items: center; }
+@media (forced-colors: active) { .faun-header-nav-link[data-current]::after { background: Highlight; } }

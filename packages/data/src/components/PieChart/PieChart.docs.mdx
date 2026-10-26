@@ -1,0 +1,100 @@
+export const meta = {
+  title: "Pie and donut chart",
+  description: "Shows how a whole divides into a few parts. A donut leaves room for the total in the middle.",
+  category: "Data",
+  status: "new",
+  components: ["PieChart"],
+  related: ["bar-chart", "meter-chart", "treemap-chart", "chart-types"],
+  order: 24,
+};
+
+<Section tab="usage">
+
+<Example of="PieChart/Overview" layout="stretch" />
+
+## When to use
+
+- To show the share of a few parts in one whole: emissions by scope, electricity by source, assurance status.
+- Donut, when the total or a headline share should sit in the middle.
+
+## When not to use
+
+- For more than five or six parts. Group the tail as “Other”, or use a treemap or bar chart.
+- To compare values between charts. Use a bar chart; angles are hard to compare.
+- For parts that do not add up to a whole. Use a bar chart.
+
+## Variants
+
+<Example of="PieChart/Donut" layout="stretch" title="Donut" description="variant=&quot;donut&quot; leaves a hole that shows the total by default." />
+
+<Example of="PieChart/DonutCustomCenter" layout="stretch" title="Custom centre" description="centerValue and centerLabel replace the total with a headline, such as the assured share." />
+
+<Example of="PieChart/SliceToggle" layout="stretch" title="Toggle slices" description="toggleSeries lets people hide a slice. The shares recalculate for what is left." />
+
+<Example of="PieChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="PieChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="PieChart/DoFewSlices" caption="Keep to a handful of slices and put the largest first." />
+  <Dont of="PieChart/DontManySlices" caption="Draw many thin slices. Colours repeat in meaning and labels do not fit." />
+</DoDont>
+
+## Writing
+
+Title with the whole and the period: “Emissions by scope, FY2026”. Say in the description which slice is biggest and by how much. Put the unit in `unit`.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, a legend, the plot (one slice per part, optionally with its share written on it, and in a donut the total and a label in the hole) and a tooltip with value and share.
+
+## Colour
+
+Slices take `dataviz.cat-1` to `cat-8` in order. Slices with the id `scope-1`, `scope-2` or `scope-3` take the GHG scope colours. A hairline surface gap separates neighbours; the active slice gets a foreground outline.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.cat-3", "dataviz.grid", "dataviz.axis", "dataviz.surface", "bg.raised", "dataviz.scope-1", "dataviz.scope-2", "dataviz.scope-3"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="PieChart/Overview" layout="stretch" code="open" />
+
+<Example of="PieChart/Donut" layout="stretch" code="open" />
+
+## Notes
+
+- `slices` is `{ id, label, value }[]`. Values must be zero or positive; a zero slice is not drawn but stays in the legend.
+- At most eight slices are drawn; a warning is logged beyond that.
+- `showShares` writes each share on slices wide enough to hold it; shares are always in the tooltip and table.
+- `toggleSeries` makes the legend interactive. Control it with `hiddenSeries` and `onHiddenSeriesChange` (ids of the hidden series), or start from `defaultHiddenSeries`.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. With `toggleSeries`, the legend buttons come before it."], ["Enter / Space", "On a legend entry (when `toggleSeries` is on), shows or hides that series. The last visible one cannot be hidden."], ["Arrow Right / Arrow Down", "Moves to the next slice."], ["Arrow Left / Arrow Up", "Moves to the previous slice."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the slice's name, value and share in a polite live region.
+- The data table lists every slice with its value and share, and the total at the foot.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Marks against the surface meet 3:1 in every theme, and the categorical palette is checked for protan and deutan separation.
+- Slice order is the order you pass, starting at twelve o'clock and running clockwise.
+
+</Section>

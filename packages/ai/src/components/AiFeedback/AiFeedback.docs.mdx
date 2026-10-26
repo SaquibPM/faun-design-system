@@ -1,0 +1,85 @@
+export const meta = {
+  title: "AI feedback",
+  description: "What a person can do with an AI response: rate it, copy it, regenerate it.",
+  category: "AI and agents",
+  status: "new",
+  components: ["AIFeedback"],
+  related: ["ai-chat", "streaming-text", "ai-label"],
+  order: 11,
+};
+
+<Section tab="usage">
+
+<Example of="AiFeedback/Overview" layout="start" />
+
+## When to use
+
+- Under a completed AI response in a chat or beside a generated draft.
+- Wherever the product will actually use the signal: rating feeds evaluation, regenerate reruns the agent.
+
+## When not to use
+
+- While the response is still streaming. Show Stop instead; [Streaming text](/components/streaming-text) does.
+- For approving agent work that needs a decision. Use [Approval card](/components/approval-card).
+
+## Reasons after a low rating
+
+<Example of="AiFeedback/WithReasons" title="What was wrong?" description="After Not helpful, offer three or four reasons as toggle chips. Pressing one sends it and says so." layout="start" height={140} />
+
+## Regenerating
+
+<Example of="AiFeedback/Regenerating" title="Busy state" description="While a new response is generated the button is disabled and named “Regenerating”." layout="start" />
+
+<DoDont>
+  <Do of="AiFeedback/DoOnlyWhatWorks" caption="Show only the controls the product supports." />
+  <Dont of="AiFeedback/DontDeadButtons" caption="Show ratings that go nowhere. If nothing reads the signal, leave them out." />
+</DoDont>
+
+## Writing
+
+Names are short verbs and adjectives: Helpful, Not helpful, Copy, Regenerate. Confirmations are sentences: “Copied to the clipboard.”
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A row of small icon buttons: thumbs up, thumbs down, copy, regenerate. A pressed rating is tinted in the AI colours and carries a pressed state. Reasons are small toggle chips.
+
+## Tokens
+
+<UsesTokens names={["ai.bg", "ai.fg", "fg.muted"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="AiFeedback/WithReasons" title="Rating with reasons" code="open" layout="start" height={140} />
+
+## Notes
+
+- `value` (`helpful`, `not-helpful`, `null`) and `onValueChange` control the rating; pressing the active rating clears it.
+- `text` is copied with the Clipboard API; `onCopy` is called afterwards, and alone it shows Copy too.
+- `hide` removes `rating`, `copy` or `regenerate`.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves between the controls."], ["Enter or Space", "Rates, copies or regenerates."]]} />
+
+## Screen readers
+
+- The controls are a group named “Response actions”. Ratings are toggle buttons with a pressed state.
+- Outcomes are announced politely: “Marked as helpful.”, “Copied to the clipboard.”, “Thanks. Sent: Missing sources.”
+
+## Visual
+
+- Copy swaps its icon for a check and its name for “Copied”, so the change is not colour alone. Targets meet the minimum size.
+
+</Section>

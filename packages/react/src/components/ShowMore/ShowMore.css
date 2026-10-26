@@ -1,0 +1,13 @@
+.faun-show-more { display: grid; gap: var(--faun-space-1-5); justify-items: start; min-inline-size: 0; }
+.faun-show-more-content { min-inline-size: 0; inline-size: 100%; overflow-wrap: anywhere; }
+.faun-show-more-content[style*="--_lines"] { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: var(--_lines); line-clamp: var(--_lines); overflow: hidden; }
+.faun-show-more-toggle {
+  all: unset;
+  display: inline-flex; align-items: center; gap: var(--faun-space-1);
+  padding-block: var(--faun-space-0-5);
+  color: var(--faun-fg-link);
+  font-size: var(--faun-type-label-md-font-size); line-height: var(--faun-type-label-md-line-height); font-weight: var(--faun-type-label-md-font-weight);
+  cursor: pointer;
+}
+.faun-show-more-toggle:hover { color: var(--faun-fg-link-hover); text-decoration: underline; text-underline-offset: 0.2em; }
+.faun-show-more-toggle:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 2px; border-radius: var(--faun-radius-xs); }

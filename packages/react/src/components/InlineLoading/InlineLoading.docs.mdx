@@ -1,0 +1,82 @@
+export const meta = {
+  title: "Inline loading",
+  description: "Shows the progress of one small action beside what started it: Saving, Saved, Save failed.",
+  category: "Feedback",
+  status: "new",
+  components: ["InlineLoading"],
+  related: ["spinner", "button", "toast"],
+  order: 6,
+};
+
+<Section tab="usage">
+
+<Example of="InlineLoading/Overview" layout="start" />
+
+## When to use
+
+- For a short action on one object: saving a draft, matching rows, syncing a connector.
+- When the result should stay next to the control that started it, not interrupt the page.
+
+## When not to use
+
+- For a result people must not miss, such as a failed submission. Use a [Banner](/components/banner) or [Toast](/components/toast).
+- For a bare wait with no result to report. Use a [Spinner](/components/spinner).
+- When progress is measurable. Use [Progress](/components/progress).
+
+## Statuses
+
+<Example of="InlineLoading/Statuses" title="Active, finished and error" description="Inactive shows nothing. Active shows a spinner, finished a check, error an alert. Each status changes the text, so the state is never icon or colour alone." layout="start" />
+
+<DoDont>
+  <Do of="InlineLoading/DoNameTheAction" caption="Name what is happening: “Saving narrative…”." />
+  <Dont of="InlineLoading/DontBareSpinner" caption="Show a spinner with no text. Screen readers hear nothing and sighted users learn little." />
+</DoDont>
+
+## Writing
+
+Use the same verb through the flow: Saving…, Saved. Say what failed and what to do: “Draft not saved. Try again.”
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+An icon (spinner, check or alert) and a text description on one line, in the body-small role. The block keeps a minimum height so layout does not jump when it appears.
+
+## Tokens
+
+<UsesTokens names={["fg.muted", "status.success.fg", "status.danger.fg"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="InlineLoading/Overview" title="Saving a draft" code="open" layout="start" />
+
+## Notes
+
+- Keep the component mounted and change `status` and `description`. A live region that is already in the page announces changes; one that mounts with text may not.
+- `onSuccess` fires once, `successDelay` ms (default 1500) after the status becomes `finished`. Use it to return to `inactive`.
+- To show the outcome on the button itself, use Button's `status`.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+Not interactive.
+
+## Screen readers
+
+- Active and finished text is announced politely (`role="status"`). An error is announced assertively (`role="alert"`).
+- Icons are hidden from assistive technology; the description carries the meaning.
+
+## Visual
+
+- Success and danger text meet 4.5:1. The icon changes with the status, so colour is never the only cue.
+
+</Section>

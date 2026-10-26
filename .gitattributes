@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.svg linguist-detectable
+pnpm-lock.yaml -diff linguist-generated
+packages/*/dist/** linguist-generated

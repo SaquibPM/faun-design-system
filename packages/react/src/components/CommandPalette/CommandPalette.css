@@ -1,0 +1,34 @@
+.faun-command-palette {
+  position: fixed;
+  top: var(--faun-space-16);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: var(--faun-z-modal);
+  display: flex;
+  flex-direction: column;
+  inline-size: min(var(--faun-layout-dialog-md), calc(100vw - var(--faun-space-8)));
+  max-block-size: min(calc(var(--faun-space-32) * 3), calc(100dvh - var(--faun-space-32)));
+  overflow: hidden;
+  border-radius: var(--faun-dialog-radius);
+  border: var(--faun-border-width-hairline) solid var(--faun-border-subtle);
+  background: var(--faun-bg-raised);
+  color: var(--faun-fg-default);
+  box-shadow: var(--faun-elevation-5);
+  outline: none;
+  animation: faun-command-in var(--faun-motion-duration-moderate) var(--faun-motion-easing-enter);
+}
+.faun-command-palette[data-state="closed"] { animation: faun-fade-out var(--faun-motion-duration-fast) var(--faun-motion-easing-exit); }
+@keyframes faun-command-in { from { opacity: 0; transform: translateX(-50%) translateY(calc(var(--faun-space-2) * -1)) scale(0.98); } to { opacity: 1; transform: translateX(-50%); } }
+.faun-command-palette [cmdk-root] { display: flex; flex-direction: column; min-block-size: 0; }
+.faun-command-palette-search { padding: var(--faun-space-3) var(--faun-space-4); }
+.faun-command-palette-list { flex: 1 1 auto; min-block-size: 0; }
+.faun-command-palette [cmdk-group-heading] {
+  padding: var(--faun-space-2) var(--faun-menu-item-px) var(--faun-space-1);
+  color: var(--faun-fg-muted);
+  font-size: var(--faun-type-label-sm-font-size); line-height: var(--faun-type-label-sm-line-height); font-weight: var(--faun-type-label-sm-font-weight);
+}
+.faun-command-palette .faun-listbox-option { grid-template-columns: auto minmax(0, 1fr) auto; }
+.faun-command-palette-shortcut { grid-column: 3; display: inline-flex; }
+.faun-command-palette-hint { display: inline-flex; align-items: center; gap: var(--faun-space-1); }
+@media (max-width: 640px) { .faun-command-palette { top: var(--faun-space-8); } }
+@media (forced-colors: active) { .faun-command-palette { border-color: CanvasText; } }

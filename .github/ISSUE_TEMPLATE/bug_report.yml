@@ -1,0 +1,32 @@
+name: Bug report
+description: Something in Faun looks or behaves wrongly.
+labels: [bug, triage]
+body:
+  - type: dropdown
+    id: package
+    attributes:
+      label: Package
+      options: ["@faun-ds/tokens", "@faun-ds/icons", "@faun-ds/react", "@faun-ds/data", "@faun-ds/ai", "Documentation site"]
+    validations: { required: true }
+  - type: input
+    id: version
+    attributes: { label: Version }
+    validations: { required: true }
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, and what did you expect?
+      description: Include theme, density, browser and a screenshot if it is visual.
+    validations: { required: true }
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+      description: A minimal code sample or a link to a reproduction.
+    validations: { required: true }
+  - type: checkboxes
+    id: a11y
+    attributes:
+      label: Accessibility
+      options:
+        - label: This affects keyboard, screen reader, contrast or motion behaviour.

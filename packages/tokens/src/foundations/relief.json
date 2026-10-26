@@ -1,0 +1,164 @@
+{
+  "$description": "Relief: the shallow-block visual language of charts (ADR 0006). Buttons are flat (ADR 0008). Scalars are plain custom properties that any scope can override. Colours are never written here: the outline, side and wave colours are derived per series slot and per theme from the data-viz colour with color-mix. Textures are SVG tiles consumed through mask-image, so the same tile takes any colour. The wave is a faint grain (ADR 0008).",
+  "chart": {
+    "$namespace": "dataviz-relief",
+    "scalars": {
+      "depth": {
+        "$type": "dimension",
+        "$value": "6px",
+        "$description": "Chart extrusion: how far the side face of a bar, box or slice sits from its front face."
+      },
+      "depth-sm": {
+        "$type": "dimension",
+        "$value": "3px",
+        "$description": "Chart extrusion for thin marks (bullet bars, meters, small tiles)."
+      },
+      "bevel": {
+        "$type": "dimension",
+        "$value": "4px",
+        "$description": "Height of the slanted cap on the side face of a bar. Not larger than the depth."
+      },
+      "outline-width": {
+        "$type": "dimension",
+        "$value": "1px",
+        "$description": "The thin dark outline around a relief face."
+      },
+      "face-mix": {
+        "$type": "percentage",
+        "$value": "24%",
+        "$description": "Share of the series colour in the face tint; the rest is paper. 100% is a solid fill."
+      },
+      "tex-alpha": {
+        "$type": "number",
+        "$value": "0.09",
+        "$description": "Opacity of the wave texture on chart faces. 0 hides it. The wave is the series colour itself laid over the tinted face at low alpha, so it reads as a faint grain: about a 6% tonal step from the face, not as lines (ADR 0008). Hatch themes, print and forced colours set it to 1 with surface-coloured lines."
+      }
+    },
+    "textures": {
+      "$description": "Wave tiles, one per series slot, each with its own direction, amplitude and frequency so series stay separable without colour. Drawn with currentColor; only the alpha channel is used as a mask. `size` is the design grid of the tile, `scale` multiplies it to the rendered tile (so a wave that reads at 100% browser zoom is a bigger tile, not a thicker line), `stroke` is the line width in grid units. Rendered pitch is at least 8 px so waves resolve at 1x (ADR 0007); strokes are thin and the wave is drawn at low alpha so it reads as a soft grain, not lines (ADR 0008).",
+      "wave-1": {
+        "size": [
+          4,
+          12
+        ],
+        "path": "<path d='M2 0Q0.2 3 2 6T2 12'/>",
+        "$description": "Vertical, fine (rendered pitch 8 px).",
+        "scale": 2,
+        "stroke": 0.56
+      },
+      "wave-2": {
+        "size": [
+          12,
+          4
+        ],
+        "path": "<path d='M0 2Q3 0.1 6 2T12 2'/>",
+        "$description": "Horizontal, medium swell (rendered pitch 8 px).",
+        "scale": 2,
+        "stroke": 0.56
+      },
+      "wave-3": {
+        "size": [
+          8,
+          8
+        ],
+        "path": "<path d='M0 8C1 5.6 3 6.4 4 4S7 2.4 8 0'/><path d='M-4 4C-3 1.6-1 2.4 0 0M8 8C9 5.6 11 6.4 12 4'/>",
+        "$description": "Rising diagonal, gentle (rendered pitch 16 px).",
+        "scale": 2,
+        "stroke": 0.56
+      },
+      "wave-4": {
+        "size": [
+          8,
+          8
+        ],
+        "path": "<path d='M0 0C1 2.4 3 1.6 4 4S7 5.6 8 8'/><path d='M-4 4C-3 6.4-1 5.6 0 8M8 0C9 2.4 11 1.6 12 4'/>",
+        "$description": "Falling diagonal, gentle (rendered pitch 16 px).",
+        "scale": 2,
+        "stroke": 0.56
+      },
+      "wave-5": {
+        "size": [
+          16,
+          6
+        ],
+        "path": "<path d='M0 3Q4-0.8 8 3T16 3'/>",
+        "$description": "Horizontal, wide and deep (rendered pitch 12 px).",
+        "scale": 2,
+        "stroke": 0.56
+      },
+      "wave-6": {
+        "size": [
+          6,
+          16
+        ],
+        "path": "<path d='M3 0Q-0.8 4 3 8T3 16'/>",
+        "$description": "Vertical, wide and deep (rendered pitch 12 px).",
+        "scale": 2,
+        "stroke": 0.56
+      },
+      "wave-7": {
+        "size": [
+          6,
+          3
+        ],
+        "path": "<path d='M0 1.5Q1.5 0 3 1.5T6 1.5'/>",
+        "$description": "Horizontal ripple (rendered pitch 9 px).",
+        "scale": 3,
+        "stroke": 0.39
+      },
+      "wave-8": {
+        "size": [
+          8,
+          4
+        ],
+        "path": "<path d='M0 3L2 1L4 3L6 1L8 3'/>",
+        "$description": "Horizontal zigzag (rendered pitch 10 px).",
+        "scale": 2.5,
+        "stroke": 0.39
+      }
+    }
+  },
+  "mix": {
+    "$description": "Percent of the series colour in each derived colour. The rest is ink (outline, wave lines), shade ink (side face) or the chart surface (hatch wave lines). The hatch set is for high-contrast themes, print and forced colours: lines are drawn in the surface colour over a solid fill.",
+    "relief": {
+      "line": 50,
+      "shade": 66,
+      "tex": 100
+    },
+    "hatch": {
+      "line": 50,
+      "shade": 50,
+      "tex": 0
+    }
+  },
+  "colour": {
+    "ink": {
+      "$description": "Colour the outline and the wave lines are mixed towards. Dark on light themes, light on dark themes.",
+      "default": "fg.default"
+    },
+    "ink-shade": {
+      "$description": "Colour the side face and the extruded edge are mixed towards. Always the darker end.",
+      "default": "fg.default",
+      "dark": "bg.canvas",
+      "dark-hc": "bg.canvas"
+    }
+  },
+  "flat": {
+    "chart": {
+      "depth": "0px",
+      "depth-sm": "0px",
+      "bevel": "0px",
+      "face-mix": "100%",
+      "tex-alpha": "0"
+    }
+  },
+  "hatch": {
+    "chart": {
+      "depth": "0px",
+      "depth-sm": "0px",
+      "bevel": "0px",
+      "face-mix": "100%",
+      "tex-alpha": "1"
+    }
+  }
+}

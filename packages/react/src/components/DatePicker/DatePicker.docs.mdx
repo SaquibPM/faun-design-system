@@ -1,0 +1,108 @@
+export const meta = {
+  title: "Date picker",
+  description: "Enter a date or a date range by typing with a format mask and validation, or by choosing from a calendar, with reporting presets such as this quarter and fiscal year.",
+  category: "Forms",
+  status: "stable",
+  components: ["DatePicker", "DateRangePicker", "Calendar"],
+  related: ["field", "input"],
+  order: 6,
+};
+
+<Section tab="usage">
+
+<Example of="DatePicker/Overview" layout="start" />
+
+## When to use
+
+- To pick a reporting date, period start or end, or a due date.
+- To pick a range with quick presets for the usual reporting periods.
+
+## When not to use
+
+- For a date far in the past that people know by heart, such as a birth date. Use separate inputs.
+- For a time of day. Use [Time picker](/components/time-picker).
+
+## Variants
+
+<Example of="DatePicker/Validation" title="Typed entry and validation" description="Typing is masked: digits fill dd/mm/yyyy and the slashes appear for you. A date that does not exist, falls outside min and max, or is disabled is flagged in words under the field and sets aria-invalid. onValidate reports the same result, so you can hand the message to a Field error." layout="start" />
+
+<Example of="DatePicker/Formats" title="Formats" description="inputFormat takes dd/MM/yyyy (default), MM/dd/yyyy or yyyy-MM-dd; the separator can be / - or a full stop. The format is the placeholder." layout="start" />
+
+<Example of="DatePicker/ButtonEntry" title="Button only" description='entry="button" keeps the earlier behaviour: a trigger that shows the date and opens the calendar, with no typing.' layout="start" />
+
+<Example of="DatePicker/Range" title="Date range" description="Two months side by side with presets down the side." layout="start" />
+
+<Example of="DatePicker/FiscalPresets" title="Fiscal year presets" description="Presets follow the fiscal year start month." layout="start" />
+
+<Example of="DatePicker/Limits" title="Limits" description="Disable dates outside the reporting window." layout="start" />
+
+<Example of="DatePicker/Inline" title="Inline calendar" description="Use Calendar when the calendar is the content." layout="start" />
+
+<Example of="DatePicker/WithError" title="Error" description="Pair with a Field error." layout="start" />
+
+<DoDont>
+  <Do of="DatePicker/DoPresets" caption="Offer presets for the periods people report on." />
+  <Do of="DatePicker/DoTypedWithFormat" caption="Show the format, mask the text and offer the calendar. People who know the date type it; others pick." />
+  <Dont of="DatePicker/DontPlainInput" caption="Use a plain input for dates. Nothing stops “31st March”, and every product parses it differently." />
+</DoDont>
+
+## Writing
+
+Label what the date means: “Reporting period”, “Period end”. The placeholder is the format (“dd/mm/yyyy”); do not repeat it in the label. Error messages say what to do: “Enter a date on or after 01/01/2026.”
+
+## Warn, read-only and loading
+
+<Example of="DatePicker/StateContract" title="Warn, read-only and skeleton" description="Warn marks a value that is allowed but worth a second look. It is never the same as invalid: it does not set aria-invalid and never blocks submission, and the message carries an icon and text so it is not colour alone. Read-only shows the value flat, keeps it focusable and copyable, and ignores changes. Skeleton replaces the control while its data loads; the label stays for screen readers. Set all three on a Field and every control inside follows." />
+
+Set `warn` (a message), `readOnly` and `skeleton` on the surrounding `Field`. On a standalone date picker, pass `readOnly` and `skeleton` directly; give `warn` a message through a Field so it is announced. An error always replaces a warning.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A text field with a format mask and a calendar button at the end, a message line under it for problems, and a raised panel with the month grid. A range has a start and an end field in one box. Range pickers add a presets column that collapses above the calendar on narrow screens.
+
+## Tokens
+
+<UsesTokens names={["bg.raised", "bg.selected", "accent.solid-bg", "border.control"]} />
+
+<ComponentTokens name="input" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="DatePicker/Range" title="Date range with presets" layout="start" code="open" />
+
+## Notes
+
+- Dates are `Date` objects. `DateRangePicker` values are `{ from, to }`.
+- `entry` is `typed` (default) or `button`. `inputFormat` sets the mask. `dateFormat` only affects `entry="button"`.
+- Typing: `onValueChange` fires with a `Date` as soon as the text is a complete, real date inside the limits, and with `null` when it stops being one. A range reports only when both ends are valid and in order.
+- `onValidate({ status, message })` reports `empty`, `incomplete`, `valid` or a problem: `invalid`, `before-min`, `after-max`, `disabled`. An incomplete date is only called out after the field loses focus.
+- The ref is now the text input (it was the trigger button) unless `entry="button"`.
+- `presets` accepts your own list, or `false` to hide them. Set `fiscalYearStartMonth` (1 to 12) for fiscal presets.
+- The calendar is styled with Faun CSS. No other stylesheet is needed.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Type", "In the field, digits fill the date; a typed separator pads a one-digit day or month."], ["Alt + ↓", "In the field, opens the calendar."], ["Enter", "On the calendar button, opens the calendar; on a day, selects it."], ["← / → / ↑ / ↓", "Moves between days."], ["Page Up / Page Down", "Moves by month."], ["Shift + Page Up / Down", "Moves by year."], ["Home / End", "Moves to the start or end of the week."], ["Escape", "Closes the calendar."]]} />
+
+## Screen readers
+
+- The field is a text input named by its Field (a range has two, "start date" and "end date", in a group). Its description gives the format and the Alt + ↓ shortcut. A problem is linked with `aria-describedby`, shown as text with an icon and announced politely.
+- The calendar is a grid with day names. The focused day and selected range are announced. Disabled days are announced as unavailable.
+
+## Visual
+
+- Selected days use a fill, not colour alone. Today is marked with bold text and a dot. Day targets meet the minimum size.
+
+</Section>

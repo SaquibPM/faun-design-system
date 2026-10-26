@@ -1,0 +1,106 @@
+export const meta = {
+  title: "Tile",
+  description: "Flat blocks that sit in a grid of peers: tiles you open, choose or expand in place.",
+  category: "Selection",
+  status: "new",
+  components: ["Tile", "ClickableTile", "SelectableTile", "TileGroup", "ExpandableTile"],
+  related: ["card", "radio-group", "checkbox", "accordion"],
+  order: 3,
+};
+
+<Section tab="usage">
+
+<Example of="Tile/Overview" layout="start" />
+
+## When to use
+
+- To choose between a few options that need a title and a line of explanation: a framework, a method, a plan. Use selectable tiles.
+- To send people somewhere from a grid of destinations. Use clickable tiles.
+- To show a short summary with detail that opens in place. Use an expandable tile.
+
+## When not to use
+
+- For a long list of options or short labels. Use a [Radio group](/components/radio-group), [Checkbox](/components/checkbox) or [Select](/components/select).
+- For a block with a header, actions and a footer. Use a [Card](/components/card).
+- For several panels of long content. Use an [Accordion](/components/accordion).
+
+## Variants
+
+<Example of="Tile/Clickable" title="Clickable" description="One link or one button: the whole tile is the target and its text names it. A tile with href is a link; without, a button. Do not put other links or buttons inside." layout="start" />
+
+<Example of="Tile/SelectableCheckbox" title="Selectable, choose several" description="TileGroup with type checkbox. Each tile is a checkbox with its own tab stop. The indicator is a filled check, so selection is not colour alone." layout="start" />
+
+<Example of="Tile/SelectableAlone" title="Selectable on its own" description="A single SelectableTile is one checkbox, like a switch with more to say." layout="start" />
+
+<Example of="Tile/Expandable" title="Expandable" description="The summary is always visible and is the toggle. The detail opens in place." layout="start" />
+
+<Example of="Tile/ReadOnlyGroup" title="Read-only" description="The choice shows but cannot change. Say why in the group description." layout="start" />
+
+<DoDont>
+  <Do of="Tile/DoLabelled" caption="Say where the tile goes: “Open the Scope 3 inventory”." />
+  <Dont of="Tile/DontVague" caption="Label a tile “Click here”. The tile's text is its accessible name." />
+</DoDont>
+
+## Writing
+
+A title in sentence case, then at most one line of detail. For clickable tiles the title is a verb phrase. For selectable tiles it is the thing chosen (“CSRD”, “Market-based”). Keep to text and inline elements inside a tile: a tile is a single control.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A hairline-bordered surface with a body (title and detail). Clickable tiles end with an arrow. Selectable tiles end with an indicator: a square with a check for several, a circle with a dot for one. Expandable tiles end with a chevron that turns when open.
+
+## States
+
+Hover raises the border and tints the surface. Selected uses the brand border and a soft brand fill with a filled indicator. Disabled uses the disabled surface, border and text. Focus draws the focus ring around the whole tile.
+
+## Tokens
+
+<UsesTokens names={["bg.surface", "bg.hover", "bg.brand-soft", "border.subtle", "border.brand", "border.disabled", "accent.solid-bg"]} />
+
+<ComponentTokens name="card" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Tile/Overview" title="Choose one" layout="start" code="open" />
+
+<Example of="Tile/SelectableCheckbox" title="Choose several" layout="start" code="open" />
+
+## Notes
+
+- `TileGroup` renders a fieldset with a required `legend`. `type` is `radio` (default; `value`, `onValueChange`) or `checkbox` (`values`, `onValuesChange`). `disabled` and `readOnly` apply to every tile; `minTileWidth` sets the grid.
+- `SelectableTile` is a native input under the tile, so forms, `name`, `required` and autofill hints work. Give each tile in a group a `value`.
+- `ClickableTile` renders `a` with `href` and `button` without. A disabled link loses its `href` and stays in the tab order as a disabled link; a disabled button leaves it.
+- `ExpandableTile` takes `summary`, `open`, `defaultOpen` and `onOpenChange`. Closed content is hidden from assistive technology.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[
+  ["Tab", "Moves to a clickable tile, a checkbox tile, an expandable tile, or the selected tile of a radio group."],
+  ["Enter / Space", "Activates a clickable tile; Space toggles a checkbox tile; Enter or Space toggles an expandable tile."],
+  ["Arrow keys", "In a radio group, move and choose the next or previous tile."],
+]} />
+
+## Screen readers
+
+- Clickable tiles are a link or a button named by their text. Selectable tiles are checkboxes or radios named by their text, in a fieldset named by the legend, with the description read after it.
+- Expandable tiles are a button with `aria-expanded` and `aria-controls`; the detail is a region named by the button. Collapsed detail is not read.
+- Read-only tiles keep their state and set `aria-readonly`.
+
+## Visual
+
+- Selection is shown by a filled check or dot and a border, not colour alone. In forced-colours mode the selected tile gets a system highlight outline.
+- The focus ring surrounds the whole tile, including when the hidden input has focus.
+
+</Section>

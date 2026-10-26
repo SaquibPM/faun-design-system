@@ -1,0 +1,44 @@
+export const meta = { title: "Contributing", description: "How Faun is built, the bar a component must clear, and how to propose a change.", order: 5 };
+
+## Principles
+
+- **Code is the source of truth.** There is no design file to keep in sync. Tokens are JSON, components are React, and this site is generated from both.
+- **Roles, not values.** Components use semantic tokens only. A hex value or a pixel size in component CSS fails the build.
+- **One way to do a thing.** Before adding a component or a prop, check whether an existing one covers the case.
+
+## Repository
+
+```text
+packages/tokens    DTCG JSON → CSS, Tailwind, JS, JSON; contrast contract
+packages/icons     curated Lucide set + Faun glyphs
+packages/react     core components
+packages/data      table, filters, charts
+packages/ai        agentic components
+apps/docs          this site
+```
+
+```bash
+pnpm install
+pnpm build        # fails on any contrast failure
+pnpm test
+pnpm typecheck
+pnpm --filter @faun-ds/docs dev
+```
+
+## The bar for a component
+
+Each component lives in its own folder with six files: the component, its CSS, tests, examples, docs and an index. Before it is marked stable it must:
+
+1. Use tokens only. `test/css-lint.test.ts` enforces it.
+2. Pass axe in every documented state, and have keyboard tests for every interaction.
+3. Work in all five themes and three densities, at 390px and 1440px.
+4. Forward refs, accept `className`, and spread remaining props to the root element.
+5. Document usage, style, code and accessibility, with a do and a don't for the most common misuse.
+
+## Changing tokens
+
+Edit the JSON in `packages/tokens/src`, then run `pnpm --filter @faun-ds/tokens build`. If a contrast or colour-vision check fails, fix the token. The test is never relaxed without an architecture decision record in `docs/adr`.
+
+## Proposing a change
+
+Open an issue describing the problem in product terms: the screen, the user and what goes wrong today. Include screenshots. Small fixes can go straight to a pull request with a changeset; new components start with a proposal.

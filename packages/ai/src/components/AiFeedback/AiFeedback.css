@@ -1,0 +1,5 @@
+.faun-ai-feedback { display: flex; flex-wrap: wrap; align-items: center; gap: var(--faun-space-2) var(--faun-space-4); min-inline-size: 0; }
+.faun-ai-feedback-bar { display: inline-flex; align-items: center; gap: var(--faun-space-0-5); }
+.faun-ai-feedback-bar [data-pressed] { background: var(--faun-ai-bg); color: var(--faun-ai-fg); }
+.faun-ai-feedback-reasons { display: flex; flex-wrap: wrap; align-items: center; gap: var(--faun-space-2); }
+.faun-ai-feedback-prompt { color: var(--faun-fg-muted); font-size: var(--faun-type-body-sm-font-size); }

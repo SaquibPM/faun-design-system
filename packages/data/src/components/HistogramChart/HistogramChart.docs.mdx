@@ -1,0 +1,96 @@
+export const meta = {
+  title: "Histogram",
+  description: "Counts measurements into ranges to show the shape of a distribution: where values cluster and where the tail is.",
+  category: "Data",
+  status: "new",
+  components: ["HistogramChart"],
+  related: ["boxplot-chart", "bar-chart", "chart-types"],
+  order: 26,
+};
+
+<Section tab="usage">
+
+<Example of="HistogramChart/Overview" layout="stretch" />
+
+## When to use
+
+- To see the spread of one measure across many items: supplier intensity, invoice lead times, meter readings.
+- To check a limit against the whole population with a reference line.
+
+## When not to use
+
+- To compare categories. Use a bar chart.
+- To compare distributions across groups. Use a box plot.
+- For fewer than about twenty values. Show the values themselves.
+
+## Variants
+
+<Example of="HistogramChart/WithThreshold" layout="stretch" title="Limit and median" description="references draws vertical lines on the measure axis. Here, seven suppliers sit above the policy limit." />
+
+<Example of="HistogramChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="HistogramChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="HistogramChart/DoSensibleBins" caption="Choose a bin width people recognise (1, 5, 10) and let the chart count." />
+  <Dont of="HistogramChart/DontTooManyBins" caption="Use more bins than the data supports. The shape turns to noise." />
+</DoDont>
+
+## Writing
+
+Title with the measure and the population: “Supplier emissions intensity distribution”. Name the measure and unit on the axis and say what is counted with `countLabel`.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, the plot (grid, count axis, measure axis with its title, contiguous bars, reference lines) and a tooltip with the range and the count. Bars touch because the ranges are continuous.
+
+## Colour
+
+One categorical colour (`dataviz.cat-1` unless you set `color`). A histogram shows one measure, so it needs no legend.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.cat-3", "dataviz.grid", "dataviz.axis", "dataviz.surface", "bg.raised"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="HistogramChart/Overview" layout="stretch" code="open" />
+
+<Example of="HistogramChart/WithThreshold" layout="stretch" code="open" />
+
+## Notes
+
+- Pass the raw `values`. The chart counts them. Set `binWidth` (in the unit of the values) or `bins`; by default the count follows Sturges' rule between 4 and 20.
+- Bins are half open: a value on a boundary goes in the upper bin, and the maximum goes in the last bin.
+- `references` takes `{ label, value, kind }`. Use `kind: "target"` for a goal and the default for a baseline or limit. Keep to one or two lines so labels stay clear of each other. References are vertical lines on the measure axis.
+- `binValues(values, bins, binWidth)` is exported for building tables or tests from the same counts.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. "], ["Arrow Right / Arrow Down", "Moves to the next bin."], ["Arrow Left / Arrow Up", "Moves to the previous bin."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the range and its count in a polite live region.
+- The data table lists each range and its count, and any reference lines at the foot.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Marks against the surface meet 3:1 in every theme, and the categorical palette is checked for protan and deutan separation.
+- Bin edges are labelled on the axis, not inside the bars, so narrow bars stay legible.
+
+</Section>

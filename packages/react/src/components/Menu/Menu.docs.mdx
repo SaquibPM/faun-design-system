@@ -1,0 +1,98 @@
+export const meta = {
+  title: "Menu",
+  description: "A list of actions or options that opens from a button (dropdown menu) or a right-click (context menu).",
+  category: "Overlays",
+  status: "stable",
+  components: ["DropdownMenuContent", "DropdownMenuItem", "DropdownMenuCheckboxItem", "DropdownMenuRadioItem", "DropdownMenuSubTrigger", "ContextMenuItem"],
+  related: ["button", "icon-button", "popover", "command-palette"],
+  order: 11,
+};
+
+<Section tab="usage">
+
+<Example of="Menu/Overview" height={300} />
+
+## When to use
+
+- To offer several actions on one object without crowding the screen: the actions for an agent, a run or a table row.
+- To switch a view setting, such as visible columns or sort order, from a compact control.
+
+## When not to use
+
+- For the primary action: put it on the page as a button. Menus hide actions.
+- For choosing a value in a form: use a Select or Combobox, which show the current value.
+- To search across the product: use the Command palette.
+- For free-form content or a form: use a Popover.
+
+## Row actions
+
+<Example of="Menu/RowActions" title="Overflow menu" description="An icon button labelled with the object's name opens row actions. Descriptions explain less obvious actions. Submenus group related choices, such as export formats." height={320} />
+
+## Options
+
+<Example of="Menu/Selection" title="Checkbox and radio items" description="Checkbox items toggle independently and keep the menu open. Radio items pick one option from a group. Label each group." height={360} />
+
+## Context menu
+
+<Example of="Menu/Context" title="Right-click" description="Context menus are shortcuts for people who know where to look. Every action in a context menu must also be reachable from a visible control." height={240} />
+
+## Writing items
+
+- Start with a verb in sentence case: “Archive”, “Use in workflow”, “Export run history”.
+- Order by frequency, then group with separators. Put destructive items last, after a separator, in the danger intent.
+- Keep menus under about ten items. If a menu grows longer, split it or move items to a dedicated page.
+
+<DoDont>
+  <Do of="Menu/DoGroup" caption="Lead with common actions, separate destructive ones, and add icons and shortcuts where they help scanning." />
+  <Dont of="Menu/DontLong" caption="Mix destructive items into the middle of a long, ungrouped list." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Each item has an optional leading icon, a label, an optional description line and an optional shortcut hint. Checkbox and radio items reserve an indicator column. The panel sits on elevation 3 with a subtle border and 4px of inner padding; items have a 6px radius and highlight with the neutral hover tint.
+
+## Tokens
+
+<UsesTokens names={["bg.raised", "border.subtle", "bg.hover", "danger.fg", "danger.ghost-bg-hover", "fg.muted"]} />
+
+<ComponentTokens name="menu" />
+
+</Section>
+
+<Section tab="code">
+
+## Controlled checkbox and radio items
+
+<Example of="Menu/Selection" title="View options" code="open" height={360} />
+
+## Notes
+
+- Use `onSelect` on items for actions. For links, pass `asChild` and render an anchor.
+- Checkbox items call `preventDefault` on select so the menu stays open; radio items close it.
+- Shortcuts are display only. Register the key handler yourself, and keep the hint in sync.
+- `DropdownMenuContent` accepts `matchTriggerWidth` for menus attached to wide triggers.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Enter", "Opens the menu from the trigger and focuses the first item; activates the focused item."], ["Space", "Opens the menu; activates the focused item."], ["ArrowDown", "Opens the menu, or moves to the next item."], ["ArrowUp", "Moves to the previous item."], ["ArrowRight", "Opens a submenu."], ["ArrowLeft", "Closes a submenu."], ["Home", "Moves to the first item."], ["End", "Moves to the last item."], ["Escape", "Closes the menu and returns focus to the trigger."], ["Shift + F10", "Opens a context menu from the keyboard."]]} />
+
+## Screen readers
+
+- The panel has the `menu` role; items are `menuitem`, `menuitemcheckbox` or `menuitemradio` with their checked state.
+- Typing a letter moves to the next item starting with it.
+- Icons and shortcut hints are hidden from assistive technology so the label is read cleanly. Icon-button triggers must name the object, for example “Actions for CSRD Discovery”.
+
+## Visual
+
+- Destructive items use the danger text colour, which meets 4.5:1 on the menu surface and on the hover tint in every theme.
+- Items are at least 32px tall, above the 24px target minimum.
+
+</Section>

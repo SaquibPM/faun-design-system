@@ -1,0 +1,17 @@
+.faun-ai-slot {
+  position: relative;
+  display: grid; gap: var(--faun-space-2);
+  min-inline-size: 0;
+  padding: var(--faun-space-2);
+  border: var(--faun-border-width-hairline) solid transparent;
+  border-radius: var(--faun-radius-lg);
+  transition: background-color var(--faun-motion-duration-moderate) var(--faun-motion-easing-standard), border-color var(--faun-motion-duration-moderate) var(--faun-motion-easing-standard);
+}
+.faun-ai-slot:where([data-kind="block"]) { padding: var(--faun-space-4); gap: var(--faun-space-3); }
+.faun-ai-slot:where([data-state="suggested"]) { background: var(--faun-ai-bg); border-color: var(--faun-ai-border); border-style: dashed; }
+.faun-ai-slot:where([data-state="edited"]) { border-color: var(--faun-border-subtle); }
+.faun-ai-slot-head { display: flex; align-items: center; justify-content: flex-start; }
+.faun-ai-slot-body { min-inline-size: 0; }
+.faun-ai-slot:where([data-state="suggested"]) .faun-ai-slot-body :where(input, textarea, select) { background: var(--faun-bg-surface); }
+.faun-ai-slot-actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--faun-space-2); }
+@media (forced-colors: active) { .faun-ai-slot:where([data-state="suggested"]) { border-color: Highlight; } }

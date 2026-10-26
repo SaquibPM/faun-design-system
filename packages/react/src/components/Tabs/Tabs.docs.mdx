@@ -1,0 +1,105 @@
+export const meta = {
+  title: "Tabs",
+  description: "Switch between related panels of content in the same context. Line tabs for sections, contained tabs for grouped panels, segmented tabs for views of the same data.",
+  category: "Navigation",
+  status: "stable",
+  components: ["Tabs", "TabsList", "TabsTrigger", "TabsContent"],
+  related: ["segmented-control", "stepper"],
+  order: 10,
+};
+
+<Section tab="usage">
+
+<Example of="Tabs/Overview" height={140} />
+
+## When to use
+
+- To split one object into sections people move between freely: a report's overview, datapoints, gaps and history.
+- To switch between views of the same data, such as table and chart, with the segmented variant.
+- When every section is about the same thing and people rarely need two at once.
+
+## When not to use
+
+- For a sequence people must complete in order: use a Stepper.
+- For navigation between different pages or objects: use the side navigation or Breadcrumbs.
+- For a single setting with two or three values inside a form: use a Segmented control or Radio group.
+
+## Variants
+
+<Example of="Tabs/WithIcons" title="With icons and counts" description="Icons help scanning when there are five or more tabs. Counts show how much is behind a tab; keep them for numbers that matter, such as items needing review." height={140} />
+
+<Example of="Tabs/Contained" title="Contained" description="Tabs joined to a bordered panel. Use inside cards and dense pages where the line variant would blend in." height={160} />
+
+<Example of="Tabs/Segmented" title="Segmented" description="A compact pill group for switching the view of the same content. Put it in a toolbar, aligned to the content it changes." height={180} />
+
+<Example of="Tabs/Overflow" title="Overflow" description="When tabs don't fit, the row scrolls horizontally with fades at the edges, and the selected tab is kept in view. Content passed to end stays fixed beside the scroller." height={140} />
+
+<Example of="Tabs/Vertical" title="Vertical" description="For settings pages with many sections. Set orientation=&quot;vertical&quot;; arrow keys follow the orientation." height={200} />
+
+## Content
+
+- Use one or two words per tab, in sentence case. Nouns, not actions.
+- Keep the order stable. Don't reorder tabs based on use.
+- Disable a tab only when the reason is obvious from context; otherwise show it and explain inside the panel.
+
+<DoDont>
+  <Do of="Tabs/DoShort" caption="Name sections with short nouns. Add a count when it signals work." />
+  <Dont of="Tabs/DontSteps" caption="Use tabs for ordered steps. Tabs let people jump anywhere; use a Stepper." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A tab list and panels. Each tab has a label with an optional leading icon and count. The selected tab's label turns semibold, with width reserved so neighbours never shift.
+
+## Variants
+
+- **Line**: a 2px accent indicator on a hairline divider. The first tab aligns with the content edge.
+- **Contained**: the selected tab joins a bordered panel on the surface colour.
+- **Segmented**: a sunken track with a raised selected segment.
+
+## Sizes
+
+Medium tabs are 40px tall; small tabs are 32px for side panels and toolbars.
+
+## Tokens
+
+<UsesTokens names={["fg.muted", "fg.default", "border.default", "accent.solid-bg", "accent.soft-bg", "bg.raised"]} />
+
+<ComponentTokens name="tabs" />
+
+</Section>
+
+<Section tab="code">
+
+<Example of="Tabs/WithIcons" title="Icons and counts" code="open" height={140} />
+
+## Notes
+
+- Built on Radix Tabs. Use `value` and `onValueChange` to control selection, for example to sync with the URL.
+- Tabs activate on focus by default. Set `activationMode="manual"` when a panel is expensive to render.
+- `TabsTrigger` takes `icon` and `count`; numeric counts are formatted with thousands separators.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves focus into the tab list, to the selected tab, then into the panel."], ["Left / Right arrow", "Moves to the previous or next tab and shows it. Up and Down in vertical tabs."], ["Home / End", "Moves to the first or last tab."]]} />
+
+## Screen readers
+
+- The list has the `tablist` role and needs a name: pass `aria-label`, or `aria-labelledby` pointing at a visible heading.
+- Each tab is linked to its panel, and panels are named by their tab.
+- Counts are read as part of the tab name, so “Gaps 12” is announced. Make sure the number makes sense in that position.
+
+## Visual
+
+- The selected tab is marked by weight and the indicator, not by colour alone.
+- In Windows high-contrast mode the indicator uses the system highlight colour.
+
+</Section>

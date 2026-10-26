@@ -1,0 +1,83 @@
+export const meta = {
+  title: "Data quality cell",
+  description: "A reported figure paired with how far it can be trusted: actual, evidenced, estimated, partial, missing or gap.",
+  category: "Data",
+  status: "new",
+  components: ["DataQualityCell"],
+  related: ["data-table", "badge", "stat"],
+  order: 3,
+};
+
+<Section tab="usage">
+
+<Example of="DataQualityCell/Overview" />
+
+## When to use
+
+- In a table column or detail row where a disclosed figure may be estimated, partial or missing.
+- Anywhere a number goes into a report and a reviewer needs to see its provenance.
+
+## When not to use
+
+- For workflow state such as draft or approved. Use StatusBadge with the lifecycle or approval domain.
+- For a figure that is always an actual. Show the number alone.
+
+## Variants
+
+<Example of="DataQualityCell/AllStates" layout="start" title="States" description="Actual and evidenced are success. Estimated and partial are warning, because they need a second look. Missing and gap are danger." />
+
+<Example of="DataQualityCell/Numeric" layout="start" title="In a numeric column" description="numeric end-aligns the cell and puts the figure on the outer edge so digits line up down the column." />
+
+<DoDont>
+  <Do of="DataQualityCell/DoStateWithFigure" caption="Keep the figure and say where it came from. An estimate is still useful." />
+  <Dont of="DataQualityCell/DontHideMissing" caption="Show a zero for something nobody measured. A zero is a claim." />
+</DoDont>
+
+## Writing
+
+Source lines are short and specific: “Utility invoices, Jan to Dec 2025”, “Spend-based, EEIO factors”. Do not repeat the state in the source.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+The figure in tabular numerals with its unit in a quieter colour, then a StatusBadge from the `data-quality` domain of the status map, then an optional source line.
+
+## Tokens
+
+<UsesTokens names={["fg.default", "fg.muted", "fg.subtle", "status.success.fg", "status.warning.fg", "status.danger.fg"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="DataQualityCell/Numeric" layout="start" code="open" />
+
+## Notes
+
+- The tone, icon and label come from `@faun-ds/tokens/status-map` (`data-quality`). Products extend the map; they do not add tones here.
+- Omit `value` for `missing` and `gap`. The cell shows a dash and speaks “No value”.
+- A real `"0"` is a value and stays visible.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+The cell is not interactive.
+
+## Screen readers
+
+- The badge carries the quality as text (“Estimated”), read after the figure. The icon is decorative.
+- A missing value is announced as “No value”, then the state.
+
+## Visual
+
+- State is icon plus label plus tone, never colour alone. Tones meet 4.5:1 on their backgrounds.
+
+</Section>

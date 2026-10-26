@@ -1,0 +1,28 @@
+name: Consumer smoke (registry)
+
+# After publishing under the `next` dist-tag: installs the published packages from the npm registry into a fresh Vite
+# and Next.js app and loads both in Chromium. Run this before promoting `next` to `latest` (docs/RELEASING.md).
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "dist-tag or exact version to install"
+        type: string
+        default: next
+
+permissions:
+  contents: read
+
+jobs:
+  registry-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - run: node scripts/consumer-smoke.mjs --registry --tag "${{ inputs.tag }}"

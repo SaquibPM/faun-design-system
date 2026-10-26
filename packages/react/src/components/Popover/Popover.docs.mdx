@@ -1,0 +1,97 @@
+export const meta = {
+  title: "Popover",
+  description: "A floating panel anchored to a trigger, for details, quick settings and small forms that don't need a full dialog.",
+  category: "Overlays",
+  status: "stable",
+  components: ["PopoverContent", "PopoverHeader"],
+  related: ["dialog", "hover-card", "menu", "tooltip"],
+  order: 10,
+};
+
+<Section tab="usage">
+
+<Example of="Popover/Overview" height={260} />
+
+## When to use
+
+- To show supporting detail on demand: the source of a factor, the calculation behind a figure, the definition of an ESRS datapoint.
+- For a quick setting or a short form of one or two fields that applies to what's on screen.
+- As the container for filters, pickers and custom menus.
+
+## When not to use
+
+- For a short, non-interactive hint on hover: use a Tooltip.
+- For a list of actions: use a Menu, which brings arrow-key navigation and typeahead.
+- For tasks that need focus, several fields or a confirmation: use a Dialog or a Sheet.
+- For a preview of a linked object on hover: use a Hover card.
+
+## With a form
+
+<Example of="Popover/WithForm" title="Quick setting" description="Give popovers that contain inputs a title, a close button and explicit Cancel and Apply actions. Changes apply only on Apply." height={340} />
+
+## Sizes
+
+<Example of="Popover/Sizes" title="Width" description="Small (240px) for short notes, medium (320px) by default, large (420px) for forms. Use auto for content that sets its own width, such as a calendar." height={240} />
+
+<Example of="Popover/Caret" title="Caret and alignment" description="Add arrow to point at the trigger. The caret has its own border and follows align: with start or end it sits near that edge of the panel, so it stays over a narrow trigger. A panel with a caret does not scroll; keep it short." height={220} />
+
+<Example of="Popover/Inverse" title="Inverse tone" description="A dark, high-contrast panel for a short hint or an announcement. It never holds a form." height={220} />
+
+<DoDont>
+  <Do of="Popover/DoSupplementary" caption="Use a popover for detail people can choose to look at, like why a figure is estimated." />
+  <Dont of="Popover/DontEssential" caption="Hide a required step, such as an approval, inside a popover. Use a dialog or put it on the page." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A popover is a raised surface with an optional header (title and description), a body, an optional footer of actions, an optional close button and an optional caret (`arrow`). It sits on elevation 3 with a subtle border, so it reads in every theme including high contrast.
+
+<Example of="Popover/IconTrigger" title="Anchored to an icon button" description="Align the panel to the end of the trigger when the trigger sits at the right edge of a toolbar." height={220} />
+
+## Tokens
+
+<UsesTokens names={["bg.raised", "bg.inverse", "fg.inverse", "border.subtle", "fg.default", "fg.muted"]} />
+
+<ComponentTokens name="popover" />
+
+</Section>
+
+<Section tab="code">
+
+## Controlled
+
+Pass `open` and `onOpenChange` to `Popover` to control it, for example to close it after an async save. `PopoverClose` closes the popover from any element inside it.
+
+<Example of="Popover/WithForm" title="Form with close actions" code="open" height={340} />
+
+## Notes
+
+- `PopoverContent` portals to the body and flips to stay inside the viewport (`collisionPadding` 8px).
+- Use `flush` to drop the padding when the content manages its own layout, such as a list or calendar.
+- `align` defaults to `start`; `side` defaults to `bottom`. `arrowPadding` keeps the caret 16px from the corner.
+- `tone="inverse"` switches to the inverse surface; `arrow` draws a bordered caret.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Enter", "Opens the popover from a focused trigger."], ["Space", "Opens the popover from a focused trigger."], ["Tab", "Moves focus through the popover's content, then back out."], ["Escape", "Closes the popover and returns focus to the trigger."]]} />
+
+## Screen readers
+
+- The trigger announces its expanded state with `aria-expanded` and points to the panel with `aria-controls`.
+- The panel has the `dialog` role. Give it a name with a `PopoverHeader` title or `aria-label` on `PopoverContent`.
+- Focus moves into the popover when it opens and returns to the trigger when it closes.
+
+## Visual
+
+- The surface uses a 1px border as well as a shadow, so its edge stays visible in high-contrast themes, where shadows are removed.
+- Text inside follows the normal contrast contract: 4.5:1 for muted text, 7:1 for body text.
+
+</Section>

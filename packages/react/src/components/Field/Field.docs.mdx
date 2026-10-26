@@ -1,0 +1,90 @@
+export const meta = {
+  title: "Field",
+  description: "Wraps one form control with its label, help text and error, and wires the ids and ARIA for you.",
+  category: "Forms",
+  status: "stable",
+  components: ["Field", "Fieldset"],
+  related: ["input", "select", "checkbox"],
+  order: 2,
+};
+
+<Section tab="usage">
+
+<Example of="Field/Overview" layout="start" />
+
+## When to use
+
+- Around every form control that is not already a TextField: selects, comboboxes, date pickers, sliders.
+- Use `Fieldset` to group related fields under one legend.
+
+## When not to use
+
+- Around a checkbox or switch that has its own label and description.
+- To lay out a form. Use Stack, Inline or Grid.
+
+## Variants
+
+<Example of="Field/Error" title="Error" description="Setting error marks the control invalid, links the message to it and announces it." layout="start" />
+
+<Example of="Field/OptionalAndAction" title="Optional fields and label actions" description="Mark Optional only when most fields in the form are required. The action slot holds a link or a count." layout="start" />
+
+<Example of="Field/Grouped" title="Fieldset" description="A legend names the group for assistive technology." layout="start" />
+
+<Example of="Field/Warn" title="Warning" description="warn shows an icon-and-text message for a value that is allowed but worth a second look. It does not set aria-invalid. An error replaces it." layout="start" />
+
+<Example of="Field/Inline" title="Inline and fluid" description="variant=&quot;inline&quot; puts the label beside the control; variant=&quot;fluid&quot; puts it inside a taller box. Both work with Input, Textarea and the select family." layout="start" />
+
+<DoDont>
+  <Do of="Field/DoSpecificError" caption="Say what is wrong and how to fix it." />
+  <Dont of="Field/DontVagueError" caption="Write “Invalid input.” People can't tell what to change." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Label row (label, required mark or Optional, optional action), the control, help text, and error with an icon. Help text and error use the caption and body-small roles.
+
+## States
+
+Default, required (asterisk, hidden from screen readers because the control carries `aria-required`), invalid (danger text and icon), warn (amber text and icon), read-only (flat nested surface), skeleton (shimmering placeholder) and disabled. All controls draw the same states from the same `data-invalid`, `data-warn`, `data-readonly` and `data-skeleton` attributes.
+
+## Tokens
+
+<UsesTokens names={["fg.default", "fg.muted", "fg.disabled"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Field/Overview" title="Field around a Select" code="open" layout="start" />
+
+## Notes
+
+- Controls built on `useFieldControl` (Input, Select, Combobox and the other form controls) pick up the id, `aria-describedby`, `aria-invalid`, required and disabled from the Field.
+- Use `hideLabel` only when the purpose is obvious from context. The label stays available to screen readers.
+- Pass `controlId` when you need a stable id.
+- `warn`, `readOnly` and `skeleton` apply to every control inside the Field. Skeleton keeps the label for screen readers, disables the control and hides the description and messages.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+Field is not interactive. Focus goes to the control.
+
+## Screen readers
+
+- The label is associated with the control. Description and error are listed in `aria-describedby`, and the error is announced with `role="alert"`. A warning uses `role="status"`, so it is read politely.
+
+## Visual
+
+- Error and warning text meet 4.5:1 and always have an icon, so neither relies on colour.
+- Read-only fields stay focusable and keep full-contrast text; disabled fields do not.
+
+</Section>

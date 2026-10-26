@@ -1,0 +1,76 @@
+.faun-tag {
+  display: inline-flex; align-items: center; gap: var(--faun-space-1);
+  block-size: var(--faun-tag-height);
+  padding-inline: var(--faun-tag-px);
+  border: var(--faun-border-width-hairline) solid var(--faun-border-default);
+  border-radius: var(--faun-tag-radius);
+  background: var(--faun-bg-surface);
+  color: var(--faun-fg-default);
+  font-size: var(--faun-type-label-sm-font-size);
+  line-height: var(--faun-type-label-sm-line-height);
+  font-weight: var(--faun-type-label-sm-font-weight);
+  white-space: nowrap;
+  vertical-align: middle;
+  max-inline-size: 100%;
+}
+.faun-tag:where([data-size="lg"]) { block-size: var(--faun-size-control-sm); padding-inline: var(--faun-space-3); font-size: var(--faun-type-label-md-font-size); line-height: var(--faun-type-label-md-line-height); }
+.faun-tag:where([data-size="sm"]) { block-size: var(--faun-badge-height-sm); padding-inline: var(--faun-space-1-5); }
+.faun-tag:where([data-removable]) { padding-inline-end: 2px; }
+.faun-tag:where([data-variant="filter"]) { background: var(--faun-accent-soft-bg); border-color: var(--faun-accent-outline-border); color: var(--faun-accent-soft-fg); }
+.faun-tag:where([data-variant="filter"]) .faun-tag-icon, .faun-tag:where([data-variant="filter"]) .faun-tag-remove { color: inherit; }
+.faun-tag:where([data-variant="operational"]) { border-color: var(--faun-border-control); background: var(--faun-bg-surface); }
+.faun-tag:where([data-selected]) { background: var(--faun-accent-soft-bg); border-color: var(--faun-accent-outline-border); color: var(--faun-accent-soft-fg); }
+.faun-tag:where([data-selected]) .faun-tag-icon { color: inherit; }
+.faun-tag:where([data-interactive]) { padding-inline: 0; }
+.faun-tag:where([data-interactive][data-removable]) { padding-inline-end: 2px; }
+.faun-tag:where([data-interactive]):hover { background: var(--faun-bg-hover); border-color: var(--faun-border-control-hover); }
+.faun-tag:where([data-interactive][data-selected]):hover { background: var(--faun-accent-soft-bg-hover); }
+.faun-tag:where([data-disabled]) { color: var(--faun-fg-disabled); border-color: var(--faun-border-disabled); background: transparent; cursor: not-allowed; }
+.faun-tag:where([data-disabled]) :is(.faun-tag-icon, .faun-tag-remove) { color: var(--faun-fg-disabled); }
+.faun-tag-action {
+  display: inline-flex; align-items: center; gap: var(--faun-space-1);
+  min-inline-size: 0; block-size: 100%;
+  padding: 0 var(--faun-tag-px);
+  border: 0; border-radius: inherit; background: transparent; color: inherit;
+  font: inherit; line-height: inherit; white-space: nowrap; cursor: pointer;
+}
+.faun-tag:where([data-size="sm"]) .faun-tag-action { padding-inline: var(--faun-space-1-5); }
+.faun-tag:where([data-size="lg"]) .faun-tag-action { padding-inline: var(--faun-space-3); }
+.faun-tag-action:disabled { cursor: not-allowed; }
+.faun-tag-action:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 2px; }
+.faun-tag-group { display: flex; flex-wrap: wrap; align-items: center; gap: var(--faun-space-1-5); min-inline-size: 0; }
+.faun-tag-group-overflow { padding: var(--faun-space-3); }
+.faun-tag:where([data-variant="framework"]) { background: var(--faun-neutral-soft-bg); border-color: transparent; font-family: var(--faun-font-family-mono); font-size: var(--faun-type-code-sm-font-size); font-weight: var(--faun-font-weight-medium); letter-spacing: 0; color: var(--faun-fg-default); }
+.faun-tag:where([data-variant="brand"]) { background: var(--faun-accent-soft-bg); border-color: transparent; color: var(--faun-accent-soft-fg); }
+.faun-tag-icon { display: inline-flex; flex: none; color: var(--faun-fg-muted); }
+.faun-tag-icon > svg { inline-size: var(--faun-size-icon-sm); block-size: var(--faun-size-icon-sm); }
+.faun-tag-label { min-inline-size: 0; overflow: hidden; text-overflow: ellipsis; }
+.faun-tag-remove { display: inline-grid; place-items: center; inline-size: var(--faun-space-5); block-size: var(--faun-space-5); padding: 0; border: 0; border-radius: var(--faun-radius-xs); background: transparent; color: var(--faun-fg-muted); cursor: pointer; }
+.faun-tag-remove:hover { background: var(--faun-bg-hover); color: var(--faun-fg-default); }
+.faun-tag-remove:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 0; }
+
+.faun-filter-chip {
+  display: inline-flex; align-items: center; gap: var(--faun-space-1-5);
+  block-size: var(--faun-size-control-sm);
+  padding-inline: var(--faun-space-2-5);
+  border: var(--faun-border-width-hairline) dashed var(--faun-border-control);
+  border-radius: var(--faun-radius-full);
+  background: transparent;
+  color: var(--faun-fg-default);
+  font: inherit;
+  font-size: var(--faun-type-label-md-font-size);
+  font-weight: var(--faun-type-label-md-font-weight);
+  line-height: var(--faun-type-label-md-line-height);
+  white-space: nowrap;
+  cursor: pointer;
+  transition: background-color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard), border-color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard);
+}
+.faun-filter-chip:where([data-size="sm"]) { block-size: var(--faun-size-control-xs); padding-inline: var(--faun-space-2); font-size: var(--faun-type-label-sm-font-size); }
+.faun-filter-chip:hover { background: var(--faun-bg-hover); border-color: var(--faun-border-control-hover); }
+.faun-filter-chip[aria-pressed="true"] { border-style: solid; border-color: var(--faun-accent-outline-border); background: var(--faun-accent-soft-bg); color: var(--faun-accent-soft-fg); }
+.faun-filter-chip[aria-pressed="true"]:hover { background: var(--faun-accent-soft-bg-hover); }
+.faun-filter-chip:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 2px; }
+.faun-filter-chip:disabled { color: var(--faun-fg-disabled); border-color: var(--faun-border-disabled); cursor: not-allowed; background: transparent; }
+.faun-filter-chip-count { color: var(--faun-fg-muted); font-feature-settings: var(--faun-font-feature-numeric); font-weight: var(--faun-font-weight-regular); }
+.faun-filter-chip[aria-pressed="true"] .faun-filter-chip-count { color: inherit; }
+@media (forced-colors: active) { .faun-tag, .faun-filter-chip { border-color: CanvasText; } .faun-tag:where([data-selected]) { outline: var(--faun-border-width-thick) solid Highlight; } }

@@ -1,0 +1,94 @@
+export const meta = {
+  title: "Prompt composer",
+  description: "Where a person tells an agent what to do: a growing text box, a slot for attachments, and Send that becomes Stop.",
+  category: "AI and agents",
+  status: "new",
+  components: ["PromptComposer"],
+  related: ["textarea", "streaming-text", "file-upload", "tag"],
+  order: 8,
+};
+
+<Section tab="usage">
+
+<Example of="PromptComposer/Overview" layout="start" />
+
+## When to use
+
+- To start a run, ask a question or give an agent an instruction.
+- Under a conversation with an agent, or at the foot of a panel that acts on the current filing.
+
+## When not to use
+
+- For a long form field such as a narrative. Use [Textarea](/components/textarea) in a [Field](/components/field).
+- For a single search term. Use [Search field](/components/search-field).
+
+## Variants
+
+<Example of="PromptComposer/WithAttachments" title="Attachments and tools" description="Put files and context above the text with the attachments slot, and controls such as an attach button in actions." layout="start" />
+
+<Example of="PromptComposer/Running" title="Running" description="While the agent answers, Send becomes Stop. The person can keep typing the next message." layout="start" />
+
+<Example of="PromptComposer/ModEnter" title="Enter adds a line" description="For long instructions, send with Ctrl or Cmd+Enter." layout="start" />
+
+<Example of="PromptComposer/Disabled" title="Disabled" layout="start" />
+
+<DoDont>
+  <Do of="PromptComposer/DoShortPlaceholder" caption="Use a short placeholder that gives an example of what to ask." />
+  <Dont of="PromptComposer/DontInstructionsInPlaceholder" caption="Explain how to use the box in the placeholder. It disappears as soon as someone types." />
+</DoDont>
+
+## Writing
+
+- Give the box a label that says who is listening: “Message to the CSRD Filing Orchestrator”. It is read by screen readers and need not be visible.
+- Use the hint for what the agent can see or what Enter does, in one sentence.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+One rounded surface that holds an attachments row, an auto-growing text box (one to eight lines), a toolbar with your actions on the start side, and Send or Stop on the end side. A hint sits below.
+
+## States
+
+Empty (Send off), ready, running (Stop), disabled. The whole surface shows the focus ring when the text box has focus.
+
+## Tokens
+
+<UsesTokens names={["bg.surface", "border.control", "focus.ring", "focus.halo", "fg.muted"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="PromptComposer/Overview" title="Send a message" code="open" layout="start" />
+
+<Example of="PromptComposer/WithAttachments" title="With attachments" code="open" layout="start" />
+
+## Notes
+
+- Works controlled (`value` and `onValueChange`) or uncontrolled (`defaultValue`). An uncontrolled composer clears itself after `onSend`. A controlled one leaves clearing to you.
+- `onSend` receives trimmed text. Send is off for empty text unless `allowEmpty` is set.
+- Enter is ignored while an input method is composing, so people typing in Japanese or Hindi are never cut off.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Enter", "Sends. With submitKey mod-enter, adds a line."], ["Shift+Enter", "Adds a line."], ["Ctrl+Enter or Cmd+Enter", "Sends when submitKey is mod-enter."], ["Tab", "Moves from the text box to your actions, then to Send or Stop."]]} />
+
+## Screen readers
+
+- The text box has an accessible name from `label`, and the hint is its description.
+- Send and Stop are labelled buttons with a tooltip that shows the shortcut.
+
+## Visual
+
+- Controls meet the minimum target size. The surface and the buttons show visible focus.
+
+</Section>

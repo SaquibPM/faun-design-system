@@ -1,0 +1,163 @@
+export const meta = {
+  title: "Data table",
+  description: "A dense, sortable table for datapoints, suppliers, runs and evidence, with row selection, pagination, expandable rows, a column menu, optional virtualisation, sticky header, density and built-in loading, empty and error states.",
+  category: "Data",
+  status: "new",
+  components: ["DataTable"],
+  related: ["filter-bar", "data-quality-cell", "pagination", "empty-state", "tree"],
+  order: 2,
+};
+
+<Section tab="usage">
+
+<Example of="DataTable/Overview" layout="stretch" />
+
+## When to use
+
+- To compare many records across the same attributes: CSRD datapoints, suppliers, agent runs, evidence items.
+- When people sort, scan and select rows rather than read each one in turn.
+
+## When not to use
+
+- For one record with many attributes. Use a description list.
+- For a handful of figures that lead a page. Use a Stat row.
+- For layout. A table holds data, not page structure.
+
+## Variants
+
+<Example of="DataTable/Selectable" layout="stretch" title="Selectable rows" description="Add selectable for bulk actions. The header checkbox shows a mixed state, and a bar with the count and your actions appears once something is selected." />
+
+<Example of="DataTable/SingleSelect" layout="stretch" title="Single select" description="selectionMode=&quot;single&quot; swaps checkboxes for radio buttons. Choosing a row replaces the previous choice, and there is no select-all or selection bar. Use it to pick one record for an action." />
+
+<Example of="DataTable/WithToolbar" layout="stretch" title="Toolbar" description="toolbar takes a DataTableToolbar with search, filters and actions; rowSizeMenu adds a Row height menu. Once rows are selected the selection bar takes the toolbar's place, and the toolbar returns when the selection clears." />
+
+<Example of="DataTable/RowActions" layout="stretch" title="Row actions" description="DataTableRowActions shows icon buttons for one or two actions and an overflow menu for more, or for any destructive action. On devices with a pointer the actions appear on row hover and stay while focused or open; on touch they are always shown. They switch off while rows are selected for a batch action." />
+
+<Example of="DataTable/Zebra" layout="stretch" title="Zebra stripes" description="zebra alternates the row background. Use it on wide tables where the eye loses its row; hover and selection stay stronger than the stripe." />
+
+<Example of="DataTable/StickyColumn" layout="stretch" title="Sticky first column" description="stickyFirstColumn keeps the selection column and the first data column in view while the rest scrolls sideways." />
+
+<Example of="DataTable/StickyHeader" layout="stretch" title="Sticky header" description="Set stickyHeader and a maxHeight so the header stays in view while the body scrolls." />
+
+<Example of="DataTable/Resizable" layout="stretch" title="Resizable columns" description="resizableColumns adds a drag handle on each header edge. Focus the handle and press the left and right arrow keys to resize without a pointer." />
+
+<Example of="DataTable/Paginated" layout="stretch" title="Pagination" description="paginated slices the sorted rows into pages and shows the Pagination component below, with an optional rows-per-page picker. Selection is kept across pages." />
+
+<Example of="DataTable/ServerPaginated" layout="stretch" title="Server-side pagination" description="Pass totalRows and control page and pageSize. data holds only the current page; you fetch on onPageChange. Set manualSort when the server sorts." />
+
+<Example of="DataTable/ExpandableRows" layout="stretch" title="Expandable rows" description="renderExpanded adds a toggle in the first column that reveals detail in a full-width row. Use isRowExpandable to limit it; here rows with no value have nothing to show." />
+
+<Example of="DataTable/ColumnMenu" layout="stretch" title="Column menu" description="columnMenu adds a Columns menu that stays open while people change several columns. Mark the column that names the row with hideable: false. One column always stays." />
+
+<Example of="DataTable/Virtualized" layout="stretch" title="Virtualised rows" description="virtualize draws only the rows in view, so 20,000 rows scroll smoothly. Keyboard navigation still reaches every row." />
+
+## States
+
+<Example of="DataTable/Loading" layout="stretch" title="Loading" description="Skeleton rows keep the table's shape while data arrives." />
+
+<Example of="DataTable/Empty" layout="stretch" title="Empty" description="Pass emptyState to say why there is nothing and what to do next. The default is a plain no-results message." />
+
+<Example of="DataTable/ErrorState" layout="stretch" title="Error" description="Give people a way to retry. Keep the message about their data, not about the system." />
+
+<DoDont>
+  <Do of="DataTable/DoNumeric" caption="Right-align numeric columns so digits line up and magnitudes compare at a glance." />
+  <Dont of="DataTable/DontNumeric" caption="Left-align numbers. Thousands no longer sit above thousands." />
+</DoDont>
+
+## Writing
+
+- Column headers are short nouns in sentence case. Put the unit in the header (“Value (tCO₂e)”) when every cell shares it.
+- Show a dash for no value, never a blank. For a missing or estimated figure use a DataQualityCell so the reason is visible.
+- Name the table with a label that says what the rows are: “CSRD datapoints”, not “Table”.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A bordered surface that scrolls on its own, a header row on a nested surface, body rows divided by subtle lines, and an optional first column of checkboxes. Row hover uses `bg.hover`; selected rows use `bg.selected`.
+
+## Density
+
+<Example of="DataTable/Density" layout="stretch" title="Density" description="Row height and cell padding follow the density mode. Set density on the table to override the surrounding mode." />
+
+## Row size
+
+<Example of="DataTable/RowSizes" layout="stretch" title="Row size" description="rowSize gives five heights: xs 24, sm 32, md 40, lg 48 and xl 64 px, mapped to the control-size tokens (xl to space 16). It overrides the height that density gives; leave it unset to follow density." />
+
+## Alignment
+
+Text is start-aligned. Columns marked `numeric` are end-aligned with tabular figures, and their header and sort button align the same way.
+
+## Tokens
+
+<UsesTokens names={["bg.surface", "bg.surface-nested", "bg.hover", "bg.selected", "border.control", "border.subtle", "border.default", "fg.muted"]} />
+
+<ComponentTokens name="table" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="DataTable/Overview" layout="stretch" title="Controlled sorting" code="open" description="Pass sort and onSortChange to control sorting. Add manualSort when the server sorts and the rows arrive already ordered." />
+
+<Example of="DataTable/Selectable" layout="stretch" title="Controlled selection" code="open" />
+
+## Notes
+
+- `columns` describe the table; `data` is the rows to show. Filtering and fetching stay with you, so the table works with a client array or a server query.
+- Pagination: `paginated` pages client-side (sorting happens first, then the slice). With `totalRows` the table is server-driven: `data` is the current page, `page` and `pageSize` are yours to control, and the table sets `aria-rowcount` and absolute `aria-rowindex`. Both modes use the Pagination component and a polite announcement on page change. Row ids must be stable across pages if you use `getRowId`.
+- Expandable rows: `renderExpanded` returns the detail; control with `expandedIds` and `onExpandedIdsChange`. Detail rows are not counted in `aria-rowcount`.
+- Column menu: control with `hiddenColumns` and `onHiddenColumnsChange`, or start from `defaultHiddenColumns`. A hidden column keeps sorting if it was the active sort.
+- Virtualisation: set `maxHeight` so the table scrolls, keep cell content to one line, and use `virtualize` for thousands of rows rather than for tens. Rows are positioned by a measured height, so density still applies. It is ignored (with a console warning) together with `paginated` or `renderExpanded`; prefer pagination when people need to jump to a place in the data.
+- Give every row a stable id with `getRowId`. Selection is stored as ids and survives sorting.
+- Sorting cycles ascending, descending, off. Empty values sort last in both directions, and text sorts numerically aware (“E1-5.38” before “E1-6.44”).
+- A column's `cell` renders anything, including a DataQualityCell, a Tag or a link. Use `sortValue` when the displayed value is formatted.
+- Single select: `selectable` with `selectionMode="single"`. `selectedIds` holds at most one id. The radios are native inputs sharing one name; the arrow keys move between rows (not between radios), and Space chooses.
+- Toolbar: `toolbar` renders above the rows. `DataTableToolbar` lays out `search`, `filters` and `actions` (build them from `SearchField`, `FilterChip`, `Button`). While rows are selected in multiple mode the strip is hidden (its state, such as a search term, is kept) and the selection bar is shown instead.
+- Row size: `rowSize` (or `defaultRowSize` with `onRowSizeChange`), or `rowSizeMenu` for a picker in the toolbar. Sizes xs and sm suit read-only scanning; the sort and expand buttons keep their target size.
+- Row actions: put `DataTableRowActions` in a column's `cell`. Pass the same text you use for `getRowLabel` as `label` so every button has a distinct name. `reveal="always"` keeps them visible.
+- Sticky first column needs a table wider than its container (resizable columns, or many columns). The first data column keeps the row-header role.
+- `onRowActivate` makes rows focusable with a roving tab stop. Enter or a click on the row (outside its buttons and links) calls it.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[
+  ["Tab", "Moves to the scroll area, the sort buttons, the select-all checkbox, then one stop in the body (the current row)."],
+  ["Enter / Space", "On a sort button, cycles the sort. On a row checkbox, Space toggles it. On a row with onRowActivate, Enter activates it."],
+  ["Arrow Down / Arrow Up", "Moves to the next or previous row."],
+  ["Home / End", "Moves to the first or last row."],
+  ["Page Down / Page Up", "In a virtualised table, moves about one screen of rows."],
+  ["Space", "On a row radio (single select), chooses that row. The arrow keys move to another row without choosing it."],
+  ["Enter / Space", "On an expand button, shows or hides the row's details."],
+  ["Arrow Right / Arrow Left", "On a row's roving stop, expands or collapses a row that has details."],
+  ["Arrow Left / Arrow Right", "On a column resize handle, makes the column narrower or wider. Hold Shift for larger steps."],
+]} />
+
+## Screen readers
+
+- A native table with a name from `label`, column headers with `scope="col"`, and `scope="row"` on the column marked `rowHeader`.
+- Sortable headers expose `aria-sort`. The sort button's text says what it will do next.
+- Each row checkbox is named from `getRowLabel`, for example “Select E1-6.44 Gross Scope 1 GHG emissions”. The selected count is a polite live region.
+- Expand buttons carry `aria-expanded`, `aria-controls` (when open) and a name such as “Expand details for E1-6.44”. The detail is a labelled group directly below its row.
+- The column menu is a menu of checkable items; the last visible column is disabled so the table is never empty.
+- With pagination or virtualisation the table has `aria-rowcount` for the full size and every row has `aria-rowindex` (the header is row 1), so assistive technology reports “row 2,001 of 5,001” even though only a window is in the DOM. Page changes are announced politely.
+- In single-select mode each row has a radio named from `getRowLabel`; the header cell carries a hidden “Select a row”. Row action buttons are named with the row (“Edit E1-6.44”, “Actions for E1-6.44”); hover-reveal only changes opacity, so the buttons stay in the tab order and appear when focused.
+- Loading sets `aria-busy` and announces “Loading …”. Empty and error states are headings with text, not just icons.
+- The scroll area is a labelled region and can be focused, so keyboard users can scroll wide tables.
+
+## Visual
+
+- Row actions are visible on touch screens and in forced-colours mode; they only hide on hover-capable pointers until the row is hovered, focused or the menu is open.
+- Selected, hovered and focused rows are distinguishable without colour: selection is also shown by the checked box.
+- Focus rings follow the focus token and stay inside the scroll area.
+- Targets in the header and checkboxes meet the minimum target size.
+
+</Section>

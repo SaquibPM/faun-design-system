@@ -1,0 +1,97 @@
+export const meta = {
+  title: "Box plot",
+  description: "Compares distributions: the middle half of the values as a box, the median as a line, whiskers for the range and dots for outliers.",
+  category: "Data",
+  status: "new",
+  components: ["BoxplotChart"],
+  related: ["histogram-chart", "bar-chart", "chart-types"],
+  order: 27,
+};
+
+<Section tab="usage">
+
+<Example of="BoxplotChart/Overview" layout="stretch" />
+
+## When to use
+
+- To compare the spread of a measure across groups: intensity by region, lead time by business unit.
+- To show outliers without hiding the typical value.
+
+## When not to use
+
+- For groups with fewer than about ten values. Show the values.
+- For a single distribution. Use a histogram.
+- For audiences who do not read box plots. Explain the parts in the description or use a bar chart of medians.
+
+## Variants
+
+<Example of="BoxplotChart/Horizontal" layout="stretch" title="Horizontal" description="orientation=&quot;horizontal&quot; puts groups down the side." />
+
+<Example of="BoxplotChart/PrecomputedSummary" layout="stretch" title="Precomputed summary" description="Give min, q1, median, q3 and max (and optional outliers) when the quartiles come from a warehouse." />
+
+<Example of="BoxplotChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="BoxplotChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="BoxplotChart/DoEnoughValues" caption="Use groups with enough values for quartiles to mean something." />
+  <Dont of="BoxplotChart/DontFewValues" caption="Draw a box from three values. Show the points instead." />
+</DoDont>
+
+## Writing
+
+Say once what the box means (“the box is the middle half of suppliers”) in the description. Title with the measure and the grouping.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, the plot (grid, measure axis with unit, a box from the lower to the upper quartile, a median line, whiskers with caps, outlier circles, reference lines) and a tooltip with the five-number summary.
+
+## Colour
+
+One categorical colour (`dataviz.cat-1` unless you set `color`) at partial opacity for the box, with the outline, median and whiskers solid. Outliers are open circles in the same colour.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.cat-3", "dataviz.grid", "dataviz.axis", "dataviz.surface", "bg.raised"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="BoxplotChart/Overview" layout="stretch" code="open" />
+
+<Example of="BoxplotChart/PrecomputedSummary" layout="stretch" code="open" />
+
+## Notes
+
+- Each group has either raw `values` or a summary (`min`, `q1`, `median`, `q3`, `max`, `outliers`). Quartiles use linear interpolation; whiskers reach the furthest value within 1.5 times the interquartile range, and values beyond are outliers.
+- `boxStats(group)` is exported to reuse the same maths.
+- `references` takes `{ label, value, kind }`. Use `kind: "target"` for a goal and the default for a baseline or limit. Keep to one or two lines so labels stay clear of each other.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. "], ["Arrow Right / Arrow Down", "Moves to the next group."], ["Arrow Left / Arrow Up", "Moves to the previous group."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the group and its five-number summary in a polite live region.
+- The data table has one row per group with count, minimum, quartiles, maximum and a list of outliers.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Marks against the surface meet 3:1 in every theme, and the categorical palette is checked for protan and deutan separation.
+- The median is a heavier line in the foreground colour so it stays visible on any fill.
+
+</Section>

@@ -1,0 +1,88 @@
+export const meta = {
+  title: "Badge",
+  description: "A compact label for status, category or count. Status badges always pair a tone with an icon and a word.",
+  category: "Display",
+  status: "stable",
+  components: ["Badge", "StatusBadge"],
+  related: ["tag", "stat"],
+  order: 2,
+};
+
+<Section tab="usage">
+
+<Example of="Badge/Overview" layout="start" />
+
+## When to use
+
+- To show the state of a run, filing, task or data point beside its name.
+- To mark a count on a navigation item or a short category such as “New”.
+
+## When not to use
+
+- For frameworks or topics people can add and remove. Use [Tag](/components/tag).
+- For a clickable filter. Use a filter chip from Tag.
+- For a message that needs reading. Use a Banner.
+
+## Status
+
+Use `StatusBadge` with a domain and state from the status map. It chooses the tone, icon and label, so a state looks the same everywhere. **Running** (lagoon) is a machine working now. **Needs you** (plum) is waiting on a person: do not swap them for info or warning.
+
+<Example of="Badge/Tones" title="Tones" description="Seven status tones plus accent for brand labels such as “New”." layout="start" />
+
+<Example of="Badge/Variants" title="Variants" description="Soft is the default. Solid suits counts and high emphasis. Outline is for quiet metadata." layout="start" />
+
+<DoDont>
+  <Do of="Badge/DoWordAndIcon" caption="Show status as tone, icon and label from the status map." />
+  <Dont of="Badge/DontColourOnly" caption="Show status as a coloured dot with no word. People with colour-vision differences and screen reader users lose it." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Optional icon or dot, then a label. Badges are fully rounded.
+
+## Sizes
+
+<Example of="Badge/Sizes" title="Small and medium" description="Small fits table cells and timeline rows. Medium is the default." layout="start" />
+
+<Example of="Badge/WithIconAndDot" title="Icon and dot" description="Dots mark live indicators and legend keys. A dot on a running tone pulses." layout="start" />
+
+## Tokens
+
+<UsesTokens names={["fg.default", "fg.on-accent", "bg.brand-soft"]} />
+
+<ComponentTokens name="badge" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Badge/Overview" title="Status from the status map" code="open" layout="start" />
+
+## Notes
+
+- `StatusBadge` accepts `domain` and `state`, or `tone` and `label` for your own states.
+- Unknown states fall back to a neutral badge with the state as its label.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+Badges are not interactive.
+
+## Screen readers
+
+- The label is real text, so status is read aloud. Icons and dots are decorative.
+
+## Visual
+
+- Label text meets 4.5:1 on every tone in every theme. Status never relies on colour alone.
+
+</Section>

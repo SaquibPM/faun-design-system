@@ -1,0 +1,101 @@
+export const meta = {
+  title: "Stacked bar chart",
+  description: "Shows how a total is made up, such as emissions by GHG scope. Scope series use the reserved scope colours.",
+  category: "Data",
+  status: "new",
+  components: ["StackedBarChart"],
+  related: ["chart-types", "bar-chart", "area-chart", "line-chart", "data-table"],
+  order: 7,
+};
+
+<Section tab="usage">
+
+<Example of="StackedBarChart/Overview" layout="stretch" />
+
+## When to use
+
+- To show the parts of a total across a few categories or years: emissions by scope, Scope 3 by category.
+- When the total matters as much as the split. The tooltip and data table include it.
+
+## When not to use
+
+- To compare the parts themselves across categories. Stacked segments share no baseline except the first; use a clustered bar chart.
+- With mixed positive and negative values. They stack on opposite sides of the baseline, which is hard to read. Use a diverging bar chart.
+- For more than five or six segments. Group the small ones.
+
+## Variants
+
+<Example of="StackedBarChart/Categorical" layout="stretch" title="Categorical series" description="Series that are not GHG scopes take the categorical palette in order." />
+
+<Example of="StackedBarChart/WithTarget" layout="stretch" title="Target line" description="A reference line marks a budget or limit against the total of each stack." />
+
+<Example of="StackedBarChart/SeriesToggle" layout="stretch" title="Toggle series" description="Hiding a segment re-stacks the bars, rescales the axis and updates the totals, tooltip and data table." />
+
+<Example of="StackedBarChart/Partial" layout="stretch" title="Partial data" description="A null value draws no segment, so the bar is shorter and the tooltip says “No data”. Say so in the description." />
+
+<DoDont>
+  <Do of="StackedBarChart/DoScopeColours" caption="Name scope series scope-1, scope-2 and scope-3. Every Faun chart then uses the same colours for them." />
+  <Dont of="StackedBarChart/DontRecolourScopes" caption="Recolour scopes per chart. Readers learn the scope colours once; changing them costs trust." />
+</DoDont>
+
+## Writing
+
+Order series so the largest, steadiest part is at the bottom, and keep that order across charts. Lead the title with the measure: “Gross emissions by scope, 2022 to 2026”.
+
+</Section>
+
+<Section tab="style">
+
+## Colour
+
+GHG scopes always use `dataviz.scope-1`, `scope-2` and `scope-3` (and `scope-outside` for outside-of-scopes). Other series take `cat-1` to `cat-8` in order.
+
+<UsesTokens names={["dataviz.scope-1", "dataviz.scope-2", "dataviz.scope-3", "dataviz.scope-outside", "dataviz.cat-1", "dataviz.surface", "dataviz.grid"]} />
+
+## Anatomy
+
+Segments have a hairline surface-coloured edge, so adjacent colours stay separate even when they are close in lightness. With `showTotals` the total is written above each stack when there is room.
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="StackedBarChart/Overview" layout="stretch" code="open" />
+
+## Notes
+
+- Series order is stack order, bottom to top.
+- Set `color` on a series to choose a slot explicitly. Do not reuse scope colours for something else.
+- `references` draws target and reference lines at a total; `toggleSeries` with `hiddenSeries` / `onHiddenSeriesChange` (or `defaultHiddenSeries`) lets people hide segments. Totals count visible series only, and at least one series stays visible.
+- The data table gains a Total column and the tooltip a total row.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[
+  ["Tab", "When `toggleSeries` is on, visits each legend toggle first, then the chart (one tab stop)."],
+  ["Enter / Space", "On a legend entry (when `toggleSeries` is on), shows or hides that series. The last visible series cannot be hidden."],
+  ["Arrow Right / Arrow Left", "Moves between categories and shows the tooltip with each part and the total."],
+  ["Home / End", "First or last category."],
+  ["Escape", "Hides the tooltip."],
+]} />
+
+## Screen readers
+
+- A figure named by its title, with a data table fallback: one row per category, one column per series, and a total.
+- Arrow keys announce the category, every part and the total.
+
+- With `toggleSeries`, each legend entry is a button with `aria-pressed` (true = shown). Hiding or showing is announced politely, for example “Market-based hidden”. The last visible series is marked `aria-disabled` and stays on.
+- Hidden series leave the drawing, the tooltip, the live announcements and the data table, so what is read matches what is seen.
+- Target and reference lines are listed at the foot of the data table with their kind, label and value, for example “Target: 2030 pathway: 14,000 tCO₂e”.
+
+## Visual
+
+- Segment edges and the legend keep parts distinguishable; the scope colours are checked for colour-vision deficiency.
+
+</Section>

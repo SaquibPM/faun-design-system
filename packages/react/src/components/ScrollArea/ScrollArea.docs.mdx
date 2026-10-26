@@ -1,0 +1,77 @@
+export const meta = {
+  title: "Scroll area",
+  description: "A scroll container with slim, themed scrollbars that stays scrollable by keyboard and touch.",
+  category: "Layout",
+  status: "stable",
+  components: ["ScrollArea"],
+  related: ["card", "sheet"],
+  order: 3,
+};
+
+<Section tab="usage">
+
+<Example of="ScrollArea/Overview" layout="start" />
+
+## When to use
+
+- For a bounded region of content that grows: run logs, evidence lists, long menus.
+- When the platform scrollbar clashes with a themed surface.
+
+## When not to use
+
+- For the whole page. Let the page scroll.
+- For tables with sticky headers and rows. Use the table component.
+- Inside another scroll area. Nested scrolling traps keyboard and touch users.
+
+## Variants
+
+<Example of="ScrollArea/Horizontal" title="Horizontal" description="Set orientation to horizontal or both. Content must set its own width." layout="start" />
+
+<DoDont>
+  <Do of="ScrollArea/DoLabelRegion" caption="Give a scrolling region a name so people can find and reach it." />
+  <Dont of="ScrollArea/DontNested" caption="Nest scroll areas. The inner one steals the wheel and the keyboard focus." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Viewport, vertical and horizontal scrollbars with a thumb, and a corner. Scrollbars appear on hover or scroll and stay out of the content area.
+
+## Tokens
+
+<UsesTokens names={["bg.hover", "fg.subtle", "border.subtle"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="ScrollArea/Overview" title="Labelled, bounded region" code="open" layout="start" />
+
+## Notes
+
+- Set `maxHeight` or size the root yourself, or nothing scrolls.
+- `label` makes the viewport a focusable region so keyboard users can scroll it with the arrow keys.
+- `type` follows Radix: `hover` (default), `scroll`, `auto` or `always`.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses a labelled scroll area."], ["↑ / ↓", "Scrolls vertically when the area has focus."], ["← / →", "Scrolls horizontally when the area has focus."], ["Page Up / Page Down", "Scrolls by a page."]]} />
+
+## Screen readers
+
+- A labelled area is a named region. Unlabelled areas are not tab stops, so use them only around content that has focusable children.
+
+## Visual
+
+- The thumb meets 3:1 against its track in every theme.
+
+</Section>

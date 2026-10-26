@@ -1,0 +1,64 @@
+/*
+ * Relief marks (ADR 0006). Every mark is a group: a side face, the semantic shape filled with the series colour, a paper wash that turns the
+ * fill into a tint, a wave texture masked by a token tile, and a thin outline. Face, outline, side and wave colour are derived here from the
+ * series colour by the tokens (--faun-dataviz-<slot>-line, -shade, -tex), so themes, tenants and nested themes keep working. No colour is written here.
+ * `appearance="flat"` (data-appearance on the chart) sets the scalar tokens to their flat values; high-contrast, print and forced colours do the
+ * same with a hatch, all in the tokens.
+ */
+.faun-relief rect, .faun-relief path, .faun-relief circle { rx: 0; }
+.faun-relief > :is(.faun-chart-bar, .faun-chart-box, .faun-chart-slice, .faun-chart-tile, .faun-chart-pack, .faun-chart-meter-seg, .faun-chart-node, .faun-chart-dot, .faun-relief-solid) { stroke: none; }
+.faun-relief-side { fill: var(--_shade); stroke: var(--_line); stroke-width: var(--faun-dataviz-relief-outline-width); stroke-linejoin: round; }
+.faun-relief-wash { fill: var(--_face, var(--faun-dataviz-surface)); fill-opacity: var(--_face-op, calc(100% - var(--faun-dataviz-relief-face-mix))); stroke: none; pointer-events: none; }
+/* Flat shows the series colour itself: the pastel face of a palette (ADR 0007) is a relief-only fill, because the outline carries its 3:1. */
+[data-appearance="flat"] .faun-relief-wash { fill-opacity: 0; }
+.faun-relief-tex {
+  fill: var(--_tex); stroke: none; opacity: var(--faun-dataviz-relief-tex-alpha); pointer-events: none;
+  -webkit-mask-image: var(--_wave); mask-image: var(--_wave);
+  -webkit-mask-size: var(--_wave-size); mask-size: var(--_wave-size);
+  -webkit-mask-repeat: repeat; mask-repeat: repeat;
+}
+.faun-relief-line { fill: none; stroke: var(--_line); stroke-width: var(--faun-dataviz-relief-outline-width); stroke-linejoin: round; pointer-events: none; }
+.faun-relief[data-active] .faun-relief-line { stroke: var(--faun-fg-default); stroke-width: var(--faun-border-width-thick); }
+
+.faun-relief-arc-side, .faun-relief-arc-line, .faun-relief-arc-wash, .faun-relief-arc-tex { fill: none; stroke-linecap: round; pointer-events: none; }
+.faun-relief-arc-side { stroke: var(--_shade); }
+.faun-relief-arc-line { stroke: var(--_line); }
+.faun-relief-arc-wash { stroke: var(--_face, var(--faun-dataviz-surface)); stroke-opacity: var(--_face-op, calc(100% - var(--faun-dataviz-relief-face-mix))); }
+[data-appearance="flat"] .faun-relief-arc-wash { stroke-opacity: 0; }
+.faun-relief-arc-tex {
+  stroke: var(--_tex); opacity: var(--faun-dataviz-relief-tex-alpha);
+  -webkit-mask-image: var(--_wave); mask-image: var(--_wave);
+  -webkit-mask-size: var(--_wave-size); mask-size: var(--_wave-size);
+  -webkit-mask-repeat: repeat; mask-repeat: repeat;
+}
+[data-appearance="flat"] .faun-relief-arc-line, [data-appearance="flat"] .faun-relief-arc-side { display: none; }
+.faun-relief > .faun-chart-box { fill-opacity: 1; }
+.faun-relief > .faun-chart-value-arc { stroke-linecap: round; }
+
+/* Heatmap cells and sankey nodes stay flat, with a hairline outline in relief. */
+.faun-chart:not([data-appearance="flat"]) :is(.faun-chart-cell, .faun-chart-node) { stroke: var(--faun-dataviz-cell-line); stroke-width: var(--faun-dataviz-relief-outline-width); }
+
+.faun-chart-area + .faun-relief-tex { opacity: calc(var(--faun-dataviz-relief-tex-alpha) * 0.7); }
+
+/* The legend key is a small block of the same kind. */
+.faun-chart-swatch[data-kind="bar"] { inline-size: var(--faun-space-3-5); block-size: var(--faun-space-3); border-radius: 0; overflow: visible; }
+
+/* Flat: the classic look. A hairline in the surface colour separates marks. */
+[data-appearance="flat"] .faun-relief-line { stroke: var(--faun-dataviz-surface); stroke-width: var(--faun-border-width-hairline); }
+[data-appearance="flat"] .faun-relief-side { display: none; }
+[data-appearance="flat"] .faun-relief[data-active] .faun-relief-line { stroke: var(--faun-fg-default); stroke-width: var(--faun-border-width-thick); }
+
+/* Value labels and axis labels in relief. */
+.faun-chart-value { font-family: var(--faun-font-family-mono); }
+.faun-chart:not([data-appearance="flat"]) .faun-chart-axis-cat { text-transform: uppercase; letter-spacing: 0.12em; font-size: var(--faun-type-caption-font-size); }
+
+@media (forced-colors: active) {
+  .faun-relief-side { fill: GrayText; stroke: CanvasText; }
+  .faun-chart-bar, .faun-chart-box, .faun-chart-slice, .faun-chart-tile, .faun-chart-pack, .faun-chart-meter-seg, .faun-relief-solid { fill: Canvas !important; }
+  .faun-relief-wash { fill-opacity: 0; }
+  .faun-relief-tex { fill: CanvasText; }
+  .faun-relief-line, [data-appearance="flat"] .faun-relief-line { stroke: CanvasText; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .faun-relief, .faun-relief * { animation: none !important; transition: none !important; }
+}

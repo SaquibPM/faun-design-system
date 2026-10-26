@@ -1,0 +1,29 @@
+.faun-chat-layout { position: relative; display: flex; inline-size: 100%; block-size: 100%; min-block-size: 0; overflow: hidden; background: var(--faun-bg-canvas); color: var(--faun-fg-default); isolation: isolate; }
+.faun-chat-main { display: flex; flex-direction: column; flex: 1 1 0; min-inline-size: 0; min-block-size: 0; }
+.faun-chat-header { display: flex; align-items: center; justify-content: space-between; gap: var(--faun-space-3); flex: none; padding: var(--faun-space-2) var(--faun-space-4); min-block-size: var(--faun-layout-topbar-height); border-block-end: var(--faun-border-width-hairline) solid var(--faun-border-subtle); background: var(--faun-bg-surface); }
+.faun-chat-scroll { flex: 1 1 auto; min-block-size: 0; overflow: auto; padding: var(--faun-space-5) var(--faun-space-4); outline: none; }
+.faun-chat-thread { inline-size: 100%; max-inline-size: var(--faun-layout-reading-max); margin-inline: auto; display: grid; gap: var(--faun-space-5); }
+.faun-chat-composer { flex: none; inline-size: 100%; max-inline-size: calc(var(--faun-layout-reading-max) + var(--faun-space-8)); margin-inline: auto; padding: var(--faun-space-2) var(--faun-space-4) var(--faun-space-4); }
+.faun-chat-controls { display: inline-flex; align-items: center; gap: var(--faun-space-1); flex: none; }
+.faun-chat-controls [data-pressed] { background: var(--faun-bg-selected); color: var(--faun-fg-default); }
+
+.faun-chat-panels { display: flex; flex-direction: column; flex: 0 0 var(--_panel-w, 20rem); inline-size: var(--_panel-w, 20rem); max-inline-size: 70%; min-inline-size: 0; min-block-size: 0; background: var(--faun-bg-surface); border-inline-start: var(--faun-border-width-hairline) solid var(--faun-border-subtle); animation: faun-chat-panel-in var(--faun-motion-duration-moderate) var(--faun-motion-easing-enter); }
+.faun-chat-slot { display: flex; flex-direction: column; min-inline-size: 0; min-block-size: 0; }
+.faun-chat-slot[data-panel="artifact"] { flex: 1 1 0; }
+.faun-chat-slot[data-panel="progress"] { flex: 1 1 0; }
+.faun-chat-layout[data-artifact] .faun-chat-slot[data-panel="progress"] { flex: 0 1 auto; max-block-size: 45%; overflow: auto; border-block-end: var(--faun-border-width-hairline) solid var(--faun-border-subtle); }
+.faun-chat-slot > * { flex: 1 1 auto; min-block-size: 0; }
+.faun-chat-layout[data-artifact] .faun-chat-slot[data-panel="progress"] > .faun-progress-panel { flex: none; block-size: auto; border-inline-start: 0; }
+
+/* Maximised: the artifact covers the whole layout. */
+.faun-chat-layout[data-maximized] .faun-chat-panels { position: static; }
+
+/* Compact: panels are sheets over the conversation. */
+.faun-chat-layout[data-compact] .faun-chat-panels { position: absolute; inset: 0; z-index: var(--faun-z-raised); flex: none; inline-size: auto; max-inline-size: none; justify-content: flex-end; border: 0; background: transparent; }
+.faun-chat-layout[data-compact]:not([data-artifact]) .faun-chat-panels { background: var(--faun-bg-scrim); }
+.faun-chat-layout[data-compact] .faun-chat-slot[data-panel="progress"] { flex: 0 1 auto; max-block-size: 80%; border-radius: var(--faun-radius-xl) var(--faun-radius-xl) 0 0; border: 0; overflow: auto; background: var(--faun-bg-raised); box-shadow: var(--faun-elevation-4); }
+.faun-chat-layout[data-compact][data-artifact] .faun-chat-slot[data-panel="progress"] { display: none; }
+.faun-chat-layout[data-compact] .faun-chat-slot[data-panel="artifact"] { position: absolute; inset: 0; }
+
+@keyframes faun-chat-panel-in { from { opacity: 0; } to { opacity: 1; } }
+@media (forced-colors: active) { .faun-chat-panels, .faun-chat-header { border-color: CanvasText; } }

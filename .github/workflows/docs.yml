@@ -1,0 +1,96 @@
+name: Deploy documentation
+
+# Builds the docs site for the subpath https://<owner>.github.io/<repo>/ (the base path comes from the repository
+# name), smoke-tests the built site under that subpath in Chromium, deploys it to GitHub Pages and then checks the
+# live URL. Pull requests that touch the docs run the build and the smoke test but never deploy.
+on:
+  push:
+    branches: [main]
+    paths: [apps/docs/**, packages/**, scripts/**, pnpm-lock.yaml, .github/workflows/docs.yml]
+  pull_request:
+    paths: [apps/docs/**, scripts/prepare-pages.mjs, scripts/pages-smoke.mjs, .github/workflows/docs.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.event_name == 'pull_request' && github.ref || 'deploy' }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    outputs:
+      base: ${{ steps.base.outputs.base }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+
+      - name: Base path from the repository name
+        id: base
+        env:
+          REPO_NAME: ${{ github.event.repository.name }}
+          OWNER: ${{ github.repository_owner }}
+          PAGES_BASE: ${{ vars.PAGES_BASE }} # optional override, for a custom domain ("/")
+        run: |
+          if [ -n "$PAGES_BASE" ]; then BASE="$PAGES_BASE"
+          elif [ "${REPO_NAME,,}" = "${OWNER,,}.github.io" ]; then BASE="/"   # user or organisation site
+          else BASE="/${REPO_NAME}/"; fi
+          echo "base=$BASE" >> "$GITHUB_OUTPUT"
+          echo "Pages base path: $BASE"
+
+      - run: pnpm build && pnpm build:llms
+      - name: Build the documentation site with the base path
+        run: |
+          pnpm --filter ./apps/docs run props
+          pnpm --filter ./apps/docs exec vite build --base "${{ steps.base.outputs.base }}"
+      - name: SPA fallback (404.html) and .nojekyll; asset URLs must sit under the base path
+        run: node scripts/prepare-pages.mjs --dist apps/docs/dist --base "${{ steps.base.outputs.base }}"
+
+      - run: pnpm exec playwright install --with-deps chromium
+      - name: Smoke test under the subpath (assets, hash routes, console errors, 404 fallback)
+        run: node scripts/pages-smoke.mjs --dist apps/docs/dist --base "${{ steps.base.outputs.base }}"
+
+      - uses: actions/configure-pages@v5
+        if: github.event_name != 'pull_request'
+      - uses: actions/upload-pages-artifact@v3
+        if: github.event_name != 'pull_request'
+        with: { path: apps/docs/dist }
+
+  deploy:
+    needs: build
+    if: github.event_name != 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    outputs:
+      page_url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+  verify-live:
+    # Fetches the deployed site (retrying while the CDN catches up) and runs the same smoke test against it.
+    needs: deploy
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm exec playwright install --with-deps chromium
+      - name: Live site smoke test
+        run: node scripts/pages-smoke.mjs --url "${{ needs.deploy.outputs.page_url }}" --wait 300

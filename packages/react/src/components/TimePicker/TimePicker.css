@@ -1,0 +1,14 @@
+.faun-time-wrap { display: grid; gap: var(--faun-space-1-5); min-inline-size: 0; }
+.faun-time-input { padding-inline-end: var(--faun-space-1-5); }
+.faun-time-input .faun-input-control { font-feature-settings: var(--faun-font-feature-numeric); min-inline-size: var(--faun-space-12); }
+.faun-time-input[data-invalid] { border-color: var(--faun-status-danger-fg); }
+.faun-time-period {
+  flex: none; appearance: none; -webkit-appearance: none;
+  block-size: calc(var(--_h) - var(--faun-space-3)); margin: 0; padding: 0 var(--faun-space-2);
+  border: 0; border-radius: var(--faun-radius-sm); background: var(--faun-bg-surface-nested); color: var(--faun-fg-default);
+  font: inherit; font-size: var(--faun-type-body-sm-font-size); font-weight: var(--faun-font-weight-medium); cursor: pointer;
+}
+.faun-time-period:hover { background: var(--faun-bg-hover); }
+.faun-time-period:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 0; }
+.faun-time-period:disabled { color: var(--faun-fg-disabled); cursor: not-allowed; }
+.faun-time-period[data-readonly] { pointer-events: none; background: transparent; }

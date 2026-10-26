@@ -1,0 +1,45 @@
+.faun-progress { --_h: 6px; display: grid; gap: var(--faun-space-1-5); min-inline-size: 0; }
+.faun-progress:where([data-size="sm"]) { --_h: var(--faun-space-1); }
+.faun-progress:where([data-size="lg"]) { --_h: var(--faun-space-2-5); }
+.faun-progress-head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--faun-space-2); font-size: var(--faun-type-body-sm-font-size); line-height: var(--faun-type-body-sm-line-height); }
+.faun-progress-label { color: var(--faun-fg-default); font-weight: var(--faun-font-weight-medium); }
+.faun-progress-value { color: var(--faun-fg-muted); font-feature-settings: var(--faun-font-feature-numeric); }
+.faun-progress-track { position: relative; display: flex; block-size: var(--_h); overflow: hidden; border-radius: var(--faun-radius-full); background: var(--faun-gray-a4); }
+.faun-progress-fill { --_c: var(--faun-accent-9); display: block; block-size: 100%; background: var(--_c); transition: inline-size var(--faun-motion-duration-slow) var(--faun-motion-easing-standard); }
+.faun-progress-fill + .faun-progress-fill { box-shadow: inset 2px 0 0 var(--faun-bg-surface); }
+.faun-progress-fill:where([data-tone="success"]), .faun-progress-key:where([data-tone="success"]) { --_c: var(--faun-status-success-solid); }
+.faun-progress-fill:where([data-tone="warning"]), .faun-progress-key:where([data-tone="warning"]) { --_c: var(--faun-status-warning-solid); }
+.faun-progress-fill:where([data-tone="danger"]), .faun-progress-key:where([data-tone="danger"]) { --_c: var(--faun-status-danger-solid); }
+.faun-progress-fill:where([data-tone="running"]), .faun-progress-key:where([data-tone="running"]) { --_c: var(--faun-status-running-solid); }
+.faun-progress-fill:where([data-tone="neutral"]), .faun-progress-key:where([data-tone="neutral"]) { --_c: var(--faun-gray-9); }
+.faun-progress-track:where([data-indeterminate]) .faun-progress-fill { inline-size: 40%; border-radius: var(--faun-radius-full); animation: faun-progress-slide 1.4s var(--faun-motion-easing-standard) infinite; }
+@keyframes faun-progress-slide { from { transform: translateX(-100%); } to { transform: translateX(260%); } }
+.faun-progress-legend { display: flex; flex-wrap: wrap; gap: var(--faun-space-1) var(--faun-space-4); margin: 0; padding: 0; list-style: none; color: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size); line-height: var(--faun-type-caption-line-height); }
+.faun-progress-legend li { display: inline-flex; align-items: center; gap: var(--faun-space-1-5); }
+.faun-progress-key { --_c: var(--faun-accent-9); inline-size: var(--faun-space-2); block-size: var(--faun-space-2); border-radius: 2px; background: var(--_c); }
+.faun-progress-legend-value { color: var(--faun-fg-default); font-feature-settings: var(--faun-font-feature-numeric); }
+.faun-meter-target { position: absolute; inset-block: -2px; inline-size: 2px; margin-inline-start: -1px; background: var(--faun-fg-default); border-radius: 1px; }
+.faun-meter .faun-progress-track { overflow: visible; }
+.faun-meter .faun-progress-fill { border-radius: var(--faun-radius-full); }
+
+.faun-progress-circle { --_s: var(--faun-size-icon-xl); --_c: var(--faun-accent-9); position: relative; display: inline-grid; place-items: center; inline-size: var(--_s); block-size: var(--_s); flex: none; }
+.faun-progress-circle:where([data-size="sm"]) { --_s: var(--faun-size-icon-md); }
+.faun-progress-circle:where([data-size="lg"]) { --_s: var(--faun-size-avatar-xl); }
+.faun-progress-circle:where([data-tone="success"]) { --_c: var(--faun-status-success-solid); }
+.faun-progress-circle:where([data-tone="warning"]) { --_c: var(--faun-status-warning-solid); }
+.faun-progress-circle:where([data-tone="danger"]) { --_c: var(--faun-status-danger-solid); }
+.faun-progress-circle:where([data-tone="running"]) { --_c: var(--faun-status-running-solid); }
+.faun-progress-circle svg { inline-size: 100%; block-size: 100%; transform: rotate(-90deg) scaleY(-1); }
+.faun-progress-circle-track { stroke: var(--faun-gray-a4); stroke-width: 3.5; }
+.faun-progress-circle-fill { stroke: var(--_c); stroke-width: 3.5; stroke-linecap: round; transition: stroke-dasharray var(--faun-motion-duration-slow) var(--faun-motion-easing-standard); }
+.faun-progress-circle:where([data-size="lg"]) .faun-progress-circle-track, .faun-progress-circle:where([data-size="lg"]) .faun-progress-circle-fill { stroke-width: 3; }
+.faun-progress-circle:where([data-indeterminate]) svg { animation: faun-spin var(--faun-motion-duration-spin) linear infinite; }
+.faun-progress-circle-value { position: absolute; font-size: var(--faun-type-micro-font-size); font-weight: var(--faun-font-weight-semibold); font-feature-settings: var(--faun-font-feature-numeric); color: var(--faun-fg-default); }
+.faun-progress-circle:where([data-size="lg"]) .faun-progress-circle-value { font-size: var(--faun-type-label-md-font-size); }
+@media (forced-colors: active) { .faun-progress-track { border: 1px solid CanvasText; } .faun-progress-fill { background: Highlight; } }
+
+/* status: finished and error are written out with an icon, never tone alone */
+.faun-progress-status { display: flex; align-items: flex-start; gap: var(--faun-space-1-5); margin: 0; color: var(--faun-fg-muted); font-size: var(--faun-type-body-sm-font-size); line-height: var(--faun-type-body-sm-line-height); }
+.faun-progress-status > svg { flex: none; inline-size: var(--faun-size-icon-md); block-size: var(--faun-size-icon-md); margin-block-start: var(--faun-space-0-5); }
+.faun-progress-status[data-status="finished"] { color: var(--faun-status-success-fg); }
+.faun-progress-status[data-status="error"] { color: var(--faun-status-danger-fg); }

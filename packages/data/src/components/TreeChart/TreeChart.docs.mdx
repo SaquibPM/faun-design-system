@@ -1,0 +1,95 @@
+export const meta = {
+  title: "Tree",
+  description: "Shows how things relate by parent and child, as a tree or a dendrogram with leaves aligned at the edge.",
+  category: "Data",
+  status: "new",
+  components: ["TreeChart"],
+  related: ["circle-pack-chart", "treemap-chart", "chart-types"],
+  order: 35,
+};
+
+<Section tab="usage">
+
+<Example of="TreeChart/Overview" layout="stretch" />
+
+## When to use
+
+- To show a structure: a legal entity hierarchy, a framework's disclosure requirements, a supplier tiering.
+- Dendrogram, for deeper structures and clusters.
+
+## When not to use
+
+- To compare sizes. Use a treemap or circle pack.
+- For a hierarchy with hundreds of nodes. Use an expandable Tree component.
+- For networks where nodes have several parents. Use a diagram.
+
+## Variants
+
+<Example of="TreeChart/Dendrogram" layout="stretch" title="Dendrogram" description="variant=&quot;dendrogram&quot; aligns every leaf at the right edge." />
+
+<Example of="TreeChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="TreeChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="TreeChart/DoShallow" caption="Keep to three or four levels so labels have room." />
+  <Dont of="TreeChart/DontDeep" caption="Draw a deep, narrow tree. Labels crowd out the structure." />
+</DoDont>
+
+## Writing
+
+Use short, parallel names for nodes. Put codes first for disclosure requirements (“E1-6 Gross emissions”).
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, an optional legend of top-level groups, the plot (elbow edges, a node per entry coloured by top-level group, labels beside leaves and above branches) and a tooltip with level, children and value.
+
+## Colour
+
+Top-level groups take `dataviz.cat-1` to `cat-8` in order; the root uses the axis colour. Edges are the axis colour at reduced opacity.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.cat-3", "dataviz.grid", "dataviz.axis", "dataviz.surface", "bg.raised"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="TreeChart/Overview" layout="stretch" code="open" />
+
+<Example of="TreeChart/Dendrogram" layout="stretch" code="open" />
+
+## Notes
+
+- `data` is a tree of `{ label, value?, children? }`. The root is drawn. Values, when present, appear in the tooltip and table.
+- `legend` shows the top-level groups; with `toggleSeries` people can hide a group.
+- Nodes are read, not expanded. For a large hierarchy people browse, use the Tree component.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. With `toggleSeries`, the legend buttons come before it."], ["Enter / Space", "On a legend entry (when `toggleSeries` is on), shows or hides that series. The last visible one cannot be hidden."], ["Arrow Right / Arrow Down", "Moves to the next node."], ["Arrow Left / Arrow Up", "Moves to the previous node."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the node's path, level and number of children in a polite live region.
+- The data table lists every node with its level, parent and children count, in reading order.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Marks against the surface meet 3:1 in every theme, and the categorical palette is checked for protan and deutan separation.
+- Labels are cut to the space between columns; the data table has the full names.
+
+</Section>

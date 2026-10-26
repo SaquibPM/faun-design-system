@@ -1,0 +1,81 @@
+export const meta = {
+  title: "Tooltip",
+  description: "A brief, non-essential hint shown on hover and keyboard focus. It names icon-only controls and explains small details.",
+  category: "Overlays",
+  status: "stable",
+  components: ["Tooltip", "TooltipProvider"],
+  related: ["icon-button", "hover-card", "popover"],
+  order: 4,
+};
+
+<Section tab="usage">
+
+<Example of="Tooltip/Overview" height={120} />
+
+## When to use
+
+- To name an icon-only control. [Icon button](/components/icon-button) does this for you.
+- To add a short note about a control, such as why it can't be used right now.
+
+## When not to use
+
+- For essential information, instructions or errors. Put them on the page.
+- For interactive content or long text. Use [Popover](/components/popover) or [Hover card](/components/hover-card).
+- On touch-only screens as the only route to information. Touch devices have no hover.
+
+## Variants
+
+<Example of="Tooltip/Sides" title="Placement" description="Tooltips prefer the side you choose and flip when there is no room." height={140} />
+
+<Example of="Tooltip/WithShortcut" title="With shortcut" description="A shortcut shows after the text in the mono face." height={120} />
+
+<DoDont>
+  <Do of="Tooltip/DoShortHint" caption="Keep it to a few words that name or clarify." />
+  <Dont of="Tooltip/DontEssentialInfo" caption="Hide instructions in a tooltip. They are missed on touch and by people who never hover." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A small inverse-coloured bubble with text and an optional shortcut. It appears after a delay of 400ms and opens instantly for a moment after another closes.
+
+## Tokens
+
+<UsesTokens names={["bg.inverse", "fg.inverse"]} />
+
+<ComponentTokens name="tooltip" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Tooltip/Open" title="Default open, placed to the right" code="open" height={120} />
+
+## Notes
+
+- The trigger must be focusable. Wrap a disabled button in a span or use `aria-disabled` so the tooltip can still open.
+- `TooltipProvider` sets delays for the whole app. Tooltip also works without it.
+- Pass `disabled` to skip the tooltip when the label is already visible.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focusing the trigger shows the tooltip."], ["Escape", "Dismisses the tooltip without moving focus."]]} />
+
+## Screen readers
+
+- The tooltip is linked to its trigger as a description. Because it may be missed, never put the only name or instruction there, except for icon-only controls, which also carry an `aria-label`.
+
+## Visual
+
+- Text meets 4.5:1 on the inverse surface. The tooltip stays open while the pointer is over it.
+
+</Section>

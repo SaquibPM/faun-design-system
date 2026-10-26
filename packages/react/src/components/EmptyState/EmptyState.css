@@ -1,0 +1,14 @@
+.faun-empty { display: flex; flex-direction: column; align-items: center; text-align: center; gap: var(--faun-space-2); padding: var(--faun-space-12) var(--faun-space-6); max-inline-size: calc(var(--faun-layout-reading-max) * 0.7); margin-inline: auto; }
+.faun-empty:where([data-size="sm"]) { padding: var(--faun-space-8) var(--faun-space-4); gap: var(--faun-space-1-5); }
+.faun-empty-visual { display: grid; place-items: center; inline-size: var(--faun-space-16); block-size: var(--faun-space-16); margin-block-end: var(--faun-space-2); border-radius: var(--faun-radius-lg); background: var(--faun-gray-a3); color: var(--faun-fg-muted); }
+.faun-empty:where([data-kind="first-use"]) .faun-empty-visual { background: var(--faun-bg-brand-soft); color: var(--faun-fg-brand); }
+.faun-empty:where([data-kind="error"]) .faun-empty-visual { background: var(--faun-status-danger-bg); color: var(--faun-status-danger-fg); }
+.faun-empty:where([data-size="sm"]) .faun-empty-visual { inline-size: var(--faun-space-12); block-size: var(--faun-space-12); border-radius: var(--faun-radius-md); }
+.faun-empty-art { inline-size: var(--faun-space-12); block-size: var(--faun-space-12); }
+.faun-empty-art-card { fill: var(--faun-bg-surface); stroke: var(--faun-accent-a7); stroke-width: 1.5; }
+.faun-empty-art-line { fill: var(--faun-accent-a6); }
+.faun-empty-art-faun { fill: var(--faun-accent-9); }
+.faun-empty-title { margin: 0; font-family: var(--faun-type-heading-lg-font-family); font-size: var(--faun-type-heading-lg-font-size); line-height: var(--faun-type-heading-lg-line-height); font-weight: var(--faun-type-heading-lg-font-weight); letter-spacing: var(--faun-type-heading-lg-letter-spacing); text-wrap: balance; color: var(--faun-fg-default); }
+.faun-empty:where([data-size="sm"]) .faun-empty-title { font-size: var(--faun-type-heading-md-font-size); line-height: var(--faun-type-heading-md-line-height); }
+.faun-empty-description { margin: 0; color: var(--faun-fg-muted); font-size: var(--faun-type-body-md-font-size); line-height: var(--faun-type-body-md-line-height); text-wrap: pretty; }
+.faun-empty-actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--faun-space-2); margin-block-start: var(--faun-space-3); }

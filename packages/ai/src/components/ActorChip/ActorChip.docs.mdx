@@ -1,0 +1,88 @@
+export const meta = {
+  title: "Actor chip",
+  description: "Names who did something. Machines are lagoon with a kind icon, people are plum with their photo or initials.",
+  category: "AI and agents",
+  status: "new",
+  components: ["ActorChip"],
+  related: ["avatar", "run-trail", "timeline", "approval-card"],
+  order: 6,
+};
+
+<Section tab="usage">
+
+<Example of="ActorChip/Overview" layout="start" />
+
+## When to use
+
+- Wherever work is attributed: run steps, approvals, drafts, comments, audit rows.
+- To keep machine work and human work visibly apart. Machines are lagoon, people are plum.
+
+## When not to use
+
+- For a person's profile or menu. Use [Avatar](/components/avatar).
+- For categories or filters. Use [Tag](/components/tag).
+
+## Variants
+
+<Example of="ActorChip/WithKindAndRole" title="Kind and role" description="Show the kind in words where readers meet an actor for the first time, and the role for people." layout="start" />
+
+<Example of="ActorChip/Small" title="Small" description="For dense trails and tables." layout="start" />
+
+<DoDont>
+  <Do of="ActorChip/DoNameTheActor" caption="Name the agent or Sub-agent that did the work and show its kind." />
+  <Dont of="ActorChip/DontAnonymousAgent" caption="Attribute work to “AI”. Name the agent, so people know who to ask and what to trust." />
+</DoDont>
+
+## Writing
+
+- Use the agent's product name: “CSRD Filing Orchestrator”, “Scope 3 Sub-agent”. Use a person's full name.
+- Roles are short and in sentence case: “Sub-agent · Value chain”, “Sustainability lead”.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A pill with a mark (a kind icon for machines, an extra-small avatar for people), the name, and optional kind and role in a lighter weight.
+
+## Kinds
+
+Agent, Sub-agent, tool, model and system each have an icon or are neutral. People use their photo or initials. Machines never look like people, and the reverse.
+
+## Tokens
+
+<UsesTokens names={["status.running.fg", "status.running.bg", "status.attention.fg", "status.attention.bg", "status.neutral.fg"]} />
+
+The chip borrows the lagoon and plum hues of the running and attention tones to say machine and human. It names identity, not state, so it does not replace a status badge.
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="ActorChip/WithKindAndRole" title="Actors from the shared model" code="open" layout="start" />
+
+## Notes
+
+- `actor` is the shared `Actor` shape: `id`, `name`, `kind`, optional `avatarUrl` and `role`.
+- `isMachine(kind)` from the package tells you which side of the line a kind falls on.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "The chip is not interactive and is not a tab stop. Wrap it in a link or button when it should be."]]} />
+
+## Screen readers
+
+- The accessible text is the name, then the kind and role: “Scope 3 Sub-agent, Sub-agent, Sub-agent · Value chain”. The mark is decorative.
+
+## Visual
+
+- Kind is shown by an icon and in words, never by colour alone. Text meets 4.5:1 in every theme.
+
+</Section>

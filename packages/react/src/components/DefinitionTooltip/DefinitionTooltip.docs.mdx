@@ -1,0 +1,77 @@
+export const meta = {
+  title: "Definition tooltip",
+  description: "A term with a dotted underline whose definition opens on hover, focus or press.",
+  category: "Overlays",
+  status: "new",
+  components: ["DefinitionTooltip"],
+  related: ["tooltip", "toggletip", "popover"],
+  order: 6,
+};
+
+<Section tab="usage">
+
+<Example of="DefinitionTooltip/Overview" height={140} />
+
+## When to use
+
+- For jargon and abbreviations inside body text, a table or a form label: tCO₂e, base year, market-based.
+- When the definition is one or two plain sentences.
+
+## When not to use
+
+- For a definition that needs a link, a list or an action. Use a [Toggletip](/components/toggletip).
+- To name an icon. Use [Tooltip](/components/tooltip).
+- For a term every reader of the page already knows.
+
+## In a list of facts
+
+<Example of="DefinitionTooltip/InTable" title="Terms beside values" description="The dotted underline marks a term as explained. Hover or focus shows the definition; pressing it keeps it open on touch." height={140} />
+
+<DoDont>
+  <Do of="DefinitionTooltip/DoOneTerm" caption="Define the term once, where it first appears, in plain words." />
+  <Dont of="DefinitionTooltip/DontLinks" caption="Put links or buttons in the definition. It is announced as a description and cannot take focus." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A text-sized button styled as a dotted underline, and a small inverse bubble. The underline turns solid on hover.
+
+## Tokens
+
+<UsesTokens names={["bg.inverse", "fg.inverse", "focus.ring"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="DefinitionTooltip/Overview" title="Inline in a sentence" code="open" height={140} />
+
+## Notes
+
+- `definition` is plain content. For rich content use Toggletip.
+- The term is a real `button`, so it is reachable by keyboard. It inherits the font of its surroundings.
+- Hover opens after 200 ms. A press pins it; press again or press Escape to close.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the term and shows the definition."], ["Enter or Space", "Pins the definition open, or closes it."], ["Escape", "Closes the definition."]]} />
+
+## Screen readers
+
+- The definition is attached with `aria-describedby`, so the term is read followed by its definition.
+
+## Visual
+
+- Meaning never depends on colour: the dotted underline marks a term. Focus draws the standard focus ring.
+
+</Section>

@@ -1,0 +1,90 @@
+export const meta = {
+  title: "AI label",
+  description: "The marker for AI-generated content, and the explanation behind it: agent, model, confidence, sources and a way back to the original.",
+  category: "AI and agents",
+  status: "new",
+  components: ["AILabel"],
+  related: ["ai-slot", "confidence-badge", "citation", "actor-chip"],
+  order: 9,
+};
+
+<Section tab="usage">
+
+<Example of="AiLabel/Overview" height={160} />
+
+## When to use
+
+- On any content an agent wrote or filled in that a person has not written themselves: a drafted paragraph, an extracted value, a suggested field.
+- Next to the content, never in a footer or a tooltip. The label stays after a person accepts, so the origin is never lost.
+
+## When not to use
+
+- To show who is speaking in a conversation. [Actor chip](/components/actor-chip) does that, and the chat message already includes the label.
+- For how sure the agent is on its own. Use [Confidence badge](/components/confidence-badge); the label shows it inside the explanation.
+- As decoration on features that are merely AI-assisted behind the scenes.
+
+## The explanation
+
+<Example of="AiLabel/Explained" title="What the person can learn" description="Press the label. The panel says how the content was produced, which agent and model, how confident it is and why, the sources it rests on, and any action such as a link to the method." height={560} />
+
+## Kinds and sizes
+
+<Example of="AiLabel/Kinds" title="Label and icon, medium and small" description="Use the words wherever there is room. The icon-only kind is for dense cells and field corners and is named “AI generated. Show details”. Use “AI suggested” for content a person has not accepted." layout="start" height={80} />
+
+## Reverting
+
+<Example of="AiLabel/WithRevert" title="Revert to the original" description="When the person has changed AI content, pass onRevert. The explanation then offers Revert to original, which is disabled and says so when nothing has changed." height={400} />
+
+<DoDont>
+  <Do of="AiLabel/DoNameTheAgent" caption="Say AI generated in words, and let a press explain who and how." />
+  <Dont of="AiLabel/DontDecoration" caption="Use a bare sparkle as decoration. It says nothing and cannot be pressed for the reason." />
+</DoDont>
+
+## Writing
+
+“AI generated” for content as produced, “AI suggested” while it awaits a decision, “AI generated, edited” after a change. The summary is one or two plain sentences about inputs, not about the model.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A small pill in the AI colours (a lagoon-tinted fill and border) with the sparkle and the words, and a bordered explanation card: title, summary, a list of facts (agent, model in the mono face, confidence), sources, and a footer with actions.
+
+## Tokens
+
+<UsesTokens names={["ai.bg", "ai.fg", "ai.border", "bg.raised", "border.subtle", "fg.muted"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="AiLabel/WithRevert" title="Revert wiring" code="open" height={400} />
+
+## Notes
+
+- `agent`, `model`, `summary`, `confidence`, `sources`, `actions` all feed the explanation; omit what you do not have.
+- `onRevert` adds the Revert action; `modified` controls whether it is enabled (default enabled).
+- It is a popover: `open`, `defaultOpen` and `onOpenChange` control it.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Enter or Space", "Opens the explanation."], ["Tab", "Moves into the explanation: links and the Revert button."], ["Escape", "Closes it and returns focus to the label."]]} />
+
+## Screen readers
+
+- A button named by its visible words, or “AI generated. Show details” for the icon kind. It reports expanded state.
+- The explanation is a dialog named “About this AI content”; the facts are a description list and the sources a labelled list.
+
+## Visual
+
+- The words carry the meaning, not the colour: the pill is recognisable in forced colours by its border and text. The label meets 4.5:1 on its tint.
+
+</Section>

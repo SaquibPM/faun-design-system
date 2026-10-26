@@ -1,0 +1,114 @@
+export const meta = {
+  title: "Toast",
+  description: "A brief, non-blocking message about the outcome of an action. Call toast() from anywhere; one Toaster renders the stack.",
+  category: "Feedback",
+  status: "stable",
+  components: ["Toaster"],
+  related: ["banner", "alert-dialog"],
+  order: 20,
+};
+
+<Section tab="usage">
+
+<Example of="Toast/Overview" height={220} />
+
+## When to use
+
+- To confirm that an action finished: saved, approved, exported, sent.
+- To report a background failure that doesn't block the current task, with a way to act on it.
+- To offer a short-lived Undo after a reversible action, instead of asking for confirmation first.
+
+## When not to use
+
+- For anything people must read or act on to continue: use a Banner on the page or an Alert dialog.
+- For form validation: show errors next to the field.
+- For long-running agent work: show progress where the work lives, and use a toast only for the result.
+
+## Variants
+
+<Example of="Toast/Tones" title="Tones" description="Neutral for plain confirmations. Success, info, warning and error add a status icon. Errors stay for 8 seconds and are announced assertively; others stay for 5." height={360} />
+
+<Example of="Toast/WithUndo" title="With an action" description="One action at most, labelled with a verb. Undo is the most common. A toast with an action does not time out: it stays until someone acts on it or dismisses it. Pass duration to opt back in to a timer." height={120} />
+
+<Example of="Toast/Persistent" title="Persistent" description="persistent keeps any toast until it is dismissed. Use it sparingly, for something people must not miss that is not worth a Banner." height={120} />
+
+## Content
+
+- Lead with the outcome in a few words: “Report exported”, not “Your report has been successfully exported”.
+- Add a description only when it helps the next step: a file name, a count, where to look.
+- Errors say what failed and what to do about it.
+
+<DoDont>
+  <Do of="Toast/DoOutcome" caption="State the outcome, add useful detail and one optional action." />
+  <Dont of="Toast/DontBlocking" caption="Put information people must act on in a toast. It disappears; use a Banner or a dialog." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A raised surface with an optional status icon, a title, an optional description, one optional action and a dismiss button. Toasts stack in a corner, newest nearest the edge, up to four at once.
+
+## Placement
+
+Bottom right by default. Use bottom center for full-screen editors and top center only when the bottom of the screen is busy. On narrow screens the stack spans the width with a 16px gutter.
+
+## Tokens
+
+<UsesTokens names={["bg.raised", "border.subtle", "fg.muted", "status.success.fg", "status.danger.fg", "status.warning.fg", "status.info.fg"]} />
+
+<ComponentTokens name="toast" />
+
+</Section>
+
+<Section tab="code">
+
+```tsx
+// Once, near the root of the app
+<Toaster />
+
+// Anywhere
+toast("Draft saved");
+toast.success({ title: "Materiality approved", action: { label: "View", onClick: openReview } });
+toast.error({ title: "Export failed", description: "The XBRL validator rejected 2 tags." });
+
+const id = toast.loading("Uploading evidence…");
+toast.update(id, { title: "Evidence uploaded", tone: "success", duration: 5000 });
+
+toast.promise(runCalculation(), {
+  loading: "Calculating Scope 3…",
+  success: (n) => `${n} categories calculated`,
+  error: (e) => `Calculation failed: ${e.message}`,
+});
+```
+
+## Notes
+
+- Mount `Toaster` once. Extra Toasters are inert, so a nested layout can't duplicate toasts.
+- Pass `id` to replace an existing toast rather than stacking a new one, for example when the same sync runs twice.
+- `toast.dismiss(id)` closes one toast; `toast.dismiss()` closes all of them.
+- Loading toasts don't time out. Update them when the work ends.
+- A toast with an `action` does not time out either, because a timer takes the action away from slow readers, switch users and screen reader users (WCAG 2.2.1). Give `duration` to choose a timer anyway, or `persistent` to keep any toast. Dismiss with the close button, Escape or a swipe; the action is also unavailable once the toast is gone, so keep the same outcome reachable elsewhere.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["F8", "Moves focus to the notification region."], ["Tab", "Moves between the action and dismiss buttons of each toast."], ["Escape", "Dismisses the focused toast."]]} />
+
+## Screen readers
+
+- Toasts are announced through a live region: politely for neutral, info and success; assertively for warnings and errors.
+- Toasts with an action, loading toasts and persistent toasts have no timer. Otherwise the timer pauses while the pointer is over a toast, while it has focus, and while the window is in the background.
+- Actions carry alternative text for screen readers, so the same outcome stays reachable without the toast. Make sure it is: Undo should also be available from the page or history.
+
+## Visual
+
+- Status is shown by an icon and the title, never by colour alone.
+- Toasts can be swiped away on touch screens. Motion is removed when reduced motion is requested.
+
+</Section>

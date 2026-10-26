@@ -1,0 +1,79 @@
+export const meta = {
+  title: "Button group",
+  description: "Lays out two or three related buttons with one clear primary, at equal widths if needed.",
+  category: "Actions",
+  status: "new",
+  components: ["ButtonGroup"],
+  related: ["button", "menu-button"],
+  order: 5,
+};
+
+<Section tab="usage">
+
+<Example of="ButtonGroup/Overview" layout="start" />
+
+## When to use
+
+- Dialog, sheet and card footers with a primary and one or two other actions.
+- A set of closely related buttons that read as one control (joined).
+
+## When not to use
+
+- For more than three actions. Move the extras into a [Menu button](/components/menu-button) or [Overflow menu](/components/overflow-menu).
+- For choosing one option that stays selected. Use a [Segmented control](/components/segmented-control).
+
+## Variants
+
+<Example of="ButtonGroup/Equal" title="Equal widths" description="equal gives every button the same width. Good for a confirm pair." layout="start" />
+
+<Example of="ButtonGroup/Joined" title="Joined" description="layout=&quot;joined&quot; fuses buttons with a shared edge and hairline separators." layout="start" />
+
+<Example of="ButtonGroup/Stacked" title="Stacked" description="stack=&quot;always&quot; stacks vertically; stack=&quot;narrow&quot; stacks below 480px with the primary first." layout="start" />
+
+<DoDont>
+  <Do of="ButtonGroup/DoOnePrimary" caption="One high-emphasis button, last in the row." />
+  <Dont of="ButtonGroup/DontFourActions" caption="Line up four actions. Nothing stands out and the row grows." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A flex row with the gap from the spacing scale, aligned to the end by default. Joined groups remove the gap and the inner radii.
+
+## Tokens
+
+<UsesTokens names={["border.control", "focus.ring"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="ButtonGroup/Overview" title="Review actions" code="open" layout="start" />
+
+## Notes
+
+- Order from quiet to loud: tertiary, secondary, primary last. Below 480px with `stack="narrow"` the order reverses so the primary is on top.
+- Pass `aria-label` when the buttons need shared context.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves through the buttons in order."]]} />
+
+## Screen readers
+
+- The group has `role="group"`. Give it a name when the buttons are ambiguous alone.
+
+## Visual
+
+- In joined groups the hovered or focused button rises above its neighbours so its focus ring is never clipped.
+
+</Section>

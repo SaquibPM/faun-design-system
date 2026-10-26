@@ -1,0 +1,16 @@
+.faun-kbd-group { display: inline-flex; align-items: center; gap: var(--faun-space-0-5); font-family: var(--faun-font-family-mono); vertical-align: baseline; }
+.faun-kbd {
+  display: inline-grid; place-items: center;
+  min-inline-size: var(--faun-space-5); block-size: var(--faun-space-5);
+  padding-inline: var(--faun-space-1);
+  border: var(--faun-border-width-hairline) solid var(--faun-border-default);
+  border-bottom-width: 2px;
+  border-radius: var(--faun-radius-xs);
+  background: var(--faun-bg-surface);
+  color: var(--faun-fg-muted);
+  font-family: var(--faun-font-family-mono);
+  font-size: var(--faun-type-micro-font-size);
+  line-height: 1;
+  font-weight: var(--faun-font-weight-medium);
+}
+.faun-kbd-group:where([data-size="sm"]) .faun-kbd { min-inline-size: var(--faun-space-4); block-size: var(--faun-space-4); padding-inline: 3px; border-bottom-width: 1px; }

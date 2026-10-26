@@ -1,0 +1,77 @@
+.faun-toast-viewport {
+  position: fixed;
+  z-index: var(--faun-z-toast);
+  display: flex;
+  flex-direction: column;
+  gap: var(--faun-space-2);
+  inline-size: min(var(--faun-toast-width), calc(100vw - var(--faun-space-8)));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  outline: none;
+}
+.faun-toast-viewport:where([data-position="bottom-right"]) { right: var(--faun-space-6); bottom: var(--faun-space-6); }
+.faun-toast-viewport:where([data-position="bottom-left"]) { left: var(--faun-space-6); bottom: var(--faun-space-6); }
+.faun-toast-viewport:where([data-position="bottom-center"]) { left: 50%; bottom: var(--faun-space-6); transform: translateX(-50%); }
+.faun-toast-viewport:where([data-position="top-right"]) { right: var(--faun-space-6); top: var(--faun-space-6); flex-direction: column-reverse; }
+.faun-toast-viewport:where([data-position="top-center"]) { left: 50%; top: var(--faun-space-6); transform: translateX(-50%); flex-direction: column-reverse; }
+.faun-toast {
+  --_icon: var(--faun-fg-muted);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--faun-space-3);
+  padding: var(--faun-space-3) var(--faun-space-3) var(--faun-space-3) var(--faun-toast-padding);
+  border-radius: var(--faun-toast-radius);
+  border: var(--faun-border-width-hairline) solid var(--faun-border-subtle);
+  background: var(--faun-bg-raised);
+  color: var(--faun-fg-default);
+  box-shadow: var(--faun-elevation-4);
+  animation: faun-pop-in var(--faun-motion-duration-slow) var(--faun-motion-spring-snappy);
+  --_pop-y: var(--faun-space-2);
+}
+.faun-toast[data-state="closed"] { animation: faun-fade-out var(--faun-motion-duration-moderate) var(--faun-motion-easing-exit); }
+.faun-toast[data-swipe="move"] { transform: translateX(var(--radix-toast-swipe-move-x)); }
+.faun-toast[data-swipe="cancel"] { transform: none; transition: transform var(--faun-motion-duration-moderate) var(--faun-motion-easing-standard); }
+.faun-toast[data-swipe="end"] { animation: faun-fade-out var(--faun-motion-duration-fast) var(--faun-motion-easing-exit); }
+.faun-toast:where([data-tone="success"]) { --_icon: var(--faun-status-success-fg); }
+.faun-toast:where([data-tone="danger"]) { --_icon: var(--faun-status-danger-fg); }
+.faun-toast:where([data-tone="warning"]) { --_icon: var(--faun-status-warning-fg); }
+.faun-toast:where([data-tone="info"]) { --_icon: var(--faun-status-info-fg); }
+.faun-toast:where([data-tone="loading"]) { --_icon: var(--faun-status-running-fg); }
+.faun-toast-icon { display: inline-flex; flex: none; color: var(--_icon); padding-block-start: var(--faun-space-0-5); }
+.faun-toast-text { display: grid; gap: var(--faun-space-0-5); flex: 1 1 auto; min-inline-size: 0; padding-block: var(--faun-space-0-5); }
+.faun-toast-title { font-size: var(--faun-type-label-lg-font-size); line-height: var(--faun-type-label-lg-line-height); font-weight: var(--faun-type-label-lg-font-weight); }
+.faun-toast-description { color: var(--faun-fg-muted); overflow-wrap: anywhere; font-size: var(--faun-type-body-sm-font-size); line-height: var(--faun-type-body-sm-line-height); }
+.faun-toast-action {
+  flex: none;
+  align-self: center;
+  block-size: var(--faun-size-control-sm);
+  padding-inline: var(--faun-space-2-5);
+  border: var(--faun-border-width-hairline) solid var(--faun-neutral-outline-border);
+  border-radius: var(--faun-radius-sm);
+  background: var(--faun-neutral-outline-bg);
+  color: var(--faun-neutral-fg);
+  font: inherit;
+  font-size: var(--faun-type-label-sm-font-size);
+  font-weight: var(--faun-font-weight-medium);
+  cursor: pointer;
+}
+.faun-toast-action:hover { background: var(--faun-neutral-outline-bg-hover); border-color: var(--faun-neutral-outline-border-hover); }
+.faun-toast-close {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  inline-size: var(--faun-size-control-xs);
+  block-size: var(--faun-size-control-xs);
+  border: 0;
+  border-radius: var(--faun-radius-sm);
+  background: transparent;
+  color: var(--faun-fg-muted);
+  cursor: pointer;
+}
+.faun-toast-close:hover { background: var(--faun-bg-hover); color: var(--faun-fg-default); }
+.faun-toast-action:focus-visible, .faun-toast-close:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 2px; }
+@media (max-width: 640px) {
+  .faun-toast-viewport { left: var(--faun-space-4); right: var(--faun-space-4); inline-size: auto; transform: none; }
+}
+@media (forced-colors: active) { .faun-toast { border-color: CanvasText; } }

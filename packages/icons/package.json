@@ -1,0 +1,77 @@
+{
+  "name": "@faun-ds/icons",
+  "version": "0.1.0",
+  "description": "Faun icons: a curated Lucide set plus ESG and agentic glyphs, as accessible, tree-shakable React components.",
+  "license": "Apache-2.0",
+  "author": "Saquib Jawed and Faun contributors",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SaquibPM/faun-design-system.git",
+    "directory": "packages/icons"
+  },
+  "homepage": "https://saquibpm.github.io/faun-design-system",
+  "bugs": {
+    "url": "https://github.com/SaquibPM/faun-design-system/issues"
+  },
+  "keywords": [
+    "icons",
+    "react",
+    "svg",
+    "lucide",
+    "design-system",
+    "accessibility",
+    "esg"
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "NOTICE"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./manifest.json": "./dist/manifest.json",
+    "./package.json": "./package.json",
+    "./registry": {
+      "types": "./dist/registry.d.ts",
+      "default": "./dist/registry.js"
+    },
+    "./sprite.svg": "./dist/sprite.svg"
+  },
+  "scripts": {
+    "generate": "tsx scripts/generate.ts",
+    "build": "tsx scripts/generate.ts && tsc -p tsconfig.build.json && tsx scripts/sprite.ts",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "peerDependencies": {
+    "react": "^18.2.0 || ^19.0.0"
+  },
+  "devDependencies": {
+    "@faun-ds/tokens": "workspace:*",
+    "@testing-library/react": "^16.1.0",
+    "@types/node": "^22.10.2",
+    "@types/react": "^19.0.2",
+    "@types/react-dom": "^19.0.2",
+    "jsdom": "^25.0.1",
+    "lucide-static": "0.468.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

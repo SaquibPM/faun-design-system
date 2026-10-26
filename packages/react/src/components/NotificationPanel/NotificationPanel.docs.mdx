@@ -1,0 +1,92 @@
+export const meta = {
+  title: "Notification panel",
+  description: "The notification centre: a bell with an unread badge that opens a list of notifications grouped by time, with read state and a link to preferences.",
+  category: "Feedback",
+  status: "new",
+  components: ["NotificationPanel", "NotificationList", "NotificationItem", "NotificationBell"],
+  related: ["banner", "toast", "popover"],
+  order: 4,
+};
+
+<Section tab="usage">
+
+<Example of="NotificationPanel/Overview" height={120} />
+
+## When to use
+
+- As the one place events are kept after the [Toast](/components/toast) that announced them has gone: approvals waiting, failed runs, finished exports.
+- In the top bar, beside search and the account menu.
+
+## When not to use
+
+- For a condition that affects the current page and stays true until fixed. Use a [Banner](/components/banner).
+- For the result of an action the person just took. Use a Toast.
+- For every event. Notify only what a person might need to act on or would regret missing.
+
+## The open panel
+
+<Example of="NotificationPanel/OpenPanel" title="Grouped, with read state" description="Unread items have a dot, a bold title and a tinted row. Tone is an icon and a word, not just colour. Each item can have one action, mark as read and dismiss." height={620} />
+
+## As a page
+
+<Example of="NotificationPanel/Centre" title="Notification centre list" description="NotificationList is the same list without the popover, for a full-page notification centre. Use a level 2 heading for the groups there." height={520} />
+
+<DoDont>
+  <Do of="NotificationPanel/DoGrouped" caption="Group by when it happened, say what changed and who it came from, and give one action." />
+  <Dont of="NotificationPanel/DontEverything" caption="Record interface events nobody needs to act on. It buries the notifications that matter." />
+</DoDont>
+
+## Writing
+
+- The title states the event in a sentence: “Ledger import failed”. The text gives the fix.
+- Name the source (an agent, a filing) before the time.
+- Action labels are verbs and objects: “Review approval”.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Panel: header with the title, unread count and Mark all as read; a scrolling list with sticky group headings; a footer with links to the full centre and to preferences. Item: tone icon, title, text, source and time, actions, unread dot, dismiss button.
+
+The bell takes its badge from the attention tone, the same one used for “waiting on you”, and shows a count up to 9+.
+
+## Tokens
+
+<UsesTokens names={["bg.raised", "bg.surface-nested", "bg.brand-soft", "border.subtle", "status.attention.solid", "status.danger.fg", "fg.link"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="NotificationPanel/Overview" title="Controlled list" code="open" height={120} />
+
+## Notes
+
+- The panel is controlled by your data: pass `items`, and update them in `onToggleRead`, `onDismiss` and `onMarkAllRead`.
+- `group` on an item sets its heading. Items are shown in the order given, so sort newest first.
+- Pass `trigger` to replace the bell, for example a header icon from your own shell.
+- `NotificationBell` can be used alone when the list lives on another page.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Enter or Space", "Opens the panel from the bell."], ["Tab", "Moves through the actions and links in each notification."], ["Escape", "Closes the panel and returns focus to the bell."]]} />
+
+## Screen readers
+
+- The bell is named with the count: “Notifications, 3 unread”. The badge itself is hidden from assistive technology.
+- Each notification is a list item named by its title, preceded by its tone and “unread” as words.
+- Groups are labelled sections with headings, so people can move between them by heading.
+
+## Visual
+
+- Unread state is a dot, a bold title and the word “unread” for screen readers, not only a tint. In forced colours the dot and a side rule use system colours.
+
+</Section>

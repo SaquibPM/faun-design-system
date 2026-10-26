@@ -1,0 +1,21 @@
+.faun-chart-types { display: flex; flex-direction: column; gap: var(--faun-space-8); inline-size: 100%; }
+.faun-chart-types-group { display: flex; flex-direction: column; gap: var(--faun-space-3); margin: 0; padding: 0; border: 0; min-inline-size: 0; }
+.faun-chart-types-heading { margin: 0; font-family: var(--faun-font-family-serif); font-size: var(--faun-type-heading-md-font-size); line-height: var(--faun-type-heading-md-line-height); font-weight: var(--faun-font-weight-semibold); }
+.faun-chart-types-note { margin: 0; color: var(--faun-fg-muted); font-size: var(--faun-type-body-sm-font-size); line-height: var(--faun-type-body-sm-line-height); }
+.faun-chart-types-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(calc(var(--faun-space-24) * 1.75), 1fr)); gap: var(--faun-space-3); margin: 0; padding: 0; list-style: none; }
+.faun-chart-types-tile {
+  display: flex; flex-direction: column; gap: var(--faun-space-2); block-size: 100%; min-inline-size: 0;
+  padding: var(--faun-space-3); border: var(--faun-border-width-hairline) solid var(--faun-border-subtle); border-radius: var(--faun-radius-lg);
+  background: var(--faun-bg-raised); color: var(--faun-fg-default); text-decoration: none;
+}
+.faun-chart-types-tile:hover { border-color: var(--faun-border-default); background: var(--faun-bg-hover); }
+.faun-chart-types-tile:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 2px; }
+.faun-chart-types-thumb { display: flex; align-items: center; justify-content: center; min-inline-size: 0; block-size: calc(var(--faun-space-24) * 1.1); overflow: hidden; pointer-events: none; }
+.faun-chart-types-thumb > * { inline-size: 100%; }
+.faun-chart-types-name { font-weight: var(--faun-font-weight-semibold); font-size: var(--faun-type-body-sm-font-size); line-height: var(--faun-type-body-sm-line-height); }
+.faun-chart-types-variant { color: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size); line-height: var(--faun-type-caption-line-height); }
+.faun-chart-types-mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: var(--faun-space-2); inline-size: 100%; }
+@media (forced-colors: active) {
+  .faun-chart-types-tile { border-color: CanvasText; }
+}
+.faun-chart-types-thumb :is(.faun-chart-legend, .faun-chart-legend-ramp) { display: none; }

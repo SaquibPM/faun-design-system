@@ -1,0 +1,85 @@
+export const meta = {
+  title: "Header navigation",
+  description: "Links in the top bar, with sub-menus for groups of pages. The current page is marked and the links fold into a menu on small screens.",
+  category: "Navigation",
+  status: "new",
+  components: ["HeaderNav"],
+  related: ["app-shell", "tabs", "menu"],
+  order: 7,
+};
+
+<Section tab="usage">
+
+<Example of="HeaderNav/Overview" height={240} />
+
+## When to use
+
+- For products whose top-level areas are few and always visible: Overview, Filings, Data, Agents.
+- Together with the side navigation, when the side navigation holds the pages inside the current area.
+
+## When not to use
+
+- For more than five or six links. Move the rest into the side navigation or a sub-menu.
+- For switching between sections of one page. Use [Tabs](/components/tabs).
+- For switching product or workspace. Use the switcher in the [Header panel](/components/header-panel).
+
+## Sub-menus
+
+<Example of="HeaderNav/SubMenuCurrent" title="A group of pages" description="An item with children opens a menu instead of navigating. When one of its pages is current, the item is underlined too, so people can see where they are." height={220} />
+
+<DoDont>
+  <Do of="HeaderNav/DoFewLinks" caption="Keep to a handful of top-level links, each a noun people recognise." />
+  <Dont of="HeaderNav/DontManyLinks" caption="Add every area to the header. It overflows on small screens and nothing stands out." />
+</DoDont>
+
+## Small screens
+
+Below 768px the links fold into one Menu button. Sub-menus become labelled groups inside it. Change the breakpoint with `collapseBelow`.
+
+## Writing
+
+Use one word where you can. Sentence case. Name destinations, not actions.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A navigation landmark with a list of links. The current link is semibold with a 3px underline in the accent colour; sub-menu buttons carry a chevron that turns when open. Menus reuse the standard Menu surface.
+
+## Tokens
+
+<UsesTokens names={["fg.muted", "fg.default", "bg.hover", "bg.active", "accent.solid-bg", "focus.ring"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="HeaderNav/Overview" title="Data-driven links" code="open" height={240} />
+
+## Notes
+
+- Pass `items` as data: `{ label, href, current, children }`. Mark `current` yourself from the route.
+- For router links, render the sub-menu or top-level items with your own element and the `faun-header-nav-link` class, or intercept clicks on the `nav`.
+- Place it in `TopBar nav`. Give it a `label` when there is more than one navigation landmark with the same role.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves between links and sub-menu buttons."], ["Enter or Space", "Follows a link, or opens a sub-menu."], ["Arrow keys", "Move between items in an open sub-menu; Home and End jump to the first and last."], ["Escape", "Closes a sub-menu and returns focus to its button."]]} />
+
+## Screen readers
+
+- A `nav` landmark named “Primary”. The current link has `aria-current="page"`. Sub-menu buttons announce that they open a menu and whether it is expanded.
+
+## Visual
+
+- The current page is shown by weight and an underline as well as colour. Link text meets 4.5:1.
+
+</Section>

@@ -1,0 +1,93 @@
+export const meta = {
+  title: "File upload",
+  description: "Accepts files by drop or browse, shows progress for each file and reports problems with how to fix them.",
+  category: "Forms",
+  status: "stable",
+  components: ["FileUpload"],
+  related: ["field", "progress"],
+  order: 7,
+};
+
+<Section tab="usage">
+
+<Example of="FileUpload/Overview" layout="start" />
+
+## When to use
+
+- To attach evidence: utility bills, meter readings, audit memos.
+- To import data files with a stated type and size limit.
+
+## When not to use
+
+- For a single image or avatar. Use a dedicated picker.
+- For syncing a folder. Use an integration.
+
+## Variants
+
+<Example of="FileUpload/FileList" title="With files" description="Each file shows name, size and status." layout="start" />
+
+<Example of="FileUpload/SimulatedUpload" title="Upload progress" description="Status and progress are driven by your upload code." layout="start" />
+
+<Example of="FileUpload/SingleFile" title="Single file" description="Set multiple to false to replace the file." layout="start" />
+
+<Example of="FileUpload/WithError" title="Error" description="Rejects show a reason per file." layout="start" />
+
+<DoDont>
+  <Do of="FileUpload/DoSayWhat" caption="Say what to drop and the limits up front." />
+  <Dont of="FileUpload/DontGeneric" caption="Use a bare “Upload” title. People don't know what is accepted." />
+</DoDont>
+
+## Writing
+
+Title names the files: “Drop utility bills”. Hint states type and size: “PDF up to 20 MB”. Errors name the file and the fix: “bill.docx is not a PDF”.
+
+## Warn, read-only and loading
+
+<Example of="FileUpload/StateContract" title="Warn, read-only and skeleton" description="Warn marks a value that is allowed but worth a second look. It is never the same as invalid: it does not set aria-invalid and never blocks submission, and the message carries an icon and text so it is not colour alone. Read-only shows the value flat, keeps it focusable and copyable, and ignores changes. Skeleton replaces the control while its data loads; the label stays for screen readers. Set all three on a Field and every control inside follows." />
+
+Set `warn` (a message), `readOnly` and `skeleton` on the surrounding `Field`. On a standalone file upload, pass `readOnly` and `skeleton` directly; give `warn` a message through a Field so it is announced. An error always replaces a warning.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A dashed drop zone with an icon, title, “or browse” text and hint, followed by a list of files with name, size, status and remove or retry actions. A visually hidden file input inside the zone carries focus and the label.
+
+## Tokens
+
+<UsesTokens names={["bg.surface", "border.control", "accent.soft-bg", "status.danger.fg"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="FileUpload/SimulatedUpload" title="Driving progress from your upload" layout="start" code="open" />
+
+## Notes
+
+- The component validates `accept`, `maxSize` and `maxFiles`, and reports accepted files with `onFilesAccepted`. You upload them and update each item's `status` and `progress`.
+- Items are `{ id, name, size, status, progress?, error?, retryable? }`.
+- `formatBytes` is exported for showing sizes.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves focus to the file input, then to each file's Retry and Remove buttons."], ["Enter / Space", "Opens the file picker, or activates a file action."]]} />
+
+## Screen readers
+
+- The file input is named by its Field label, with the hint as its description. The list is named “Files”.
+- Uploads show as progress bars named “Uploading” followed by the file name. Errors appear as text beside the file, and Retry and Remove buttons name the file.
+
+## Visual
+
+- Dragging over the zone changes its border and background. Progress shows a percentage as text. Errors carry an icon and text.
+
+</Section>

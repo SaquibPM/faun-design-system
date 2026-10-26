@@ -1,0 +1,94 @@
+export const meta = {
+  title: "Bullet chart",
+  description: "Shows one measure against a goal and qualitative bands. Compact enough to stack a dozen KPIs.",
+  category: "Data",
+  status: "new",
+  components: ["BulletChart"],
+  related: ["gauge-chart", "meter-chart", "bar-chart", "chart-types"],
+  order: 28,
+};
+
+<Section tab="usage">
+
+<Example of="BulletChart/Overview" layout="stretch" />
+
+## When to use
+
+- To track several KPIs against targets in one view: programme KPIs, site reductions against a goal.
+- When a gauge would take too much room.
+
+## When not to use
+
+- For a single headline value. Use a gauge or a Stat.
+- For measures on different scales in one chart. Split into one chart per scale.
+- For change over time. Use a line chart.
+
+## Variants
+
+<Example of="BulletChart/WithoutBands" layout="stretch" title="Without bands" description="Bands are optional. A bar and a target tick are enough for many KPIs." />
+
+<Example of="BulletChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="BulletChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="BulletChart/DoOneScale" caption="Put measures that share a unit and scale in one chart." />
+  <Dont of="BulletChart/DontMixScales" caption="Mix percentages and tonnes. The small measure vanishes." />
+</DoDont>
+
+## Writing
+
+Name each measure with a short noun phrase. Name the bands with what they mean (“Behind”, “On track”, “Ahead”) with `rangeLabels`, so the legend explains the shading.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, a key (value, target, bands), the plot (one row per measure with graded bands behind a thin value bar and a target tick) and a tooltip with value, target and band limits.
+
+## Colour
+
+The value bar is `dataviz.cat-1` (or `color`). Bands are the axis colour at three or four increasing opacities, so shade carries order and no hue competes with the bar. The target tick uses the foreground colour.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.cat-3", "dataviz.grid", "dataviz.axis", "dataviz.surface", "bg.raised"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="BulletChart/Overview" layout="stretch" code="open" />
+
+<Example of="BulletChart/WithoutBands" layout="stretch" code="open" />
+
+## Notes
+
+- Each item is `{ id, label, value, target?, ranges? }`. `ranges` are the upper bounds of the bands, ascending, up to four.
+- All rows share one scale from zero.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. "], ["Arrow Right / Arrow Down", "Moves to the next measure."], ["Arrow Left / Arrow Up", "Moves to the previous measure."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the measure, its value, target and band limits in a polite live region.
+- The data table lists each measure with its value, target and bands in words, for example “Behind up to 40”.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Marks against the surface meet 3:1 in every theme, and the categorical palette is checked for protan and deutan separation.
+- Band shades step in lightness, not hue, so they read for colour-blind people and in forced-colours mode.
+
+</Section>

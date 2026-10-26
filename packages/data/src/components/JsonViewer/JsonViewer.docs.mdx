@@ -1,0 +1,88 @@
+export const meta = {
+  title: "JSON viewer",
+  description: "A collapsible tree for JSON payloads in the mono face, with copy, expand all and collapse all.",
+  category: "Data",
+  status: "new",
+  components: ["JsonViewer"],
+  related: ["tree", "description-list"],
+  order: 5,
+};
+
+<Section tab="usage">
+
+<Example of="JsonViewer/Overview" layout="stretch" />
+
+## When to use
+
+- To inspect agent run inputs and outputs, tool calls, evidence records and API payloads.
+- When people need to explore structure and copy the exact text.
+
+## When not to use
+
+- For values people should read as a form. Use a description list.
+- For code samples. Use a code block.
+- For tabular records. Use a data table.
+
+## Variants
+
+<Example of="JsonViewer/Expanded" layout="stretch" title="Expanded, with a max height" description="defaultExpandedDepth opens deeper levels. maxHeight keeps long payloads from pushing the page down." />
+
+<Example of="JsonViewer/Collapsed" layout="stretch" title="Collapsed" description="Depth 0 starts closed, with a count of keys." />
+
+<DoDont>
+  <Do of="JsonViewer/DoLabel" caption="Name what the payload is, so the group makes sense without its surroundings." />
+  <Dont of="JsonViewer/DontRawText" caption="Dump a minified string. It cannot be collapsed, scanned or navigated." />
+</DoDont>
+
+## Writing
+
+The label says what the data is (“Agent run payload”, “Emission factor record”), not that it is JSON.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A toolbar (Expand all, Collapse all, Copy), then the tree. Keys are medium weight, punctuation is muted, and values are coloured by type: strings (success), numbers (info), booleans (attention), null (muted, italic). Types also read from syntax: strings are quoted.
+
+## Tokens
+
+<UsesTokens names={["bg.surface-nested", "border.subtle", "fg.default", "fg.muted", "status.success.fg", "status.info.fg", "status.attention.fg"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="JsonViewer/Overview" layout="stretch" code="open" />
+
+## Notes
+
+- Pass any JSON-serialisable value to `data`. Copy writes `JSON.stringify(data, null, 2)`; `onCopied` receives the text.
+- Collapse all keeps the first level open; use `defaultExpandedDepth={0}` for a fully closed start.
+- The viewer is read-only.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[
+  ["Tab", "Moves through the toolbar buttons and each expand or collapse toggle, in reading order."],
+  ["Enter / Space", "Expands or collapses the focused node. On Copy, copies the JSON."],
+]} />
+
+## Screen readers
+
+- The viewer is a group with the label you give it. Each toggle is a button with `aria-expanded`, named with the key and its size, for example “output, 2 keys”.
+- Copying is confirmed in a polite status: “Copied JSON to clipboard”, and the button's name changes to “Copied”.
+- The scroll area is focusable so keyboard users can scroll long payloads.
+
+## Visual
+
+- Value types are not told by colour alone. Value colours meet 4.5:1 on the nested surface.
+
+</Section>

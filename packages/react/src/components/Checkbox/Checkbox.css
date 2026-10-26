@@ -1,0 +1,56 @@
+.faun-checkbox {
+  --_size: var(--faun-checkbox-size);
+  all: unset;
+  box-sizing: border-box;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  inline-size: var(--_size);
+  block-size: var(--_size);
+  border: var(--faun-border-width-hairline) solid var(--faun-border-control);
+  border-radius: var(--faun-checkbox-radius);
+  background: var(--faun-bg-surface);
+  color: var(--faun-accent-solid-fg);
+  box-shadow: var(--faun-elevation-1);
+  cursor: pointer;
+  transition: background-color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard), border-color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard);
+}
+.faun-checkbox:where([data-size="sm"]) { --_size: var(--faun-size-icon-sm); }
+.faun-checkbox:hover { border-color: var(--faun-border-control-hover); }
+.faun-checkbox:focus-visible { outline: var(--faun-border-width-focus) solid var(--faun-focus-ring); outline-offset: 2px; }
+.faun-checkbox[data-state="checked"], .faun-checkbox[data-state="indeterminate"] { background: var(--faun-accent-solid-bg); border-color: var(--faun-accent-solid-bg); }
+.faun-checkbox[data-state="checked"]:hover, .faun-checkbox[data-state="indeterminate"]:hover { background: var(--faun-accent-solid-bg-hover); border-color: var(--faun-accent-solid-bg-hover); }
+.faun-checkbox[data-invalid]:not([data-state="checked"]) { border-color: var(--faun-status-danger-fg); }
+.faun-checkbox:disabled { cursor: not-allowed; background: var(--faun-bg-disabled); border-color: var(--faun-border-disabled); box-shadow: none; color: var(--faun-fg-disabled); }
+.faun-checkbox:disabled[data-state="checked"], .faun-checkbox:disabled[data-state="indeterminate"] { background: var(--faun-bg-disabled); border-color: var(--faun-border-disabled); }
+.faun-checkbox-indicator { display: inline-flex; }
+.faun-checkbox-indicator[data-state="unchecked"] { display: none; }
+.faun-checkbox[data-state="indeterminate"] .faun-checkbox-check, .faun-checkbox:not([data-state="indeterminate"]) .faun-checkbox-dash { display: none; }
+.faun-checkbox-indicator > svg { inline-size: calc(var(--_size) - var(--faun-space-1)); block-size: calc(var(--_size) - var(--faun-space-1)); stroke-width: 3; }
+
+.faun-checkbox-row { display: flex; align-items: flex-start; gap: var(--faun-space-2-5); min-inline-size: 0; }
+.faun-checkbox-row > .faun-checkbox { margin-block-start: var(--faun-space-0-5); }
+.faun-checkbox-text { display: grid; gap: var(--faun-space-0-5); min-inline-size: 0; }
+.faun-checkbox-label {
+  color: var(--faun-fg-default); cursor: pointer;
+  font-size: var(--faun-type-body-md-font-size); line-height: var(--faun-type-body-md-line-height);
+}
+.faun-checkbox-row[data-size="sm"] .faun-checkbox-label { font-size: var(--faun-type-body-sm-font-size); line-height: var(--faun-type-body-sm-line-height); }
+.faun-checkbox-row[data-size="sm"] > .faun-checkbox { margin-block-start: var(--faun-space-1); }
+.faun-checkbox-description { margin: 0; color: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size); line-height: var(--faun-type-caption-line-height); }
+.faun-checkbox-row[data-disabled] .faun-checkbox-label { color: var(--faun-fg-disabled); cursor: not-allowed; }
+
+/* Choice groups (CheckboxGroup, RadioGroup). */
+.faun-choice-group { border: 0; margin: 0; padding: 0; min-inline-size: 0; display: grid; gap: var(--faun-space-2); }
+.faun-choice-group-legend {
+  padding: 0; margin-block-end: var(--faun-space-1);
+  display: inline-flex; gap: var(--faun-space-1);
+  color: var(--faun-fg-default);
+  font-size: var(--faun-type-label-md-font-size); line-height: var(--faun-type-label-md-line-height); font-weight: var(--faun-type-label-md-font-weight);
+}
+.faun-choice-group-legend + .faun-field-description { margin-block-start: calc(var(--faun-space-1) * -1); }
+.faun-choice-group-items { display: grid; gap: var(--faun-space-2-5); }
+.faun-choice-group-items[data-orientation="horizontal"] { display: flex; flex-wrap: wrap; gap: var(--faun-space-2-5) var(--faun-space-5); }
+.faun-choice-group-all { padding-block-end: var(--faun-space-2); border-block-end: var(--faun-border-width-hairline) solid var(--faun-border-subtle); }
+.faun-choice-group-items[data-orientation="horizontal"] .faun-choice-group-all { border: 0; padding: 0; }
+@media (forced-colors: active) { .faun-checkbox { border-color: CanvasText; } .faun-checkbox[data-state="checked"] { background: Highlight; } }

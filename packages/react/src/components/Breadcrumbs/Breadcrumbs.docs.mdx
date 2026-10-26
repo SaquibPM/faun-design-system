@@ -1,0 +1,81 @@
+export const meta = {
+  title: "Breadcrumbs",
+  description: "Show where a page sits in the hierarchy and link back up to each level. Long trails collapse into a menu.",
+  category: "Navigation",
+  status: "stable",
+  components: ["Breadcrumbs"],
+  related: ["link", "tabs"],
+  order: 11,
+};
+
+<Section tab="usage">
+
+<Example of="Breadcrumbs/Overview" height={80} />
+
+## When to use
+
+- On pages two or more levels deep, such as a datapoint inside a disclosure inside a report.
+- At the top of the page, above the page title, so people can move up without the back button.
+
+## When not to use
+
+- On top-level pages: there is nothing above them.
+- To show the history of pages visited. Breadcrumbs reflect structure, not a session.
+- For steps in a process: use a Stepper.
+
+## Variants
+
+<Example of="Breadcrumbs/Collapsed" title="Collapsed" description="More than four levels collapse after the first into a “…” menu, keeping the last two visible. Change the limits with maxItems, itemsBeforeCollapse and itemsAfterCollapse." height={100} />
+
+<Example of="Breadcrumbs/LongLabels" title="Long labels" description="Each level truncates at 240px (160px on small screens) with the full name in a tooltip, so one long name can't push the current page off screen." height={80} />
+
+## Content
+
+- Use the same names as the page titles they link to.
+- The last item is the current page. It isn't a link.
+- Add an icon to the first item only, when it identifies a workspace or entity.
+
+<DoDont>
+  <Do of="Breadcrumbs/DoHierarchy" caption="Reflect where the page lives: report, standard, page." />
+  <Dont of="Breadcrumbs/DontHistory" caption="Show the path someone happened to take. Use the browser history for that." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Links in muted text separated by chevrons, ending with the current page in the default colour and medium weight. The collapse menu is a 24px button with a horizontal ellipsis.
+
+## Tokens
+
+<UsesTokens names={["fg.muted", "fg.default", "fg.subtle", "bg.hover"]} />
+
+</Section>
+
+<Section tab="code">
+
+<Example of="Breadcrumbs/Collapsed" title="Collapsed trail" code="open" height={100} />
+
+## Notes
+
+- Pass `renderLink` to use your router's link component; it receives `href`, `className`, `onClick`, `title` and `children`.
+- Items with `onClick` and no `href` render as buttons. Prefer real links so people can open levels in a new tab.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves between the links and the collapse button."], ["Enter / Space", "Opens the collapse menu. Arrow keys move through it; Enter follows a link."]]} />
+
+## Screen readers
+
+- The trail is a `nav` landmark named “Breadcrumb” containing an ordered list, so the number of levels is announced.
+- The current page has `aria-current="page"`.
+- The collapse button says how many levels it hides, for example “Show 3 more levels”.
+- Separators are decorative and hidden from assistive technology.
+
+</Section>

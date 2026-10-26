@@ -1,0 +1,21 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "extends": ["//"],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "inputs": [
+        "src/**",
+        "scripts/**",
+        "package.json",
+        "tsconfig.json",
+        "tsup.config.ts",
+        "../../scripts/lib/**",
+        "../../packages/*/src/**/*.docs.mdx",
+        "../../packages/*/src/**/*.examples.tsx",
+        "../../packages/*/src/**/*.tsx"
+      ],
+      "outputs": ["dist/**", "data/**"]
+    }
+  }
+}

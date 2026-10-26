@@ -1,0 +1,88 @@
+export const meta = {
+  title: "Sheet",
+  description: "A panel that slides in from an edge for details, filters and editors, without leaving the page. Modal or as a non-blocking inspector.",
+  category: "Overlays",
+  status: "stable",
+  components: ["Sheet", "SheetContent", "SheetHeader", "SheetFooter"],
+  related: ["dialog", "popover"],
+  order: 13,
+};
+
+<Section tab="usage">
+
+<Example of="Sheet/Overview" height={200} />
+
+## When to use
+
+- To show the detail of a row or object while keeping the list in place: a datapoint, a run, a tool's schema.
+- For filters and editors that need more room than a popover but shouldn't replace the page.
+- As a non-modal inspector beside a canvas, such as a task graph or an artifact preview.
+
+## When not to use
+
+- For a short decision or confirmation: use a Dialog or Alert dialog.
+- For primary content people return to: give it its own page with a URL.
+- For a few options: use a Popover or Menu.
+
+## Variants
+
+<Example of="Sheet/FilterSheet" title="Left, with a form" description="Filters open from the left, next to the content they filter. Set dismissible={false} when the sheet holds unsaved input, so a stray click outside doesn't discard it." height={200} />
+
+<Example of="Sheet/Inspector" title="Non-modal inspector" description="With modal={false} there is no scrim and the page stays interactive. Use it for panels that accompany work, like an agent run inspector." height={200} />
+
+<Example of="Sheet/Bottom" title="Bottom" description="Bottom sheets suit short choices on phones. Keep them short; they never exceed the viewport minus 48px." height={200} />
+
+<DoDont>
+  <Do of="Sheet/DoDetail" caption="Open one sheet for the detail of the selected item. Selecting another item replaces its content." />
+  <Dont of="Sheet/DontStack" caption="Stack sheets on top of each other. Navigate within one sheet, or move to a page." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A header (title, description and optional meta such as status badges), a scrolling body, and an optional footer with actions, separated by subtle borders. Right and left sheets are full height; bottom sheets have rounded top corners.
+
+## Sizes
+
+Small 400px, medium 560px (default) and large 760px. Sheets never exceed the viewport width.
+
+## Tokens
+
+<UsesTokens names={["bg.raised", "bg.scrim", "border.subtle", "fg.muted"]} />
+
+<ComponentTokens name="sheet" />
+
+</Section>
+
+<Section tab="code">
+
+<Example of="Sheet/Inspector" title="Inspector panel" code="open" height={200} />
+
+## Notes
+
+- `modal` is set on `Sheet`, not on the content. Non-modal sheets ignore outside clicks; close them with the close button or Escape.
+- `SheetHeader` provides the accessible title. Always include one.
+- Content scrolls inside `SheetBody`; the header and footer stay put.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves through the sheet. In modal sheets focus is trapped inside."], ["Escape", "Closes the sheet and returns focus to the trigger."]]} />
+
+## Screen readers
+
+- The sheet has the `dialog` role named by its title. Modal sheets also set `aria-modal` and hide the rest of the page from assistive technology.
+- Non-modal sheets leave the page available, so give them a clear title that says what they inspect.
+
+## Visual
+
+- The sheet edge carries a 1px border as well as a shadow, so it stays visible in high-contrast themes.
+- Motion uses the emphasized easing for 300ms on entry and is removed when reduced motion is requested.
+
+</Section>

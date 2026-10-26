@@ -1,0 +1,98 @@
+export const meta = {
+  title: "Run trail",
+  description: "What an agent did, step by step: nested steps, who did them, progress and the tool calls behind each one.",
+  category: "AI and agents",
+  status: "new",
+  components: ["RunTrail"],
+  related: ["approval-card", "provenance-trail", "timeline", "actor-chip"],
+  order: 1,
+};
+
+<Section tab="usage">
+
+<Example of="RunTrail/Overview" layout="start" />
+
+## When to use
+
+- To show a person what an agent or Sub-agent is doing now, or did, in a filing, calculation or review.
+- To let a reviewer open a step and see the tool calls, inputs and outputs behind a figure.
+- Beside an [Approval card](/components/approval-card), so the decision comes with the work that led to it.
+
+## When not to use
+
+- For the audit trail of who changed a record over time. Use [Timeline](/components/timeline).
+- For the steps a person walks through in a form. Use [Stepper](/components/stepper).
+- For how one number was produced. Use [Provenance trail](/components/provenance-trail).
+
+## Variants
+
+<Example of="RunTrail/AllOpen" title="All open" description="Open every step and tool call, for review and printing. By default only running, waiting, blocked and failed work is open." layout="start" />
+
+<Example of="RunTrail/StepsOnly" title="Steps only" description="Hide the header when a panel already names the run." layout="start" />
+
+<Example of="RunTrail/Failed" title="Failed run" description="A failed tool call opens by itself and announces its error." layout="start" />
+
+<DoDont>
+  <Do of="RunTrail/DoOneLineSummary" caption="Summarise each step in one sentence a reviewer can act on: what was matched, how many, by what rule." />
+  <Dont of="RunTrail/DontLogDump" caption="Paste log lines into titles or summaries. Keep raw output in the tool call's input and output." />
+</DoDont>
+
+## Writing
+
+- Step titles are verb phrases: “Calculate Scope 3 category 1”. Summaries say what happened with numbers, not “Processing”.
+- Name the actor on every step done by an agent. A person reading the trail should never have to guess whether a human or a machine did the work.
+- Use `progress` for any step longer than a few seconds, with a unit people recognise: suppliers, datapoints, invoices.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A header with the run title, state, orchestrating agent, who started it, and one progress bar for all steps. Below it an ordered list of steps joined by a line. Each step has a marker, a title (a toggle if it has children or tool calls), a duration and a status badge, then the actor, a one-line summary and optional progress. Tool calls sit in muted boxes with a tool icon, the title, the registered tool name in mono and a status badge.
+
+## Colour
+
+Machine work is lagoon: the running marker pulses, and tool icons and chips use the running tones. Work waiting on a person is plum. Success, warning and danger markers follow the status model, and every marker is paired with a status badge that carries an icon and a word.
+
+## Tokens
+
+<UsesTokens names={["fg.default", "fg.muted", "border.subtle", "bg.surface-nested", "status.running.fg", "status.attention.solid", "status.danger.fg"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="RunTrail/Overview" title="A CSRD run" code="open" layout="start" />
+
+<Example of="RunTrail/StepsOnly" title="Inside a panel" code="open" layout="start" />
+
+## Notes
+
+- The data shapes (`Run`, `RunStep`, `ToolCall`, `Actor`) are exported from `@faun-ds/ai`. Map your run API to them once.
+- States match the `run` and `task` domains in the status map, so labels and tones stay consistent across Faun.
+- Durations come from `startedAt` and `endedAt`. For unfinished work they are measured to `now`, which defaults to the first render. Pass `now` for tests and screenshots.
+- Inputs and outputs render as text: strings as they are, everything else as indented JSON. Redact secrets before they reach the component.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves to each step and tool call toggle, and to scrollable input and output blocks."], ["Enter", "Opens or closes the focused step or tool call."], ["Space", "Opens or closes the focused step or tool call."]]} />
+
+## Screen readers
+
+- The run is a region named by its title. Steps are nested ordered lists, each named by its parent (“Steps in Calculate Scope 3 category 1”).
+- Toggles report expanded or collapsed. A failed tool call's error is announced when it appears.
+- The run state is shown as a word in a status badge. A marker colour is never the only signal.
+
+## Visual
+
+- Markers are 6px dots and decorative. Text, badges and toggles meet 4.5:1 in every theme, and toggles show a visible focus ring.
+- The pulse on a running step stops under reduced motion.
+
+</Section>

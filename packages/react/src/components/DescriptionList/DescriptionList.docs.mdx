@@ -1,0 +1,82 @@
+export const meta = {
+  title: "Description list",
+  description: "Key–value metadata for detail panels and summaries, with mono identifiers and one-click copy for values people paste elsewhere.",
+  category: "Display",
+  status: "new",
+  components: ["DescriptionList"],
+  related: ["card", "tag"],
+  order: 11,
+};
+
+<Section tab="usage">
+
+<Example of="DescriptionList/Overview" layout="padded" />
+
+## When to use
+
+- Facts about one thing: a datapoint, a run, an entity, an emission factor.
+- In side panels, dialogs and card bodies where a table would be too heavy.
+
+## When not to use
+
+- Comparing many records: use a Table.
+- Editable fields: use a form with Field and inputs.
+
+## Layouts
+
+<Example of="DescriptionList/Stacked" title="Stacked" description="Term above value for narrow panels and mobile." layout="padded" />
+
+<Example of="DescriptionList/Plain" title="Without dividers" description="Use inside a card that already has strong structure." layout="padded" />
+
+## Copyable values
+
+<Example of="DescriptionList/CopyValues" title="Identifiers and hashes" description="Mark identifiers `mono` and give them a `copyValue`. The copy button confirms with “Copied” and is available to keyboard and screen reader users. The copied text can differ from what is shown, such as a full hash behind a truncated one." layout="padded" />
+
+<DoDont>
+  <Do of="DescriptionList/DoLabelsShort" caption="Short noun labels: Boundary, Period, Source." />
+  <Dont of="DescriptionList/DontSentenceLabels" caption="Write labels as phrases. They wrap and push values around." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Rows of term (muted) and value (default colour). In the horizontal layout terms share a fixed column (`termWidth`). Values may be text, a badge or any node.
+
+## Tokens
+
+<UsesTokens names={["fg.muted", "fg.default", "border.subtle"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="DescriptionList/CopyValues" title="With copy" code="open" layout="padded" />
+
+## Notes
+
+- Renders a native `dl`, with each pair wrapped in a `div`, which is valid HTML and read correctly by screen readers.
+- Copy uses the async clipboard API and fails silently where it's unavailable.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves to copy buttons."], ["Enter / Space", "Copies the value."]]} />
+
+## Screen readers
+
+- Terms and values are announced as a list of term and definition pairs.
+- Each copy button is named “Copy”, then “Copied” after use.
+
+## Visual
+
+- Muted terms meet 4.5:1 on the surface. Mono values use the code face at the same size as body text.
+
+</Section>

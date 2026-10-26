@@ -1,0 +1,94 @@
+export const meta = {
+  title: "Textarea",
+  description: "A multi-line text box for longer answers, with optional auto-grow and a character count.",
+  category: "Forms",
+  status: "stable",
+  components: ["Textarea"],
+  related: ["input", "field"],
+  order: 14,
+};
+
+<Section tab="usage">
+
+<Example of="Textarea/Overview" layout="start" />
+
+## When to use
+
+- For free text of more than a line: explanations, methodology notes, comments.
+- With a character count where a limit applies.
+
+## When not to use
+
+- For short answers. Use [Input](/components/input).
+- For formatted content. Use a rich text editor.
+
+## Variants
+
+<Example of="Textarea/AutoGrow" title="Auto-grow" description="Grows with the content between minRows and maxRows." layout="start" />
+
+<Example of="Textarea/CharacterCount" title="Character count" description="Shows the count and limit when maxLength is set." layout="start" />
+
+<Example of="Textarea/Invalid" title="Invalid" description="Pair with a Field error." layout="start" />
+
+<Example of="Textarea/Resize" title="Resize" description="Vertical resize by default. Turn it off for fixed layouts." layout="start" />
+
+<DoDont>
+  <Do of="Textarea/DoLongForm" caption="Use a textarea for answers that need explaining." />
+  <Dont of="Textarea/DontShortAnswer" caption="Use a textarea for a short name. It invites too much and wastes space." />
+</DoDont>
+
+## Writing
+
+Placeholders suggest what to write: “What changed since last year and why?”. Say the limit before people reach it.
+
+## Warn, read-only and loading
+
+<Example of="Textarea/StateContract" title="Warn, read-only and skeleton" description="Warn marks a value that is allowed but worth a second look. It is never the same as invalid: it does not set aria-invalid and never blocks submission, and the message carries an icon and text so it is not colour alone. Read-only shows the value flat, keeps it focusable and copyable, and ignores changes. Skeleton replaces the control while its data loads; the label stays for screen readers. Set all three on a Field and every control inside follows." />
+
+Set `warn` (a message), `readOnly` and `skeleton` on the surrounding `Field`. On a standalone text area, pass `readOnly` and `skeleton` directly; give `warn` a message through a Field so it is announced. An error always replaces a warning.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A bordered box like Input with a resize handle, and an optional count under the box.
+
+## Tokens
+
+<UsesTokens names={["bg.surface", "border.control", "focus.halo", "fg.placeholder"]} />
+
+<ComponentTokens name="input" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="Textarea/CharacterCount" title="Character count" layout="start" code="open" />
+
+## Notes
+
+- All native textarea props are supported.
+- `autoGrow` sets resize to none. `showCount` needs `maxLength` to show the limit.
+- Works inside a [Field](/components/field).
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves focus out of the textarea."], ["Enter", "Adds a new line."]]} />
+
+## Screen readers
+
+- Announced as a multi-line text box. The count is linked as its description, and within the last 10% of the limit a polite message reports characters left.
+
+## Visual
+
+- Border and focus match Input. Past the limit the count turns the danger colour and heavier weight.
+
+</Section>

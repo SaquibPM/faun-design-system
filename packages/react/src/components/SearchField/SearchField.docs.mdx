@@ -1,0 +1,92 @@
+export const meta = {
+  title: "Search field",
+  description: "A text box for finding things, with a search icon, clear button, loading state and optional shortcut hint.",
+  category: "Forms",
+  status: "stable",
+  components: ["SearchField"],
+  related: ["input", "command-palette", "combobox"],
+  order: 10,
+};
+
+<Section tab="usage">
+
+<Example of="SearchField/Overview" layout="start" />
+
+## When to use
+
+- To filter a list or table by typing.
+- To search a workspace, with a shortcut such as ⌘K.
+
+## When not to use
+
+- For a form value. Use [Input](/components/input).
+- To pick from known options. Use [Combobox](/components/combobox).
+
+## Variants
+
+<Example of="SearchField/WithSubmit" title="Submit on Enter" description="Use onSearch for searches that run on Enter rather than as you type." layout="start" />
+
+<Example of="SearchField/Loading" title="Loading" description="Shows a spinner while results load." layout="start" />
+
+<Example of="SearchField/Sizes" title="Sizes" description="Heights follow the control sizes and the density mode." layout="start" />
+
+<DoDont>
+  <Do of="SearchField/DoSpecificPlaceholder" caption="Say what can be searched." />
+  <Dont of="SearchField/DontVaguePlaceholder" caption="Use a vague placeholder like “Search…”. People don't know what will be found." />
+</DoDont>
+
+## Writing
+
+Placeholder names what is searched: “Search by site, factor or run ID”. Empty results say what to try next.
+
+## Warn, read-only and loading
+
+<Example of="SearchField/StateContract" title="Warn, read-only and skeleton" description="Warn marks a value that is allowed but worth a second look. It is never the same as invalid: it does not set aria-invalid and never blocks submission, and the message carries an icon and text so it is not colour alone. Read-only shows the value flat, keeps it focusable and copyable, and ignores changes. Skeleton replaces the control while its data loads; the label stays for screen readers. Set all three on a Field and every control inside follows." />
+
+Set `warn` (a message), `readOnly` and `skeleton` on the surrounding `Field`. On a standalone search field, pass `readOnly` and `skeleton` directly; give `warn` a message through a Field so it is announced. An error always replaces a warning.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A search icon, the text input, a loading spinner or clear button and an optional shortcut hint (Kbd). Search fields have a type of search and are always named.
+
+## Tokens
+
+<UsesTokens names={["bg.surface", "border.control", "fg.placeholder", "focus.halo"]} />
+
+<ComponentTokens name="input" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="SearchField/WithSubmit" title="Searching on Enter" layout="start" code="open" />
+
+## Notes
+
+- `onValueChange` fires as people type. `onSearch` fires when they press Enter.
+- Search fields need an accessible name: pass `aria-label` or put them in a Field. The placeholder is the fallback name.
+- `shortcut` is a hint only. Bind the key yourself, or use the [Command palette](/components/command-palette).
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Enter", "Runs the search."], ["Escape", "Clears the field when it has text."], ["Tab", "Moves focus to the clear button when there is text, then onwards."]]} />
+
+## Screen readers
+
+- Announced as a text box with its name. The clear button is named “Clear search”. Announce result counts from your results region.
+
+## Visual
+
+- Placeholder text is a hint only. The clear button keeps the minimum target size.
+
+</Section>

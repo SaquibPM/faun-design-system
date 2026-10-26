@@ -1,0 +1,7 @@
+/* Joined primary action + chevron. The two buttons share one outline; a hairline separates them. */
+.faun-combo-button { display: inline-flex; align-items: stretch; }
+.faun-combo-button > .faun-button:first-child { border-start-end-radius: 0; border-end-end-radius: 0; }
+.faun-combo-button > .faun-icon-button { border-start-start-radius: 0; border-end-start-radius: 0; box-shadow: inset var(--faun-border-width-hairline) 0 0 0 color-mix(in srgb, currentColor 30%, transparent), var(--_shadow); }
+.faun-combo-button > .faun-icon-button:where([data-variant="outline"]) { border-inline-start-width: 0; }
+.faun-combo-button > .faun-button:focus-visible { z-index: 1; }
+[dir="rtl"] .faun-combo-button > .faun-icon-button { box-shadow: inset calc(var(--faun-border-width-hairline) * -1) 0 0 0 color-mix(in srgb, currentColor 30%, transparent), var(--_shadow); }

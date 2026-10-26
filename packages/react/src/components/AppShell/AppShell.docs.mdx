@@ -1,0 +1,146 @@
+export const meta = {
+  title: "App shell",
+  description: "The frame every screen sits in: a deep moss green side navigation, a top bar for location and search, and a page header with title, status and actions.",
+  category: "Navigation",
+  status: "new",
+  components: ["AppShell", "SideNav", "SideNavWorkspace", "SideNavSection", "SideNavGroup", "SideNavItem", "SideNavUser", "TopBar", "PageHeader"],
+  related: ["stat", "card", "banner"],
+  order: 1,
+};
+
+<Section tab="usage">
+
+<Example of="AppShell/Overview" layout="full" />
+
+## When to use
+
+- Once, at the root of the product, around every signed-in page.
+- `PageHeader` at the top of every page inside the shell, so titles, status and the primary action always sit in the same place.
+
+## When not to use
+
+- Marketing pages, sign-in and onboarding flows: they have no navigation to show.
+- Secondary navigation inside a page: use Tabs. Steps of a flow: use Stepper.
+- Embedded or print views of a report: render the page content without the shell.
+
+## Side navigation
+
+Destinations are grouped into a few short sections (Reporting, Agents, Data) under an ungrouped top block for the places people go every day. Each item has an icon so the collapsed rail stays usable, a neutral count when the number helps people choose, and an attention badge only when something is waiting on the person signed in.
+
+<DoDont>
+  <Do of="AppShell/DoOneAttention" caption="Reserve the attention badge for work waiting on this person. Show plain counts for everything else." />
+  <Dont of="AppShell/DontAttentionForCounts" caption="Use attention badges as counters. When everything is urgent, nothing is." />
+</DoDont>
+
+<DoDont>
+  <Do of="AppShell/DoIconsEverywhere" caption="Group related destinations in one section with a short, sentence-case title." />
+  <Dont of="AppShell/DontTooManySections" caption="Make a section per item or per framework. Filings for each framework live on the Filings page." />
+</DoDont>
+
+## Second tier
+
+<Example of="AppShell/SecondTier" title="Expandable groups" description="A group holds a short list of pages that belong together. The group that holds the current page starts open and is marked; its page has the current indicator. A closed group shows a dot when a page inside needs the person." layout="center" />
+
+Use one tier of groups at most. If a group needs groups of its own, the information architecture is too deep: move the lower level into tabs on the page.
+
+## Collapsed rail
+
+People can collapse the navigation to a 60px rail to give tables and graphs more room. Labels move into tooltips, counts hide, and attention badges become a dot on the icon. The choice is the person's; persist it per user with `navCollapsed` and `onNavCollapsedChange`.
+
+See the open and collapsed states side by side, with a working toggle, a keyboard shortcut and remembered state, in the [Assistant home](/patterns/assistant-home) pattern. [Chat with panels](/patterns/chat-with-panels) puts a conversation, a progress panel and an artifact panel beside the same navigation.
+
+<Example of="AppShell/CollapsedRail" title="Collapsed" description="Hover or focus an icon to see its name and count." layout="full" />
+
+<Example of="AppShell/SecondTierRail" title="Groups in the collapsed rail" description="A group keeps its icon. Pressing it opens a small panel beside the rail with its pages, the current one marked. Escape closes it and returns focus to the group." layout="full" />
+
+## Header navigation and global actions
+
+<Example of="AppShell/HeaderWithNavigation" title="Header with links, panels and a switcher" description="HeaderNav puts links in the top bar, with sub-menus. Global actions sit at the far right: notifications, help, then the product switcher last. Each action that has a panel opens it under the header; only one is open at once." layout="full" />
+
+See [Header navigation](/components/header-nav) and [Header panel](/components/header-panel).
+
+## Small screens
+
+Below 768px the navigation becomes an off-canvas drawer opened from the menu button in the top bar. The page behind it becomes inert, Escape or choosing a destination closes it, and focus returns to the menu button. The top bar hides the search field; put a search action in `actions` if search must stay one tap away.
+
+## Page header
+
+<Example of="AppShell/PageHeaders" title="Page headers" description="A title, an optional status badge beside it, a line of facts (owner, period, timing) and actions with the primary last. Children render below, for framework tags or Tabs." layout="padded" />
+
+Write titles as the name of the thing on the page ("CSRD sustainability statement", "Scope 3 Cat. 1 purchased goods"), not as an instruction. Keep meta to three facts or fewer.
+
+## Top bar
+
+<Example of="AppShell/TopBars" title="Top bar" description="Location on the left, search or ask the assistant in the middle, global actions on the right. Inside an AppShell the navigation toggle is added automatically." layout="padded" />
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+1. **SideNav**: workspace block (mark, name, tenant and period), sections of items, and the signed-in user pinned to the bottom. It sits on `sidebar.bg`, a deep moss green in every theme (moss.10 in light, a slightly deeper moss in dark so it reads as green against the near-black canvas). The open panel and the collapsed icon rail share the same surface, so collapsing never turns the navigation black. Page content stays neutral. See ADR 0009.
+2. **TopBar**: a 56px sticky bar on the surface colour with a hairline bottom border.
+3. **Page area**: the sage canvas, padded by the page padding tokens (24/32/40px by breakpoint). Cards and KPI rows sit on it as white surfaces with a soft shadow.
+4. **PageHeader**: `heading-xl` title, muted meta line with 14px icons, and actions aligned to the title.
+
+<Example of="AppShell/NavigationOnly" title="Side navigation" layout="center" />
+
+## States
+
+Items have rest, hover (`sidebar.bg-hover`, label to `sidebar.fg-active`), current (`sidebar.bg-active`, semibold label and a 3px `sidebar.accent` bar) and keyboard focus (a 2px ring in `sidebar.accent`, 3:1 on the surface and on both fills). Section labels, counts and context use `sidebar.fg-muted`; attention badges use `sidebar.badge-bg` and `sidebar.badge-fg`.
+
+## Tokens
+
+<UsesTokens names={["sidebar.bg", "sidebar.bg-hover", "sidebar.bg-active", "sidebar.fg", "sidebar.fg-muted", "sidebar.fg-active", "sidebar.accent", "sidebar.border", "sidebar.badge-bg", "sidebar.badge-fg", "bg.canvas", "bg.surface", "border.subtle", "layout.nav-width", "layout.nav-collapsed-width", "layout.topbar-height"]} />
+
+<ComponentTokens name="nav" />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="AppShell/Overview" title="A run page" code="open" layout="full" />
+
+## Routing
+
+Pass your router's link through `asChild`; the item keeps its icon, label, count and current state.
+
+```tsx
+<SideNavItem asChild label="Filings" icon={<IconFileText />} current={pathname.startsWith("/filings")} count={5}>
+  <Link to="/filings" />
+</SideNavItem>
+```
+
+## Notes
+
+- `fill="viewport"` (default) sizes the shell to the window and scrolls the page area. Use `fill="container"` to embed it, as these docs do.
+- `useAppShell()` exposes `collapsed`, `mobile`, `mobileOpen` and their setters for custom controls; `AppShellNavToggle` renders the standard toggle anywhere inside the shell.
+- The skip link is the [Skip link](/components/skip-link) component, aimed at the `<main>` element, which is focusable so the jump lands correctly.
+- `SideNavGroup` takes `open`, `defaultOpen`, `onOpenChange` and `current`. It detects `current` on its direct items. Second-tier `SideNavItem`s take no icon.
+- `TopBar` takes `nav` (header links) before `start`. Put `HeaderActions` in `actions`.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves through the skip link, navigation, top bar and page in that order."], ["Enter", "On the skip link, moves focus to the main content. On an item, follows the link."], ["Enter or Space", "On a group, expands or collapses it (opens its panel in the collapsed rail)."], ["Escape", "Closes the navigation drawer on small screens and returns focus to the menu button."]]} />
+
+## Screen readers
+
+- A group is a button with `aria-expanded` and `aria-controls` pointing at its list of pages; in the collapsed rail it is a button that opens a panel named by the group.
+- The rail is a `nav` landmark named "Main"; the page is `main`. Sections are lists named by their titles.
+- The current page has `aria-current="page"`. Counts are read after the label ("Filings 5"); attention badges are read as "Approvals 2 awaiting you".
+- When collapsed, labels stay in the accessibility tree; only their visual text moves into a tooltip.
+- The toggle reports `aria-expanded` and `aria-controls`. While the drawer is open the rest of the page is `inert`.
+
+## Visual
+
+- Item labels, section titles, counts and badge numbers meet 4.5:1 on `sidebar.bg` and on the hover and current fills in every theme (7:1 in the high-contrast themes). Icons, the current-item bar, the focus ring and the attention dot meet 3:1. These pairs are in the contrast contract.
+- Items are 34px tall with full-width hit areas. The attention badge never relies on colour alone: it carries a number.
+
+</Section>

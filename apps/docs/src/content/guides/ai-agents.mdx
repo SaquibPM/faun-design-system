@@ -1,0 +1,40 @@
+export const meta = { title: "Building with coding agents", description: "Faun is written to be used correctly by coding agents as well as people: machine-readable docs, strict presets and rules that fail fast.", order: 4 };
+
+Much product code is now written with Claude Code and other agents. A design system only holds if those agents use it correctly. Faun gives them three things.
+
+## 1. Rules in the repository
+
+`AGENTS.md` at the root of the Faun repository is the contract for any agent building with Faun. Copy its consumer section into the product's own `AGENTS.md` or `CLAUDE.md`. The short version:
+
+- Use a Faun component before writing markup. Check the component list first.
+- Use semantic tokens or the Tailwind preset. Never write hex colours, raw pixel sizes or arbitrary values.
+- Use `StatusBadge` with a domain and state from the status map for any status.
+- Every icon-only button gets a `label`.
+- Sentence case for all text. Follow the content guidelines.
+
+## 2. Machine-readable docs
+
+| File | Use |
+| --- | --- |
+| `llms.txt` | Index of every page on this site, for agents that fetch docs. |
+| `llms-full.txt` | All component docs and props in one file, for context windows. |
+| `@faun-ds/tokens/json` | Every token with its value per theme and its description. |
+| `@faun-ds/tokens/status-map` | Every domain state with its tone, label and icon. |
+| `@faun-ds/icons/manifest.json` | Icon names, categories and search keywords. |
+
+## 3. Guardrails that fail fast
+
+- `@faun-ds/tokens/tailwind/strict` removes off-system classes, so they don't compile.
+- The Faun ESLint rules flag hex colours, arbitrary values, raw `<button>` and `<input>` elements, and icon-only buttons without labels.
+- Component props are typed with string unions, so an invalid `intent` or `tone` is a type error.
+
+## Prompting
+
+When asking an agent to build a screen, name the components and the pattern.
+
+```text
+Build the Supplier detail page using the list-detail pattern from Faun.
+Header: PageHeader with title, StatusBadge (domain "lifecycle"), and actions.
+Body: Tabs (Overview, Emissions, Evidence). Emissions uses DataTable from @faun-ds/data
+with numeric right-aligned columns in tCO₂e. Use tokens only.
+```

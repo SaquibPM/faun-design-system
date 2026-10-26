@@ -1,0 +1,96 @@
+export const meta = {
+  title: "Sankey and alluvial diagram",
+  description: "Shows how a quantity flows from sources to destinations through one or more stages. Ribbon width is the flow.",
+  category: "Data",
+  status: "new",
+  components: ["SankeyChart"],
+  related: ["tree-chart", "stacked-bar-chart", "chart-types"],
+  order: 36,
+};
+
+<Section tab="usage">
+
+<Example of="SankeyChart/Overview" layout="stretch" />
+
+## When to use
+
+- To follow a quantity through stages: energy source to scope to site, spend by category to region.
+- To show where the largest flows go, and what feeds each destination.
+
+## When not to use
+
+- For more than about fifteen nodes or thirty flows. It turns to spaghetti.
+- For exact comparison. Use a stacked bar chart.
+- For flows that loop back. Sankey diagrams read left to right.
+
+## Variants
+
+<Example of="SankeyChart/TwoStage" layout="stretch" title="Two stages" description="Nodes are placed in columns by the longest path from a source." />
+
+<Example of="SankeyChart/Loading" layout="stretch" title="Loading" />
+
+<Example of="SankeyChart/Empty" layout="stretch" title="Empty" />
+
+<DoDont>
+  <Do of="SankeyChart/DoSmallNumberOfNodes" caption="Keep to a few nodes per column." />
+  <Dont of="SankeyChart/DontTooManyFlows" caption="Connect every source to every target. The ribbons become a tangle." />
+</DoDont>
+
+## Writing
+
+Title with what flows and the period. Node names should be short nouns; they sit beside the nodes.
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+Title and description, the plot (node bars in columns, ribbons between them whose width is the flow, node labels at the edges) and a tooltip for the flow or node under the pointer.
+
+## Colour
+
+Nodes in the first column take `dataviz.cat-1` to `cat-8` in order; later nodes take the colour of the source that feeds them most. A node with the id `scope-1`, `scope-2` or `scope-3` takes the GHG scope colour. Ribbons are the source colour at low opacity.
+
+<UsesTokens names={["dataviz.cat-1", "dataviz.cat-2", "dataviz.cat-3", "dataviz.grid", "dataviz.axis", "dataviz.surface", "bg.raised", "dataviz.scope-1", "dataviz.scope-2", "dataviz.scope-3"]} />
+
+</Section>
+
+<Section tab="code">
+
+## Examples
+
+<Example of="SankeyChart/Overview" layout="stretch" code="open" />
+
+<Example of="SankeyChart/TwoStage" layout="stretch" code="open" />
+
+## Notes
+
+- `nodes` are `{ id, label, color? }` and `links` are `{ source, target, value }`. Links with a zero value, an unknown node or the same source and target are ignored.
+- A cycle does not stop the chart drawing; the layout cuts it at a bounded number of passes.
+- The chart is called an alluvial diagram in some libraries; this is the same component.
+- `sankeyLayout(nodes, links, width, height)` is exported for tests and custom drawings.
+- The width follows the container; set `height` in px to change the plot height.
+- No chart library is used. The chart is plain SVG, so it prints and themes with the tokens. Colours are always data-viz tokens; a test fails if any chart source contains a literal colour.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Focuses the chart. It is one tab stop, however many marks there are. "], ["Arrow Right / Arrow Down", "Moves to the next flow or node."], ["Arrow Left / Arrow Up", "Moves to the previous flow or node."], ["Home / End", "Moves to the first or last item."], ["Escape", "Hides the tooltip."]]} />
+
+## Screen readers
+
+- The chart is a figure named by its title. The drawing is hidden from assistive technology; a data table with every value, its unit and “No data” gaps takes its place.
+- Moving with the arrow keys announces the flow's source, target, value and share of its source, or the node's total, inflow and outflow in a polite live region.
+- Flows are read first, then nodes. The data table lists every flow, and node totals at the foot.
+
+## Visual
+
+- Hovering shows a tooltip with the values for the mark under the pointer; keyboard focus shows the same tooltip.
+- Marks against the surface meet 3:1 in every theme, and the categorical palette is checked for protan and deutan separation.
+- Pointing at a ribbon or a node selects it; the ribbon is highlighted.
+
+</Section>

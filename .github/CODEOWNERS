@@ -1,0 +1,8 @@
+# Default owner for every file.
+#
+# Do NOT switch on "Require review from Code Owners" in branch protection until this names a real user or a team
+# that exists and has write access: GitHub ignores unknown owners, and a required review nobody can give blocks
+# every pull request, including your own.
+#
+# Add per-directory rules (packages, docs/adr) only after the teams exist; see docs/LAUNCH-CHECKLIST.md.
+*   @SaquibPM

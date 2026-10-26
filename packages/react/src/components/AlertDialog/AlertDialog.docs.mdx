@@ -1,0 +1,94 @@
+export const meta = {
+  title: "Alert dialog",
+  description: "Interrupts to confirm a destructive or consequential action, with the consequence spelled out and an explicit confirm label.",
+  category: "Overlays",
+  status: "stable",
+  components: ["AlertDialogContent"],
+  related: ["dialog", "button", "toast"],
+  order: 12,
+};
+
+<Section tab="usage">
+
+<Example of="AlertDialog/Overview" height={200} />
+
+## When to use
+
+- Before an action that destroys data, can't be undone, or affects other people's work: deleting a factor library, archiving an agent, revoking access.
+- Before a consequential but safe step that locks work, such as submitting a filing for assurance (use the `accent` intent).
+
+## When not to use
+
+- For routine, reversible actions. Do them immediately and offer Undo in a toast. Frequent confirmations train people to click through.
+- To collect information: use a Dialog.
+- To report an error or outcome: use a Banner or Toast.
+
+## Type to confirm
+
+<Example of="AlertDialog/TypeToConfirm" title="High-stakes deletion" description="For irreversible actions on important objects, ask people to type the object's name. The confirm button stays disabled until it matches." height={200} />
+
+## Consequential, not destructive
+
+<Example of="AlertDialog/Consequential" title="Accent intent" description="Locking or submitting work is serious but not destructive. Use the accent intent and summarise what will be sent." height={200} />
+
+## Writing
+
+- Title: a question naming the action and the object. “Archive CSRD Filing Orchestrator?”
+- Description: the consequence. What stops, what is kept, whether it can be undone, and how.
+- Confirm label: repeat the verb. Never “OK” or “Yes”. Cancel stays “Cancel”.
+
+<DoDont>
+  <Do of="AlertDialog/DoSpecific" caption="Label buttons with the outcome: “Keep tool” and “Delete tool”." />
+  <Dont of="AlertDialog/DontGeneric" caption="Use Yes and No. People have to reread the question to know what each does." />
+</DoDont>
+
+</Section>
+
+<Section tab="style">
+
+## Anatomy
+
+A status icon (danger or warning), the title, the description, optional extra content, an optional type-to-confirm field, and the actions: Cancel, then the confirm button in the dialog's intent. The panel is the small dialog size and becomes a bottom sheet on narrow screens.
+
+## Tokens
+
+<UsesTokens names={["status.danger.bg", "status.danger.fg", "danger.solid-bg", "accent.solid-bg", "bg.raised", "bg.scrim"]} />
+
+<ComponentTokens name="dialog" />
+
+</Section>
+
+<Section tab="code">
+
+## Async confirm
+
+`onConfirm` may return a promise. The confirm button shows a spinner and blocks repeat clicks; the dialog closes when the promise resolves and stays open with the error message if it rejects.
+
+<Example of="AlertDialog/Overview" title="Archive with loading" code="open" height={200} />
+
+## Notes
+
+- Control it with `open` and `onOpenChange` on `AlertDialog`, for example to open it from a menu item.
+- Clicking the scrim does nothing; only Cancel, Escape or confirming close it.
+- The type-to-confirm comparison trims whitespace and is case-sensitive.
+
+</Section>
+
+<Section tab="accessibility">
+
+## Keyboard
+
+<Keys rows={[["Tab", "Moves between the confirm field (if present), Cancel and the confirm button."], ["Enter", "Activates the focused button; in the confirm field, confirms when the text matches."], ["Escape", "Cancels and returns focus to the trigger."]]} />
+
+## Screen readers
+
+- The panel has the `alertdialog` role, with the title as its name and the description as its description, so both are announced on open.
+- Focus starts on Cancel (or the confirm field), never on the destructive button, so an accidental Enter does no harm.
+- Errors from `onConfirm` are announced with `role="alert"`.
+
+## Visual
+
+- The confirm button uses the danger solid fill, whose label meets 4.5:1 (7:1 in high contrast).
+- The icon repeats the meaning of the title; it is decorative and hidden from assistive technology.
+
+</Section>
