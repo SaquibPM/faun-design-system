@@ -86,7 +86,7 @@
   },
   "devDependencies": {
     "@tailwindcss/cli": "4.3.3",
-    "@types/culori": "^2.1.1",
+    "@types/culori": "^4.0.1",
     "@types/node": "^26.6.5",
     "tailwindcss": "4.3.3",
     "tsup": "9.0.0",
@@ -95,7 +95,7 @@
     "vitest": "5.0.5"
   },
   "dependencies": {
-    "culori": "4.0.1"
+    "culori": "4.0.2"
   },
   "publishConfig": {
     "access": "public",
