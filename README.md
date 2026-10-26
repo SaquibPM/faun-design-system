@@ -336,7 +336,7 @@ pnpm dev         # docs on http://localhost:5173
 pnpm readme:shots  # regenerate the images in this README
 ```
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) and [GOVERNANCE.md](GOVERNANCE.md). Participation is governed by the [Code of Conduct](CODE_OF_CONDUCT.md); security issues go through [SECURITY.md](SECURITY.md). Coding agents follow [AGENTS.md](AGENTS.md).
+Read [CONTRIBUTING.md](.github/CONTRIBUTING.md) and [GOVERNANCE.md](docs/GOVERNANCE.md). Participation is governed by the [Code of Conduct](.github/CODE_OF_CONDUCT.md); security issues go through [SECURITY.md](.github/SECURITY.md). Coding agents follow [AGENTS.md](AGENTS.md).
 
 ## License
 

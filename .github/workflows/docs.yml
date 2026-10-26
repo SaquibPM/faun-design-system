@@ -21,6 +21,7 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     outputs:
       base: ${{ steps.base.outputs.base }}
     steps:
@@ -53,7 +54,8 @@ jobs:
       - name: SPA fallback (404.html) and .nojekyll; asset URLs must sit under the base path
         run: node scripts/prepare-pages.mjs --dist apps/docs/dist --base "${{ steps.base.outputs.base }}"
 
-      - run: pnpm exec playwright install --with-deps chromium
+      # apt on hosted runners occasionally stalls; bound each attempt and retry once
+      - run: timeout 300 pnpm exec playwright install chromium || timeout 300 pnpm exec playwright install chromium
       - name: Smoke test under the subpath (assets, hash routes, console errors, 404 fallback)
         run: node scripts/pages-smoke.mjs --dist apps/docs/dist --base "${{ steps.base.outputs.base }}"
 
@@ -67,6 +69,7 @@ jobs:
     needs: build
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     permissions:
       pages: write
       id-token: write
@@ -83,6 +86,7 @@ jobs:
     # Fetches the deployed site (retrying while the CDN catches up) and runs the same smoke test against it.
     needs: deploy
     runs-on: ubuntu-latest
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
       - uses: pnpm/action-setup@v4
@@ -91,6 +95,7 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile
-      - run: pnpm exec playwright install --with-deps chromium
+      # apt on hosted runners occasionally stalls; bound each attempt and retry once
+      - run: timeout 300 pnpm exec playwright install chromium || timeout 300 pnpm exec playwright install chromium
       - name: Live site smoke test
         run: node scripts/pages-smoke.mjs --url "${{ needs.deploy.outputs.page_url }}" --wait 300

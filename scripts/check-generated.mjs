@@ -28,7 +28,7 @@ const GENERATORS = [
   { name: "colour scales", cmd: pnpm("--filter", "./packages/tokens", "run", "scales") },
   { name: "data-viz palettes", cmd: pnpm("--filter", "./packages/tokens", "run", "viz") },
   { name: "tokens build (css, json, js, tailwind, contrast)", cmd: pnpm("--filter", "./packages/tokens", "run", "build") },
-  { name: "icons", cmd: pnpm("--filter", "./packages/icons", "run", "generate") },
+  { name: "icons (sources, build output, manifest)", cmd: pnpm("--filter", "./packages/icons", "run", "build") },
   { name: "package barrels", cmd: ["node", ["-e", ["react", "data", "ai"].map((p) => `require("node:child_process").execFileSync("node",["packages/${p}/scripts/barrel.mjs"],{stdio:"inherit"})`).join(";")]] },
   { name: "docs props.json", cmd: pnpm("--filter", "./apps/docs", "run", "props") },
   { name: "MCP data", cmd: pnpm("--filter", "./packages/mcp", "run", "data") },
