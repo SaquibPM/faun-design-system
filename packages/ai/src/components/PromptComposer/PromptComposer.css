@@ -8,11 +8,14 @@
   padding: var(--faun-space-5) var(--faun-space-6);
   border: var(--faun-border-width-hairline) solid var(--faun-border-default);
   border-radius: var(--_radius);
-  background: var(--faun-bg-surface);
+  background: transparent;
   box-shadow: none;
   min-inline-size: 0;
   transition: border-color var(--faun-motion-duration-fast) var(--faun-motion-easing-standard), box-shadow var(--faun-motion-duration-fast) var(--faun-motion-easing-standard);
 }
+/* Card fill sits above the glow so the glow shows only around the card, as in the reference. */
+.faun-composer::after { content: ""; position: absolute; z-index: -1; inset: 0; border-radius: inherit; background: var(--faun-bg-surface); pointer-events: none; }
+.faun-composer[data-disabled]::after { background: var(--faun-bg-disabled); }
 /* Glow: rose on the start side, lavender above and below, blurred past the card edge. */
 .faun-composer::before {
   content: ""; position: absolute; z-index: -1; pointer-events: none;
@@ -43,8 +46,8 @@
 .faun-composer-actions .faun-button:not(.faun-icon-button) { padding-inline: var(--faun-space-4); }
 .faun-composer-actions .faun-button[data-variant="outline"], .faun-composer-actions .faun-button[data-variant="ghost"] { background: var(--faun-bg-surface); border-color: var(--faun-border-default); }
 .faun-composer-actions .faun-button[data-variant="outline"]:hover, .faun-composer-actions .faun-button[data-variant="ghost"]:hover { background: var(--faun-bg-hover); border-color: var(--faun-border-strong); }
-/* An empty composer keeps the solid shape of Send and only dims it, so the card reads the same before and after typing. */
-.faun-composer-bar > .faun-button[data-variant="solid"][data-intent="accent"]:disabled { background: color-mix(in srgb, var(--faun-accent-solid-bg) 62%, var(--faun-bg-surface)); border-color: transparent; color: var(--faun-accent-solid-fg); opacity: 1; }
+/* An empty composer keeps Send fully solid (it stays disabled for assistive technology), so the card reads the same before and after typing. */
+.faun-composer-bar > .faun-button[data-variant="solid"][data-intent="accent"]:disabled { background: var(--faun-accent-solid-bg); border-color: transparent; color: var(--faun-accent-solid-fg); opacity: 1; cursor: default; }
 /* A tool glyph in colour, e.g. the lightning bolt for quick actions: add className="faun-composer-glyph". */
 .faun-composer-actions .faun-composer-glyph { color: var(--faun-amber-11); }
 .faun-composer-hint { margin: 0; color: var(--faun-fg-muted); font-size: var(--faun-type-caption-font-size); line-height: var(--faun-type-caption-line-height); }
@@ -53,5 +56,5 @@
   .faun-composer { padding: var(--faun-space-4); gap: var(--faun-space-3); }
   .faun-composer .faun-textarea-control { font-size: var(--faun-type-body-md-font-size); line-height: var(--faun-type-body-md-line-height); min-block-size: calc(var(--faun-type-body-md-line-height) * 2); }
 }
-@media (forced-colors: active) { .faun-composer { border-color: CanvasText; } .faun-composer::before { display: none; } }
+@media (forced-colors: active) { .faun-composer { border-color: CanvasText; } .faun-composer::before { display: none; } .faun-composer::after { background: Canvas; } }
 @media print { .faun-composer::before { display: none; } }
