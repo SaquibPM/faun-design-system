@@ -300,9 +300,16 @@
     ]
   },
   "SideNav": {
-    "description": "The primary navigation rail: workspace, sections of destinations, and the signed-in user.",
+    "description": "The primary navigation: workspace, one primary action, sections of destinations, and the signed-in user. One component draws both\nstates: a light panel when open and a near-black icon rail when collapsed (ADR 0011).",
     "file": "packages/react/src/components/AppShell/AppShell.tsx",
     "props": [
+      {
+        "name": "action",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": "The one primary action, usually `<SideNavAction>`: \"New conversation\". Sits under the workspace; a square \"+\" on the rail."
+      },
       {
         "name": "collapsed",
         "type": "boolean",
@@ -367,16 +374,50 @@
       }
     ]
   },
+  "SideNavAction": {
+    "description": "The primary action of the SideNav: a full-width moss button when open and a square \"+\" when collapsed.",
+    "file": "packages/react/src/components/AppShell/AppShell.tsx",
+    "props": [
+      {
+        "name": "children",
+        "type": "string",
+        "required": true,
+        "default": null,
+        "description": "The action's name, e.g. \"New conversation\". Shown beside the icon when open; the tooltip and accessible name on the rail."
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": "Icon before the label. Default \"+\"."
+      }
+    ]
+  },
   "SideNavSection": {
     "description": "A labelled group of SideNav items.",
     "file": "packages/react/src/components/AppShell/AppShell.tsx",
     "props": [
       {
+        "name": "action",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": "A control at the end of the heading, e.g. an `IconButton` with a \"+\" to add a project. Hidden on the rail."
+      },
+      {
+        "name": "icon",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": "The section's glyph on the rail. With an `icon` and a `title`, the collapsed rail shows one icon that opens the section's links in a panel beside the rail."
+      },
+      {
         "name": "title",
         "type": "string",
         "required": false,
         "default": null,
-        "description": "Section heading, e.g. \"Reporting\". Omit for the top group."
+        "description": "Section heading, e.g. \"Reports\". Omit for the top group."
       }
     ]
   },
@@ -390,6 +431,13 @@
         "required": true,
         "default": null,
         "description": "Destination name, or your router link element when `asChild` is set."
+      },
+      {
+        "name": "actions",
+        "type": "ReactNode",
+        "required": false,
+        "default": null,
+        "description": "Row-level controls at the end of the row, e.g. an `IconButton` with a vertical-dots icon that opens a menu. Rendered beside the link, not inside it, so it is its own tab stop."
       },
       {
         "name": "asChild",
@@ -420,6 +468,13 @@
         "description": "Marks the current page (`aria-current=\"page\"`)."
       },
       {
+        "name": "dot",
+        "type": "boolean",
+        "required": false,
+        "default": null,
+        "description": "A small leading dot, e.g. for pinned rows. Decorative: say what it means in the section title."
+      },
+      {
         "name": "icon",
         "type": "ReactNode",
         "required": false,
@@ -432,6 +487,13 @@
         "required": false,
         "default": "Main",
         "description": "Destination name when `asChild` is used (children is then the link element)."
+      },
+      {
+        "name": "progress",
+        "type": "number | \"done\"",
+        "required": false,
+        "default": null,
+        "description": "Progress of the thing the row stands for, 0 to 100. Shows the percentage and a thin bar under the row. `\"done\"` shows a check mark and a full bar."
       }
     ]
   },
