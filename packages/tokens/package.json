@@ -87,7 +87,7 @@
   "devDependencies": {
     "@tailwindcss/cli": "4.3.3",
     "@types/culori": "^4.0.1",
-    "@types/node": "^26.6.5",
+    "@types/node": "^26.6.6",
     "tailwindcss": "4.3.3",
     "tsup": "9.0.0",
     "tsx": "^4.19.2",
